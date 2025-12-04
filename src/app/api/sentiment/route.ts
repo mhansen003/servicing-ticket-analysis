@@ -36,41 +36,42 @@ export async function POST(request: NextRequest) {
         messages: [
           {
             role: 'system',
-            content: `You are a sentiment analyzer for mortgage customer service calls. Be CRITICAL and sensitive to customer dissatisfaction - these are high-stakes financial conversations where even mild frustration matters.
+            content: `You are a sentiment analyzer for mortgage customer service calls. Each message is labeled as CUSTOMER or AGENT - apply DIFFERENT scoring rules for each.
 
-SCORING GUIDELINES (be aggressive, NOT conservative):
-- Score from -1.0 (furious) to +1.0 (delighted). Reserve 0 for truly emotionless statements.
-- Customers calling about problems START at slightly negative (-0.2) unless they sound happy
-- Any complaint, inconvenience, or "I don't like" = at least -0.4
+CRITICAL: Messages are labeled [index] CUSTOMER: or [index] AGENT: - use these labels to apply correct rules.
+
+=== CUSTOMER SCORING (be sensitive to frustration) ===
+Emotions: frustrated, disappointed, annoyed, resigned, confused, anxious, neutral, satisfied, grateful, relieved
+- Complaints, "I don't like", inconvenience = -0.4 to -0.6
 - "Disappointed", "frustrated", "upset" = -0.5 to -0.7
-- Sarcasm, passive-aggressive comments = -0.4 to -0.6
-- Polite thanks at end of negative call = still negative (-0.2) not positive
-- Genuine gratitude, "you've been so helpful" = +0.5 to +0.8
-
-NEGATIVE SIGNALS (score -0.3 to -0.8):
-- "I don't like that", "that's frustrating", "I wasn't informed"
-- Having to re-enter information, repeat themselves, or call back
-- Inconvenience, extra work required, system problems
 - "I guess I'll have to...", resigned acceptance = -0.3
-- Complaints about company/process/website
-- "disappointed", "annoyed", "ridiculous", "unacceptable"
+- Routine questions (asking for balance, payment info) = 0 neutral
+- Simple confirmations like "OK", "Thank you" = 0 to +0.1
+- Genuine gratitude, problem solved = +0.4 to +0.7
 
-AGENT SCORING:
-- Helpful, empathetic agents = +0.3 to +0.5
-- Robotic/cold responses = -0.1 to 0
+=== AGENT SCORING (evaluate helpfulness) ===
+Emotions: helpful, professional, empathetic, apologetic, neutral, dismissive, confused
+- Helpful explanations, solving problems = +0.3 to +0.5
+- Professional, providing information = +0.2 to +0.3
+- Empathetic responses, acknowledging feelings = +0.4 to +0.5
+- Simple statements of fact = 0 to +0.1
+- "Sorry", "I apologize" with action = +0.2
+- Robotic/cold responses = 0
 - Defensive or dismissive = -0.3 to -0.5
-- Simple acknowledgments like "uh-huh", "yes" = 0
 
-Return JSON array with one object per message:
-- "score": number (-1 to 1)
-- "emotion": string (frustrated, disappointed, annoyed, resigned, confused, neutral, satisfied, grateful, relieved, helpful, professional, empathetic)
+IMPORTANT:
+- A CUSTOMER saying "thank you" after getting info = neutral to slightly positive
+- An AGENT providing information helpfully = professional/helpful (+0.2 to +0.3)
+- Don't confuse who said what - check the CUSTOMER/AGENT label!
 
-Return ONLY valid JSON array. Example:
-[{"score": -0.1, "emotion": "professional"}, {"score": -0.5, "emotion": "frustrated"}, {"score": -0.3, "emotion": "resigned"}]`,
+Return JSON array with one object per message in order:
+{"score": number, "emotion": string}
+
+Return ONLY valid JSON array, no other text.`,
           },
           {
             role: 'user',
-            content: `Analyze the sentiment of each message in this customer service conversation:\n\n${conversationText}`,
+            content: `Analyze each message's sentiment. Pay attention to CUSTOMER vs AGENT labels:\n\n${conversationText}`,
           },
         ],
         max_tokens: 2000,
