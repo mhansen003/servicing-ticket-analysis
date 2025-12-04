@@ -1,41 +1,6 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-
-interface RawTicket {
-  id: string;
-  key: string;
-  title: string;
-  status: string;
-  priority: string;
-  project: string;
-  assignee: string;
-  assigneeEmail: string;
-  created: string;
-  responseTime: number | null;
-  resolutionTime: number | null;
-  complete: boolean;
-}
-
-let cachedTickets: RawTicket[] | null = null;
-
-function loadTickets(): RawTicket[] {
-  if (cachedTickets) return cachedTickets;
-
-  const jsonPath = path.join(process.cwd(), 'data', 'all-tickets.json');
-
-  // Check if file exists - it may not in production without the CSV
-  if (!fs.existsSync(jsonPath)) {
-    console.warn('all-tickets.json not found - Raw data table will be empty');
-    cachedTickets = [];
-    return cachedTickets;
-  }
-
-  const jsonContent = fs.readFileSync(jsonPath, 'utf-8');
-  cachedTickets = JSON.parse(jsonContent);
-
-  return cachedTickets!;
-}
+import { prisma } from '@/lib/db';
+import { Prisma } from '@prisma/client';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -47,81 +12,134 @@ export async function GET(request: Request) {
   const project = searchParams.get('project') || '';
   const priority = searchParams.get('priority') || '';
   const assignee = searchParams.get('assignee') || '';
-  const sortField = searchParams.get('sortField') || 'created';
+  const sortField = searchParams.get('sortField') || 'ticketCreatedAtUtc';
   const sortOrder = searchParams.get('sortOrder') || 'desc';
 
   try {
-    let tickets = loadTickets();
+    // Build where clause
+    const where: Prisma.TicketWhereInput = {};
 
-    // Apply filters
     if (search) {
-      const searchLower = search.toLowerCase();
-      tickets = tickets.filter(t =>
-        t.title.toLowerCase().includes(searchLower) ||
-        t.key?.toLowerCase().includes(searchLower) ||
-        t.assignee.toLowerCase().includes(searchLower)
-      );
+      where.OR = [
+        { ticketTitle: { contains: search, mode: 'insensitive' } },
+        { ticketKey: { contains: search, mode: 'insensitive' } },
+        { assignedUserName: { contains: search, mode: 'insensitive' } },
+      ];
     }
 
     if (status) {
-      tickets = tickets.filter(t => t.status === status);
+      where.ticketStatus = status;
     }
 
     if (project) {
-      tickets = tickets.filter(t => t.project === project);
+      where.projectName = project;
     }
 
     if (priority) {
-      tickets = tickets.filter(t => t.priority === priority);
+      where.ticketPriority = priority;
     }
 
     if (assignee) {
-      tickets = tickets.filter(t => t.assignee === assignee);
+      where.assignedUserName = assignee;
     }
 
-    // Get unique values for filters (from full dataset)
-    const allTickets = loadTickets();
-    const filterOptions = {
-      statuses: [...new Set(allTickets.map(t => t.status))].sort(),
-      projects: [...new Set(allTickets.map(t => t.project))].sort(),
-      priorities: [...new Set(allTickets.map(t => t.priority))].sort(),
-      assignees: [...new Set(allTickets.map(t => t.assignee))].filter(a => a !== 'Unassigned').sort().slice(0, 100),
+    // Map frontend sort fields to database fields
+    const sortFieldMap: Record<string, string> = {
+      key: 'ticketKey',
+      title: 'ticketTitle',
+      status: 'ticketStatus',
+      priority: 'ticketPriority',
+      project: 'projectName',
+      assignee: 'assignedUserName',
+      created: 'ticketCreatedAtUtc',
+      resolutionTime: 'timeToResolutionInMinutes',
     };
 
-    // Sort
-    tickets.sort((a, b) => {
-      const aVal = a[sortField as keyof RawTicket];
-      const bVal = b[sortField as keyof RawTicket];
+    const dbSortField = sortFieldMap[sortField] || 'ticketCreatedAtUtc';
 
-      if (aVal === null || aVal === undefined) return 1;
-      if (bVal === null || bVal === undefined) return -1;
+    // Get tickets with pagination
+    const [tickets, total] = await Promise.all([
+      prisma.ticket.findMany({
+        where,
+        orderBy: { [dbSortField]: sortOrder },
+        skip: (page - 1) * limit,
+        take: limit,
+        select: {
+          id: true,
+          ticketKey: true,
+          ticketTitle: true,
+          ticketStatus: true,
+          ticketPriority: true,
+          projectName: true,
+          assignedUserName: true,
+          ticketCreatedAtUtc: true,
+          timeToFirstResponseInMinutes: true,
+          timeToResolutionInMinutes: true,
+          isTicketComplete: true,
+        },
+      }),
+      prisma.ticket.count({ where }),
+    ]);
 
-      if (typeof aVal === 'string' && typeof bVal === 'string') {
-        return sortOrder === 'asc'
-          ? aVal.localeCompare(bVal)
-          : bVal.localeCompare(aVal);
-      }
+    // Get filter options (only on first page for performance)
+    let filterOptions = null;
+    if (page === 1) {
+      const [statuses, projects, priorities, assignees] = await Promise.all([
+        prisma.ticket.groupBy({
+          by: ['ticketStatus'],
+          where: { ticketStatus: { not: null } },
+          orderBy: { _count: { ticketStatus: 'desc' } },
+          take: 20,
+        }),
+        prisma.ticket.groupBy({
+          by: ['projectName'],
+          where: { projectName: { not: null } },
+          orderBy: { _count: { projectName: 'desc' } },
+          take: 20,
+        }),
+        prisma.ticket.groupBy({
+          by: ['ticketPriority'],
+          where: { ticketPriority: { not: null } },
+          orderBy: { _count: { ticketPriority: 'desc' } },
+        }),
+        prisma.ticket.groupBy({
+          by: ['assignedUserName'],
+          where: { assignedUserName: { not: null } },
+          orderBy: { _count: { assignedUserName: 'desc' } },
+          take: 100,
+        }),
+      ]);
 
-      if (typeof aVal === 'number' && typeof bVal === 'number') {
-        return sortOrder === 'asc' ? aVal - bVal : bVal - aVal;
-      }
+      filterOptions = {
+        statuses: statuses.map((s) => s.ticketStatus).filter(Boolean),
+        projects: projects.map((p) => p.projectName).filter(Boolean),
+        priorities: priorities.map((p) => p.ticketPriority).filter(Boolean),
+        assignees: assignees.map((a) => a.assignedUserName).filter(Boolean),
+      };
+    }
 
-      return 0;
-    });
-
-    // Paginate
-    const total = tickets.length;
-    const totalPages = Math.ceil(total / limit);
-    const startIndex = (page - 1) * limit;
-    const paginatedTickets = tickets.slice(startIndex, startIndex + limit);
+    // Transform to frontend format
+    const formattedTickets = tickets.map((t) => ({
+      id: t.id.toString(),
+      key: t.ticketKey,
+      title: t.ticketTitle || '',
+      status: t.ticketStatus || 'Unknown',
+      priority: t.ticketPriority || 'Unknown',
+      project: t.projectName || 'Unknown',
+      assignee: t.assignedUserName || 'Unassigned',
+      created: t.ticketCreatedAtUtc?.toISOString() || '',
+      responseTime: t.timeToFirstResponseInMinutes,
+      resolutionTime: t.timeToResolutionInMinutes,
+      complete: t.isTicketComplete,
+    }));
 
     return NextResponse.json({
-      tickets: paginatedTickets,
+      tickets: formattedTickets,
       pagination: {
         page,
         limit,
         total,
-        totalPages,
+        totalPages: Math.ceil(total / limit),
       },
       filterOptions,
     });
@@ -137,40 +155,46 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { groupBy } = body;
 
-    const tickets = loadTickets();
+    // Map frontend field names to database field names
+    const fieldMap: Record<string, keyof Prisma.TicketGroupByOutputType> = {
+      project: 'projectName',
+      status: 'ticketStatus',
+      priority: 'ticketPriority',
+      assignee: 'assignedUserName',
+    };
 
-    const groups: Record<string, { count: number; completed: number; avgResolution: number }> = {};
+    const dbField = fieldMap[groupBy] || 'projectName';
 
-    tickets.forEach(ticket => {
-      const key = ticket[groupBy as keyof RawTicket]?.toString() || 'Unknown';
+    // Use raw SQL for better performance on aggregations
+    const result = await prisma.$queryRaw<
+      Array<{
+        name: string;
+        count: bigint;
+        completed: bigint;
+        avg_resolution: number | null;
+      }>
+    >`
+      SELECT
+        ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} as name,
+        COUNT(*) as count,
+        SUM(CASE WHEN is_ticket_complete THEN 1 ELSE 0 END) as completed,
+        AVG(time_to_resolution_in_minutes) / 60 as avg_resolution
+      FROM tickets
+      WHERE ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} IS NOT NULL
+      GROUP BY ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')}
+      ORDER BY count DESC
+      LIMIT 50
+    `;
 
-      if (!groups[key]) {
-        groups[key] = { count: 0, completed: 0, avgResolution: 0 };
-      }
+    const groups = result.map((r) => ({
+      name: r.name || 'Unknown',
+      count: Number(r.count),
+      completed: Number(r.completed),
+      avgResolution: r.avg_resolution ? Math.round(r.avg_resolution) : 0,
+      completionRate: r.count > 0 ? Math.round((Number(r.completed) / Number(r.count)) * 100) : 0,
+    }));
 
-      groups[key].count++;
-      if (ticket.complete) groups[key].completed++;
-      if (ticket.resolutionTime) {
-        groups[key].avgResolution += ticket.resolutionTime;
-      }
-    });
-
-    // Calculate averages
-    Object.keys(groups).forEach(key => {
-      if (groups[key].avgResolution > 0) {
-        groups[key].avgResolution = Math.round(groups[key].avgResolution / groups[key].count / 60); // Convert to hours
-      }
-    });
-
-    const result = Object.entries(groups)
-      .map(([name, data]) => ({
-        name,
-        ...data,
-        completionRate: Math.round((data.completed / data.count) * 100),
-      }))
-      .sort((a, b) => b.count - a.count);
-
-    return NextResponse.json({ groups: result });
+    return NextResponse.json({ groups });
   } catch (error) {
     console.error('Error grouping tickets:', error);
     return NextResponse.json({ error: 'Failed to group tickets' }, { status: 500 });

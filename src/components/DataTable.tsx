@@ -391,19 +391,6 @@ export function DataTable() {
                       <p className="mt-2 text-sm text-gray-500">Loading tickets...</p>
                     </td>
                   </tr>
-                ) : tickets.length === 0 && pagination.total === 0 && !search && !statusFilter && !projectFilter && !priorityFilter && !assigneeFilter ? (
-                  <tr>
-                    <td colSpan={8} className="px-4 py-16 text-center">
-                      <div className="max-w-md mx-auto">
-                        <Table2 className="h-12 w-12 text-gray-600 mx-auto mb-4" />
-                        <p className="text-lg font-medium text-gray-400 mb-2">Raw Data Not Available</p>
-                        <p className="text-sm text-gray-500">
-                          The raw ticket data file is too large to include in the deployment.
-                          Use the Overview and Insights tabs for aggregated analytics, or ask AI to analyze specific patterns.
-                        </p>
-                      </div>
-                    </td>
-                  </tr>
                 ) : tickets.length === 0 ? (
                   <tr>
                     <td colSpan={8} className="px-4 py-12 text-center text-gray-500">
