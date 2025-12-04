@@ -6,19 +6,34 @@ import {
   getAssigneeBreakdown,
   getStatusBreakdown,
   getPriorityBreakdown,
+  getHeatmaps,
+  getIssues,
+  getTrends,
 } from '@/lib/data-loader';
 
 export async function GET() {
   try {
-    const [stats, ticketsByMonth, projectBreakdown, assigneeBreakdown, statusBreakdown, priorityBreakdown] =
-      await Promise.all([
-        getTicketStats(),
-        getTicketsByMonth(),
-        getProjectBreakdown(),
-        getAssigneeBreakdown(),
-        getStatusBreakdown(),
-        getPriorityBreakdown(),
-      ]);
+    const [
+      stats,
+      ticketsByMonth,
+      projectBreakdown,
+      assigneeBreakdown,
+      statusBreakdown,
+      priorityBreakdown,
+      heatmaps,
+      issues,
+      trends,
+    ] = await Promise.all([
+      getTicketStats(),
+      getTicketsByMonth(),
+      getProjectBreakdown(),
+      getAssigneeBreakdown(),
+      getStatusBreakdown(),
+      getPriorityBreakdown(),
+      getHeatmaps(),
+      getIssues(),
+      getTrends(),
+    ]);
 
     return NextResponse.json({
       stats,
@@ -27,6 +42,9 @@ export async function GET() {
       assigneeBreakdown,
       statusBreakdown,
       priorityBreakdown,
+      heatmaps,
+      issues,
+      trends,
     });
   } catch (error) {
     console.error('Error loading stats:', error);

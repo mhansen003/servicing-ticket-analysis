@@ -2,6 +2,33 @@ import fs from 'fs';
 import path from 'path';
 import { TicketStats, ProjectBreakdown, AssigneeBreakdown, TimeSeriesData } from '@/types/ticket';
 
+interface HeatmapCell {
+  x: string;
+  y: string;
+  value: number;
+}
+
+interface HeatmapData {
+  data: HeatmapCell[];
+  xLabels: string[];
+  yLabels: string[];
+}
+
+interface Issue {
+  category: string;
+  metric: string;
+  value: number;
+  severity: 'critical' | 'warning' | 'normal' | 'good';
+  description?: string;
+}
+
+interface Trends {
+  volumeByDayOfWeek: { day: string; count: number }[];
+  peakHours: { hour: string; count: number }[];
+  projectsAtRisk: number;
+  overloadedAssignees: number;
+}
+
 interface ProcessedData {
   stats: TicketStats;
   ticketsByMonth: TimeSeriesData[];
@@ -20,6 +47,12 @@ interface ProcessedData {
     time_to_resolution_in_minutes: number | null;
     is_ticket_complete: string;
   }[];
+  heatmaps?: {
+    dayHour: HeatmapData;
+    projectStatus: HeatmapData;
+  };
+  issues?: Issue[];
+  trends?: Trends;
   processedAt: string;
 }
 
@@ -74,4 +107,19 @@ export async function getTicketSample(limit: number = 100) {
 
 export async function getAllProcessedData(): Promise<ProcessedData> {
   return loadProcessedData();
+}
+
+export async function getHeatmaps() {
+  const data = loadProcessedData();
+  return data.heatmaps;
+}
+
+export async function getIssues() {
+  const data = loadProcessedData();
+  return data.issues;
+}
+
+export async function getTrends() {
+  const data = loadProcessedData();
+  return data.trends;
 }

@@ -21,6 +21,7 @@ import {
 } from '@/components/Charts';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import { InsightsPanel } from '@/components/InsightsPanel';
+import { DataTable } from '@/components/DataTable';
 
 interface HeatmapData {
   data: { x: string; y: string; value: number }[];
@@ -77,7 +78,7 @@ interface DashboardData {
   trends?: Trends;
 }
 
-type TabType = 'overview' | 'insights' | 'ai';
+type TabType = 'overview' | 'insights' | 'data' | 'ai';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -136,7 +137,8 @@ export default function Dashboard() {
 
   const tabs = [
     { id: 'overview' as TabType, label: 'Overview', icon: BarChart3 },
-    { id: 'insights' as TabType, label: 'AI Insights', icon: Brain },
+    { id: 'insights' as TabType, label: 'Insights', icon: Brain },
+    { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
   ];
 
@@ -315,7 +317,39 @@ export default function Dashboard() {
           <InsightsPanel heatmaps={data.heatmaps} issues={data.issues} trends={data.trends} />
         )}
 
-        {activeTab === 'ai' && <AIAnalysis />}
+        {activeTab === 'data' && <DataTable />}
+
+        {activeTab === 'ai' && (
+          <div className="space-y-6">
+            {/* Prominent AI Header */}
+            <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+                  <Brain className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">AI-Powered Analysis</h2>
+                  <p className="text-gray-400">Get intelligent insights about your ticket data</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Analysis Ready</p>
+                  <p className="text-lg font-semibold text-white">{data.stats.totalTickets.toLocaleString()} Tickets</p>
+                </div>
+                <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Projects</p>
+                  <p className="text-lg font-semibold text-white">{data.projectBreakdown.length} Active</p>
+                </div>
+                <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
+                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Insights Found</p>
+                  <p className="text-lg font-semibold text-white">{data.issues?.length || 0} Issues</p>
+                </div>
+              </div>
+            </div>
+            <AIAnalysis />
+          </div>
+        )}
       </main>
 
       {/* Footer */}

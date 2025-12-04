@@ -351,6 +351,29 @@ const ticketSample = tickets.slice(0, 100).map((t) => ({
   is_ticket_complete: t.is_ticket_complete,
 }));
 
+// ========================================
+// ALL TICKETS FOR RAW DATA TABLE
+// ========================================
+const allTicketsPath = path.join(__dirname, '..', 'data', 'all-tickets.json');
+const allTickets = tickets.map((t) => ({
+  id: t.ticket_key || t.ticket_id,
+  key: t.ticket_key,
+  title: String(t.ticket_title || '').slice(0, 100),
+  status: String(t.ticket_status || 'Unknown'),
+  priority: String(t.ticket_priority || 'Unknown'),
+  project: String(t.project_name || 'Unknown'),
+  assignee: String(t.assigned_user_name || 'Unassigned'),
+  assigneeEmail: String(t.assigned_user_email || ''),
+  created: t.ticket_created_at_utc,
+  responseTime: t.time_to_first_response_in_minutes,
+  resolutionTime: t.time_to_resolution_in_minutes,
+  complete: t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1',
+}));
+
+fs.writeFileSync(allTicketsPath, JSON.stringify(allTickets));
+const allTicketsSizeKB = Math.round(fs.statSync(allTicketsPath).size / 1024);
+console.log(`✅ Generated all-tickets.json (${allTicketsSizeKB} KB) with ${allTickets.length.toLocaleString()} tickets`);
+
 // Write output
 const output = {
   stats,
