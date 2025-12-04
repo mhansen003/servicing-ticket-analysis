@@ -1,0 +1,1370 @@
+{
+  "stats": {
+    "totalTickets": 50714,
+    "completedTickets": 0,
+    "openTickets": 50714,
+    "avgResponseTimeMinutes": 1674,
+    "avgResolutionTimeMinutes": 2973,
+    "completionRate": 0
+  },
+  "ticketsByMonth": [
+    {
+      "date": "2025-09",
+      "count": 18024
+    },
+    {
+      "date": "2025-10",
+      "count": 17202
+    },
+    {
+      "date": "2025-11",
+      "count": 14407
+    },
+    {
+      "date": "2025-12",
+      "count": 1081
+    }
+  ],
+  "projectBreakdown": [
+    {
+      "project": "RED Team",
+      "total": 24523,
+      "completed": 0,
+      "open": 24523,
+      "avgResolutionHours": 16
+    },
+    {
+      "project": "Servicing Help",
+      "total": 20979,
+      "completed": 0,
+      "open": 20979,
+      "avgResolutionHours": 87
+    },
+    {
+      "project": "ServApp Support",
+      "total": 1923,
+      "completed": 0,
+      "open": 1923,
+      "avgResolutionHours": 0
+    },
+    {
+      "project": "CMG Servicing Oversight",
+      "total": 927,
+      "completed": 0,
+      "open": 927,
+      "avgResolutionHours": 88
+    },
+    {
+      "project": "Servicing Escalations WG",
+      "total": 858,
+      "completed": 0,
+      "open": 858,
+      "avgResolutionHours": 140
+    },
+    {
+      "project": "Tim Loss's Mysite",
+      "total": 490,
+      "completed": 0,
+      "open": 490,
+      "avgResolutionHours": 0
+    },
+    {
+      "project": "Consumer Comms",
+      "total": 325,
+      "completed": 0,
+      "open": 325,
+      "avgResolutionHours": 0
+    },
+    {
+      "project": "DataRequests Servicing",
+      "total": 308,
+      "completed": 0,
+      "open": 308,
+      "avgResolutionHours": 229
+    },
+    {
+      "project": "Assumptions",
+      "total": 91,
+      "completed": 0,
+      "open": 91,
+      "avgResolutionHours": 17
+    },
+    {
+      "project": "RED Team Corp Website",
+      "total": 90,
+      "completed": 0,
+      "open": 90,
+      "avgResolutionHours": 2
+    }
+  ],
+  "assigneeBreakdown": [
+    {
+      "email": "skailani@cmgfi.com",
+      "name": "Kailani, Sarah",
+      "total": 4640,
+      "completed": 0,
+      "avgResolutionHours": 21
+    },
+    {
+      "email": "vcaliri@cmgfi.com",
+      "name": "Caliri, Victoria",
+      "total": 4548,
+      "completed": 0,
+      "avgResolutionHours": 18
+    },
+    {
+      "email": "sdoherty@cmgfi.com",
+      "name": "Doherty, Sam",
+      "total": 3660,
+      "completed": 0,
+      "avgResolutionHours": 80
+    },
+    {
+      "email": "jeich@cmgfi.com",
+      "name": "Eich, Janet",
+      "total": 2675,
+      "completed": 0,
+      "avgResolutionHours": 24
+    },
+    {
+      "email": "jchaves@cmgfi.com",
+      "name": "Chaves, Jackie",
+      "total": 2488,
+      "completed": 0,
+      "avgResolutionHours": 60
+    },
+    {
+      "email": "jaimenewton@cmgfi.com",
+      "name": "Newton, Jaime",
+      "total": 1867,
+      "completed": 0,
+      "avgResolutionHours": 18
+    },
+    {
+      "email": "tmacadangdang@cmgfi.com",
+      "name": "Macadangdang, Tara",
+      "total": 1623,
+      "completed": 0,
+      "avgResolutionHours": 18
+    },
+    {
+      "email": "kvue@cmgfi.com",
+      "name": "Vue, Ky",
+      "total": 1354,
+      "completed": 0,
+      "avgResolutionHours": 109
+    },
+    {
+      "email": "lmartin@cmgfi.com",
+      "name": "Martin, Lauren",
+      "total": 975,
+      "completed": 0,
+      "avgResolutionHours": 114
+    },
+    {
+      "email": "kschreiner@cmgfi.com",
+      "name": "Schreiner, Katie",
+      "total": 879,
+      "completed": 0,
+      "avgResolutionHours": 129
+    },
+    {
+      "email": "kmccallum@cmgfi.com",
+      "name": "McCallum, Kristine",
+      "total": 783,
+      "completed": 0,
+      "avgResolutionHours": 178
+    },
+    {
+      "email": "cpinckney@cmgfi.com",
+      "name": "Pinckney, Christina",
+      "total": 656,
+      "completed": 0,
+      "avgResolutionHours": 92
+    },
+    {
+      "email": "kristis@cmgfi.com",
+      "name": "Smith, Kristi",
+      "total": 645,
+      "completed": 0,
+      "avgResolutionHours": 76
+    },
+    {
+      "email": "duoy@cmgfi.com",
+      "name": "Yang, Duo",
+      "total": 586,
+      "completed": 0,
+      "avgResolutionHours": 95
+    },
+    {
+      "email": "kwoodman@cmgfi.com",
+      "name": "Woodman, Kiera",
+      "total": 585,
+      "completed": 0,
+      "avgResolutionHours": 45
+    }
+  ],
+  "statusBreakdown": [
+    {
+      "name": "Request Complete",
+      "value": 46203
+    },
+    {
+      "name": "New",
+      "value": 2654
+    },
+    {
+      "name": "To Do",
+      "value": 530
+    },
+    {
+      "name": "Closed - Missing Info",
+      "value": 370
+    },
+    {
+      "name": "Assigned",
+      "value": 235
+    },
+    {
+      "name": "In Progress",
+      "value": 149
+    },
+    {
+      "name": "Done",
+      "value": 144
+    },
+    {
+      "name": "Reopened",
+      "value": 89
+    },
+    {
+      "name": "Completed",
+      "value": 84
+    },
+    {
+      "name": "Dismissed",
+      "value": 37
+    }
+  ],
+  "priorityBreakdown": [
+    {
+      "name": "Medium",
+      "value": 50658
+    },
+    {
+      "name": "Low",
+      "value": 31
+    },
+    {
+      "name": "High",
+      "value": 14
+    },
+    {
+      "name": "Critical",
+      "value": 10
+    }
+  ],
+  "ticketSample": [
+    {
+      "ticket_key": "SH-104533",
+      "ticket_title": "Annual Escrow Account Disclosure Statement Inaccuracy",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-10-06T13:49:27.000000000",
+      "time_to_resolution_in_minutes": 3417,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-104435",
+      "ticket_title": "Nelson Fernandez loan number 0179218250",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-10-03T21:37:50.000000000",
+      "time_to_resolution_in_minutes": 5547,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-104803",
+      "ticket_title": "Re: Cannot get anyone one the phone... double drafted my loan payment 9/4",
+      "ticket_status": "Reopened",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-10-06T20:41:18.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-102505",
+      "ticket_title": "FW: Regarding Loan# 0163485915 (137 Elisha Dr) Kondai",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-26T20:16:01.000000000",
+      "time_to_resolution_in_minutes": 8620,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112362",
+      "ticket_title": "Immediate Attention Required: Client Auto-Payment Issue",
+      "ticket_status": "Pending Internal Response",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-11-07T17:29:25.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-97587",
+      "ticket_title": "RE: Payment issue",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-05T18:06:16.000000000",
+      "time_to_resolution_in_minutes": 19975,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97631",
+      "ticket_title": "FW: Ninteau 0140009499 -134 Palmer rd candia nh Fw: Sending Funds for Escrow Account",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-05T19:26:33.000000000",
+      "time_to_resolution_in_minutes": 46206,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97989",
+      "ticket_title": "FW: Mortgage amount issue -- RTX53125 Afflerbach - 606 Ridgewood Dr",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-08T18:39:40.000000000",
+      "time_to_resolution_in_minutes": 14601,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98208",
+      "ticket_title": "FW: Account issues",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-09T14:38:07.000000000",
+      "time_to_resolution_in_minutes": 32954,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97774",
+      "ticket_title": "15526 SE 169th Street",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-06T15:45:17.000000000",
+      "time_to_resolution_in_minutes": 17625,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-99298",
+      "ticket_title": "Loan 0152479796  Rebecca Truitt - Flood Insurance Renewal",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-13T15:54:19.000000000",
+      "time_to_resolution_in_minutes": 27393,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98787",
+      "ticket_title": "Loan 0139889380",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-11T13:29:43.000000000",
+      "time_to_resolution_in_minutes": 10234,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "HFC-785",
+      "ticket_title": "can I use the money on my homefundit to pay for the appraisal?",
+      "ticket_status": "Done",
+      "ticket_priority": "Medium",
+      "project_name": "HomeFundIt Campaigners",
+      "assigned_user_name": "Dorak, Marie",
+      "ticket_created_at_utc": "2025-09-12T20:19:01.000000000",
+      "time_to_resolution_in_minutes": 11,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "HFI-729",
+      "ticket_title": "Just browsing, but I'm interested in HomeFundIt",
+      "ticket_status": "Done",
+      "ticket_priority": "Medium",
+      "project_name": "HomeFundIt",
+      "assigned_user_name": "Dorak, Marie",
+      "ticket_created_at_utc": "2025-10-22T17:31:31.000000000",
+      "time_to_resolution_in_minutes": 10,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "HFC-818",
+      "ticket_title": "I want to reset my password but I am not recieving the reset code via email.",
+      "ticket_status": "Done",
+      "ticket_priority": "Medium",
+      "project_name": "HomeFundIt Campaigners",
+      "assigned_user_name": "Dorak, Marie",
+      "ticket_created_at_utc": "2025-11-14T14:39:13.000000000",
+      "time_to_resolution_in_minutes": 89,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "HFC-789",
+      "ticket_title": "How do transfer the donated funs",
+      "ticket_status": "Done",
+      "ticket_priority": "Medium",
+      "project_name": "HomeFundIt Campaigners",
+      "assigned_user_name": "Dorak, Marie",
+      "ticket_created_at_utc": "2025-09-15T08:03:27.000000000",
+      "time_to_resolution_in_minutes": 325,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114686",
+      "ticket_title": "FW: Customer Issue with Double Payments",
+      "ticket_status": "Closed - Missing Info",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-11-18T14:40:36.000000000",
+      "time_to_resolution_in_minutes": 3219,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-102474",
+      "ticket_title": "FW: Tax question - Pinto RNE*87679",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-26T18:52:54.000000000",
+      "time_to_resolution_in_minutes": 8156,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114633",
+      "ticket_title": "RE: Help !!!!     loan # is 0152531125",
+      "ticket_status": "In Progress",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-11-18T00:38:01.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-112845",
+      "ticket_title": "RE: Immediate Attention Required: Client Auto-Payment Issue",
+      "ticket_status": "Pending Internal Response",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-11-10T19:17:42.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-98032",
+      "ticket_title": "RCE112075 - Janell Liban",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-08T19:46:58.000000000",
+      "time_to_resolution_in_minutes": 14377,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-99152",
+      "ticket_title": "File #2708363 - Hunt - 518 E Main St., Rogersville, TN 37857",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-12T17:46:16.000000000",
+      "time_to_resolution_in_minutes": 8517,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-99031",
+      "ticket_title": "Removal of PMI",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Boni, Justin",
+      "ticket_created_at_utc": "2025-09-12T13:03:11.000000000",
+      "time_to_resolution_in_minutes": 8812,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "TRN-315",
+      "ticket_title": "need link",
+      "ticket_status": "Done",
+      "ticket_priority": "Low",
+      "project_name": "Training",
+      "assigned_user_name": "Mansfield, Liz",
+      "ticket_created_at_utc": "2025-10-21T15:28:19.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "HFC-810",
+      "ticket_title": "How can I withdraw the funds already raised?",
+      "ticket_status": "Done",
+      "ticket_priority": "Medium",
+      "project_name": "HomeFundIt Campaigners",
+      "assigned_user_name": "Dorak, Marie",
+      "ticket_created_at_utc": "2025-11-04T22:02:03.000000000",
+      "time_to_resolution_in_minutes": 28,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-101515",
+      "ticket_title": "Re: Henze Gongola - 3000004571 - Servicing Portal Question",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-23T20:11:38.000000000",
+      "time_to_resolution_in_minutes": 2457,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98830",
+      "ticket_title": "Portal Link",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-11T15:04:58.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-110334",
+      "ticket_title": "Re: Payment Issues",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-10-31T18:40:48.000000000",
+      "time_to_resolution_in_minutes": 10127,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98232",
+      "ticket_title": "Confirmation Number/Instructions",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-09T15:28:29.000000000",
+      "time_to_resolution_in_minutes": 5,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97860",
+      "ticket_title": "Escrow Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-08T14:34:33.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96354",
+      "ticket_title": "Service Transfer Letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-02T18:10:01.000000000",
+      "time_to_resolution_in_minutes": 1,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "TRN-316",
+      "ticket_title": "need link for trianing hub",
+      "ticket_status": "Done",
+      "ticket_priority": "Low",
+      "project_name": "Training",
+      "assigned_user_name": "Mansfield, Liz",
+      "ticket_created_at_utc": "2025-10-21T15:28:33.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-98688",
+      "ticket_title": "Ayoub 0139959134",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-10T20:40:42.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97787",
+      "ticket_title": "Hicks RWE 0000039225",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-06T18:33:59.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97939",
+      "ticket_title": "sturchen RNW0000005975",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-08T16:55:08.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96609",
+      "ticket_title": "COntent RNN0000008809",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-02T23:36:22.000000000",
+      "time_to_resolution_in_minutes": 913,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98638",
+      "ticket_title": "tuteja  RCE0000099336",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-10T18:47:42.000000000",
+      "time_to_resolution_in_minutes": 3,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97616",
+      "ticket_title": "Fowles REA0000168388",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Robinson, Christopher",
+      "ticket_created_at_utc": "2025-09-05T19:00:36.000000000",
+      "time_to_resolution_in_minutes": 3,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-116887",
+      "ticket_title": "RE: Payoff Request Closing 11/14 (SH-111378)",
+      "ticket_status": "Assigned",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-12-01T15:02:32.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-96162",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-02T14:42:59.000000000",
+      "time_to_resolution_in_minutes": 3108,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97636",
+      "ticket_title": "Detailed Payment History",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-05T19:34:15.000000000",
+      "time_to_resolution_in_minutes": 21676,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-109475",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-28T19:27:07.000000000",
+      "time_to_resolution_in_minutes": 1509,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-102741",
+      "ticket_title": "Transfer Letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-29T15:03:54.000000000",
+      "time_to_resolution_in_minutes": 399,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-104268",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-03T16:28:14.000000000",
+      "time_to_resolution_in_minutes": 5888,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-103700",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-01T20:29:25.000000000",
+      "time_to_resolution_in_minutes": 8326,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-105822",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-10T13:54:26.000000000",
+      "time_to_resolution_in_minutes": 4366,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-106834",
+      "ticket_title": "Notice of servicing",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-15T16:18:23.000000000",
+      "time_to_resolution_in_minutes": 1361,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97991",
+      "ticket_title": "Escrow Disclosure",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-08T18:40:40.000000000",
+      "time_to_resolution_in_minutes": 17413,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-104346",
+      "ticket_title": "Insurance Documents",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-03T18:46:35.000000000",
+      "time_to_resolution_in_minutes": 5751,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107479",
+      "ticket_title": "Payment History",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-17T16:07:19.000000000",
+      "time_to_resolution_in_minutes": 4230,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-103689",
+      "ticket_title": "Payoff Statement Request / 3250 North 96th Street, Milwaukee, WI 53222 / 18-25-46877AN",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-01T20:08:39.000000000",
+      "time_to_resolution_in_minutes": 16953,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-105008",
+      "ticket_title": "October Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-07T16:15:43.000000000",
+      "time_to_resolution_in_minutes": 142,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-99165",
+      "ticket_title": "Insurance Policy Update",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-12T18:11:02.000000000",
+      "time_to_resolution_in_minutes": 11685,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112346",
+      "ticket_title": "Insurance update",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-07T17:02:35.000000000",
+      "time_to_resolution_in_minutes": 115,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-110051",
+      "ticket_title": "Payment History",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-30T18:31:46.000000000",
+      "time_to_resolution_in_minutes": 150,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-109045",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-27T15:36:50.000000000",
+      "time_to_resolution_in_minutes": 1352,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-103692",
+      "ticket_title": "PMI removal",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-01T20:10:19.000000000",
+      "time_to_resolution_in_minutes": 8546,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107676",
+      "ticket_title": "Online account",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-18T18:25:51.000000000",
+      "time_to_resolution_in_minutes": 7011,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-113208",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-12T16:23:47.000000000",
+      "time_to_resolution_in_minutes": 11457,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-106850",
+      "ticket_title": "Transfer letter- Hohenberger RCA0000010161",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-15T16:52:42.000000000",
+      "time_to_resolution_in_minutes": 9877,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-110661",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-03T17:09:42.000000000",
+      "time_to_resolution_in_minutes": 4131,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-104747",
+      "ticket_title": "Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-06T19:03:48.000000000",
+      "time_to_resolution_in_minutes": 1414,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108048",
+      "ticket_title": "ServiceMac Contact Info",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-21T16:38:24.000000000",
+      "time_to_resolution_in_minutes": 1225,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-103829",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-02T13:52:54.000000000",
+      "time_to_resolution_in_minutes": 7282,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108000",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-21T14:35:40.000000000",
+      "time_to_resolution_in_minutes": 30,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112835",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-10T18:55:08.000000000",
+      "time_to_resolution_in_minutes": 121,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-111947",
+      "ticket_title": "Notice of Transfer",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-06T15:53:47.000000000",
+      "time_to_resolution_in_minutes": 1624,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108787",
+      "ticket_title": "Payment",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-24T16:02:43.000000000",
+      "time_to_resolution_in_minutes": 5647,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108394",
+      "ticket_title": "CMG Home Loans",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-22T20:30:59.000000000",
+      "time_to_resolution_in_minutes": 10127,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-99796",
+      "ticket_title": "Escrow Analysis",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-16T18:09:37.000000000",
+      "time_to_resolution_in_minutes": 30258,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-116264",
+      "ticket_title": "Please rush payoff demand for loan #0140106907 - FMNA-6012500626 - 131 Legend Road, San Anselmo CA 9",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-25T18:47:58.000000000",
+      "time_to_resolution_in_minutes": 193,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-110047",
+      "ticket_title": "Website link",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-30T18:27:52.000000000",
+      "time_to_resolution_in_minutes": 154,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-106161",
+      "ticket_title": "October Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-13T14:16:09.000000000",
+      "time_to_resolution_in_minutes": 23,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96582",
+      "ticket_title": "Hills REA 202756",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-02T22:43:30.000000000",
+      "time_to_resolution_in_minutes": 25803,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-100371",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-18T14:03:35.000000000",
+      "time_to_resolution_in_minutes": 27629,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97187",
+      "ticket_title": "Reimbursement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-04T16:14:02.000000000",
+      "time_to_resolution_in_minutes": 23315,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-103986",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-02T18:39:46.000000000",
+      "time_to_resolution_in_minutes": 7197,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-102146",
+      "ticket_title": "Insurance claim",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-25T19:13:04.000000000",
+      "time_to_resolution_in_minutes": 17039,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107671",
+      "ticket_title": "Lewandowski : First Payment - Online Payment Set Up",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-18T14:49:11.000000000",
+      "time_to_resolution_in_minutes": 4345,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108438",
+      "ticket_title": "loan mortgage statement monthly",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-23T01:50:32.000000000",
+      "time_to_resolution_in_minutes": 772,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-110563",
+      "ticket_title": "Transfer letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-11-03T15:13:09.000000000",
+      "time_to_resolution_in_minutes": 4247,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-109331",
+      "ticket_title": "Escrow Analysis",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-28T14:51:04.000000000",
+      "time_to_resolution_in_minutes": 1786,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107854",
+      "ticket_title": "RTX8962 - Marissa Clay - 11721 Murano",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-20T19:45:08.000000000",
+      "time_to_resolution_in_minutes": 11187,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96973",
+      "ticket_title": "Online portal link",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-03T21:25:50.000000000",
+      "time_to_resolution_in_minutes": 24444,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-102489",
+      "ticket_title": "Original documents",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-26T19:17:22.000000000",
+      "time_to_resolution_in_minutes": 15595,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-105613",
+      "ticket_title": "September Payment",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-09T15:09:21.000000000",
+      "time_to_resolution_in_minutes": 5733,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-105666",
+      "ticket_title": "Wire Transfer verification",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-09T17:08:56.000000000",
+      "time_to_resolution_in_minutes": 20211,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-105270",
+      "ticket_title": "Wire Reference number",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-08T14:51:08.000000000",
+      "time_to_resolution_in_minutes": 7169,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-101317",
+      "ticket_title": "October Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-23T14:23:59.000000000",
+      "time_to_resolution_in_minutes": 20410,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-109118",
+      "ticket_title": "First payment letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-27T18:12:11.000000000",
+      "time_to_resolution_in_minutes": 1190,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-108450",
+      "ticket_title": "Monthly Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-23T13:14:27.000000000",
+      "time_to_resolution_in_minutes": 88,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97665",
+      "ticket_title": "ACH form",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-09-05T20:23:05.000000000",
+      "time_to_resolution_in_minutes": 21629,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107618",
+      "ticket_title": "October payment",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-17T21:22:16.000000000",
+      "time_to_resolution_in_minutes": 13972,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-117233",
+      "ticket_title": "Transfer Letter",
+      "ticket_status": "New",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-12-01T22:30:47.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-109355",
+      "ticket_title": "Mailing address",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Gironza, Jake",
+      "ticket_created_at_utc": "2025-10-28T15:33:43.000000000",
+      "time_to_resolution_in_minutes": 1743,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "RD-59736",
+      "ticket_title": "Joseph Gallegos has sent you a new document",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "RED Team",
+      "assigned_user_name": "Shafer, Tracy",
+      "ticket_created_at_utc": "2025-09-09T16:49:42.000000000",
+      "time_to_resolution_in_minutes": 559,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "RD-57573",
+      "ticket_title": "Raywattie Singh has sent you a new document",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "RED Team",
+      "assigned_user_name": "Shafer, Tracy",
+      "ticket_created_at_utc": "2025-09-02T14:35:44.000000000",
+      "time_to_resolution_in_minutes": 48,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "RD-59740",
+      "ticket_title": "Joseph Gallegos has sent you a new document",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "RED Team",
+      "assigned_user_name": "Shafer, Tracy",
+      "ticket_created_at_utc": "2025-09-09T16:50:03.000000000",
+      "time_to_resolution_in_minutes": 560,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "RD-57503",
+      "ticket_title": "Brent Nakihei has sent you a new document",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "RED Team",
+      "assigned_user_name": "Shafer, Tracy",
+      "ticket_created_at_utc": "2025-09-02T08:34:16.000000000",
+      "time_to_resolution_in_minutes": 488,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "RD-57588",
+      "ticket_title": "Document upload notifications",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "RED Team",
+      "assigned_user_name": "Shafer, Tracy",
+      "ticket_created_at_utc": "2025-09-02T15:02:35.000000000",
+      "time_to_resolution_in_minutes": 12,
+      "is_ticket_complete": "YES"
+    }
+  ],
+  "processedAt": "2025-12-04T16:33:01.233Z"
+}
