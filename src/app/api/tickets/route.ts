@@ -226,28 +226,26 @@ export async function GET(request: Request) {
     // All filter queries are scoped to servicing projects only
     let filterOptions = null;
     if (page === 1) {
-      const servicingFilter = { projectName: { in: SERVICING_PROJECTS } };
-      const [statuses, projects, priorities, assignees] = await Promise.all([
+      // Explicitly filter to only servicing projects for all dropdowns
+      const servicingProjectFilter: Prisma.TicketWhereInput = {
+        projectName: { in: SERVICING_PROJECTS }
+      };
+
+      const [statuses, priorities, assignees] = await Promise.all([
         prisma.ticket.groupBy({
           by: ['ticketStatus'],
-          where: { ...servicingFilter, ticketStatus: { not: null } },
+          where: { ...servicingProjectFilter, ticketStatus: { not: null } },
           orderBy: { _count: { ticketStatus: 'desc' } },
           take: 20,
         }),
         prisma.ticket.groupBy({
-          by: ['projectName'],
-          where: { ...servicingFilter, projectName: { not: null } },
-          orderBy: { _count: { projectName: 'desc' } },
-          take: 20,
-        }),
-        prisma.ticket.groupBy({
           by: ['ticketPriority'],
-          where: { ...servicingFilter, ticketPriority: { not: null } },
+          where: { ...servicingProjectFilter, ticketPriority: { not: null } },
           orderBy: { _count: { ticketPriority: 'desc' } },
         }),
         prisma.ticket.groupBy({
           by: ['assignedUserName'],
-          where: { ...servicingFilter, assignedUserName: { not: null } },
+          where: { ...servicingProjectFilter, assignedUserName: { not: null } },
           orderBy: { _count: { assignedUserName: 'desc' } },
           take: 100,
         }),
@@ -255,7 +253,8 @@ export async function GET(request: Request) {
 
       filterOptions = {
         statuses: statuses.map((s) => s.ticketStatus).filter(Boolean),
-        projects: projects.map((p) => p.projectName).filter(Boolean),
+        // Projects dropdown shows only the 4 servicing projects (hardcoded for clarity)
+        projects: SERVICING_PROJECTS,
         priorities: priorities.map((p) => p.ticketPriority).filter(Boolean),
         assignees: assignees.map((a) => a.assignedUserName).filter(Boolean),
       };

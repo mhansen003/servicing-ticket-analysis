@@ -16,6 +16,7 @@ import {
   Plus,
   Minus,
   ChevronRight as ChevronRightIcon,
+  Download,
 } from 'lucide-react';
 import type { DrillDownFilter } from '@/app/page';
 
@@ -97,6 +98,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
   const [groupedData, setGroupedData] = useState<MultiLevelGroupData[]>([]);
   const [groupLoading, setGroupLoading] = useState(false);
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+  const [exporting, setExporting] = useState(false);
 
   // Filter panel
   const [showFilters, setShowFilters] = useState(false);
@@ -341,6 +343,90 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     Low: 'bg-green-500/20 text-green-400 border-green-500/30',
   };
 
+  // Export to CSV function
+  const exportToCSV = async () => {
+    setExporting(true);
+    try {
+      if (viewMode === 'table') {
+        // Export table data - fetch all matching records (up to 10k)
+        const params = new URLSearchParams({
+          page: '1',
+          limit: '10000', // Export up to 10k records
+          search: debouncedSearch,
+          status: statusFilter.join(','),
+          project: projectFilter.join(','),
+          priority: priorityFilter.join(','),
+          assignee: assigneeFilter.join(','),
+          category: categoryFilter,
+          sortField,
+          sortOrder,
+        });
+
+        const response = await fetch(`/api/tickets?${params}`);
+        const data = await response.json();
+
+        // Build CSV content
+        const headers = ['Key', 'Title', 'Status', 'Priority', 'Project', 'Assignee', 'Created', 'Resolution Time (h)', 'Complete'];
+        const rows = data.tickets.map((t: Ticket) => [
+          t.key,
+          `"${(t.title || '').replace(/"/g, '""')}"`, // Escape quotes in title
+          t.status,
+          t.priority,
+          t.project,
+          t.assignee,
+          t.created ? new Date(t.created).toLocaleDateString() : '',
+          t.resolutionTime ? Math.round(t.resolutionTime / 60) : '',
+          t.complete ? 'Yes' : 'No',
+        ]);
+
+        const csvContent = [headers.join(','), ...rows.map((r: string[]) => r.join(','))].join('\n');
+        downloadCSV(csvContent, `tickets-export-${new Date().toISOString().slice(0, 10)}.csv`);
+      } else {
+        // Export grouped data
+        const headers = [...groupByLevels.map(l => l.charAt(0).toUpperCase() + l.slice(1)), 'Tickets', 'Completed', 'Completion %', 'Avg Resolution (h)'];
+        const rows: string[][] = [];
+
+        // Flatten hierarchical data for export
+        const flattenGroups = (groups: MultiLevelGroupData[], level: number = 0) => {
+          groups.forEach(group => {
+            const row: string[] = [];
+            groupByLevels.forEach((field, i) => {
+              row.push(i === level ? (group.values[field] || '') : (i < level ? '' : ''));
+            });
+            row.push(group.count.toString());
+            row.push(group.completed.toString());
+            row.push(`${group.completionRate}%`);
+            row.push(group.avgResolution > 0 ? group.avgResolution.toString() : '');
+            rows.push(row);
+
+            if (group.children && group.children.length > 0) {
+              flattenGroups(group.children as MultiLevelGroupData[], level + 1);
+            }
+          });
+        };
+
+        flattenGroups(groupedData);
+
+        const csvContent = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+        downloadCSV(csvContent, `tickets-grouped-${groupByLevels.join('-')}-${new Date().toISOString().slice(0, 10)}.csv`);
+      }
+    } catch (error) {
+      console.error('Export failed:', error);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  // Helper to trigger CSV download
+  const downloadCSV = (content: string, filename: string) => {
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    URL.revokeObjectURL(link.href);
+  };
+
   // Toggle group expansion
   const toggleGroupExpansion = (key: string) => {
     setExpandedGroups(prev => {
@@ -484,6 +570,21 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Export Button */}
+            <button
+              onClick={exportToCSV}
+              disabled={exporting || loading}
+              className="flex items-center gap-2 px-3 py-2 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-sm text-gray-400 hover:text-white hover:border-green-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              title="Export to CSV"
+            >
+              {exporting ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
+              Export
+            </button>
+
             {/* View Mode Toggle */}
             <div className="flex items-center bg-[#0a0e17] rounded-lg p-1 border border-white/[0.08]">
               <button
