@@ -2,6 +2,14 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/db';
 import { Prisma } from '@prisma/client';
 
+// Only include servicing-related projects
+const SERVICING_PROJECTS = [
+  'Servicing Help',
+  'Servicing Escalations WG',
+  'ServApp Support',
+  'CMG Servicing Oversight',
+];
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
@@ -16,8 +24,10 @@ export async function GET(request: Request) {
   const sortOrder = searchParams.get('sortOrder') || 'desc';
 
   try {
-    // Build where clause
-    const where: Prisma.TicketWhereInput = {};
+    // Build where clause - always filter to servicing projects
+    const where: Prisma.TicketWhereInput = {
+      projectName: { in: SERVICING_PROJECTS },
+    };
 
     if (search) {
       where.OR = [
@@ -82,29 +92,31 @@ export async function GET(request: Request) {
     ]);
 
     // Get filter options (only on first page for performance)
+    // All filter queries are scoped to servicing projects only
     let filterOptions = null;
     if (page === 1) {
+      const servicingFilter = { projectName: { in: SERVICING_PROJECTS } };
       const [statuses, projects, priorities, assignees] = await Promise.all([
         prisma.ticket.groupBy({
           by: ['ticketStatus'],
-          where: { ticketStatus: { not: null } },
+          where: { ...servicingFilter, ticketStatus: { not: null } },
           orderBy: { _count: { ticketStatus: 'desc' } },
           take: 20,
         }),
         prisma.ticket.groupBy({
           by: ['projectName'],
-          where: { projectName: { not: null } },
+          where: { ...servicingFilter, projectName: { not: null } },
           orderBy: { _count: { projectName: 'desc' } },
           take: 20,
         }),
         prisma.ticket.groupBy({
           by: ['ticketPriority'],
-          where: { ticketPriority: { not: null } },
+          where: { ...servicingFilter, ticketPriority: { not: null } },
           orderBy: { _count: { ticketPriority: 'desc' } },
         }),
         prisma.ticket.groupBy({
           by: ['assignedUserName'],
-          where: { assignedUserName: { not: null } },
+          where: { ...servicingFilter, assignedUserName: { not: null } },
           orderBy: { _count: { assignedUserName: 'desc' } },
           take: 100,
         }),
@@ -166,6 +178,7 @@ export async function POST(request: Request) {
     const dbField = fieldMap[groupBy] || 'projectName';
 
     // Use raw SQL for better performance on aggregations
+    // Filter to servicing projects only
     const result = await prisma.$queryRaw<
       Array<{
         name: string;
@@ -180,7 +193,8 @@ export async function POST(request: Request) {
         SUM(CASE WHEN is_ticket_complete THEN 1 ELSE 0 END) as completed,
         AVG(time_to_resolution_in_minutes) / 60 as avg_resolution
       FROM tickets
-      WHERE ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} IS NOT NULL
+      WHERE project_name IN ('Servicing Help', 'Servicing Escalations WG', 'ServApp Support', 'CMG Servicing Oversight')
+        AND ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} IS NOT NULL
       GROUP BY ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')}
       ORDER BY count DESC
       LIMIT 50
