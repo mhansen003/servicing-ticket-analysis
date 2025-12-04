@@ -1,39 +1,31 @@
 {
   "stats": {
-    "totalTickets": 50714,
+    "totalTickets": 24687,
     "completedTickets": 0,
-    "openTickets": 50714,
-    "avgResponseTimeMinutes": 1674,
-    "avgResolutionTimeMinutes": 2973,
+    "openTickets": 24687,
+    "avgResponseTimeMinutes": 2960,
+    "avgResolutionTimeMinutes": 5328,
     "completionRate": 0
   },
   "ticketsByMonth": [
     {
       "date": "2025-09",
-      "count": 18024
+      "count": 9262
     },
     {
       "date": "2025-10",
-      "count": 17202
+      "count": 7901
     },
     {
       "date": "2025-11",
-      "count": 14407
+      "count": 6968
     },
     {
       "date": "2025-12",
-      "count": 1081
+      "count": 556
     }
   ],
   "projectBreakdown": [
-    {
-      "project": "RED Team",
-      "total": 24523,
-      "completed": 0,
-      "open": 24523,
-      "openRate": 100,
-      "avgResolutionHours": 16
-    },
     {
       "project": "Servicing Help",
       "total": 20979,
@@ -65,67 +57,9 @@
       "open": 858,
       "openRate": 100,
       "avgResolutionHours": 140
-    },
-    {
-      "project": "Tim Loss's Mysite",
-      "total": 490,
-      "completed": 0,
-      "open": 490,
-      "openRate": 100,
-      "avgResolutionHours": 0
-    },
-    {
-      "project": "Consumer Comms",
-      "total": 325,
-      "completed": 0,
-      "open": 325,
-      "openRate": 100,
-      "avgResolutionHours": 0
-    },
-    {
-      "project": "DataRequests Servicing",
-      "total": 308,
-      "completed": 0,
-      "open": 308,
-      "openRate": 100,
-      "avgResolutionHours": 229
-    },
-    {
-      "project": "Assumptions",
-      "total": 91,
-      "completed": 0,
-      "open": 91,
-      "openRate": 100,
-      "avgResolutionHours": 17
-    },
-    {
-      "project": "RED Team Corp Website",
-      "total": 90,
-      "completed": 0,
-      "open": 90,
-      "openRate": 100,
-      "avgResolutionHours": 2
     }
   ],
   "assigneeBreakdown": [
-    {
-      "email": "skailani@cmgfi.com",
-      "name": "Kailani, Sarah",
-      "total": 4640,
-      "completed": 0,
-      "open": 4640,
-      "openRate": 100,
-      "avgResolutionHours": 21
-    },
-    {
-      "email": "vcaliri@cmgfi.com",
-      "name": "Caliri, Victoria",
-      "total": 4548,
-      "completed": 0,
-      "open": 4548,
-      "openRate": 100,
-      "avgResolutionHours": 18
-    },
     {
       "email": "sdoherty@cmgfi.com",
       "name": "Doherty, Sam",
@@ -136,15 +70,6 @@
       "avgResolutionHours": 80
     },
     {
-      "email": "jeich@cmgfi.com",
-      "name": "Eich, Janet",
-      "total": 2675,
-      "completed": 0,
-      "open": 2675,
-      "openRate": 100,
-      "avgResolutionHours": 24
-    },
-    {
       "email": "jchaves@cmgfi.com",
       "name": "Chaves, Jackie",
       "total": 2488,
@@ -152,24 +77,6 @@
       "open": 2488,
       "openRate": 100,
       "avgResolutionHours": 60
-    },
-    {
-      "email": "jaimenewton@cmgfi.com",
-      "name": "Newton, Jaime",
-      "total": 1867,
-      "completed": 0,
-      "open": 1867,
-      "openRate": 100,
-      "avgResolutionHours": 18
-    },
-    {
-      "email": "tmacadangdang@cmgfi.com",
-      "name": "Macadangdang, Tara",
-      "total": 1623,
-      "completed": 0,
-      "open": 1623,
-      "openRate": 100,
-      "avgResolutionHours": 18
     },
     {
       "email": "kvue@cmgfi.com",
@@ -192,9 +99,9 @@
     {
       "email": "kschreiner@cmgfi.com",
       "name": "Schreiner, Katie",
-      "total": 879,
+      "total": 878,
       "completed": 0,
-      "open": 879,
+      "open": 878,
       "openRate": 100,
       "avgResolutionHours": 129
     },
@@ -242,62 +149,103 @@
       "open": 585,
       "openRate": 100,
       "avgResolutionHours": 45
+    },
+    {
+      "email": "LMathis@cmgfi.com",
+      "name": "Mathis, Laecene",
+      "total": 525,
+      "completed": 0,
+      "open": 525,
+      "openRate": 100,
+      "avgResolutionHours": 71
+    },
+    {
+      "email": "jporter@cmgfi.com",
+      "name": "Porter, Joe",
+      "total": 486,
+      "completed": 0,
+      "open": 486,
+      "openRate": 100,
+      "avgResolutionHours": 108
+    },
+    {
+      "email": "mburnip@cmgfi.com",
+      "name": "Burnip, Marlea",
+      "total": 400,
+      "completed": 0,
+      "open": 400,
+      "openRate": 100,
+      "avgResolutionHours": 147
+    },
+    {
+      "email": "jond@cmgfi.com",
+      "name": "Davis, Jon",
+      "total": 398,
+      "completed": 0,
+      "open": 398,
+      "openRate": 100,
+      "avgResolutionHours": 97
+    },
+    {
+      "email": "nobrien@cmgfi.com",
+      "name": "O'Brien, Noreen",
+      "total": 384,
+      "completed": 0,
+      "open": 384,
+      "openRate": 100,
+      "avgResolutionHours": 193
     }
   ],
   "statusBreakdown": [
     {
       "name": "Request Complete",
-      "value": 46203
+      "value": 21785
     },
     {
       "name": "New",
-      "value": 2654
-    },
-    {
-      "name": "To Do",
-      "value": 530
-    },
-    {
-      "name": "Closed - Missing Info",
-      "value": 370
+      "value": 2287
     },
     {
       "name": "Assigned",
-      "value": 235
+      "value": 202
+    },
+    {
+      "name": "Closed - Missing Info",
+      "value": 133
     },
     {
       "name": "In Progress",
-      "value": 149
-    },
-    {
-      "name": "Done",
-      "value": 144
+      "value": 127
     },
     {
       "name": "Reopened",
-      "value": 89
+      "value": 74
     },
     {
-      "name": "Completed",
-      "value": 84
+      "name": "Pending Internal Response",
+      "value": 36
     },
     {
-      "name": "Dismissed",
-      "value": 37
+      "name": "Pending External Response",
+      "value": 34
+    },
+    {
+      "name": "More Borrower Info Requested",
+      "value": 6
+    },
+    {
+      "name": "Self Closed",
+      "value": 3
     }
   ],
   "priorityBreakdown": [
     {
       "name": "Medium",
-      "value": 50658
-    },
-    {
-      "name": "Low",
-      "value": 31
+      "value": 24669
     },
     {
       "name": "High",
-      "value": 14
+      "value": 8
     },
     {
       "name": "Critical",
@@ -438,50 +386,6 @@
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "HFC-785",
-      "ticket_title": "can I use the money on my homefundit to pay for the appraisal?",
-      "ticket_status": "Done",
-      "ticket_priority": "Medium",
-      "project_name": "HomeFundIt Campaigners",
-      "assigned_user_name": "Dorak, Marie",
-      "ticket_created_at_utc": "2025-09-12T20:19:01.000000000",
-      "time_to_resolution_in_minutes": 11,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "HFI-729",
-      "ticket_title": "Just browsing, but I'm interested in HomeFundIt",
-      "ticket_status": "Done",
-      "ticket_priority": "Medium",
-      "project_name": "HomeFundIt",
-      "assigned_user_name": "Dorak, Marie",
-      "ticket_created_at_utc": "2025-10-22T17:31:31.000000000",
-      "time_to_resolution_in_minutes": 10,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "HFC-818",
-      "ticket_title": "I want to reset my password but I am not recieving the reset code via email.",
-      "ticket_status": "Done",
-      "ticket_priority": "Medium",
-      "project_name": "HomeFundIt Campaigners",
-      "assigned_user_name": "Dorak, Marie",
-      "ticket_created_at_utc": "2025-11-14T14:39:13.000000000",
-      "time_to_resolution_in_minutes": 89,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "HFC-789",
-      "ticket_title": "How do transfer the donated funs",
-      "ticket_status": "Done",
-      "ticket_priority": "Medium",
-      "project_name": "HomeFundIt Campaigners",
-      "assigned_user_name": "Dorak, Marie",
-      "ticket_created_at_utc": "2025-09-15T08:03:27.000000000",
-      "time_to_resolution_in_minutes": 325,
-      "is_ticket_complete": "YES"
-    },
-    {
       "ticket_key": "SH-114686",
       "ticket_title": "FW: Customer Issue with Double Payments",
       "ticket_status": "Closed - Missing Info",
@@ -559,28 +463,6 @@
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "TRN-315",
-      "ticket_title": "need link",
-      "ticket_status": "Done",
-      "ticket_priority": "Low",
-      "project_name": "Training",
-      "assigned_user_name": "Mansfield, Liz",
-      "ticket_created_at_utc": "2025-10-21T15:28:19.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
-    },
-    {
-      "ticket_key": "HFC-810",
-      "ticket_title": "How can I withdraw the funds already raised?",
-      "ticket_status": "Done",
-      "ticket_priority": "Medium",
-      "project_name": "HomeFundIt Campaigners",
-      "assigned_user_name": "Dorak, Marie",
-      "ticket_created_at_utc": "2025-11-04T22:02:03.000000000",
-      "time_to_resolution_in_minutes": 28,
-      "is_ticket_complete": "YES"
-    },
-    {
       "ticket_key": "SH-101515",
       "ticket_title": "Re: Henze Gongola - 3000004571 - Servicing Portal Question",
       "ticket_status": "Request Complete",
@@ -645,17 +527,6 @@
       "ticket_created_at_utc": "2025-09-02T18:10:01.000000000",
       "time_to_resolution_in_minutes": 1,
       "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "TRN-316",
-      "ticket_title": "need link for trianing hub",
-      "ticket_status": "Done",
-      "ticket_priority": "Low",
-      "project_name": "Training",
-      "assigned_user_name": "Mansfield, Liz",
-      "ticket_created_at_utc": "2025-10-21T15:28:33.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
     },
     {
       "ticket_key": "SH-98688",
@@ -1351,58 +1222,135 @@
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "RD-59736",
-      "ticket_title": "Joseph Gallegos has sent you a new document",
+      "ticket_key": "SH-100732",
+      "ticket_title": "Escrow",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
-      "project_name": "RED Team",
-      "assigned_user_name": "Shafer, Tracy",
-      "ticket_created_at_utc": "2025-09-09T16:49:42.000000000",
-      "time_to_resolution_in_minutes": 559,
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-19T17:03:33.000000000",
+      "time_to_resolution_in_minutes": 220,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "RD-57573",
-      "ticket_title": "Raywattie Singh has sent you a new document",
+      "ticket_key": "SH-96228",
+      "ticket_title": "Service Transfer",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
-      "project_name": "RED Team",
-      "assigned_user_name": "Shafer, Tracy",
-      "ticket_created_at_utc": "2025-09-02T14:35:44.000000000",
-      "time_to_resolution_in_minutes": 48,
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-02T15:55:20.000000000",
+      "time_to_resolution_in_minutes": 2,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "RD-59740",
-      "ticket_title": "Joseph Gallegos has sent you a new document",
+      "ticket_key": "SH-100358",
+      "ticket_title": "Statements",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
-      "project_name": "RED Team",
-      "assigned_user_name": "Shafer, Tracy",
-      "ticket_created_at_utc": "2025-09-09T16:50:03.000000000",
-      "time_to_resolution_in_minutes": 560,
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-18T13:08:25.000000000",
+      "time_to_resolution_in_minutes": 1,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "RD-57503",
-      "ticket_title": "Brent Nakihei has sent you a new document",
+      "ticket_key": "SH-99455",
+      "ticket_title": "Confirmation",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
-      "project_name": "RED Team",
-      "assigned_user_name": "Shafer, Tracy",
-      "ticket_created_at_utc": "2025-09-02T08:34:16.000000000",
-      "time_to_resolution_in_minutes": 488,
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-15T17:17:40.000000000",
+      "time_to_resolution_in_minutes": 1,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "RD-57588",
-      "ticket_title": "Document upload notifications",
+      "ticket_key": "SH-102262",
+      "ticket_title": "RE: Presidential Bank - Morris - First Payment letter & Notice of Transfer - 2248 Ellis Mountain Dri",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
-      "project_name": "RED Team",
-      "assigned_user_name": "Shafer, Tracy",
-      "ticket_created_at_utc": "2025-09-02T15:02:35.000000000",
-      "time_to_resolution_in_minutes": 12,
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-26T00:07:28.000000000",
+      "time_to_resolution_in_minutes": 22546,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97332",
+      "ticket_title": "Escrow Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-04T20:41:45.000000000",
+      "time_to_resolution_in_minutes": 3,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-98827",
+      "ticket_title": "Portal Link",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-11T14:49:33.000000000",
+      "time_to_resolution_in_minutes": 1,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-97793",
+      "ticket_title": "Confirmation",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-06T19:44:29.000000000",
+      "time_to_resolution_in_minutes": 9,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96894",
+      "ticket_title": "Mortgage Statement",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-03T19:28:23.000000000",
+      "time_to_resolution_in_minutes": 0,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-100944",
+      "ticket_title": "Payment",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-22T13:51:01.000000000",
+      "time_to_resolution_in_minutes": 8,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-100089",
+      "ticket_title": "Payoff",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-09-17T17:10:58.000000000",
+      "time_to_resolution_in_minutes": 9,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-106307",
+      "ticket_title": "Re: Recast information",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Truance, Donavan",
+      "ticket_created_at_utc": "2025-10-13T19:27:28.000000000",
+      "time_to_resolution_in_minutes": 2470,
       "is_ticket_complete": "YES"
     }
   ],
@@ -1772,842 +1720,842 @@
         {
           "x": "00:00",
           "y": "Sun",
-          "value": 68
+          "value": 37
         },
         {
           "x": "01:00",
           "y": "Sun",
-          "value": 71
+          "value": 42
         },
         {
           "x": "02:00",
           "y": "Sun",
-          "value": 64
+          "value": 44
         },
         {
           "x": "03:00",
           "y": "Sun",
-          "value": 48
+          "value": 35
         },
         {
           "x": "04:00",
           "y": "Sun",
-          "value": 48
+          "value": 34
         },
         {
           "x": "05:00",
           "y": "Sun",
-          "value": 34
+          "value": 32
         },
         {
           "x": "06:00",
           "y": "Sun",
-          "value": 34
+          "value": 30
         },
         {
           "x": "07:00",
           "y": "Sun",
-          "value": 38
+          "value": 33
         },
         {
           "x": "08:00",
+          "y": "Sun",
+          "value": 29
+        },
+        {
+          "x": "09:00",
+          "y": "Sun",
+          "value": 29
+        },
+        {
+          "x": "10:00",
+          "y": "Sun",
+          "value": 33
+        },
+        {
+          "x": "11:00",
+          "y": "Sun",
+          "value": 44
+        },
+        {
+          "x": "12:00",
+          "y": "Sun",
+          "value": 35
+        },
+        {
+          "x": "13:00",
+          "y": "Sun",
+          "value": 38
+        },
+        {
+          "x": "14:00",
+          "y": "Sun",
+          "value": 41
+        },
+        {
+          "x": "15:00",
+          "y": "Sun",
+          "value": 46
+        },
+        {
+          "x": "16:00",
+          "y": "Sun",
+          "value": 48
+        },
+        {
+          "x": "17:00",
           "y": "Sun",
           "value": 43
         },
         {
-          "x": "09:00",
-          "y": "Sun",
-          "value": 32
-        },
-        {
-          "x": "10:00",
+          "x": "18:00",
           "y": "Sun",
           "value": 38
         },
         {
-          "x": "11:00",
-          "y": "Sun",
-          "value": 51
-        },
-        {
-          "x": "12:00",
-          "y": "Sun",
-          "value": 48
-        },
-        {
-          "x": "13:00",
-          "y": "Sun",
-          "value": 56
-        },
-        {
-          "x": "14:00",
-          "y": "Sun",
-          "value": 68
-        },
-        {
-          "x": "15:00",
-          "y": "Sun",
-          "value": 78
-        },
-        {
-          "x": "16:00",
-          "y": "Sun",
-          "value": 67
-        },
-        {
-          "x": "17:00",
-          "y": "Sun",
-          "value": 98
-        },
-        {
-          "x": "18:00",
-          "y": "Sun",
-          "value": 121
-        },
-        {
           "x": "19:00",
           "y": "Sun",
-          "value": 88
+          "value": 46
         },
         {
           "x": "20:00",
           "y": "Sun",
-          "value": 89
+          "value": 52
         },
         {
           "x": "21:00",
           "y": "Sun",
-          "value": 83
+          "value": 55
         },
         {
           "x": "22:00",
           "y": "Sun",
-          "value": 74
+          "value": 40
         },
         {
           "x": "23:00",
           "y": "Sun",
-          "value": 62
+          "value": 34
         },
         {
           "x": "00:00",
           "y": "Mon",
-          "value": 65
+          "value": 10
         },
         {
           "x": "01:00",
           "y": "Mon",
-          "value": 23
+          "value": 4
         },
         {
           "x": "02:00",
           "y": "Mon",
-          "value": 26
+          "value": 5
         },
         {
           "x": "03:00",
           "y": "Mon",
-          "value": 34
+          "value": 6
         },
         {
           "x": "04:00",
           "y": "Mon",
-          "value": 57
+          "value": 2
         },
         {
           "x": "05:00",
           "y": "Mon",
-          "value": 25
+          "value": 4
         },
         {
           "x": "06:00",
-          "y": "Mon",
-          "value": 41
-        },
-        {
-          "x": "07:00",
           "y": "Mon",
           "value": 7
         },
         {
-          "x": "08:00",
-          "y": "Mon",
-          "value": 23
-        },
-        {
-          "x": "09:00",
-          "y": "Mon",
-          "value": 22
-        },
-        {
-          "x": "10:00",
-          "y": "Mon",
-          "value": 28
-        },
-        {
-          "x": "11:00",
-          "y": "Mon",
-          "value": 48
-        },
-        {
-          "x": "12:00",
-          "y": "Mon",
-          "value": 238
-        },
-        {
-          "x": "13:00",
-          "y": "Mon",
-          "value": 524
-        },
-        {
-          "x": "14:00",
-          "y": "Mon",
-          "value": 831
-        },
-        {
-          "x": "15:00",
-          "y": "Mon",
-          "value": 994
-        },
-        {
-          "x": "16:00",
-          "y": "Mon",
-          "value": 1053
-        },
-        {
-          "x": "17:00",
-          "y": "Mon",
-          "value": 1097
-        },
-        {
-          "x": "18:00",
-          "y": "Mon",
-          "value": 1083
-        },
-        {
-          "x": "19:00",
-          "y": "Mon",
-          "value": 1086
-        },
-        {
-          "x": "20:00",
-          "y": "Mon",
-          "value": 956
-        },
-        {
-          "x": "21:00",
-          "y": "Mon",
-          "value": 813
-        },
-        {
-          "x": "22:00",
-          "y": "Mon",
-          "value": 659
-        },
-        {
-          "x": "23:00",
-          "y": "Mon",
-          "value": 429
-        },
-        {
-          "x": "00:00",
-          "y": "Tue",
-          "value": 323
-        },
-        {
-          "x": "01:00",
-          "y": "Tue",
-          "value": 174
-        },
-        {
-          "x": "02:00",
-          "y": "Tue",
-          "value": 113
-        },
-        {
-          "x": "03:00",
-          "y": "Tue",
-          "value": 68
-        },
-        {
-          "x": "04:00",
-          "y": "Tue",
-          "value": 60
-        },
-        {
-          "x": "05:00",
-          "y": "Tue",
-          "value": 31
-        },
-        {
-          "x": "06:00",
-          "y": "Tue",
-          "value": 23
-        },
-        {
           "x": "07:00",
-          "y": "Tue",
-          "value": 16
+          "y": "Mon",
+          "value": 0
         },
         {
           "x": "08:00",
-          "y": "Tue",
-          "value": 27
+          "y": "Mon",
+          "value": 4
         },
         {
           "x": "09:00",
-          "y": "Tue",
-          "value": 28
+          "y": "Mon",
+          "value": 3
         },
         {
           "x": "10:00",
-          "y": "Tue",
-          "value": 31
+          "y": "Mon",
+          "value": 4
         },
         {
           "x": "11:00",
-          "y": "Tue",
-          "value": 83
+          "y": "Mon",
+          "value": 28
         },
         {
           "x": "12:00",
-          "y": "Tue",
-          "value": 228
+          "y": "Mon",
+          "value": 111
         },
         {
           "x": "13:00",
-          "y": "Tue",
-          "value": 554
+          "y": "Mon",
+          "value": 255
         },
         {
           "x": "14:00",
-          "y": "Tue",
-          "value": 843
+          "y": "Mon",
+          "value": 430
         },
         {
           "x": "15:00",
-          "y": "Tue",
-          "value": 940
+          "y": "Mon",
+          "value": 481
         },
         {
           "x": "16:00",
-          "y": "Tue",
-          "value": 966
+          "y": "Mon",
+          "value": 492
         },
         {
           "x": "17:00",
-          "y": "Tue",
-          "value": 994
+          "y": "Mon",
+          "value": 507
         },
         {
           "x": "18:00",
-          "y": "Tue",
-          "value": 1034
+          "y": "Mon",
+          "value": 522
         },
         {
           "x": "19:00",
-          "y": "Tue",
-          "value": 985
+          "y": "Mon",
+          "value": 507
         },
         {
           "x": "20:00",
-          "y": "Tue",
-          "value": 862
+          "y": "Mon",
+          "value": 486
         },
         {
           "x": "21:00",
-          "y": "Tue",
-          "value": 652
+          "y": "Mon",
+          "value": 368
         },
         {
           "x": "22:00",
-          "y": "Tue",
-          "value": 574
+          "y": "Mon",
+          "value": 306
         },
         {
           "x": "23:00",
-          "y": "Tue",
-          "value": 360
+          "y": "Mon",
+          "value": 218
         },
         {
           "x": "00:00",
-          "y": "Wed",
-          "value": 252
+          "y": "Tue",
+          "value": 137
         },
         {
           "x": "01:00",
-          "y": "Wed",
-          "value": 140
+          "y": "Tue",
+          "value": 58
         },
         {
           "x": "02:00",
-          "y": "Wed",
-          "value": 86
+          "y": "Tue",
+          "value": 35
         },
         {
           "x": "03:00",
-          "y": "Wed",
-          "value": 41
+          "y": "Tue",
+          "value": 36
         },
         {
           "x": "04:00",
-          "y": "Wed",
-          "value": 37
+          "y": "Tue",
+          "value": 20
         },
         {
           "x": "05:00",
-          "y": "Wed",
-          "value": 13
+          "y": "Tue",
+          "value": 9
         },
         {
           "x": "06:00",
-          "y": "Wed",
+          "y": "Tue",
           "value": 12
         },
         {
           "x": "07:00",
+          "y": "Tue",
+          "value": 8
+        },
+        {
+          "x": "08:00",
+          "y": "Tue",
+          "value": 1
+        },
+        {
+          "x": "09:00",
+          "y": "Tue",
+          "value": 7
+        },
+        {
+          "x": "10:00",
+          "y": "Tue",
+          "value": 7
+        },
+        {
+          "x": "11:00",
+          "y": "Tue",
+          "value": 63
+        },
+        {
+          "x": "12:00",
+          "y": "Tue",
+          "value": 96
+        },
+        {
+          "x": "13:00",
+          "y": "Tue",
+          "value": 292
+        },
+        {
+          "x": "14:00",
+          "y": "Tue",
+          "value": 428
+        },
+        {
+          "x": "15:00",
+          "y": "Tue",
+          "value": 477
+        },
+        {
+          "x": "16:00",
+          "y": "Tue",
+          "value": 470
+        },
+        {
+          "x": "17:00",
+          "y": "Tue",
+          "value": 482
+        },
+        {
+          "x": "18:00",
+          "y": "Tue",
+          "value": 485
+        },
+        {
+          "x": "19:00",
+          "y": "Tue",
+          "value": 459
+        },
+        {
+          "x": "20:00",
+          "y": "Tue",
+          "value": 467
+        },
+        {
+          "x": "21:00",
+          "y": "Tue",
+          "value": 327
+        },
+        {
+          "x": "22:00",
+          "y": "Tue",
+          "value": 265
+        },
+        {
+          "x": "23:00",
+          "y": "Tue",
+          "value": 168
+        },
+        {
+          "x": "00:00",
           "y": "Wed",
-          "value": 13
+          "value": 111
+        },
+        {
+          "x": "01:00",
+          "y": "Wed",
+          "value": 54
+        },
+        {
+          "x": "02:00",
+          "y": "Wed",
+          "value": 38
+        },
+        {
+          "x": "03:00",
+          "y": "Wed",
+          "value": 19
+        },
+        {
+          "x": "04:00",
+          "y": "Wed",
+          "value": 16
+        },
+        {
+          "x": "05:00",
+          "y": "Wed",
+          "value": 7
+        },
+        {
+          "x": "06:00",
+          "y": "Wed",
+          "value": 9
+        },
+        {
+          "x": "07:00",
+          "y": "Wed",
+          "value": 3
         },
         {
           "x": "08:00",
           "y": "Wed",
-          "value": 20
+          "value": 5
         },
         {
           "x": "09:00",
           "y": "Wed",
-          "value": 30
+          "value": 6
         },
         {
           "x": "10:00",
           "y": "Wed",
-          "value": 30
+          "value": 9
         },
         {
           "x": "11:00",
           "y": "Wed",
-          "value": 61
+          "value": 31
         },
         {
           "x": "12:00",
           "y": "Wed",
-          "value": 248
+          "value": 137
         },
         {
           "x": "13:00",
           "y": "Wed",
-          "value": 556
+          "value": 305
         },
         {
           "x": "14:00",
           "y": "Wed",
-          "value": 764
+          "value": 405
         },
         {
           "x": "15:00",
           "y": "Wed",
-          "value": 919
+          "value": 458
         },
         {
           "x": "16:00",
           "y": "Wed",
-          "value": 973
+          "value": 490
         },
         {
           "x": "17:00",
           "y": "Wed",
-          "value": 1003
+          "value": 463
         },
         {
           "x": "18:00",
           "y": "Wed",
-          "value": 1079
+          "value": 502
         },
         {
           "x": "19:00",
           "y": "Wed",
-          "value": 936
+          "value": 441
         },
         {
           "x": "20:00",
           "y": "Wed",
-          "value": 923
+          "value": 454
         },
         {
           "x": "21:00",
           "y": "Wed",
-          "value": 704
+          "value": 359
         },
         {
           "x": "22:00",
           "y": "Wed",
-          "value": 567
+          "value": 270
         },
         {
           "x": "23:00",
           "y": "Wed",
-          "value": 426
+          "value": 202
         },
         {
           "x": "00:00",
           "y": "Thu",
-          "value": 292
+          "value": 124
         },
         {
           "x": "01:00",
           "y": "Thu",
-          "value": 146
-        },
-        {
-          "x": "02:00",
-          "y": "Thu",
-          "value": 80
-        },
-        {
-          "x": "03:00",
-          "y": "Thu",
           "value": 55
         },
         {
-          "x": "04:00",
-          "y": "Thu",
-          "value": 44
-        },
-        {
-          "x": "05:00",
-          "y": "Thu",
-          "value": 29
-        },
-        {
-          "x": "06:00",
-          "y": "Thu",
-          "value": 25
-        },
-        {
-          "x": "07:00",
-          "y": "Thu",
-          "value": 22
-        },
-        {
-          "x": "08:00",
-          "y": "Thu",
-          "value": 26
-        },
-        {
-          "x": "09:00",
-          "y": "Thu",
-          "value": 32
-        },
-        {
-          "x": "10:00",
+          "x": "02:00",
           "y": "Thu",
           "value": 34
         },
         {
+          "x": "03:00",
+          "y": "Thu",
+          "value": 22
+        },
+        {
+          "x": "04:00",
+          "y": "Thu",
+          "value": 15
+        },
+        {
+          "x": "05:00",
+          "y": "Thu",
+          "value": 7
+        },
+        {
+          "x": "06:00",
+          "y": "Thu",
+          "value": 10
+        },
+        {
+          "x": "07:00",
+          "y": "Thu",
+          "value": 8
+        },
+        {
+          "x": "08:00",
+          "y": "Thu",
+          "value": 4
+        },
+        {
+          "x": "09:00",
+          "y": "Thu",
+          "value": 4
+        },
+        {
+          "x": "10:00",
+          "y": "Thu",
+          "value": 7
+        },
+        {
           "x": "11:00",
           "y": "Thu",
-          "value": 59
+          "value": 26
         },
         {
           "x": "12:00",
           "y": "Thu",
-          "value": 235
+          "value": 118
         },
         {
           "x": "13:00",
           "y": "Thu",
-          "value": 476
+          "value": 229
         },
         {
           "x": "14:00",
           "y": "Thu",
-          "value": 663
+          "value": 326
         },
         {
           "x": "15:00",
           "y": "Thu",
-          "value": 776
+          "value": 392
         },
         {
           "x": "16:00",
           "y": "Thu",
-          "value": 812
+          "value": 416
         },
         {
           "x": "17:00",
           "y": "Thu",
-          "value": 920
+          "value": 430
         },
         {
           "x": "18:00",
           "y": "Thu",
-          "value": 890
+          "value": 405
         },
         {
           "x": "19:00",
           "y": "Thu",
-          "value": 867
+          "value": 447
         },
         {
           "x": "20:00",
           "y": "Thu",
-          "value": 804
+          "value": 400
         },
         {
           "x": "21:00",
           "y": "Thu",
-          "value": 666
+          "value": 350
         },
         {
           "x": "22:00",
           "y": "Thu",
-          "value": 583
+          "value": 266
         },
         {
           "x": "23:00",
           "y": "Thu",
-          "value": 396
+          "value": 206
         },
         {
           "x": "00:00",
           "y": "Fri",
-          "value": 268
+          "value": 139
         },
         {
           "x": "01:00",
           "y": "Fri",
-          "value": 138
+          "value": 51
         },
         {
           "x": "02:00",
           "y": "Fri",
-          "value": 55
+          "value": 25
         },
         {
           "x": "03:00",
-          "y": "Fri",
-          "value": 40
-        },
-        {
-          "x": "04:00",
-          "y": "Fri",
-          "value": 23
-        },
-        {
-          "x": "05:00",
-          "y": "Fri",
-          "value": 26
-        },
-        {
-          "x": "06:00",
           "y": "Fri",
           "value": 16
         },
         {
+          "x": "04:00",
+          "y": "Fri",
+          "value": 4
+        },
+        {
+          "x": "05:00",
+          "y": "Fri",
+          "value": 8
+        },
+        {
+          "x": "06:00",
+          "y": "Fri",
+          "value": 5
+        },
+        {
           "x": "07:00",
           "y": "Fri",
-          "value": 22
+          "value": 7
         },
         {
           "x": "08:00",
           "y": "Fri",
-          "value": 21
+          "value": 1
         },
         {
           "x": "09:00",
           "y": "Fri",
-          "value": 21
+          "value": 6
         },
         {
           "x": "10:00",
           "y": "Fri",
-          "value": 21
+          "value": 3
         },
         {
           "x": "11:00",
           "y": "Fri",
-          "value": 52
+          "value": 30
         },
         {
           "x": "12:00",
           "y": "Fri",
-          "value": 225
+          "value": 100
         },
         {
           "x": "13:00",
           "y": "Fri",
-          "value": 394
+          "value": 207
         },
         {
           "x": "14:00",
           "y": "Fri",
-          "value": 577
+          "value": 273
         },
         {
           "x": "15:00",
           "y": "Fri",
-          "value": 740
+          "value": 401
         },
         {
           "x": "16:00",
           "y": "Fri",
-          "value": 811
+          "value": 397
         },
         {
           "x": "17:00",
           "y": "Fri",
-          "value": 816
+          "value": 391
         },
         {
           "x": "18:00",
           "y": "Fri",
-          "value": 863
+          "value": 388
         },
         {
           "x": "19:00",
           "y": "Fri",
-          "value": 1011
+          "value": 425
         },
         {
           "x": "20:00",
           "y": "Fri",
-          "value": 805
+          "value": 385
         },
         {
           "x": "21:00",
           "y": "Fri",
-          "value": 596
+          "value": 290
         },
         {
           "x": "22:00",
           "y": "Fri",
-          "value": 424
+          "value": 210
         },
         {
           "x": "23:00",
           "y": "Fri",
-          "value": 408
+          "value": 174
         },
         {
           "x": "00:00",
           "y": "Sat",
-          "value": 226
+          "value": 93
         },
         {
           "x": "01:00",
           "y": "Sat",
-          "value": 133
+          "value": 51
         },
         {
           "x": "02:00",
           "y": "Sat",
-          "value": 97
+          "value": 61
         },
         {
           "x": "03:00",
           "y": "Sat",
-          "value": 57
+          "value": 46
         },
         {
           "x": "04:00",
           "y": "Sat",
-          "value": 54
+          "value": 41
         },
         {
           "x": "05:00",
           "y": "Sat",
-          "value": 51
+          "value": 33
         },
         {
           "x": "06:00",
           "y": "Sat",
-          "value": 51
+          "value": 31
         },
         {
           "x": "07:00",
           "y": "Sat",
-          "value": 42
+          "value": 28
         },
         {
           "x": "08:00",
           "y": "Sat",
-          "value": 42
+          "value": 27
         },
         {
           "x": "09:00",
           "y": "Sat",
-          "value": 35
+          "value": 28
         },
         {
           "x": "10:00",
           "y": "Sat",
-          "value": 40
+          "value": 32
         },
         {
           "x": "11:00",
           "y": "Sat",
-          "value": 52
+          "value": 33
         },
         {
           "x": "12:00",
           "y": "Sat",
-          "value": 66
+          "value": 38
         },
         {
           "x": "13:00",
           "y": "Sat",
-          "value": 81
+          "value": 62
         },
         {
           "x": "14:00",
           "y": "Sat",
-          "value": 88
+          "value": 69
         },
         {
           "x": "15:00",
           "y": "Sat",
-          "value": 90
+          "value": 59
         },
         {
           "x": "16:00",
           "y": "Sat",
-          "value": 116
+          "value": 72
         },
         {
           "x": "17:00",
           "y": "Sat",
-          "value": 112
+          "value": 54
         },
         {
           "x": "18:00",
           "y": "Sat",
-          "value": 104
+          "value": 60
         },
         {
           "x": "19:00",
           "y": "Sat",
-          "value": 99
+          "value": 53
         },
         {
           "x": "20:00",
           "y": "Sat",
-          "value": 89
+          "value": 51
         },
         {
           "x": "21:00",
           "y": "Sat",
-          "value": 84
+          "value": 42
         },
         {
           "x": "22:00",
           "y": "Sat",
-          "value": 78
+          "value": 47
         },
         {
           "x": "23:00",
           "y": "Sat",
-          "value": 57
+          "value": 38
         }
       ],
       "xLabels": [
@@ -2634,36 +2582,6 @@
       "data": [
         {
           "x": "Request Comp..",
-          "y": "RED Team",
-          "value": 24205
-        },
-        {
-          "x": "New",
-          "y": "RED Team",
-          "value": 0
-        },
-        {
-          "x": "To Do",
-          "y": "RED Team",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "RED Team",
-          "value": 220
-        },
-        {
-          "x": "Assigned",
-          "y": "RED Team",
-          "value": 24
-        },
-        {
-          "x": "In Progress",
-          "y": "RED Team",
-          "value": 0
-        },
-        {
-          "x": "Request Comp..",
           "y": "Servicing Help",
           "value": 20138
         },
@@ -2673,9 +2591,9 @@
           "value": 325
         },
         {
-          "x": "To Do",
+          "x": "Assigned",
           "y": "Servicing Help",
-          "value": 0
+          "value": 181
         },
         {
           "x": "Closed - Mis..",
@@ -2683,14 +2601,14 @@
           "value": 113
         },
         {
-          "x": "Assigned",
-          "y": "Servicing Help",
-          "value": 181
-        },
-        {
           "x": "In Progress",
           "y": "Servicing Help",
           "value": 116
+        },
+        {
+          "x": "Reopened",
+          "y": "Servicing Help",
+          "value": 69
         },
         {
           "x": "Request Comp..",
@@ -2703,7 +2621,7 @@
           "value": 1920
         },
         {
-          "x": "To Do",
+          "x": "Assigned",
           "y": "ServApp Support",
           "value": 0
         },
@@ -2713,12 +2631,12 @@
           "value": 0
         },
         {
-          "x": "Assigned",
+          "x": "In Progress",
           "y": "ServApp Support",
           "value": 0
         },
         {
-          "x": "In Progress",
+          "x": "Reopened",
           "y": "ServApp Support",
           "value": 0
         },
@@ -2733,9 +2651,9 @@
           "value": 25
         },
         {
-          "x": "To Do",
+          "x": "Assigned",
           "y": "CMG Servicing O..",
-          "value": 0
+          "value": 20
         },
         {
           "x": "Closed - Mis..",
@@ -2743,14 +2661,14 @@
           "value": 19
         },
         {
-          "x": "Assigned",
-          "y": "CMG Servicing O..",
-          "value": 20
-        },
-        {
           "x": "In Progress",
           "y": "CMG Servicing O..",
           "value": 9
+        },
+        {
+          "x": "Reopened",
+          "y": "CMG Servicing O..",
+          "value": 3
         },
         {
           "x": "Request Comp..",
@@ -2763,17 +2681,12 @@
           "value": 17
         },
         {
-          "x": "To Do",
-          "y": "Servicing Escal..",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
+          "x": "Assigned",
           "y": "Servicing Escal..",
           "value": 1
         },
         {
-          "x": "Assigned",
+          "x": "Closed - Mis..",
           "y": "Servicing Escal..",
           "value": 1
         },
@@ -2783,186 +2696,28 @@
           "value": 2
         },
         {
-          "x": "Request Comp..",
-          "y": "Tim Loss's Mysi..",
-          "value": 0
-        },
-        {
-          "x": "New",
-          "y": "Tim Loss's Mysi..",
-          "value": 0
-        },
-        {
-          "x": "To Do",
-          "y": "Tim Loss's Mysi..",
-          "value": 490
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "Tim Loss's Mysi..",
-          "value": 0
-        },
-        {
-          "x": "Assigned",
-          "y": "Tim Loss's Mysi..",
-          "value": 0
-        },
-        {
-          "x": "In Progress",
-          "y": "Tim Loss's Mysi..",
-          "value": 0
-        },
-        {
-          "x": "Request Comp..",
-          "y": "Consumer Comms",
-          "value": 0
-        },
-        {
-          "x": "New",
-          "y": "Consumer Comms",
-          "value": 325
-        },
-        {
-          "x": "To Do",
-          "y": "Consumer Comms",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "Consumer Comms",
-          "value": 0
-        },
-        {
-          "x": "Assigned",
-          "y": "Consumer Comms",
-          "value": 0
-        },
-        {
-          "x": "In Progress",
-          "y": "Consumer Comms",
-          "value": 0
-        },
-        {
-          "x": "Request Comp..",
-          "y": "DataRequests Se..",
-          "value": 212
-        },
-        {
-          "x": "New",
-          "y": "DataRequests Se..",
-          "value": 0
-        },
-        {
-          "x": "To Do",
-          "y": "DataRequests Se..",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "DataRequests Se..",
-          "value": 0
-        },
-        {
-          "x": "Assigned",
-          "y": "DataRequests Se..",
-          "value": 9
-        },
-        {
-          "x": "In Progress",
-          "y": "DataRequests Se..",
-          "value": 14
-        },
-        {
-          "x": "Request Comp..",
-          "y": "Assumptions",
-          "value": 0
-        },
-        {
-          "x": "New",
-          "y": "Assumptions",
-          "value": 0
-        },
-        {
-          "x": "To Do",
-          "y": "Assumptions",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "Assumptions",
-          "value": 0
-        },
-        {
-          "x": "Assigned",
-          "y": "Assumptions",
-          "value": 0
-        },
-        {
-          "x": "In Progress",
-          "y": "Assumptions",
-          "value": 5
-        },
-        {
-          "x": "Request Comp..",
-          "y": "RED Team Corp W..",
-          "value": 0
-        },
-        {
-          "x": "New",
-          "y": "RED Team Corp W..",
-          "value": 0
-        },
-        {
-          "x": "To Do",
-          "y": "RED Team Corp W..",
-          "value": 6
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "RED Team Corp W..",
-          "value": 0
-        },
-        {
-          "x": "Assigned",
-          "y": "RED Team Corp W..",
-          "value": 0
-        },
-        {
-          "x": "In Progress",
-          "y": "RED Team Corp W..",
-          "value": 0
+          "x": "Reopened",
+          "y": "Servicing Escal..",
+          "value": 2
         }
       ],
       "xLabels": [
         "Request Comp..",
         "New",
-        "To Do",
-        "Closed - Mis..",
         "Assigned",
-        "In Progress"
+        "Closed - Mis..",
+        "In Progress",
+        "Reopened"
       ],
       "yLabels": [
-        "RED Team",
         "Servicing Help",
         "ServApp Support",
         "CMG Servicing O..",
-        "Servicing Escal..",
-        "Tim Loss's Mysi..",
-        "Consumer Comms",
-        "DataRequests Se..",
-        "Assumptions",
-        "RED Team Corp W.."
+        "Servicing Escal.."
       ]
     }
   },
   "issues": [
-    {
-      "category": "Project Health",
-      "metric": "RED Team",
-      "value": 100,
-      "severity": "critical",
-      "description": "24,523 open of 24,523 total"
-    },
     {
       "category": "Project Health",
       "metric": "Servicing Help",
@@ -2992,41 +2747,6 @@
       "description": "858 open of 858 total"
     },
     {
-      "category": "Project Health",
-      "metric": "Tim Loss's Mysite",
-      "value": 100,
-      "severity": "critical",
-      "description": "490 open of 490 total"
-    },
-    {
-      "category": "Project Health",
-      "metric": "Consumer Comms",
-      "value": 100,
-      "severity": "critical",
-      "description": "325 open of 325 total"
-    },
-    {
-      "category": "Project Health",
-      "metric": "DataRequests Servici",
-      "value": 100,
-      "severity": "critical",
-      "description": "308 open of 308 total"
-    },
-    {
-      "category": "Workload",
-      "metric": "Kailani",
-      "value": 4640,
-      "severity": "critical",
-      "description": "100% of 4,640 assigned"
-    },
-    {
-      "category": "Workload",
-      "metric": "Caliri",
-      "value": 4548,
-      "severity": "critical",
-      "description": "100% of 4,548 assigned"
-    },
-    {
       "category": "Workload",
       "metric": "Doherty",
       "value": 3660,
@@ -3035,31 +2755,10 @@
     },
     {
       "category": "Workload",
-      "metric": "Eich",
-      "value": 2675,
-      "severity": "warning",
-      "description": "100% of 2,675 assigned"
-    },
-    {
-      "category": "Workload",
       "metric": "Chaves",
       "value": 2488,
       "severity": "warning",
       "description": "100% of 2,488 assigned"
-    },
-    {
-      "category": "Workload",
-      "metric": "Newton",
-      "value": 1867,
-      "severity": "warning",
-      "description": "100% of 1,867 assigned"
-    },
-    {
-      "category": "Workload",
-      "metric": "Macadangdang",
-      "value": 1623,
-      "severity": "warning",
-      "description": "100% of 1,623 assigned"
     },
     {
       "category": "Workload",
@@ -3071,7 +2770,7 @@
     {
       "category": "Response Time",
       "metric": ">24h No Response",
-      "value": 7922,
+      "value": 7612,
       "severity": "critical",
       "description": "Open tickets waiting over 24 hours"
     },
@@ -3085,73 +2784,73 @@
     {
       "category": "Summary",
       "metric": "Total Open",
-      "value": 50714,
-      "severity": "critical",
+      "value": 24687,
+      "severity": "warning",
       "description": "0% completion rate"
     },
     {
       "category": "Summary",
       "metric": "Avg Resolution",
-      "value": 50,
+      "value": 89,
       "severity": "good",
-      "description": "50 hours average"
+      "description": "89 hours average"
     }
   ],
   "trends": {
     "volumeByDayOfWeek": [
       {
         "day": "Sun",
-        "count": 1501
+        "count": 938
       },
       {
         "day": "Mon",
-        "count": 10162
+        "count": 4760
       },
       {
         "day": "Tue",
-        "count": 9969
+        "count": 4809
       },
       {
         "day": "Wed",
-        "count": 9833
+        "count": 4794
       },
       {
         "day": "Thu",
-        "count": 8932
+        "count": 4301
       },
       {
         "day": "Fri",
-        "count": 8373
+        "count": 3936
       },
       {
         "day": "Sat",
-        "count": 1944
+        "count": 1149
       }
     ],
     "peakHours": [
       {
         "hour": "18:00",
-        "count": 5174
-      },
-      {
-        "hour": "19:00",
-        "count": 5072
-      },
-      {
-        "hour": "17:00",
-        "count": 5040
+        "count": 2400
       },
       {
         "hour": "16:00",
-        "count": 4798
+        "count": 2385
+      },
+      {
+        "hour": "19:00",
+        "count": 2378
+      },
+      {
+        "hour": "17:00",
+        "count": 2370
       },
       {
         "hour": "15:00",
-        "count": 4537
+        "count": 2314
       }
     ],
-    "projectsAtRisk": 10,
-    "overloadedAssignees": 15
+    "projectsAtRisk": 4,
+    "overloadedAssignees": 11
   },
-  "processedAt": "2025-12-04T18:07:57.398Z"
+  "processedAt": "2025-12-04T18:12:38.736Z"
 }

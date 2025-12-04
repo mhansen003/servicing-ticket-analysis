@@ -2,23 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import {
-  Ticket,
-  CheckCircle,
-  Clock,
   FolderKanban,
   AlertCircle,
   Activity,
-  TrendingUp,
   Brain,
   BarChart3,
 } from 'lucide-react';
-import { StatsCard } from '@/components/StatsCard';
-import {
-  TimeSeriesChart,
-  ProjectStackedBarChart,
-  DonutChart,
-  AssigneeBarChart,
-} from '@/components/Charts';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import { InsightsPanel } from '@/components/InsightsPanel';
 import { DataTable } from '@/components/DataTable';
@@ -45,32 +34,13 @@ interface Trends {
   overloadedAssignees: number;
 }
 
+interface ServicingAnalysisData {
+  totalTickets: number;
+  categories: { name: string; count: number; percent: number }[];
+}
+
 interface DashboardData {
-  stats: {
-    totalTickets: number;
-    completedTickets: number;
-    openTickets: number;
-    avgResponseTimeMinutes: number;
-    avgResolutionTimeMinutes: number;
-    completionRate: number;
-  };
-  ticketsByMonth: { date: string; count: number }[];
-  projectBreakdown: {
-    project: string;
-    total: number;
-    completed: number;
-    open: number;
-    avgResolutionHours: number;
-  }[];
-  assigneeBreakdown: {
-    name: string;
-    email: string;
-    total: number;
-    completed: number;
-    avgResolutionHours: number;
-  }[];
-  statusBreakdown: { name: string; value: number }[];
-  priorityBreakdown: { name: string; value: number }[];
+  servicingAnalysis?: ServicingAnalysisData;
   heatmaps?: {
     dayHour: HeatmapData;
     projectStatus: HeatmapData;
@@ -79,7 +49,7 @@ interface DashboardData {
   trends?: Trends;
 }
 
-type TabType = 'overview' | 'servicing' | 'insights' | 'data' | 'ai';
+type TabType = 'overview' | 'insights' | 'data' | 'ai';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -130,19 +100,15 @@ export default function Dashboard() {
     );
   }
 
-  const formatTime = (minutes: number) => {
-    if (minutes < 60) return `${minutes}m`;
-    if (minutes < 1440) return `${Math.round(minutes / 60)}h`;
-    return `${Math.round(minutes / 1440)}d`;
-  };
-
   const tabs = [
     { id: 'overview' as TabType, label: 'Overview', icon: BarChart3 },
-    { id: 'servicing' as TabType, label: 'Servicing', icon: Ticket },
     { id: 'insights' as TabType, label: 'Insights', icon: Brain },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
   ];
+
+  const servicingTotal = data.servicingAnalysis?.totalTickets || 0;
+  const categoriesCount = data.servicingAnalysis?.categories?.length || 0;
 
   return (
     <div className="min-h-screen bg-[#0a0e17]">
@@ -155,8 +121,8 @@ export default function Dashboard() {
                 <Activity className="h-5 w-5 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Ticket Analytics</h1>
-                <p className="text-xs text-gray-500">Servicing Performance Dashboard</p>
+                <h1 className="text-xl font-bold text-white">Servicing Analytics</h1>
+                <p className="text-xs text-gray-500">Ticket Performance Dashboard</p>
               </div>
             </div>
 
@@ -185,9 +151,9 @@ export default function Dashboard() {
               </div>
               <div className="text-right">
                 <p className="text-sm font-semibold text-white">
-                  {data.stats.totalTickets.toLocaleString()}
+                  {servicingTotal.toLocaleString()}
                 </p>
-                <p className="text-xs text-gray-500">Total Tickets</p>
+                <p className="text-xs text-gray-500">Servicing Tickets</p>
               </div>
             </div>
           </div>
@@ -213,109 +179,8 @@ export default function Dashboard() {
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Cards - Always visible */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-          <StatsCard
-            title="Total Tickets"
-            value={data.stats.totalTickets.toLocaleString()}
-            icon={Ticket}
-            subtitle="All time"
-            accentColor="blue"
-          />
-          <StatsCard
-            title="Completed"
-            value={data.stats.completedTickets.toLocaleString()}
-            icon={CheckCircle}
-            trend="up"
-            trendValue={`${data.stats.completionRate}% rate`}
-            accentColor="green"
-          />
-          <StatsCard
-            title="Open"
-            value={data.stats.openTickets.toLocaleString()}
-            icon={FolderKanban}
-            subtitle="Awaiting resolution"
-            accentColor="yellow"
-          />
-          <StatsCard
-            title="Avg Resolution"
-            value={formatTime(data.stats.avgResolutionTimeMinutes)}
-            icon={Clock}
-            subtitle={`Response: ${formatTime(data.stats.avgResponseTimeMinutes)}`}
-            accentColor="purple"
-          />
-        </div>
-
         {/* Tab Content */}
-        {activeTab === 'overview' && (
-          <>
-            {/* Charts Row 1 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <TimeSeriesChart data={data.ticketsByMonth} title="Ticket Volume Over Time" />
-              <DonutChart data={data.statusBreakdown} title="Status Distribution" />
-            </div>
-
-            {/* Charts Row 2 */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <ProjectStackedBarChart data={data.projectBreakdown} title="Projects Breakdown" />
-              <AssigneeBarChart data={data.assigneeBreakdown} title="Top Assignees" />
-            </div>
-
-            {/* Bottom Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-              <DonutChart data={data.priorityBreakdown} title="Priority Levels" />
-
-              {/* Project Performance Table */}
-              <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold text-white">Project Performance</h3>
-                  <TrendingUp className="h-5 w-5 text-gray-500" />
-                </div>
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-white/[0.06]">
-                        <th className="text-left py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Project
-                        </th>
-                        <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Tickets
-                        </th>
-                        <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          Avg Time
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.projectBreakdown.slice(0, 8).map((project) => (
-                        <tr
-                          key={project.project}
-                          className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors"
-                        >
-                          <td className="py-4 text-sm text-gray-300">
-                            {project.project.length > 22
-                              ? project.project.substring(0, 22) + '...'
-                              : project.project}
-                          </td>
-                          <td className="py-4 text-right">
-                            <span className="text-sm font-medium text-white">
-                              {project.total.toLocaleString()}
-                            </span>
-                          </td>
-                          <td className="py-4 text-right">
-                            <span className="text-sm text-gray-400">{project.avgResolutionHours}h</span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </>
-        )}
-
-        {activeTab === 'servicing' && <ServicingAnalysis />}
+        {activeTab === 'overview' && <ServicingAnalysis />}
 
         {activeTab === 'insights' && data.heatmaps && data.issues && data.trends && (
           <InsightsPanel heatmaps={data.heatmaps} issues={data.issues} trends={data.trends} />
@@ -333,17 +198,17 @@ export default function Dashboard() {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">AI-Powered Analysis</h2>
-                  <p className="text-gray-400">Get intelligent insights about your ticket data</p>
+                  <p className="text-gray-400">Get intelligent insights about your servicing ticket data</p>
                 </div>
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
                   <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Analysis Ready</p>
-                  <p className="text-lg font-semibold text-white">{data.stats.totalTickets.toLocaleString()} Tickets</p>
+                  <p className="text-lg font-semibold text-white">{servicingTotal.toLocaleString()} Tickets</p>
                 </div>
                 <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
-                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Projects</p>
-                  <p className="text-lg font-semibold text-white">{data.projectBreakdown.length} Active</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Categories</p>
+                  <p className="text-lg font-semibold text-white">{categoriesCount} Identified</p>
                 </div>
                 <div className="bg-[#0a0e17]/50 rounded-xl p-4 border border-white/[0.06]">
                   <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">Insights Found</p>

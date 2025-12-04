@@ -26,15 +26,22 @@ const result = Papa.parse(csvContent, {
   dynamicTyping: true,
 });
 
-// Filter valid tickets
-const tickets = result.data.filter((ticket) => {
+// Servicing projects to include (filtered from original 50k+ tickets)
+const SERVICING_PROJECTS = ['Servicing Help', 'Servicing Escalations WG', 'ServApp Support', 'CMG Servicing Oversight'];
+
+// Filter valid tickets AND only servicing projects
+const allValidTickets = result.data.filter((ticket) => {
   if (!ticket.ticket_created_at_utc) return false;
   if (ticket.ticket_created_at_utc.length > 30) return false;
   if (!ticket.ticket_created_at_utc.includes('-')) return false;
   return true;
 });
 
-console.log(`✅ Loaded ${tickets.length.toLocaleString()} valid tickets`);
+// Filter to servicing-only tickets
+const tickets = allValidTickets.filter((ticket) => SERVICING_PROJECTS.includes(ticket.project_name));
+
+console.log(`✅ Loaded ${allValidTickets.length.toLocaleString()} valid tickets`);
+console.log(`📌 Filtered to ${tickets.length.toLocaleString()} servicing tickets`);
 
 // Helper to check completion
 const isComplete = (t) =>
