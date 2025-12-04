@@ -257,6 +257,8 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
                   border: '1px solid #374151',
                   borderRadius: '8px',
                 }}
+                labelStyle={{ color: '#e5e7eb' }}
+                itemStyle={{ color: '#e5e7eb' }}
                 labelFormatter={formatDate}
               />
               <Area
@@ -305,6 +307,8 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
                   border: '1px solid #374151',
                   borderRadius: '8px',
                 }}
+                labelStyle={{ color: '#e5e7eb' }}
+                itemStyle={{ color: '#e5e7eb' }}
                 formatter={(value: number) => [value.toLocaleString(), 'Tickets']}
               />
             </PieChart>
@@ -341,6 +345,8 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
                 border: '1px solid #374151',
                 borderRadius: '8px',
               }}
+              labelStyle={{ color: '#e5e7eb' }}
+              itemStyle={{ color: '#e5e7eb' }}
             />
             <Legend
               onClick={(e) => handleCategoryClick(e.value as string)}
