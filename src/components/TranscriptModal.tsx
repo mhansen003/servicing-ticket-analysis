@@ -118,12 +118,21 @@ function getMessageSentimentStyle(sentiment: number, role: 'agent' | 'customer')
 // Get emotion badge color
 function getEmotionBadgeStyle(emotion: string): string {
   const emotionLower = emotion.toLowerCase();
-  if (['grateful', 'satisfied', 'relieved', 'happy', 'pleased'].includes(emotionLower)) {
+  // Positive emotions (customer & agent)
+  if (['grateful', 'satisfied', 'relieved', 'happy', 'pleased', 'helpful', 'empathetic', 'supportive', 'friendly', 'professional', 'reassuring', 'polite', 'patient'].includes(emotionLower)) {
     return 'bg-emerald-500/20 text-emerald-300';
-  } else if (['frustrated', 'angry', 'annoyed', 'upset', 'furious'].includes(emotionLower)) {
+  }
+  // Negative emotions (customer & agent)
+  if (['frustrated', 'angry', 'annoyed', 'upset', 'furious', 'dismissive', 'impatient', 'rude', 'cold', 'curt'].includes(emotionLower)) {
     return 'bg-red-500/20 text-red-300';
-  } else if (['confused', 'uncertain', 'worried'].includes(emotionLower)) {
+  }
+  // Uncertain/worried emotions
+  if (['confused', 'uncertain', 'worried', 'concerned', 'hesitant'].includes(emotionLower)) {
     return 'bg-amber-500/20 text-amber-300';
+  }
+  // Informative/procedural (common for agents)
+  if (['informative', 'procedural', 'explanatory', 'clarifying'].includes(emotionLower)) {
+    return 'bg-blue-500/20 text-blue-300';
   }
   return 'bg-gray-500/20 text-gray-300';
 }
@@ -568,22 +577,82 @@ export function TranscriptModal({
                   </div>
                 )}
 
-                {/* Sentiment Legend */}
+                {/* Sentiment Legend and Overall Score */}
                 {messageSentiments.length > 0 && !analyzingSentiment && (
-                  <div className="flex items-center justify-center gap-4 py-2 px-4 bg-white/[0.02] rounded-lg border border-white/[0.05] mb-3 text-xs">
-                    <span className="text-gray-500">Sentiment:</span>
-                    <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 rounded bg-emerald-500/50" />
-                      <span className="text-emerald-400">Positive</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 rounded bg-gray-500/50" />
-                      <span className="text-gray-400">Neutral</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-3 h-3 rounded bg-red-500/50" />
-                      <span className="text-red-400">Negative</span>
-                    </div>
+                  <div className="py-2 px-4 bg-white/[0.02] rounded-lg border border-white/[0.05] mb-3">
+                    {/* Overall Sentiment Summary */}
+                    {(() => {
+                      // Calculate overall conversation sentiment
+                      const customerSentiments = messageSentiments
+                        .filter((_, idx) => selectedTranscript?.conversation?.[idx]?.role === 'customer')
+                        .map(s => s.score);
+                      const agentSentiments = messageSentiments
+                        .filter((_, idx) => selectedTranscript?.conversation?.[idx]?.role === 'agent')
+                        .map(s => s.score);
+
+                      const avgCustomer = customerSentiments.length > 0
+                        ? customerSentiments.reduce((a, b) => a + b, 0) / customerSentiments.length
+                        : 0;
+                      const avgAgent = agentSentiments.length > 0
+                        ? agentSentiments.reduce((a, b) => a + b, 0) / agentSentiments.length
+                        : 0;
+                      const avgOverall = messageSentiments.length > 0
+                        ? messageSentiments.reduce((a, b) => a + b.score, 0) / messageSentiments.length
+                        : 0;
+
+                      // Determine overall sentiment label
+                      const getLabel = (score: number) => {
+                        if (score > 0.2) return { label: 'Positive', color: 'text-emerald-400', bg: 'bg-emerald-500/20' };
+                        if (score < -0.2) return { label: 'Negative', color: 'text-red-400', bg: 'bg-red-500/20' };
+                        return { label: 'Neutral', color: 'text-gray-400', bg: 'bg-gray-500/20' };
+                      };
+
+                      const overall = getLabel(avgOverall);
+                      const customer = getLabel(avgCustomer);
+                      const agent = getLabel(avgAgent);
+
+                      // Compare with pre-computed sentiment
+                      const preComputed = selectedTranscript?.aiAnalysis?.sentiment || selectedTranscript?.basicSentiment || 'neutral';
+                      const mismatch = overall.label.toLowerCase() !== preComputed;
+
+                      return (
+                        <div className="flex flex-col gap-2">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <span className="text-xs text-gray-500">AI Analysis:</span>
+                              <span className={`text-xs font-medium px-2 py-0.5 rounded ${overall.bg} ${overall.color}`}>
+                                {overall.label} ({avgOverall.toFixed(2)})
+                              </span>
+                              <span className="text-[10px] text-gray-600">|</span>
+                              <span className="text-[10px] text-gray-500">Customer:</span>
+                              <span className={`text-[10px] ${customer.color}`}>{customer.label} ({avgCustomer.toFixed(2)})</span>
+                              <span className="text-[10px] text-gray-500">Agent:</span>
+                              <span className={`text-[10px] ${agent.color}`}>{agent.label} ({avgAgent.toFixed(2)})</span>
+                            </div>
+                            {mismatch && (
+                              <span className="text-[10px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded">
+                                Pre-computed: {preComputed}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center justify-center gap-4 text-xs border-t border-white/[0.05] pt-2">
+                            <span className="text-gray-500">Legend:</span>
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 rounded bg-emerald-500/50" />
+                              <span className="text-emerald-400">Positive</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 rounded bg-gray-500/50" />
+                              <span className="text-gray-400">Neutral</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <div className="w-3 h-3 rounded bg-red-500/50" />
+                              <span className="text-red-400">Negative</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 )}
 
@@ -623,8 +692,8 @@ export function TranscriptModal({
                             <p className="text-xs font-medium opacity-60">
                               {msg.role === 'agent' ? 'Agent' : 'Customer'}
                             </p>
-                            {/* Show emotion badge for customer messages with sentiment */}
-                            {msg.role === 'customer' && emotion && messageSentiments.length > 0 && (
+                            {/* Show emotion badge for all messages with sentiment */}
+                            {emotion && messageSentiments.length > 0 && (
                               <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${getEmotionBadgeStyle(emotion)}`}>
                                 {emotion}
                               </span>
