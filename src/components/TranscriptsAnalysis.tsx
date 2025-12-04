@@ -14,6 +14,9 @@ import {
   BarChart,
   Bar,
   Legend,
+  LineChart,
+  Line,
+  CartesianGrid,
 } from 'recharts';
 import {
   Phone,
@@ -357,7 +360,7 @@ export default function TranscriptsAnalysis() {
         </div>
       </div>
 
-      {/* Calendar Sentiment View */}
+      {/* Daily Sentiment Line Chart */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
         <button
           onClick={() => toggleSection('calendar')}
@@ -365,11 +368,11 @@ export default function TranscriptsAnalysis() {
         >
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-gradient-to-br from-emerald-500/20 to-red-500/20">
-              <Calendar className="h-5 w-5 text-emerald-400" />
+              <TrendingUp className="h-5 w-5 text-emerald-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-lg font-semibold text-white">Daily Sentiment Calendar</h3>
-              <p className="text-sm text-gray-500">See sentiment breakdown for each day <span className="text-blue-400">Click any day to view transcripts</span></p>
+              <h3 className="text-lg font-semibold text-white">Daily Sentiment Trends</h3>
+              <p className="text-sm text-gray-500">Track sentiment changes over time <span className="text-blue-400">Click data points to view transcripts</span></p>
             </div>
           </div>
           {expandedSections.has('calendar') ? (
@@ -381,126 +384,111 @@ export default function TranscriptsAnalysis() {
 
         {expandedSections.has('calendar') && (
           <div className="p-6 pt-0">
-            {/* Legend */}
-            <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-emerald-500"></div>
-                <span>Positive</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-gray-500"></div>
-                <span>Neutral</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-red-500"></div>
-                <span>Negative</span>
-              </div>
-              <span className="text-gray-600">|</span>
-              <span>Bar height = call volume</span>
-            </div>
-
-            {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-2 mb-2">
-              {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-xs text-gray-500 py-1 font-medium">{day}</div>
-              ))}
-            </div>
-            <div className="grid grid-cols-7 gap-2">
-              {(() => {
-                // Generate calendar cells for the date range
-                const sortedDays = [...stats.dailyTrends].sort((a, b) => a.date.localeCompare(b.date));
-                if (sortedDays.length === 0) return null;
-
-                const startDate = new Date(sortedDays[0].date);
-                const endDate = new Date(sortedDays[sortedDays.length - 1].date);
-
-                // Adjust start to beginning of week
-                const calendarStart = new Date(startDate);
-                calendarStart.setDate(calendarStart.getDate() - calendarStart.getDay());
-
-                const cells = [];
-                const dayMap = new Map(sortedDays.map(d => [d.date, d]));
-                const maxTotal = Math.max(...sortedDays.map(d => d.total));
-
-                let currentDate = new Date(calendarStart);
-                while (currentDate <= endDate || currentDate.getDay() !== 0) {
-                  const dateStr = currentDate.toISOString().split('T')[0];
-                  const dayData = dayMap.get(dateStr);
-
-                  if (dayData) {
-                    const total = dayData.total;
-                    const positivePercent = (dayData.positive / total) * 100;
-                    const neutralPercent = (dayData.neutral / total) * 100;
-                    const negativePercent = (dayData.negative / total) * 100;
-                    const heightPercent = Math.max(30, (total / maxTotal) * 100); // Min 30% height
-
-                    cells.push(
-                      <button
-                        key={dateStr}
-                        onClick={() => openDrillDown('all', dateStr, `Calls on ${formatDate(dateStr)}`)}
-                        className="bg-gray-800/50 rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[70px] flex flex-col"
-                        title={`${formatDate(dateStr)}: ${total} calls`}
-                      >
-                        {/* Date label */}
-                        <span className="text-[10px] text-gray-400 font-medium mb-1">{currentDate.getDate()}</span>
-
-                        {/* Stacked sentiment bar */}
-                        <div className="flex-1 flex items-end justify-center">
-                          <div
-                            className="w-full max-w-[32px] rounded-sm overflow-hidden flex flex-col-reverse"
-                            style={{ height: `${heightPercent}%` }}
-                          >
-                            {/* Negative (bottom - red) */}
-                            {negativePercent > 0 && (
-                              <div
-                                className="w-full bg-red-500 transition-all"
-                                style={{ height: `${negativePercent}%` }}
-                              />
-                            )}
-                            {/* Neutral (middle - gray) */}
-                            {neutralPercent > 0 && (
-                              <div
-                                className="w-full bg-gray-500 transition-all"
-                                style={{ height: `${neutralPercent}%` }}
-                              />
-                            )}
-                            {/* Positive (top - green) */}
-                            {positivePercent > 0 && (
-                              <div
-                                className="w-full bg-emerald-500 transition-all"
-                                style={{ height: `${positivePercent}%` }}
-                              />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Call count */}
-                        <span className="text-[9px] text-gray-500 mt-1">{total}</span>
-
-                        {/* Hover tooltip */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 border border-gray-700 shadow-xl">
-                          <div className="font-medium text-white mb-1">{formatDate(dateStr)}</div>
-                          <div className="text-gray-400">{total} total calls</div>
-                          <div className="flex flex-col gap-0.5 mt-1">
-                            <span className="text-emerald-400">● {dayData.positive} positive ({positivePercent.toFixed(0)}%)</span>
-                            <span className="text-gray-400">● {dayData.neutral} neutral ({neutralPercent.toFixed(0)}%)</span>
-                            <span className="text-red-400">● {dayData.negative} negative ({negativePercent.toFixed(0)}%)</span>
-                          </div>
-                        </div>
-                      </button>
-                    );
-                  } else {
-                    // Empty cell for days outside range
-                    cells.push(
-                      <div key={dateStr} className="bg-gray-800/20 rounded-lg min-h-[70px]"></div>
-                    );
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart
+                data={stats.dailyTrends}
+                margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                onClick={(data) => {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  const payload = (data as any)?.activePayload?.[0]?.payload;
+                  if (payload?.date) {
+                    openDrillDown('all', payload.date, `Calls on ${formatDate(payload.date)}`);
                   }
+                }}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                <XAxis
+                  dataKey="date"
+                  tickFormatter={formatDate}
+                  stroke="#6b7280"
+                  fontSize={11}
+                  tick={{ fill: '#9ca3af' }}
+                  interval="preserveStartEnd"
+                />
+                <YAxis
+                  stroke="#6b7280"
+                  fontSize={11}
+                  tick={{ fill: '#9ca3af' }}
+                  label={{ value: 'Call Count', angle: -90, position: 'insideLeft', fill: '#9ca3af', fontSize: 12 }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: '#1f2937',
+                    border: '1px solid #374151',
+                    borderRadius: '8px',
+                  }}
+                  labelFormatter={(value) => formatDate(value as string)}
+                  formatter={(value: number, name: string) => {
+                    const label = name.charAt(0).toUpperCase() + name.slice(1);
+                    return [value.toLocaleString(), label];
+                  }}
+                />
+                <Legend
+                  verticalAlign="top"
+                  height={36}
+                  formatter={(value: string) => (
+                    <span className="text-gray-300 text-sm">{value.charAt(0).toUpperCase() + value.slice(1)}</span>
+                  )}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="positive"
+                  stroke="#22c55e"
+                  strokeWidth={2}
+                  dot={{ fill: '#22c55e', strokeWidth: 0, r: 3 }}
+                  activeDot={{ r: 6, fill: '#22c55e', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  name="positive"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="neutral"
+                  stroke="#6b7280"
+                  strokeWidth={2}
+                  dot={{ fill: '#6b7280', strokeWidth: 0, r: 3 }}
+                  activeDot={{ r: 6, fill: '#6b7280', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  name="neutral"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="negative"
+                  stroke="#ef4444"
+                  strokeWidth={2}
+                  dot={{ fill: '#ef4444', strokeWidth: 0, r: 3 }}
+                  activeDot={{ r: 6, fill: '#ef4444', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  name="negative"
+                />
+              </LineChart>
+            </ResponsiveContainer>
 
-                  currentDate.setDate(currentDate.getDate() + 1);
-                }
-
-                return cells;
-              })()}
+            {/* Summary Stats Below Chart */}
+            <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-gray-700/50">
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <div className="w-3 h-3 rounded-full bg-emerald-500"></div>
+                  <span className="text-sm text-gray-400">Avg Positive/Day</span>
+                </div>
+                <span className="text-xl font-bold text-emerald-400">
+                  {Math.round(stats.dailyTrends.reduce((sum, d) => sum + d.positive, 0) / stats.dailyTrends.length)}
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                  <span className="text-sm text-gray-400">Avg Neutral/Day</span>
+                </div>
+                <span className="text-xl font-bold text-gray-400">
+                  {Math.round(stats.dailyTrends.reduce((sum, d) => sum + d.neutral, 0) / stats.dailyTrends.length)}
+                </span>
+              </div>
+              <div className="text-center">
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <span className="text-sm text-gray-400">Avg Negative/Day</span>
+                </div>
+                <span className="text-xl font-bold text-red-400">
+                  {Math.round(stats.dailyTrends.reduce((sum, d) => sum + d.negative, 0) / stats.dailyTrends.length)}
+                </span>
+              </div>
             </div>
           </div>
         )}
