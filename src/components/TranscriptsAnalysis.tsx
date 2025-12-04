@@ -388,13 +388,6 @@ export default function TranscriptsAnalysis() {
               <LineChart
                 data={stats.dailyTrends}
                 margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                onClick={(data) => {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  const payload = (data as any)?.activePayload?.[0]?.payload;
-                  if (payload?.date) {
-                    openDrillDown('all', payload.date, `Calls on ${formatDate(payload.date)}`);
-                  }
-                }}
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis
@@ -435,8 +428,19 @@ export default function TranscriptsAnalysis() {
                   dataKey="positive"
                   stroke="#22c55e"
                   strokeWidth={2}
-                  dot={{ fill: '#22c55e', strokeWidth: 0, r: 3 }}
-                  activeDot={{ r: 6, fill: '#22c55e', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  dot={{ fill: '#22c55e', strokeWidth: 0, r: 4, cursor: 'pointer' }}
+                  activeDot={{
+                    r: 8,
+                    fill: '#22c55e',
+                    stroke: '#fff',
+                    strokeWidth: 2,
+                    cursor: 'pointer',
+                    onClick: (_, payload) => {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      const date = (payload as any)?.payload?.date;
+                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
+                    },
+                  }}
                   name="positive"
                 />
                 <Line
@@ -444,8 +448,19 @@ export default function TranscriptsAnalysis() {
                   dataKey="neutral"
                   stroke="#6b7280"
                   strokeWidth={2}
-                  dot={{ fill: '#6b7280', strokeWidth: 0, r: 3 }}
-                  activeDot={{ r: 6, fill: '#6b7280', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  dot={{ fill: '#6b7280', strokeWidth: 0, r: 4, cursor: 'pointer' }}
+                  activeDot={{
+                    r: 8,
+                    fill: '#6b7280',
+                    stroke: '#fff',
+                    strokeWidth: 2,
+                    cursor: 'pointer',
+                    onClick: (_, payload) => {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      const date = (payload as any)?.payload?.date;
+                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
+                    },
+                  }}
                   name="neutral"
                 />
                 <Line
@@ -453,8 +468,19 @@ export default function TranscriptsAnalysis() {
                   dataKey="negative"
                   stroke="#ef4444"
                   strokeWidth={2}
-                  dot={{ fill: '#ef4444', strokeWidth: 0, r: 3 }}
-                  activeDot={{ r: 6, fill: '#ef4444', stroke: '#fff', strokeWidth: 2, cursor: 'pointer' }}
+                  dot={{ fill: '#ef4444', strokeWidth: 0, r: 4, cursor: 'pointer' }}
+                  activeDot={{
+                    r: 8,
+                    fill: '#ef4444',
+                    stroke: '#fff',
+                    strokeWidth: 2,
+                    cursor: 'pointer',
+                    onClick: (_, payload) => {
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      const date = (payload as any)?.payload?.date;
+                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
+                    },
+                  }}
                   name="negative"
                 />
               </LineChart>
