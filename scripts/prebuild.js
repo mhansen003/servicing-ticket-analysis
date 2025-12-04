@@ -458,12 +458,53 @@ const categoryTrends = Object.entries(servicingCategoryByMonth)
     ...Object.fromEntries(topCategories.map(c => [c.name, cats[c.name] || 0]))
   }));
 
-// Format time series data
-const servicingTimeSeries = {
-  monthly: Object.entries(servicingByMonth).sort(([a], [b]) => a.localeCompare(b)).map(([date, count]) => ({ date, count })),
-  weekly: Object.entries(servicingByWeek).sort(([a], [b]) => a.localeCompare(b)).slice(-12).map(([date, count]) => ({ date, count })),
-  daily: Object.entries(servicingByDay).sort(([a], [b]) => a.localeCompare(b)).slice(-30).map(([date, count]) => ({ date, count })),
+// Find the last date with actual ticket data
+const allDates = servicingTickets
+  .map(t => new Date(t.ticket_created_at_utc))
+  .filter(d => !isNaN(d.getTime()))
+  .sort((a, b) => b - a);
+const lastTicketDate = allDates[0];
+console.log(`📅 Last ticket date: ${lastTicketDate.toISOString().slice(0, 10)}`);
+
+// Helper to check if a period is complete (has ended before last ticket date)
+const isCompletePeriod = (periodStart, periodType) => {
+  const start = new Date(periodStart);
+  let periodEnd;
+
+  if (periodType === 'monthly') {
+    // Period ends at the last day of the month
+    periodEnd = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+  } else if (periodType === 'weekly') {
+    // Period ends 6 days after start (week = 7 days)
+    periodEnd = new Date(start);
+    periodEnd.setDate(start.getDate() + 6);
+  } else {
+    // Daily - period is complete if it's before or equal to last ticket date
+    periodEnd = start;
+  }
+
+  return periodEnd <= lastTicketDate;
 };
+
+// Format time series data - only include complete periods to avoid misleading downward slopes
+const servicingTimeSeries = {
+  monthly: Object.entries(servicingByMonth)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .filter(([date]) => isCompletePeriod(date + '-01', 'monthly'))
+    .map(([date, count]) => ({ date, count })),
+  weekly: Object.entries(servicingByWeek)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .filter(([date]) => isCompletePeriod(date, 'weekly'))
+    .slice(-12)
+    .map(([date, count]) => ({ date, count })),
+  daily: Object.entries(servicingByDay)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .filter(([date]) => isCompletePeriod(date, 'daily'))
+    .slice(-30)
+    .map(([date, count]) => ({ date, count })),
+};
+
+console.log(`📊 Time series: ${servicingTimeSeries.monthly.length} months, ${servicingTimeSeries.weekly.length} weeks, ${servicingTimeSeries.daily.length} days`);
 
 // Servicing analysis object
 const servicingAnalysis = {
