@@ -59,14 +59,17 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
   const [pagination, setPagination] = useState({ page: 1, limit: 50, total: 0, totalPages: 0 });
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
 
-  // Filters
+  // Filters - arrays for multi-select
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('');
-  const [projectFilter, setProjectFilter] = useState('');
-  const [priorityFilter, setPriorityFilter] = useState('');
-  const [assigneeFilter, setAssigneeFilter] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
+  const [projectFilter, setProjectFilter] = useState<string[]>([]);
+  const [priorityFilter, setPriorityFilter] = useState<string[]>([]);
+  const [assigneeFilter, setAssigneeFilter] = useState<string[]>([]);
   const [categoryFilter, setCategoryFilter] = useState(''); // For drill-down from category charts
+
+  // Multi-select dropdown open states
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   // Sorting
   const [sortField, setSortField] = useState<SortField>('created');
@@ -91,15 +94,15 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
   useEffect(() => {
     if (drillDownFilter) {
       // Clear existing filters first
-      setStatusFilter('');
-      setPriorityFilter('');
-      setAssigneeFilter('');
+      setStatusFilter([]);
+      setPriorityFilter([]);
+      setAssigneeFilter([]);
       setCategoryFilter('');
       setSearch('');
-      setProjectFilter('');
+      setProjectFilter([]);
 
       if (drillDownFilter.type === 'project') {
-        setProjectFilter(drillDownFilter.value);
+        setProjectFilter([drillDownFilter.value]);
       } else if (drillDownFilter.type === 'category') {
         // Use category filter - exact match on the category field in tickets
         setCategoryFilter(drillDownFilter.value);
@@ -124,10 +127,10 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
         page: pagination.page.toString(),
         limit: pagination.limit.toString(),
         search: debouncedSearch,
-        status: statusFilter,
-        project: projectFilter,
-        priority: priorityFilter,
-        assignee: assigneeFilter,
+        status: statusFilter.join(','), // Multi-select as comma-separated
+        project: projectFilter.join(','),
+        priority: priorityFilter.join(','),
+        assignee: assigneeFilter.join(','),
         category: categoryFilter, // Add category filter for drill-down
         sortField,
         sortOrder,
@@ -201,14 +204,104 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
 
   const clearFilters = () => {
     setSearch('');
-    setStatusFilter('');
-    setProjectFilter('');
-    setPriorityFilter('');
-    setAssigneeFilter('');
+    setStatusFilter([]);
+    setProjectFilter([]);
+    setPriorityFilter([]);
+    setAssigneeFilter([]);
     setCategoryFilter('');
   };
 
-  const activeFilterCount = [statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter].filter(Boolean).length;
+  // Count total selected items across all multi-select filters
+  const activeFilterCount = statusFilter.length + projectFilter.length + priorityFilter.length + assigneeFilter.length + (categoryFilter ? 1 : 0);
+
+  // Toggle item in multi-select array
+  const toggleFilter = (
+    current: string[],
+    setter: React.Dispatch<React.SetStateAction<string[]>>,
+    value: string
+  ) => {
+    if (current.includes(value)) {
+      setter(current.filter(v => v !== value));
+    } else {
+      setter([...current, value]);
+    }
+  };
+
+  // Multi-select dropdown component
+  const MultiSelectDropdown = ({
+    label,
+    options,
+    selected,
+    onToggle,
+    dropdownKey,
+  }: {
+    label: string;
+    options: string[];
+    selected: string[];
+    onToggle: (value: string) => void;
+    dropdownKey: string;
+  }) => {
+    const isOpen = openDropdown === dropdownKey;
+
+    return (
+      <div className="relative">
+        <label className="text-xs text-gray-500 mb-1 block">{label}</label>
+        <button
+          type="button"
+          onClick={() => setOpenDropdown(isOpen ? null : dropdownKey)}
+          className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-left text-white focus:outline-none focus:border-blue-500/50 flex items-center justify-between"
+        >
+          <span className="truncate">
+            {selected.length === 0 ? `All ${label}s` : `${selected.length} selected`}
+          </span>
+          <ChevronDown className={`h-4 w-4 text-gray-500 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        </button>
+
+        {isOpen && (
+          <div className="absolute z-50 mt-1 w-full max-h-60 overflow-auto bg-[#131a29] border border-white/[0.08] rounded-lg shadow-lg">
+            <button
+              type="button"
+              onClick={() => {
+                if (selected.length === options.length) {
+                  // Clear all
+                  selected.forEach(s => onToggle(s));
+                } else {
+                  // Select all
+                  options.forEach(o => {
+                    if (!selected.includes(o)) onToggle(o);
+                  });
+                }
+              }}
+              className="w-full px-3 py-2 text-left text-sm text-gray-400 hover:bg-white/[0.05] border-b border-white/[0.06]"
+            >
+              {selected.length === options.length ? 'Clear All' : 'Select All'}
+            </button>
+            {options.map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => onToggle(option)}
+                className="w-full px-3 py-2 text-left text-sm text-white hover:bg-white/[0.05] flex items-center gap-2"
+              >
+                <div className={`w-4 h-4 rounded border flex items-center justify-center ${
+                  selected.includes(option)
+                    ? 'bg-blue-500 border-blue-500'
+                    : 'border-gray-600'
+                }`}>
+                  {selected.includes(option) && (
+                    <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  )}
+                </div>
+                <span className="truncate">{option}</span>
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const formatTime = (minutes: number | null) => {
     if (!minutes) return '-';
@@ -353,64 +446,37 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
           </div>
         )}
 
-        {/* Filter Panel */}
+        {/* Filter Panel - Multi-select dropdowns */}
         {viewMode === 'table' && showFilters && filterOptions && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Status</label>
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="">All Statuses</option>
-                {filterOptions.statuses.map(s => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Project</label>
-              <select
-                value={projectFilter}
-                onChange={(e) => setProjectFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="">All Projects</option>
-                {filterOptions.projects.map(p => (
-                  <option key={p} value={p}>{p}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Priority</label>
-              <select
-                value={priorityFilter}
-                onChange={(e) => setPriorityFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="">All Priorities</option>
-                {filterOptions.priorities.map(p => (
-                  <option key={p} value={p}>{p}</option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Assignee</label>
-              <select
-                value={assigneeFilter}
-                onChange={(e) => setAssigneeFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="">All Assignees</option>
-                {filterOptions.assignees.map(a => (
-                  <option key={a} value={a}>{a}</option>
-                ))}
-              </select>
-            </div>
+            <MultiSelectDropdown
+              label="Status"
+              options={filterOptions.statuses}
+              selected={statusFilter}
+              onToggle={(v) => toggleFilter(statusFilter, setStatusFilter, v)}
+              dropdownKey="status"
+            />
+            <MultiSelectDropdown
+              label="Project"
+              options={filterOptions.projects}
+              selected={projectFilter}
+              onToggle={(v) => toggleFilter(projectFilter, setProjectFilter, v)}
+              dropdownKey="project"
+            />
+            <MultiSelectDropdown
+              label="Priority"
+              options={filterOptions.priorities}
+              selected={priorityFilter}
+              onToggle={(v) => toggleFilter(priorityFilter, setPriorityFilter, v)}
+              dropdownKey="priority"
+            />
+            <MultiSelectDropdown
+              label="Assignee"
+              options={filterOptions.assignees}
+              selected={assigneeFilter}
+              onToggle={(v) => toggleFilter(assigneeFilter, setAssigneeFilter, v)}
+              dropdownKey="assignee"
+            />
           </div>
         )}
       </div>
@@ -558,10 +624,10 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
                   key={group.name}
                   className="p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06] hover:border-blue-500/30 transition-all cursor-pointer"
                   onClick={() => {
-                    if (groupBy === 'project') setProjectFilter(group.name);
-                    else if (groupBy === 'status') setStatusFilter(group.name);
-                    else if (groupBy === 'priority') setPriorityFilter(group.name);
-                    else if (groupBy === 'assignee') setAssigneeFilter(group.name);
+                    if (groupBy === 'project') setProjectFilter([group.name]);
+                    else if (groupBy === 'status') setStatusFilter([group.name]);
+                    else if (groupBy === 'priority') setPriorityFilter([group.name]);
+                    else if (groupBy === 'assignee') setAssigneeFilter([group.name]);
                     setViewMode('table');
                   }}
                 >

@@ -53,13 +53,20 @@ export async function GET(request: Request) {
   const page = parseInt(searchParams.get('page') || '1');
   const limit = Math.min(parseInt(searchParams.get('limit') || '100'), 500);
   const search = searchParams.get('search') || '';
-  const status = searchParams.get('status') || '';
-  const project = searchParams.get('project') || '';
-  const priority = searchParams.get('priority') || '';
-  const assignee = searchParams.get('assignee') || '';
+  // Multi-select filters come as comma-separated values
+  const statusParam = searchParams.get('status') || '';
+  const projectParam = searchParams.get('project') || '';
+  const priorityParam = searchParams.get('priority') || '';
+  const assigneeParam = searchParams.get('assignee') || '';
   const category = searchParams.get('category') || ''; // Category filter for drill-down
   const sortField = searchParams.get('sortField') || 'ticketCreatedAtUtc';
   const sortOrder = searchParams.get('sortOrder') || 'desc';
+
+  // Parse comma-separated multi-select values into arrays
+  const statuses = statusParam ? statusParam.split(',').filter(Boolean) : [];
+  const projects = projectParam ? projectParam.split(',').filter(Boolean) : [];
+  const priorities = priorityParam ? priorityParam.split(',').filter(Boolean) : [];
+  const assignees = assigneeParam ? assigneeParam.split(',').filter(Boolean) : [];
 
   try {
     // Build where clause - always filter to servicing projects
@@ -79,20 +86,22 @@ export async function GET(request: Request) {
     // uses order-dependent matching that SQL can't easily replicate
     const filterByCategory = category;
 
-    if (status) {
-      where.ticketStatus = status;
+    // Multi-select filters use 'in' for multiple values
+    if (statuses.length > 0) {
+      where.ticketStatus = { in: statuses };
     }
 
-    if (project) {
-      where.projectName = project;
+    if (projects.length > 0) {
+      // Override the servicing projects filter if specific projects selected
+      where.projectName = { in: projects };
     }
 
-    if (priority) {
-      where.ticketPriority = priority;
+    if (priorities.length > 0) {
+      where.ticketPriority = { in: priorities };
     }
 
-    if (assignee) {
-      where.assignedUserName = assignee;
+    if (assignees.length > 0) {
+      where.assignedUserName = { in: assignees };
     }
 
     // Map frontend sort fields to database fields
