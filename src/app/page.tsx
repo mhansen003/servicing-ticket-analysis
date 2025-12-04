@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   FolderKanban,
   AlertCircle,
@@ -12,6 +12,15 @@ import { AIAnalysis } from '@/components/AIAnalysis';
 import { InsightsPanel } from '@/components/InsightsPanel';
 import { DataTable } from '@/components/DataTable';
 import ServicingAnalysis from '@/components/ServicingAnalysis';
+
+// Drill-down filter interface for navigating from charts to raw data
+export interface DrillDownFilter {
+  type: 'category' | 'project' | 'dateRange' | 'search';
+  value: string;
+  label: string; // Human-readable label for display
+  dateStart?: string;
+  dateEnd?: string;
+}
 
 interface HeatmapData {
   data: { x: string; y: string; value: number }[];
@@ -56,6 +65,18 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState<TabType>('overview');
+  const [drillDownFilter, setDrillDownFilter] = useState<DrillDownFilter | null>(null);
+
+  // Handle drill-down from charts - switches to data tab with filter applied
+  const handleDrillDown = useCallback((filter: DrillDownFilter) => {
+    setDrillDownFilter(filter);
+    setActiveTab('data');
+  }, []);
+
+  // Clear drill-down filter
+  const clearDrillDown = useCallback(() => {
+    setDrillDownFilter(null);
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
@@ -180,13 +201,18 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Tab Content */}
-        {activeTab === 'overview' && <ServicingAnalysis />}
+        {activeTab === 'overview' && <ServicingAnalysis onDrillDown={handleDrillDown} />}
 
         {activeTab === 'insights' && data.heatmaps && data.issues && data.trends && (
           <InsightsPanel heatmaps={data.heatmaps} issues={data.issues} trends={data.trends} />
         )}
 
-        {activeTab === 'data' && <DataTable />}
+        {activeTab === 'data' && (
+          <DataTable
+            drillDownFilter={drillDownFilter}
+            onClearDrillDown={clearDrillDown}
+          />
+        )}
 
         {activeTab === 'ai' && (
           <div className="space-y-6">

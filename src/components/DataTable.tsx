@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Search,
   ChevronDown,
@@ -12,7 +12,9 @@ import {
   Layers,
   Table2,
   Loader2,
+  ArrowLeft,
 } from 'lucide-react';
+import type { DrillDownFilter } from '@/app/page';
 
 interface Ticket {
   id: string;
@@ -46,7 +48,12 @@ interface GroupData {
 type SortField = 'key' | 'title' | 'status' | 'priority' | 'project' | 'assignee' | 'created' | 'resolutionTime';
 type ViewMode = 'table' | 'grouped';
 
-export function DataTable() {
+interface DataTableProps {
+  drillDownFilter?: DrillDownFilter | null;
+  onClearDrillDown?: () => void;
+}
+
+export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({ page: 1, limit: 50, total: 0, totalPages: 0 });
@@ -78,6 +85,37 @@ export function DataTable() {
     const timer = setTimeout(() => setDebouncedSearch(search), 300);
     return () => clearTimeout(timer);
   }, [search]);
+
+  // Apply drill-down filter when it changes
+  useEffect(() => {
+    if (drillDownFilter) {
+      // Clear existing filters first
+      setStatusFilter('');
+      setPriorityFilter('');
+      setAssigneeFilter('');
+
+      if (drillDownFilter.type === 'project') {
+        setProjectFilter(drillDownFilter.value);
+        setSearch('');
+      } else if (drillDownFilter.type === 'category') {
+        // Categories are matched via search on ticket title
+        setSearch(drillDownFilter.value);
+        setProjectFilter('');
+      } else if (drillDownFilter.type === 'search') {
+        setSearch(drillDownFilter.value);
+        setProjectFilter('');
+      } else if (drillDownFilter.type === 'dateRange') {
+        // For date range, we'll use the search field with date info
+        // The API will need to handle date filtering
+        setSearch(drillDownFilter.value);
+        setProjectFilter('');
+      }
+
+      // Reset to table view and page 1
+      setViewMode('table');
+      setPagination(prev => ({ ...prev, page: 1 }));
+    }
+  }, [drillDownFilter]);
 
   // Fetch tickets
   const fetchTickets = useCallback(async () => {
@@ -193,6 +231,28 @@ export function DataTable() {
 
   return (
     <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
+      {/* Drill-down banner */}
+      {drillDownFilter && (
+        <div className="px-4 py-3 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 border-b border-blue-500/20 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-1.5 rounded-lg bg-blue-500/20">
+              <Filter className="h-4 w-4 text-blue-400" />
+            </div>
+            <div>
+              <span className="text-sm text-gray-400">Filtered by: </span>
+              <span className="text-sm font-medium text-white">{drillDownFilter.label}</span>
+            </div>
+          </div>
+          <button
+            onClick={onClearDrillDown}
+            className="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/[0.05] rounded-lg transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Overview
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="p-4 border-b border-white/[0.06]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
@@ -204,6 +264,7 @@ export function DataTable() {
               <h3 className="text-lg font-semibold text-white">Raw Ticket Data</h3>
               <p className="text-sm text-gray-500">
                 {loading ? 'Loading...' : `${pagination.total.toLocaleString()} tickets`}
+                {drillDownFilter && ' (filtered)'}
               </p>
             </div>
           </div>
