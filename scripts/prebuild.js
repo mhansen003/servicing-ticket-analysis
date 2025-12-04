@@ -7,6 +7,17 @@ console.log('📊 Pre-processing ticket data...');
 const csvPath = path.join(__dirname, '..', 'data', 'tickets.csv');
 const outputPath = path.join(__dirname, '..', 'data', 'processed-stats.json');
 
+// Check if processed data already exists (for deployment without CSV)
+if (!fs.existsSync(csvPath)) {
+  if (fs.existsSync(outputPath)) {
+    console.log('⚡ Using pre-processed data (CSV not present)');
+    process.exit(0);
+  } else {
+    console.error('❌ No CSV file and no pre-processed data found!');
+    process.exit(1);
+  }
+}
+
 // Read and parse CSV
 const csvContent = fs.readFileSync(csvPath, 'utf-8');
 const result = Papa.parse(csvContent, {
