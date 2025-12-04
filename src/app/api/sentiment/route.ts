@@ -89,8 +89,10 @@ Return ONLY valid JSON array. Example:
 
     // Parse the JSON response
     try {
-      // Clean up the response - sometimes models add markdown code blocks
+      // Clean up the response - sometimes models add markdown code blocks or preamble
       let jsonStr = content.trim();
+
+      // Remove markdown code blocks
       if (jsonStr.startsWith('```json')) {
         jsonStr = jsonStr.slice(7);
       }
@@ -100,6 +102,19 @@ Return ONLY valid JSON array. Example:
       if (jsonStr.endsWith('```')) {
         jsonStr = jsonStr.slice(0, -3);
       }
+
+      // Extract JSON array from response - handle preamble text like "Here is the analysis:"
+      const arrayMatch = jsonStr.match(/\[[\s\S]*\]/);
+      if (arrayMatch) {
+        jsonStr = arrayMatch[0];
+      }
+
+      // Fix common JSON syntax errors from AI
+      // Fix missing quotes after "score: (should be "score":)
+      jsonStr = jsonStr.replace(/"score:\s*/g, '"score": ');
+      // Fix missing quotes after "emotion: (should be "emotion":)
+      jsonStr = jsonStr.replace(/"emotion:\s*/g, '"emotion": ');
+
       jsonStr = jsonStr.trim();
 
       const sentiments = JSON.parse(jsonStr);
