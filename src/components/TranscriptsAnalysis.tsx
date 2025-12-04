@@ -428,19 +428,25 @@ export default function TranscriptsAnalysis() {
                   dataKey="positive"
                   stroke="#22c55e"
                   strokeWidth={2}
-                  dot={{ fill: '#22c55e', strokeWidth: 0, r: 4, cursor: 'pointer' }}
-                  activeDot={{
-                    r: 8,
-                    fill: '#22c55e',
-                    stroke: '#fff',
-                    strokeWidth: 2,
-                    cursor: 'pointer',
-                    onClick: (_, payload) => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      const date = (payload as any)?.payload?.date;
-                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
-                    },
+                  dot={(props) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const { cx, cy, payload } = props as any;
+                    return (
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={5}
+                        fill="#22c55e"
+                        stroke="transparent"
+                        strokeWidth={10}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          if (payload?.date) openDrillDown('all', payload.date, `Calls on ${formatDate(payload.date)}`);
+                        }}
+                      />
+                    );
                   }}
+                  activeDot={{ r: 8, fill: '#22c55e', stroke: '#fff', strokeWidth: 2 }}
                   name="positive"
                 />
                 <Line
@@ -448,19 +454,25 @@ export default function TranscriptsAnalysis() {
                   dataKey="neutral"
                   stroke="#6b7280"
                   strokeWidth={2}
-                  dot={{ fill: '#6b7280', strokeWidth: 0, r: 4, cursor: 'pointer' }}
-                  activeDot={{
-                    r: 8,
-                    fill: '#6b7280',
-                    stroke: '#fff',
-                    strokeWidth: 2,
-                    cursor: 'pointer',
-                    onClick: (_, payload) => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      const date = (payload as any)?.payload?.date;
-                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
-                    },
+                  dot={(props) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const { cx, cy, payload } = props as any;
+                    return (
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={5}
+                        fill="#6b7280"
+                        stroke="transparent"
+                        strokeWidth={10}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          if (payload?.date) openDrillDown('all', payload.date, `Calls on ${formatDate(payload.date)}`);
+                        }}
+                      />
+                    );
                   }}
+                  activeDot={{ r: 8, fill: '#6b7280', stroke: '#fff', strokeWidth: 2 }}
                   name="neutral"
                 />
                 <Line
@@ -468,19 +480,25 @@ export default function TranscriptsAnalysis() {
                   dataKey="negative"
                   stroke="#ef4444"
                   strokeWidth={2}
-                  dot={{ fill: '#ef4444', strokeWidth: 0, r: 4, cursor: 'pointer' }}
-                  activeDot={{
-                    r: 8,
-                    fill: '#ef4444',
-                    stroke: '#fff',
-                    strokeWidth: 2,
-                    cursor: 'pointer',
-                    onClick: (_, payload) => {
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      const date = (payload as any)?.payload?.date;
-                      if (date) openDrillDown('all', date, `Calls on ${formatDate(date)}`);
-                    },
+                  dot={(props) => {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    const { cx, cy, payload } = props as any;
+                    return (
+                      <circle
+                        cx={cx}
+                        cy={cy}
+                        r={5}
+                        fill="#ef4444"
+                        stroke="transparent"
+                        strokeWidth={10}
+                        style={{ cursor: 'pointer' }}
+                        onClick={() => {
+                          if (payload?.date) openDrillDown('all', payload.date, `Calls on ${formatDate(payload.date)}`);
+                        }}
+                      />
+                    );
                   }}
+                  activeDot={{ r: 8, fill: '#ef4444', stroke: '#fff', strokeWidth: 2 }}
                   name="negative"
                 />
               </LineChart>
