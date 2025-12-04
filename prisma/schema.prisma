@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Ticket {
+  id                                    Int       @id @default(autoincrement())
+  ticketKey                             String    @unique @map("ticket_key")
+  ticketUuid                            String?   @map("ticket_uuid")
+  ticketTitle                           String?   @map("ticket_title")
+  ticketDescription                     String?   @map("ticket_description")
+  ticketPriority                        String?   @map("ticket_priority")
+  ticketStatus                          String?   @map("ticket_status")
+  ticketType                            String?   @map("ticket_type")
+
+  // Organization
+  orgId                                 String?   @map("org_id")
+  orgName                               String?   @map("org_name")
+  orgStatusId                           String?   @map("org_status_id")
+  orgStatusName                         String?   @map("org_status_name")
+  projectName                           String?   @map("project_name")
+
+  // Reporter
+  ticketReporterEmail                   String?   @map("ticket_reporter_email")
+  ticketReporterName                    String?   @map("ticket_reporter_name")
+
+  // Assignment
+  assignedUserName                      String?   @map("assigned_user_name")
+  assignedUserEmail                     String?   @map("assigned_user_email")
+
+  // Response tracking
+  firstResponseSentUtc                  DateTime? @map("first_response_sent_utc")
+  timeToFirstResponseInMinutes          Int?      @map("time_to_first_response_in_minutes")
+  firstResponderEmail                   String?   @map("first_responder_email")
+  firstResponderName                    String?   @map("first_responder_name")
+  latestResponseSentUtc                 DateTime? @map("latest_response_sent_utc")
+  latestResponderEmail                  String?   @map("latest_responder_email")
+  latestResponderName                   String?   @map("latest_responder_name")
+
+  // SLA
+  dueDateUtc                            DateTime? @map("due_date_utc")
+  slaEverBreached                       Boolean   @default(false) @map("sla_ever_breached")
+  firstSlaBreachedAtUtc                 DateTime? @map("first_sla_breached_at_utc")
+  latestSlaBreachedAtUtc                DateTime? @map("latest_sla_breached_at_utc")
+
+  // Deletion
+  deletedAt                             DateTime? @map("deleted_at")
+  deleteReasonName                      String?   @map("delete_reason_name")
+
+  // Completion
+  isTicketComplete                      Boolean   @default(false) @map("is_ticket_complete")
+  ticketCompletedAtUtc                  DateTime? @map("ticket_completed_at_utc")
+  timeToResolutionInMinutes             Int?      @map("time_to_resolution_in_minutes")
+  assignedUserEmailWhenTicketCompleted  String?   @map("assigned_user_email_when_ticket_completed")
+  assignedUserNameWhenTicketCompleted   String?   @map("assigned_user_name_when_ticket_completed")
+
+  // Metadata
+  ticketTags                            String?   @map("ticket_tags")
+  customFields                          String?   @map("custom_fields")
+
+  // Timestamps
+  ticketCreatedAtUtc                    DateTime  @map("ticket_created_at_utc")
+  ticketUpdatedAtUtc                    DateTime? @map("ticket_updated_at_utc")
+
+  // Indexes for common queries
+  @@index([projectName])
+  @@index([ticketStatus])
+  @@index([assignedUserEmail])
+  @@index([ticketCreatedAtUtc])
+  @@index([isTicketComplete])
+  @@index([ticketPriority])
+
+  @@map("tickets")
+}

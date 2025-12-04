@@ -5,10 +5,10 @@ import {
   Ticket,
   CheckCircle,
   Clock,
-  TrendingUp,
-  Users,
   FolderKanban,
   AlertCircle,
+  Activity,
+  TrendingUp,
 } from 'lucide-react';
 import { StatsCard } from '@/components/StatsCard';
 import {
@@ -16,7 +16,6 @@ import {
   ProjectStackedBarChart,
   DonutChart,
   AssigneeBarChart,
-  HorizontalBarChart,
 } from '@/components/Charts';
 import { AIAnalysis } from '@/components/AIAnalysis';
 
@@ -73,10 +72,13 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0e17] flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <div className="relative">
+            <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-2xl animate-pulse" />
+            <div className="relative animate-spin rounded-full h-12 w-12 border-2 border-blue-500/20 border-t-blue-500"></div>
+          </div>
+          <p className="mt-6 text-gray-400">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -84,10 +86,10 @@ export default function Dashboard() {
 
   if (error || !data) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0e17] flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <p className="text-gray-600">{error || 'Something went wrong'}</p>
+          <p className="text-gray-400">{error || 'Something went wrong'}</p>
         </div>
       </div>
     );
@@ -100,52 +102,67 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0a0e17]">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#0a0e17]/80 border-b border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Servicing Ticket Analysis</h1>
-              <p className="text-sm text-gray-500">Helpdesk performance dashboard</p>
+            <div className="flex items-center gap-4">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600">
+                <Activity className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-white">Ticket Analytics</h1>
+                <p className="text-xs text-gray-500">Servicing Performance Dashboard</p>
+              </div>
             </div>
-            <div className="text-right">
-              <p className="text-sm font-medium text-gray-900">
-                {data.stats.totalTickets.toLocaleString()} tickets
-              </p>
-              <p className="text-xs text-gray-500">Last updated: {new Date().toLocaleDateString()}</p>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span className="text-xs text-gray-400">Live</span>
+              </div>
+              <div className="text-right">
+                <p className="text-sm font-semibold text-white">
+                  {data.stats.totalTickets.toLocaleString()}
+                </p>
+                <p className="text-xs text-gray-500">Total Tickets</p>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           <StatsCard
             title="Total Tickets"
             value={data.stats.totalTickets.toLocaleString()}
             icon={Ticket}
             subtitle="All time"
+            accentColor="blue"
           />
           <StatsCard
             title="Completed"
             value={data.stats.completedTickets.toLocaleString()}
             icon={CheckCircle}
             trend="up"
-            trendValue={`${data.stats.completionRate}% completion rate`}
+            trendValue={`${data.stats.completionRate}% rate`}
+            accentColor="green"
           />
           <StatsCard
-            title="Open Tickets"
+            title="Open"
             value={data.stats.openTickets.toLocaleString()}
             icon={FolderKanban}
             subtitle="Awaiting resolution"
+            accentColor="yellow"
           />
           <StatsCard
             title="Avg Resolution"
             value={formatTime(data.stats.avgResolutionTimeMinutes)}
             icon={Clock}
             subtitle={`Response: ${formatTime(data.stats.avgResponseTimeMinutes)}`}
+            accentColor="purple"
           />
         </div>
 
@@ -155,45 +172,50 @@ export default function Dashboard() {
         </div>
 
         {/* Charts Row 1 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <TimeSeriesChart data={data.ticketsByMonth} title="Tickets Over Time" />
-          <DonutChart data={data.statusBreakdown} title="Ticket Status Distribution" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <TimeSeriesChart data={data.ticketsByMonth} title="Ticket Volume Over Time" />
+          <DonutChart data={data.statusBreakdown} title="Status Distribution" />
         </div>
 
         {/* Charts Row 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <ProjectStackedBarChart data={data.projectBreakdown} title="Tickets by Project" />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <ProjectStackedBarChart data={data.projectBreakdown} title="Projects Breakdown" />
           <AssigneeBarChart data={data.assigneeBreakdown} title="Top Assignees" />
         </div>
 
-        {/* Priority Distribution */}
+        {/* Bottom Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <DonutChart data={data.priorityBreakdown} title="Priority Distribution" />
+          <DonutChart data={data.priorityBreakdown} title="Priority Levels" />
 
-          {/* Quick Stats Table */}
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Project Performance</h3>
+          {/* Project Performance Table */}
+          <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-lg font-semibold text-white">Project Performance</h3>
+              <TrendingUp className="h-5 w-5 text-gray-500" />
+            </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full">
                 <thead>
-                  <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 font-medium text-gray-500">Project</th>
-                    <th className="text-right py-2 font-medium text-gray-500">Total</th>
-                    <th className="text-right py-2 font-medium text-gray-500">Avg Res.</th>
+                  <tr className="border-b border-white/[0.06]">
+                    <th className="text-left py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                    <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
+                    <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Time</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data.projectBreakdown.slice(0, 8).map((project) => (
-                    <tr key={project.project} className="border-b border-gray-100">
-                      <td className="py-2 text-gray-900">
-                        {project.project.length > 25
-                          ? project.project.substring(0, 25) + '...'
+                    <tr key={project.project} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
+                      <td className="py-4 text-sm text-gray-300">
+                        {project.project.length > 22
+                          ? project.project.substring(0, 22) + '...'
                           : project.project}
                       </td>
-                      <td className="py-2 text-right text-gray-600">
-                        {project.total.toLocaleString()}
+                      <td className="py-4 text-right">
+                        <span className="text-sm font-medium text-white">{project.total.toLocaleString()}</span>
                       </td>
-                      <td className="py-2 text-right text-gray-600">{project.avgResolutionHours}h</td>
+                      <td className="py-4 text-right">
+                        <span className="text-sm text-gray-400">{project.avgResolutionHours}h</span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -204,11 +226,16 @@ export default function Dashboard() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-200 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <p className="text-center text-sm text-gray-500">
-            Servicing Ticket Analysis Dashboard | Data from Capacity Helpdesk
-          </p>
+      <footer className="border-t border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <p className="text-xs text-gray-600">
+              Servicing Ticket Analysis Dashboard
+            </p>
+            <p className="text-xs text-gray-600">
+              Last updated: {new Date().toLocaleDateString()}
+            </p>
+          </div>
         </div>
       </footer>
     </div>

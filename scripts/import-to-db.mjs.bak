@@ -1,0 +1,169 @@
+import { PrismaClient } from '@prisma/client';
+import * as fs from 'fs';
+import * as path from 'path';
+import Papa from 'papaparse';
+
+const prisma = new PrismaClient();
+
+interface RawTicket {
+  ticket_created_at_utc: string;
+  ticket_updated_at_utc: string;
+  org_id: string;
+  org_name: string;
+  org_status_id: string;
+  org_status_name: string;
+  project_name: string;
+  ticket_priority: string;
+  ticket_status: string;
+  ticket_type: string;
+  ticket_key: string;
+  ticket_uuid: string;
+  ticket_title: string;
+  ticket_description: string;
+  ticket_reporter_email: string;
+  ticket_reporter_name: string;
+  assigned_user_name: string;
+  assigned_user_email: string;
+  first_response_sent_utc: string;
+  time_to_first_response_in_minutes: string;
+  first_responder_email: string;
+  first_responder_name: string;
+  latest_response_sent_utc: string;
+  latest_responder_email: string;
+  latest_responder_name: string;
+  due_date_utc: string;
+  sla_ever_breached: string;
+  first_sla_breached_at_utc: string;
+  latest_sla_breached_at_utc: string;
+  deleted_at: string;
+  delete_reason_name: string;
+  is_ticket_complete: string;
+  ticket_completed_at_utc: string;
+  time_to_resolution_in_minutes: string;
+  assigned_user_email_when_ticket_completed: string;
+  assigned_user_name_when_ticket_completed: string;
+  ticket_tags: string;
+  custom_fields: string;
+}
+
+function parseDate(dateStr: string | null | undefined): Date | null {
+  if (!dateStr || dateStr.length > 30 || !dateStr.includes('-')) return null;
+  try {
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return null;
+    return date;
+  } catch {
+    return null;
+  }
+}
+
+function parseNumber(numStr: string | null | undefined): number | null {
+  if (!numStr) return null;
+  const num = parseInt(numStr, 10);
+  if (isNaN(num) || num < 0 || num > 100000000) return null;
+  return num;
+}
+
+function parseBool(boolStr: string | null | undefined): boolean {
+  if (!boolStr) return false;
+  return boolStr.toLowerCase() === 'true' || boolStr === '1';
+}
+
+async function main() {
+  console.log('📊 Loading CSV data...');
+
+  const csvPath = path.join(__dirname, '..', 'data', 'tickets.csv');
+  const csvContent = fs.readFileSync(csvPath, 'utf-8');
+
+  const result = Papa.parse<RawTicket>(csvContent, {
+    header: true,
+    skipEmptyLines: true,
+  });
+
+  // Filter valid tickets
+  const validTickets = result.data.filter((ticket) => {
+    if (!ticket.ticket_created_at_utc) return false;
+    if (ticket.ticket_created_at_utc.length > 30) return false;
+    if (!ticket.ticket_created_at_utc.includes('-')) return false;
+    if (!ticket.ticket_key) return false;
+    return true;
+  });
+
+  console.log(`✅ Found ${validTickets.length.toLocaleString()} valid tickets`);
+
+  // Clear existing data
+  console.log('🗑️  Clearing existing data...');
+  await prisma.ticket.deleteMany({});
+
+  // Import in batches
+  const BATCH_SIZE = 500;
+  const totalBatches = Math.ceil(validTickets.length / BATCH_SIZE);
+
+  console.log(`📤 Importing in ${totalBatches} batches of ${BATCH_SIZE}...`);
+
+  for (let i = 0; i < validTickets.length; i += BATCH_SIZE) {
+    const batch = validTickets.slice(i, i + BATCH_SIZE);
+    const batchNum = Math.floor(i / BATCH_SIZE) + 1;
+
+    const records = batch.map((ticket) => ({
+      ticketKey: ticket.ticket_key,
+      ticketUuid: ticket.ticket_uuid || null,
+      ticketTitle: ticket.ticket_title || null,
+      ticketDescription: ticket.ticket_description || null,
+      ticketPriority: ticket.ticket_priority || null,
+      ticketStatus: ticket.ticket_status || null,
+      ticketType: ticket.ticket_type || null,
+      orgId: ticket.org_id || null,
+      orgName: ticket.org_name || null,
+      orgStatusId: ticket.org_status_id || null,
+      orgStatusName: ticket.org_status_name || null,
+      projectName: ticket.project_name || null,
+      ticketReporterEmail: ticket.ticket_reporter_email || null,
+      ticketReporterName: ticket.ticket_reporter_name || null,
+      assignedUserName: ticket.assigned_user_name || null,
+      assignedUserEmail: ticket.assigned_user_email || null,
+      firstResponseSentUtc: parseDate(ticket.first_response_sent_utc),
+      timeToFirstResponseInMinutes: parseNumber(ticket.time_to_first_response_in_minutes),
+      firstResponderEmail: ticket.first_responder_email || null,
+      firstResponderName: ticket.first_responder_name || null,
+      latestResponseSentUtc: parseDate(ticket.latest_response_sent_utc),
+      latestResponderEmail: ticket.latest_responder_email || null,
+      latestResponderName: ticket.latest_responder_name || null,
+      dueDateUtc: parseDate(ticket.due_date_utc),
+      slaEverBreached: parseBool(ticket.sla_ever_breached),
+      firstSlaBreachedAtUtc: parseDate(ticket.first_sla_breached_at_utc),
+      latestSlaBreachedAtUtc: parseDate(ticket.latest_sla_breached_at_utc),
+      deletedAt: parseDate(ticket.deleted_at),
+      deleteReasonName: ticket.delete_reason_name || null,
+      isTicketComplete: parseBool(ticket.is_ticket_complete),
+      ticketCompletedAtUtc: parseDate(ticket.ticket_completed_at_utc),
+      timeToResolutionInMinutes: parseNumber(ticket.time_to_resolution_in_minutes),
+      assignedUserEmailWhenTicketCompleted: ticket.assigned_user_email_when_ticket_completed || null,
+      assignedUserNameWhenTicketCompleted: ticket.assigned_user_name_when_ticket_completed || null,
+      ticketTags: ticket.ticket_tags || null,
+      customFields: ticket.custom_fields || null,
+      ticketCreatedAtUtc: parseDate(ticket.ticket_created_at_utc)!,
+      ticketUpdatedAtUtc: parseDate(ticket.ticket_updated_at_utc),
+    }));
+
+    await prisma.ticket.createMany({
+      data: records,
+      skipDuplicates: true,
+    });
+
+    console.log(`  Batch ${batchNum}/${totalBatches} complete`);
+  }
+
+  // Verify import
+  const count = await prisma.ticket.count();
+  console.log(`\n✅ Import complete! ${count.toLocaleString()} tickets in database`);
+}
+
+main()
+  .catch((e) => {
+    console.error('❌ Import failed:', e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

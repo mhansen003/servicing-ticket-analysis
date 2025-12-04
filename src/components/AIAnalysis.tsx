@@ -1,15 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Sparkles, Send, Loader2 } from 'lucide-react';
+import { Sparkles, Send, Loader2, Bot } from 'lucide-react';
 
 const SUGGESTED_PROMPTS = [
-  'What are the main bottlenecks in our ticket resolution process?',
-  'Which projects need the most attention right now?',
-  'Analyze the workload distribution across team members',
-  'What patterns do you see in ticket response times?',
-  'Give me a summary of the overall ticket health',
-  'Which assignees are most efficient at resolving tickets?',
+  'What are the main bottlenecks?',
+  'Which projects need attention?',
+  'Analyze workload distribution',
+  'Response time patterns',
+  'Overall ticket health',
+  'Most efficient assignees',
 ];
 
 export function AIAnalysis() {
@@ -57,28 +57,31 @@ export function AIAnalysis() {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="h-5 w-5 text-purple-600" />
-        <h3 className="text-lg font-semibold text-gray-900">AI-Powered Analysis</h3>
+    <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] p-6 overflow-hidden relative">
+      {/* Gradient accent */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500" />
+
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+          <Sparkles className="h-5 w-5 text-blue-400" />
+        </div>
+        <div>
+          <h3 className="text-lg font-semibold text-white">AI-Powered Analysis</h3>
+          <p className="text-sm text-gray-500">Ask questions about your ticket data</p>
+        </div>
       </div>
 
-      <p className="text-sm text-gray-500 mb-4">
-        Ask questions about your ticket data and get AI-powered insights.
-      </p>
-
       {/* Suggested prompts */}
-      <div className="mb-4">
-        <p className="text-xs font-medium text-gray-400 uppercase mb-2">Suggested Questions</p>
+      <div className="mb-5">
         <div className="flex flex-wrap gap-2">
           {SUGGESTED_PROMPTS.map((suggestedPrompt, index) => (
             <button
               key={index}
               onClick={() => handleSuggestedPrompt(suggestedPrompt)}
               disabled={loading}
-              className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-full transition-colors disabled:opacity-50"
+              className="text-xs px-3 py-1.5 bg-white/[0.04] hover:bg-white/[0.08] text-gray-300 rounded-full border border-white/[0.08] transition-all hover:border-blue-500/30 disabled:opacity-50"
             >
-              {suggestedPrompt.length > 40 ? suggestedPrompt.substring(0, 40) + '...' : suggestedPrompt}
+              {suggestedPrompt}
             </button>
           ))}
         </div>
@@ -86,19 +89,19 @@ export function AIAnalysis() {
 
       {/* Custom prompt input */}
       <form onSubmit={handleSubmit} className="mb-4">
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <input
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="Ask a question about your ticket data..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+            className="flex-1 px-4 py-3 bg-[#0a0e17] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading || !prompt.trim()}
-            className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-5 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all hover:shadow-lg hover:shadow-blue-500/20"
           >
             {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             Analyze
@@ -108,25 +111,32 @@ export function AIAnalysis() {
 
       {/* Error display */}
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 mb-4">
+        <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 mb-4">
           {error}
         </div>
       )}
 
       {/* Analysis results */}
       {analysis && (
-        <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
-          <div className="prose prose-sm max-w-none">
-            <div className="whitespace-pre-wrap text-gray-800">{analysis}</div>
+        <div className="p-5 bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-blue-500/10 rounded-xl">
+          <div className="flex items-center gap-2 mb-3">
+            <Bot className="h-4 w-4 text-blue-400" />
+            <span className="text-xs font-medium text-blue-400 uppercase tracking-wider">AI Analysis</span>
+          </div>
+          <div className="prose prose-sm max-w-none prose-invert">
+            <div className="whitespace-pre-wrap text-gray-300 leading-relaxed">{analysis}</div>
           </div>
         </div>
       )}
 
       {/* Loading state */}
       {loading && (
-        <div className="p-8 flex flex-col items-center justify-center text-gray-500">
-          <Loader2 className="h-8 w-8 animate-spin mb-2" />
-          <p>Analyzing your ticket data...</p>
+        <div className="p-8 flex flex-col items-center justify-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse" />
+            <Loader2 className="h-8 w-8 animate-spin text-blue-400 relative" />
+          </div>
+          <p className="mt-4 text-gray-400 text-sm">Analyzing your ticket data...</p>
         </div>
       )}
     </div>
