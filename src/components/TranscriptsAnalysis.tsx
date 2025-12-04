@@ -14,6 +14,8 @@ import {
   BarChart,
   Bar,
   Legend,
+  LineChart,
+  Line,
 } from 'recharts';
 import {
   Phone,
@@ -384,19 +386,19 @@ export default function TranscriptsAnalysis() {
             {/* Legend */}
             <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-emerald-500"></div>
-                <span>Positive</span>
+                <div className="w-8 h-0.5 bg-emerald-500"></div>
+                <span>Positive %</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-gray-500"></div>
-                <span>Neutral</span>
+                <div className="w-8 h-0.5 bg-gray-500"></div>
+                <span>Neutral %</span>
               </div>
               <div className="flex items-center gap-1">
-                <div className="w-3 h-3 rounded bg-red-500"></div>
-                <span>Negative</span>
+                <div className="w-8 h-0.5 bg-red-500"></div>
+                <span>Negative %</span>
               </div>
               <span className="text-gray-600">|</span>
-              <span>Bar height = call volume</span>
+              <span>Mini charts show ±3 day trends</span>
             </div>
 
             {/* Calendar Grid */}
@@ -420,7 +422,27 @@ export default function TranscriptsAnalysis() {
 
                 const cells = [];
                 const dayMap = new Map(sortedDays.map(d => [d.date, d]));
-                const maxTotal = Math.max(...sortedDays.map(d => d.total));
+
+                // Helper to get sparkline data for a date (±3 days)
+                const getSparklineData = (centerDate: string) => {
+                  const center = new Date(centerDate);
+                  const data = [];
+                  for (let offset = -3; offset <= 3; offset++) {
+                    const d = new Date(center);
+                    d.setDate(d.getDate() + offset);
+                    const dateStr = d.toISOString().split('T')[0];
+                    const dayData = dayMap.get(dateStr);
+                    if (dayData && dayData.total > 0) {
+                      data.push({
+                        day: offset,
+                        positive: (dayData.positive / dayData.total) * 100,
+                        neutral: (dayData.neutral / dayData.total) * 100,
+                        negative: (dayData.negative / dayData.total) * 100,
+                      });
+                    }
+                  }
+                  return data;
+                };
 
                 const currentDate = new Date(calendarStart);
                 while (currentDate <= endDate || currentDate.getDay() !== 0) {
@@ -432,50 +454,61 @@ export default function TranscriptsAnalysis() {
                     const positivePercent = (dayData.positive / total) * 100;
                     const neutralPercent = (dayData.neutral / total) * 100;
                     const negativePercent = (dayData.negative / total) * 100;
-                    const heightPercent = Math.max(30, (total / maxTotal) * 100); // Min 30% height
+                    const sparklineData = getSparklineData(dateStr);
 
                     cells.push(
                       <button
                         key={dateStr}
                         onClick={() => openDrillDown('all', dateStr, `Calls on ${formatDate(dateStr)}`)}
-                        className="bg-gray-800/50 rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[70px] flex flex-col"
+                        className="bg-gray-800/50 rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[80px] flex flex-col"
                         title={`${formatDate(dateStr)}: ${total} calls`}
                       >
                         {/* Date label */}
-                        <span className="text-[10px] text-gray-400 font-medium mb-1">{currentDate.getDate()}</span>
+                        <span className="text-[10px] text-gray-400 font-medium">{currentDate.getDate()}</span>
 
-                        {/* Stacked sentiment bar */}
-                        <div className="flex-1 flex items-end justify-center">
-                          <div
-                            className="w-full max-w-[32px] rounded-sm overflow-hidden flex flex-col-reverse"
-                            style={{ height: `${heightPercent}%` }}
-                          >
-                            {/* Negative (bottom - red) */}
-                            {negativePercent > 0 && (
-                              <div
-                                className="w-full bg-red-500 transition-all"
-                                style={{ height: `${negativePercent}%` }}
-                              />
-                            )}
-                            {/* Neutral (middle - gray) */}
-                            {neutralPercent > 0 && (
-                              <div
-                                className="w-full bg-gray-500 transition-all"
-                                style={{ height: `${neutralPercent}%` }}
-                              />
-                            )}
-                            {/* Positive (top - green) */}
-                            {positivePercent > 0 && (
-                              <div
-                                className="w-full bg-emerald-500 transition-all"
-                                style={{ height: `${positivePercent}%` }}
-                              />
-                            )}
-                          </div>
+                        {/* Mini sparkline chart */}
+                        <div className="flex-1 w-full">
+                          {sparklineData.length >= 2 ? (
+                            <ResponsiveContainer width="100%" height={36}>
+                              <LineChart data={sparklineData} margin={{ top: 2, right: 2, bottom: 2, left: 2 }}>
+                                <Line
+                                  type="monotone"
+                                  dataKey="positive"
+                                  stroke="#22c55e"
+                                  strokeWidth={1.5}
+                                  dot={false}
+                                  isAnimationActive={false}
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="neutral"
+                                  stroke="#6b7280"
+                                  strokeWidth={1}
+                                  dot={false}
+                                  isAnimationActive={false}
+                                />
+                                <Line
+                                  type="monotone"
+                                  dataKey="negative"
+                                  stroke="#ef4444"
+                                  strokeWidth={1.5}
+                                  dot={false}
+                                  isAnimationActive={false}
+                                />
+                              </LineChart>
+                            </ResponsiveContainer>
+                          ) : (
+                            // Fallback: show sentiment dots if not enough data for sparkline
+                            <div className="flex items-center justify-center h-full gap-1">
+                              <div className="w-2 h-2 rounded-full bg-emerald-500" style={{ opacity: positivePercent / 100 }} />
+                              <div className="w-2 h-2 rounded-full bg-gray-500" style={{ opacity: neutralPercent / 100 }} />
+                              <div className="w-2 h-2 rounded-full bg-red-500" style={{ opacity: negativePercent / 100 }} />
+                            </div>
+                          )}
                         </div>
 
                         {/* Call count */}
-                        <span className="text-[9px] text-gray-500 mt-1">{total}</span>
+                        <span className="text-[9px] text-gray-500">{total}</span>
 
                         {/* Hover tooltip */}
                         <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 border border-gray-700 shadow-xl">
@@ -492,7 +525,7 @@ export default function TranscriptsAnalysis() {
                   } else {
                     // Empty cell for days outside range
                     cells.push(
-                      <div key={dateStr} className="bg-gray-800/20 rounded-lg min-h-[70px]"></div>
+                      <div key={dateStr} className="bg-gray-800/20 rounded-lg min-h-[80px]"></div>
                     );
                   }
 
