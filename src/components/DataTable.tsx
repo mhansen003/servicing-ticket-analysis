@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   Search,
   ChevronDown,
@@ -13,6 +13,9 @@ import {
   Table2,
   Loader2,
   ArrowLeft,
+  Plus,
+  Minus,
+  ChevronRight as ChevronRightIcon,
 } from 'lucide-react';
 import type { DrillDownFilter } from '@/app/page';
 
@@ -43,10 +46,23 @@ interface GroupData {
   completed: number;
   avgResolution: number;
   completionRate: number;
+  children?: GroupData[];
+}
+
+interface MultiLevelGroupData {
+  key: string;
+  values: Record<string, string>;
+  count: number;
+  completed: number;
+  avgResolution: number;
+  completionRate: number;
+  children?: MultiLevelGroupData[];
+  expanded?: boolean;
 }
 
 type SortField = 'key' | 'title' | 'status' | 'priority' | 'project' | 'assignee' | 'created' | 'resolutionTime';
 type ViewMode = 'table' | 'grouped';
+type GroupByField = 'project' | 'status' | 'priority' | 'assignee' | 'category';
 
 interface DataTableProps {
   drillDownFilter?: DrillDownFilter | null;
@@ -77,9 +93,10 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
 
   // View mode
   const [viewMode, setViewMode] = useState<ViewMode>('table');
-  const [groupBy, setGroupBy] = useState<string>('project');
-  const [groupedData, setGroupedData] = useState<GroupData[]>([]);
+  const [groupByLevels, setGroupByLevels] = useState<GroupByField[]>(['project']);
+  const [groupedData, setGroupedData] = useState<MultiLevelGroupData[]>([]);
   const [groupLoading, setGroupLoading] = useState(false);
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   // Filter panel
   const [showFilters, setShowFilters] = useState(false);
@@ -159,23 +176,24 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     }
   }, [fetchTickets, viewMode]);
 
-  // Fetch grouped data
+  // Fetch grouped data with multi-level support
   const fetchGroupedData = useCallback(async () => {
     setGroupLoading(true);
     try {
       const response = await fetch('/api/tickets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ groupBy }),
+        body: JSON.stringify({ groupByLevels }),
       });
       const data = await response.json();
-      setGroupedData(data.groups);
+      setGroupedData(data.groups || []);
+      setExpandedGroups(new Set()); // Reset expanded state when grouping changes
     } catch (error) {
       console.error('Failed to fetch grouped data:', error);
     } finally {
       setGroupLoading(false);
     }
-  }, [groupBy]);
+  }, [groupByLevels]);
 
   useEffect(() => {
     if (viewMode === 'grouped') {
@@ -323,6 +341,108 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     Low: 'bg-green-500/20 text-green-400 border-green-500/30',
   };
 
+  // Toggle group expansion
+  const toggleGroupExpansion = (key: string) => {
+    setExpandedGroups(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(key)) {
+        newSet.delete(key);
+      } else {
+        newSet.add(key);
+      }
+      return newSet;
+    });
+  };
+
+  // Render grouped rows recursively
+  const renderGroupRows = (groups: MultiLevelGroupData[], level: number): React.ReactNode => {
+    return groups.map((group) => {
+      const isExpanded = expandedGroups.has(group.key);
+      const hasChildren = group.children && group.children.length > 0;
+      const indentPadding = level * 24;
+
+      return (
+        <React.Fragment key={group.key}>
+          <tr
+            className={`hover:bg-white/[0.02] transition-colors ${hasChildren ? 'cursor-pointer' : ''}`}
+            onClick={() => {
+              if (hasChildren) {
+                toggleGroupExpansion(group.key);
+              } else {
+                // Apply filters and switch to table view for leaf nodes
+                const filters = group.values;
+                if (filters.project) setProjectFilter([filters.project]);
+                if (filters.status) setStatusFilter([filters.status]);
+                if (filters.priority) setPriorityFilter([filters.priority]);
+                if (filters.assignee) setAssigneeFilter([filters.assignee]);
+                if (filters.category) setCategoryFilter(filters.category);
+                setViewMode('table');
+              }
+            }}
+          >
+            {/* Render cells for each grouping level */}
+            {groupByLevels.map((field, colIndex) => {
+              const value = group.values[field] || '';
+              const isCurrentLevel = colIndex === level;
+
+              return (
+                <td key={field} className="px-4 py-3">
+                  {isCurrentLevel ? (
+                    <div className="flex items-center gap-2" style={{ paddingLeft: `${indentPadding}px` }}>
+                      {hasChildren && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleGroupExpansion(group.key);
+                          }}
+                          className="p-0.5 rounded hover:bg-white/[0.1] transition-colors"
+                        >
+                          {isExpanded ? (
+                            <ChevronDown className="h-4 w-4 text-gray-400" />
+                          ) : (
+                            <ChevronRightIcon className="h-4 w-4 text-gray-400" />
+                          )}
+                        </button>
+                      )}
+                      {!hasChildren && <span className="w-5" />}
+                      <span className="text-sm font-medium text-white truncate max-w-[200px]" title={value}>
+                        {value || 'Unknown'}
+                      </span>
+                    </div>
+                  ) : colIndex < level ? (
+                    <span className="text-sm text-gray-600">—</span>
+                  ) : (
+                    <span className="text-sm text-gray-500">—</span>
+                  )}
+                </td>
+              );
+            })}
+            <td className="px-4 py-3 text-right text-sm font-medium text-white">
+              {group.count.toLocaleString()}
+            </td>
+            <td className="px-4 py-3 text-right text-sm text-gray-400">
+              {group.completed.toLocaleString()}
+            </td>
+            <td className="px-4 py-3 text-right">
+              <span className={`text-sm font-medium ${
+                group.completionRate > 75 ? 'text-green-400' :
+                group.completionRate > 50 ? 'text-yellow-400' :
+                'text-red-400'
+              }`}>
+                {group.completionRate}%
+              </span>
+            </td>
+            <td className="px-4 py-3 text-right text-sm text-gray-500">
+              {group.avgResolution > 0 ? `${group.avgResolution}h` : '—'}
+            </td>
+          </tr>
+          {/* Render children if expanded */}
+          {hasChildren && isExpanded && renderGroupRows(group.children!, level + 1)}
+        </React.Fragment>
+      );
+    });
+  };
+
   return (
     <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
       {/* Drill-down banner */}
@@ -389,16 +509,54 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
             </div>
 
             {viewMode === 'grouped' && (
-              <select
-                value={groupBy}
-                onChange={(e) => setGroupBy(e.target.value)}
-                className="px-3 py-2 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="project">Group by Project</option>
-                <option value="status">Group by Status</option>
-                <option value="priority">Group by Priority</option>
-                <option value="assignee">Group by Assignee</option>
-              </select>
+              <div className="flex items-center gap-2 flex-wrap">
+                {groupByLevels.map((level, index) => (
+                  <div key={index} className="flex items-center gap-1">
+                    {index > 0 && <ChevronRightIcon className="h-4 w-4 text-gray-500" />}
+                    <select
+                      value={level}
+                      onChange={(e) => {
+                        const newLevels = [...groupByLevels];
+                        newLevels[index] = e.target.value as GroupByField;
+                        setGroupByLevels(newLevels);
+                      }}
+                      className="px-3 py-2 bg-[#0a0e17] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+                    >
+                      <option value="project">Project</option>
+                      <option value="status">Status</option>
+                      <option value="priority">Priority</option>
+                      <option value="assignee">Assignee</option>
+                      <option value="category">Category</option>
+                    </select>
+                    {groupByLevels.length > 1 && (
+                      <button
+                        onClick={() => {
+                          const newLevels = groupByLevels.filter((_, i) => i !== index);
+                          setGroupByLevels(newLevels);
+                        }}
+                        className="p-1 text-gray-500 hover:text-red-400 transition-colors"
+                        title="Remove level"
+                      >
+                        <Minus className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {groupByLevels.length < 3 && (
+                  <button
+                    onClick={() => {
+                      const availableFields: GroupByField[] = ['project', 'status', 'priority', 'assignee', 'category'];
+                      const unusedField = availableFields.find(f => !groupByLevels.includes(f)) || 'status';
+                      setGroupByLevels([...groupByLevels, unusedField]);
+                    }}
+                    className="flex items-center gap-1 px-3 py-2 bg-blue-500/10 border border-blue-500/30 rounded-lg text-sm text-blue-400 hover:bg-blue-500/20 transition-colors"
+                    title="Add grouping level"
+                  >
+                    <Plus className="h-4 w-4" />
+                    Add Level
+                  </button>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -611,51 +769,39 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
 
       {/* Grouped View */}
       {viewMode === 'grouped' && (
-        <div className="p-4">
+        <div className="overflow-x-auto">
           {groupLoading ? (
             <div className="py-12 text-center">
               <Loader2 className="h-6 w-6 animate-spin text-blue-400 mx-auto" />
               <p className="mt-2 text-sm text-gray-500">Calculating groups...</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {groupedData.slice(0, 30).map((group) => (
-                <div
-                  key={group.name}
-                  className="p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06] hover:border-blue-500/30 transition-all cursor-pointer"
-                  onClick={() => {
-                    if (groupBy === 'project') setProjectFilter([group.name]);
-                    else if (groupBy === 'status') setStatusFilter([group.name]);
-                    else if (groupBy === 'priority') setPriorityFilter([group.name]);
-                    else if (groupBy === 'assignee') setAssigneeFilter([group.name]);
-                    setViewMode('table');
-                  }}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{group.name}</p>
-                      <p className="text-2xl font-bold text-white mt-1">{group.count.toLocaleString()}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs text-gray-500">Completion</p>
-                      <p className={`text-sm font-medium ${
-                        group.completionRate > 75 ? 'text-green-400' :
-                        group.completionRate > 50 ? 'text-yellow-400' :
-                        'text-red-400'
-                      }`}>
-                        {group.completionRate}%
-                      </p>
-                    </div>
-                  </div>
-                  <div className="mt-3 flex items-center justify-between text-xs text-gray-500">
-                    <span>{group.completed.toLocaleString()} completed</span>
-                    {group.avgResolution > 0 && (
-                      <span>~{group.avgResolution}h avg</span>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
+            <table className="w-full">
+              <thead className="bg-[#0a0e17]/50">
+                <tr>
+                  {groupByLevels.map((level, index) => (
+                    <th key={level} className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      {index === 0 ? '' : ''}{level.charAt(0).toUpperCase() + level.slice(1)}
+                    </th>
+                  ))}
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-28">Tickets</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-28">Completed</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-28">Completion %</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider w-28">Avg Resolution</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/[0.04]">
+                {groupedData.length === 0 ? (
+                  <tr>
+                    <td colSpan={groupByLevels.length + 4} className="px-4 py-12 text-center text-gray-500">
+                      No data to group
+                    </td>
+                  </tr>
+                ) : (
+                  renderGroupRows(groupedData, 0)
+                )}
+              </tbody>
+            </table>
           )}
         </div>
       )}

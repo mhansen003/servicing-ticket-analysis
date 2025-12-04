@@ -292,56 +292,297 @@ export async function GET(request: Request) {
   }
 }
 
-// Group by endpoint
+// Map frontend field names to database column names
+const FIELD_TO_COLUMN: Record<string, string> = {
+  project: 'project_name',
+  status: 'ticket_status',
+  priority: 'ticket_priority',
+  assignee: 'assigned_user_name',
+  category: 'computed_category', // Special handling needed
+};
+
+// Category CASE expression for SQL (matches prebuild.js exactly)
+const CATEGORY_CASE_SQL = `
+  CASE
+    WHEN LOWER(ticket_title) LIKE '%automatic reply%' OR LOWER(ticket_title) LIKE '%unmonitored mailbox%' OR LOWER(ticket_title) LIKE '%sagentsupport%' OR LOWER(ticket_title) LIKE '%auto-reply%' THEN 'Automated System Messages'
+    WHEN LOWER(ticket_title) LIKE '%payment%' OR LOWER(ticket_title) LIKE '%pay %' OR LOWER(ticket_title) LIKE '%ach%' OR LOWER(ticket_title) LIKE '%autopay%' OR LOWER(ticket_title) LIKE '%draft%' OR LOWER(ticket_title) LIKE '%misapplied%' OR LOWER(ticket_title) LIKE '%overpayment%' OR LOWER(ticket_title) LIKE '%underpayment%' OR LOWER(ticket_title) LIKE '%double draft%' THEN 'Payment Issues'
+    WHEN LOWER(ticket_title) LIKE '%escrow%' OR LOWER(ticket_title) LIKE '%tax bill%' OR LOWER(ticket_title) LIKE '%tax %' OR LOWER(ticket_title) LIKE '%insurance%' OR LOWER(ticket_title) LIKE '%hoi %' OR LOWER(ticket_title) LIKE '%pmi%' OR LOWER(ticket_title) LIKE '%shortage%' OR LOWER(ticket_title) LIKE '%surplus%' OR LOWER(ticket_title) LIKE '%flood%' OR LOWER(ticket_title) LIKE '%hazard%' THEN 'Escrow'
+    WHEN LOWER(ticket_title) LIKE '%statement%' OR LOWER(ticket_title) LIKE '%letter%' OR LOWER(ticket_title) LIKE '%document%' OR LOWER(ticket_title) LIKE '%1098%' OR LOWER(ticket_title) LIKE '%payoff%' OR LOWER(ticket_title) LIKE '%release%' OR LOWER(ticket_title) LIKE '%mortgage release%' OR LOWER(ticket_title) LIKE '%amortization%' OR LOWER(ticket_title) LIKE '%confirmation%' THEN 'Documentation'
+    WHEN LOWER(ticket_title) LIKE '%transfer%' OR LOWER(ticket_title) LIKE '%board%' OR LOWER(ticket_title) LIKE '%cenlar%' OR LOWER(ticket_title) LIKE '%sold%' OR LOWER(ticket_title) LIKE '%subservicer%' OR LOWER(ticket_title) LIKE '%lakeview%' OR LOWER(ticket_title) LIKE '%servicemac%' OR LOWER(ticket_title) LIKE '%notice of servicing%' THEN 'Transfer/Boarding'
+    WHEN LOWER(ticket_title) LIKE '%voice mail%' OR LOWER(ticket_title) LIKE '%voicemail%' OR LOWER(ticket_title) LIKE '%alert%' OR LOWER(ticket_title) LIKE '%interim%' THEN 'Voice/Alert Requests'
+    WHEN LOWER(ticket_title) LIKE '%login%' OR LOWER(ticket_title) LIKE '%password%' OR LOWER(ticket_title) LIKE '%access%' OR LOWER(ticket_title) LIKE '%portal%' OR LOWER(ticket_title) LIKE '%locked out%' OR LOWER(ticket_title) LIKE '%reset%' OR LOWER(ticket_title) LIKE '%website link%' OR LOWER(ticket_title) LIKE '%online%' THEN 'Account Access'
+    WHEN LOWER(ticket_title) LIKE '%loan number%' OR LOWER(ticket_title) LIKE '%loan info%' OR LOWER(ticket_title) LIKE '%balance%' OR LOWER(ticket_title) LIKE '%rate%' OR LOWER(ticket_title) LIKE '%mailing address%' OR LOWER(ticket_title) LIKE '%wire%' OR LOWER(ticket_title) LIKE '%reimbursement%' THEN 'Loan Info Request'
+    WHEN LOWER(ticket_title) LIKE '%mycoverageinfo%' OR LOWER(ticket_title) LIKE '%covius%' OR LOWER(ticket_title) LIKE '%coverage%' OR LOWER(ticket_title) LIKE '%policy%' THEN 'Insurance/Coverage'
+    WHEN LOWER(ticket_title) LIKE '%recast%' OR LOWER(ticket_title) LIKE '%buyout%' OR LOWER(ticket_title) LIKE '%assumption%' OR LOWER(ticket_title) LIKE '%modification%' OR LOWER(ticket_title) LIKE '%forbearance%' OR LOWER(ticket_title) LIKE '%hardship%' OR LOWER(ticket_title) LIKE '%loss mitigation%' OR LOWER(ticket_title) LIKE '%deferment%' THEN 'Loan Changes'
+    WHEN LOWER(ticket_title) LIKE '%complaint%' OR LOWER(ticket_title) LIKE '%escalat%' OR LOWER(ticket_title) LIKE '%elevated%' OR LOWER(ticket_title) LIKE '%urgent%' OR LOWER(ticket_title) LIKE '%mess%' OR LOWER(ticket_title) LIKE '%facebook%' OR LOWER(ticket_title) LIKE '%issue%' THEN 'Complaints/Escalations'
+    WHEN LOWER(ticket_title) LIKE '%help%' OR LOWER(ticket_title) LIKE '%question%' OR LOWER(ticket_title) LIKE '%request%' OR LOWER(ticket_title) LIKE '%information%' OR LOWER(ticket_title) LIKE '%needed%' OR LOWER(ticket_title) LIKE '%assistance%' THEN 'General Inquiry'
+    WHEN LOWER(ticket_title) LIKE '%fw:%' OR LOWER(ticket_title) LIKE '%fwd:%' OR LOWER(ticket_title) LIKE '%re:%' OR LOWER(ticket_title) LIKE '%follow up%' OR LOWER(ticket_title) LIKE '%call back%' THEN 'Communication/Forwarded'
+    WHEN ticket_title ~ '(r[a-z]{2}[0-9]{7,}|0[0-9]{9}|[0-9]{10,}|loan\\s*#?\\s*[0-9]+)' THEN 'Loan-Specific Inquiry'
+    ELSE 'Other'
+  END
+`;
+
+// Multi-level group by endpoint
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { groupBy } = body;
+    const { groupByLevels } = body;
 
-    // Map frontend field names to database field names
-    const fieldMap: Record<string, keyof Prisma.TicketGroupByOutputType> = {
-      project: 'projectName',
-      status: 'ticketStatus',
-      priority: 'ticketPriority',
-      assignee: 'assignedUserName',
-    };
+    if (!groupByLevels || !Array.isArray(groupByLevels) || groupByLevels.length === 0) {
+      return NextResponse.json({ groups: [] });
+    }
 
-    const dbField = fieldMap[groupBy] || 'projectName';
+    // Build the GROUP BY columns and SELECT expressions
+    const selectColumns: string[] = [];
+    const groupByColumns: string[] = [];
 
-    // Use raw SQL for better performance on aggregations
-    // Filter to servicing projects only
-    const result = await prisma.$queryRaw<
-      Array<{
-        name: string;
-        count: bigint;
-        completed: bigint;
-        avg_resolution: number | null;
-      }>
-    >`
+    groupByLevels.forEach((field: string) => {
+      if (field === 'category') {
+        selectColumns.push(`(${CATEGORY_CASE_SQL}) as category`);
+        groupByColumns.push(`(${CATEGORY_CASE_SQL})`);
+      } else {
+        const column = FIELD_TO_COLUMN[field] || 'project_name';
+        selectColumns.push(`${column} as ${field}`);
+        groupByColumns.push(column);
+      }
+    });
+
+    // Execute the multi-level group query
+    const query = `
       SELECT
-        ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} as name,
+        ${selectColumns.join(', ')},
         COUNT(*) as count,
         SUM(CASE WHEN is_ticket_complete THEN 1 ELSE 0 END) as completed,
         AVG(time_to_resolution_in_minutes) / 60 as avg_resolution
       FROM tickets
       WHERE project_name IN ('Servicing Help', 'Servicing Escalations WG', 'ServApp Support', 'CMG Servicing Oversight')
-        AND ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')} IS NOT NULL
-      GROUP BY ${Prisma.raw(dbField === 'projectName' ? 'project_name' : dbField === 'ticketStatus' ? 'ticket_status' : dbField === 'ticketPriority' ? 'ticket_priority' : 'assigned_user_name')}
+      GROUP BY ${groupByColumns.join(', ')}
       ORDER BY count DESC
-      LIMIT 50
+      LIMIT 500
     `;
 
-    const groups = result.map((r) => ({
-      name: r.name || 'Unknown',
-      count: Number(r.count),
-      completed: Number(r.completed),
-      avgResolution: r.avg_resolution ? Math.round(r.avg_resolution) : 0,
-      completionRate: r.count > 0 ? Math.round((Number(r.completed) / Number(r.count)) * 100) : 0,
-    }));
+    const result = await prisma.$queryRawUnsafe<Array<Record<string, unknown>>>(query);
+
+    // Build hierarchical structure from flat results
+    const groups = buildHierarchy(result, groupByLevels);
 
     return NextResponse.json({ groups });
   } catch (error) {
     console.error('Error grouping tickets:', error);
     return NextResponse.json({ error: 'Failed to group tickets' }, { status: 500 });
   }
+}
+
+// Build hierarchical group structure from flat query results
+function buildHierarchy(
+  rows: Array<Record<string, unknown>>,
+  levels: string[]
+): Array<{
+  key: string;
+  values: Record<string, string>;
+  count: number;
+  completed: number;
+  avgResolution: number;
+  completionRate: number;
+  children?: Array<unknown>;
+}> {
+  if (levels.length === 1) {
+    // Single level - return flat list
+    return rows.map((row) => {
+      const value = String(row[levels[0]] || 'Unknown');
+      const count = Number(row.count || 0);
+      const completed = Number(row.completed || 0);
+      return {
+        key: value,
+        values: { [levels[0]]: value },
+        count,
+        completed,
+        avgResolution: row.avg_resolution ? Math.round(Number(row.avg_resolution)) : 0,
+        completionRate: count > 0 ? Math.round((completed / count) * 100) : 0,
+      };
+    });
+  }
+
+  // Multi-level - build tree structure
+  const tree = new Map<string, {
+    values: Record<string, string>;
+    count: number;
+    completed: number;
+    totalResolution: number;
+    resolutionCount: number;
+    childMap: Map<string, unknown>;
+  }>();
+
+  const firstLevel = levels[0];
+
+  rows.forEach((row) => {
+    const firstValue = String(row[firstLevel] || 'Unknown');
+
+    if (!tree.has(firstValue)) {
+      tree.set(firstValue, {
+        values: { [firstLevel]: firstValue },
+        count: 0,
+        completed: 0,
+        totalResolution: 0,
+        resolutionCount: 0,
+        childMap: new Map(),
+      });
+    }
+
+    const parent = tree.get(firstValue)!;
+    const count = Number(row.count || 0);
+    const completed = Number(row.completed || 0);
+    const avgRes = row.avg_resolution ? Number(row.avg_resolution) : 0;
+
+    parent.count += count;
+    parent.completed += completed;
+    if (avgRes > 0) {
+      parent.totalResolution += avgRes * count;
+      parent.resolutionCount += count;
+    }
+
+    // Build child values for remaining levels
+    if (levels.length > 1) {
+      const childKey = levels.slice(1).map((l) => String(row[l] || 'Unknown')).join('|');
+      const childValues: Record<string, string> = { [firstLevel]: firstValue };
+      levels.slice(1).forEach((l) => {
+        childValues[l] = String(row[l] || 'Unknown');
+      });
+
+      if (!parent.childMap.has(childKey)) {
+        parent.childMap.set(childKey, {
+          values: childValues,
+          count: 0,
+          completed: 0,
+          totalResolution: 0,
+          resolutionCount: 0,
+        });
+      }
+
+      const child = parent.childMap.get(childKey) as {
+        values: Record<string, string>;
+        count: number;
+        completed: number;
+        totalResolution: number;
+        resolutionCount: number;
+      };
+      child.count += count;
+      child.completed += completed;
+      if (avgRes > 0) {
+        child.totalResolution += avgRes * count;
+        child.resolutionCount += count;
+      }
+    }
+  });
+
+  // Convert tree to array with children
+  const result = Array.from(tree.entries())
+    .map(([key, data]) => {
+      const avgResolution = data.resolutionCount > 0
+        ? Math.round(data.totalResolution / data.resolutionCount)
+        : 0;
+
+      const children = levels.length > 1
+        ? buildChildrenFromMap(data.childMap, levels, 1, data.values)
+        : undefined;
+
+      return {
+        key,
+        values: data.values,
+        count: data.count,
+        completed: data.completed,
+        avgResolution,
+        completionRate: data.count > 0 ? Math.round((data.completed / data.count) * 100) : 0,
+        children,
+      };
+    })
+    .sort((a, b) => b.count - a.count);
+
+  return result;
+}
+
+// Helper to build children recursively
+function buildChildrenFromMap(
+  childMap: Map<string, unknown>,
+  levels: string[],
+  currentLevel: number,
+  parentValues: Record<string, string>
+): Array<{
+  key: string;
+  values: Record<string, string>;
+  count: number;
+  completed: number;
+  avgResolution: number;
+  completionRate: number;
+  children?: Array<unknown>;
+}> {
+  const currentField = levels[currentLevel];
+
+  // Group by current level
+  const grouped = new Map<string, {
+    values: Record<string, string>;
+    count: number;
+    completed: number;
+    totalResolution: number;
+    resolutionCount: number;
+    childMap: Map<string, unknown>;
+  }>();
+
+  childMap.forEach((childData) => {
+    const data = childData as {
+      values: Record<string, string>;
+      count: number;
+      completed: number;
+      totalResolution: number;
+      resolutionCount: number;
+    };
+
+    const currentValue = data.values[currentField] || 'Unknown';
+
+    if (!grouped.has(currentValue)) {
+      grouped.set(currentValue, {
+        values: { ...parentValues, [currentField]: currentValue },
+        count: 0,
+        completed: 0,
+        totalResolution: 0,
+        resolutionCount: 0,
+        childMap: new Map(),
+      });
+    }
+
+    const group = grouped.get(currentValue)!;
+    group.count += data.count;
+    group.completed += data.completed;
+    group.totalResolution += data.totalResolution;
+    group.resolutionCount += data.resolutionCount;
+
+    // If there are more levels, add to childMap
+    if (currentLevel < levels.length - 1) {
+      const remainingKey = levels.slice(currentLevel + 1).map((l) => data.values[l] || 'Unknown').join('|');
+      group.childMap.set(remainingKey, data);
+    }
+  });
+
+  return Array.from(grouped.entries())
+    .map(([key, data]) => {
+      const avgResolution = data.resolutionCount > 0
+        ? Math.round(data.totalResolution / data.resolutionCount)
+        : 0;
+
+      const hasMoreLevels = currentLevel < levels.length - 1;
+      const children = hasMoreLevels
+        ? buildChildrenFromMap(data.childMap, levels, currentLevel + 1, data.values)
+        : undefined;
+
+      return {
+        key: `${parentValues[levels[0]]}|${key}`,
+        values: data.values,
+        count: data.count,
+        completed: data.completed,
+        avgResolution,
+        completionRate: data.count > 0 ? Math.round((data.completed / data.count) * 100) : 0,
+        children,
+      };
+    })
+    .sort((a, b) => b.count - a.count);
 }
