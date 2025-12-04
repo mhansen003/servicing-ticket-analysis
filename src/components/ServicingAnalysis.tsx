@@ -17,6 +17,7 @@ import {
 } from 'recharts';
 import { TrendingUp, TrendingDown, Calendar, BarChart3, PieChartIcon, Layers, MousePointer } from 'lucide-react';
 import type { DrillDownFilter } from '@/app/page';
+import { TicketModal } from './TicketModal';
 
 interface ServicingCategory {
   name: string;
@@ -76,6 +77,12 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
   const [timeView, setTimeView] = useState<TimeView>('weekly');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
+  // Modal state for drill-down
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalFilterType, setModalFilterType] = useState<'category' | 'project'>('category');
+  const [modalFilterValue, setModalFilterValue] = useState('');
+
   useEffect(() => {
     fetch('/api/stats')
       .then((res) => res.json())
@@ -130,40 +137,25 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
 
   const timeSeriesData = getTimeSeriesData();
 
-  // Handle category click - drill down to raw data using exact category name
+  // Handle category click - open modal with category filter
   const handleCategoryClick = (categoryName: string) => {
-    if (onDrillDown) {
-      // Pass the exact category name - DataTable will filter by category field
-      onDrillDown({
-        type: 'category',
-        value: categoryName, // Exact category name for filtering
-        label: `Category: ${categoryName}`,
-      });
-    }
+    setModalTitle(`Category: ${categoryName}`);
+    setModalFilterType('category');
+    setModalFilterValue(categoryName);
+    setModalOpen(true);
   };
 
-  // Handle project click - drill down to raw data
+  // Handle project click - open modal with project filter
   const handleProjectClick = (projectName: string) => {
-    if (onDrillDown) {
-      onDrillDown({
-        type: 'project',
-        value: projectName,
-        label: `Project: ${projectName}`,
-      });
-    }
+    setModalTitle(`Project: ${projectName}`);
+    setModalFilterType('project');
+    setModalFilterValue(projectName);
+    setModalOpen(true);
   };
 
-  // Handle time series click - drill down with date info
-  const handleTimeSeriesClick = (date: string) => {
-    if (onDrillDown) {
-      const formattedDate = formatDate(date);
-      onDrillDown({
-        type: 'search',
-        value: '', // Clear search to show all for that period
-        label: `${timeView.charAt(0).toUpperCase() + timeView.slice(1)} of ${formattedDate}`,
-        dateStart: date,
-      });
-    }
+  // Close modal
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   // Calculate trend
@@ -277,11 +269,9 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
           <h3 className="text-white font-medium mb-4 flex items-center gap-2">
             <PieChartIcon className="w-4 h-4 text-blue-400" />
             Category Distribution
-            {onDrillDown && (
-              <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
-                <MousePointer className="w-3 h-3" /> Click to drill down
-              </span>
-            )}
+            <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
+              <MousePointer className="w-3 h-3" /> Click to view tickets
+            </span>
           </h3>
           <ResponsiveContainer width="100%" height={250}>
             <PieChart>
@@ -295,7 +285,7 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
                 label={({ name, percent }) => `${(name as string)?.split(' ')[0] || ''} ${percent}%`}
                 labelLine={false}
                 onClick={(entry) => handleCategoryClick(entry.name)}
-                style={{ cursor: onDrillDown ? 'pointer' : 'default' }}
+                style={{ cursor: 'pointer' }}
               >
                 {data.topCategories.map((_, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -321,11 +311,9 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
         <h3 className="text-white font-medium mb-4 flex items-center gap-2">
           <Layers className="w-4 h-4 text-blue-400" />
           Top 6 Categories - Month Over Month Trends
-          {onDrillDown && (
-            <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
-              <MousePointer className="w-3 h-3" /> Click legend to drill down
-            </span>
-          )}
+          <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
+            <MousePointer className="w-3 h-3" /> Click legend to view tickets
+          </span>
         </h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={data.categoryTrends}>
@@ -350,7 +338,7 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
             />
             <Legend
               onClick={(e) => handleCategoryClick(e.value as string)}
-              wrapperStyle={{ cursor: onDrillDown ? 'pointer' : 'default' }}
+              wrapperStyle={{ cursor: 'pointer' }}
             />
             {data.topCategories.map((cat, index) => (
               <Line
@@ -371,11 +359,9 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
       <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
         <h3 className="text-white font-medium mb-4 flex items-center gap-2">
           All Categories
-          {onDrillDown && (
-            <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
-              <MousePointer className="w-3 h-3" /> Click row to see tickets
-            </span>
-          )}
+          <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
+            <MousePointer className="w-3 h-3" /> Click row to view tickets
+          </span>
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -429,11 +415,9 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
       <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
         <h3 className="text-white font-medium mb-4 flex items-center gap-2">
           Servicing Projects Included
-          {onDrillDown && (
-            <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
-              <MousePointer className="w-3 h-3" /> Click to filter by project
-            </span>
-          )}
+          <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">
+            <MousePointer className="w-3 h-3" /> Click to view tickets
+          </span>
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {data.projects.map((project) => (
@@ -448,6 +432,15 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
           ))}
         </div>
       </div>
+
+      {/* Ticket Modal for drill-down */}
+      <TicketModal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        title={modalTitle}
+        filterType={modalFilterType}
+        filterValue={modalFilterValue}
+      />
     </div>
   );
 }
