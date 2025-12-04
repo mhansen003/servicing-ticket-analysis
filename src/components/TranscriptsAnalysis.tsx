@@ -180,10 +180,12 @@ export default function TranscriptsAnalysis() {
     return `${mins}m ${secs}s`;
   };
 
-  // Format date for display
+  // Format date for display (avoiding timezone issues)
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    // Parse YYYY-MM-DD directly to avoid timezone shifts
+    const [year, month, day] = dateStr.split('-').map(Number);
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return `${months[month - 1]} ${day}`;
   };
 
   // Prepare topic data for chart
