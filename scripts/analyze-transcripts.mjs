@@ -417,7 +417,9 @@ function generateStats(analyzedRecords) {
       if (!isNaN(date.getTime())) {
         const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
         const hour = date.getHours();
-        const dateKey = date.toISOString().split('T')[0];
+        // Extract date directly from callStart string to avoid timezone issues
+        // callStart format: "2025-11-29 16:46:04.000"
+        const dateKey = record.callStart.split(' ')[0];
 
         stats.byDayOfWeek[dayName] = (stats.byDayOfWeek[dayName] || 0) + 1;
         stats.byHour[hour] = (stats.byHour[hour] || 0) + 1;
