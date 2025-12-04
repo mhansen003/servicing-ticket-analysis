@@ -24,7 +24,7 @@ export interface HeatmapFilter {
 
 // Filter for issue card drill-down
 export interface IssueCardFilter {
-  type: 'project' | 'assignee' | 'noResponse';
+  type: 'project' | 'assignee' | 'noResponse' | 'status';
   value: string;
   category: string;
   metric: string;
@@ -134,6 +134,27 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
           return ticketDay === targetDay && ticketHour === targetHour;
         });
       }
+    } else if (filterType === 'issue' && issueFilter) {
+      if (issueFilter.type === 'project') {
+        // Filter by project name (from Project Health cards)
+        filtered = filtered.filter(t => {
+          const projectMatch = t.project?.toLowerCase().includes(issueFilter.value.toLowerCase().substring(0, 10));
+          return projectMatch;
+        });
+      } else if (issueFilter.type === 'assignee') {
+        // Filter by assignee name (from Workload cards)
+        filtered = filtered.filter(t => {
+          const assigneeMatch = t.assignee?.toLowerCase().includes(issueFilter.value.toLowerCase());
+          return assigneeMatch;
+        });
+      } else if (issueFilter.type === 'noResponse') {
+        // Filter for tickets with no response > 24h (all open tickets essentially)
+        // Since we don't have response time data, show all open tickets
+        filtered = filtered.filter(t => {
+          const openStatuses = ['New', 'Assigned', 'In Progress', 'Reopened'];
+          return openStatuses.some(status => t.status?.includes(status));
+        });
+      }
     }
 
     // Apply search filter
@@ -147,7 +168,7 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
     }
 
     return filtered;
-  }, [allTickets, filterType, filterValue, search, heatmapFilter]);
+  }, [allTickets, filterType, filterValue, search, heatmapFilter, issueFilter]);
 
   // Get visible tickets (progressive loading)
   const visibleTickets = useMemo(() => {
@@ -196,6 +217,14 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
         return `Project: ${project} • Status: ${status}`;
       } else if (heatmapFilter.type === 'dayHour') {
         return `Created on ${heatmapFilter.y} at ${heatmapFilter.x}`;
+      }
+    } else if (filterType === 'issue' && issueFilter) {
+      if (issueFilter.type === 'project') {
+        return `Open tickets in project: ${issueFilter.metric}`;
+      } else if (issueFilter.type === 'assignee') {
+        return `Open tickets assigned to: ${issueFilter.metric}`;
+      } else if (issueFilter.type === 'noResponse') {
+        return `Open tickets waiting for response`;
       }
     }
     return null;

@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { Heatmap, IssueHeatmap } from './Heatmap';
-import { TicketModal, HeatmapFilter } from './TicketModal';
+import { TicketModal, HeatmapFilter, IssueCardFilter } from './TicketModal';
+import { IssueFilter } from './Heatmap';
 import {
   AlertTriangle,
   TrendingUp,
@@ -47,25 +48,40 @@ interface InsightsPanelProps {
 }
 
 export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) {
-  const [expandedSection, setExpandedSection] = useState<string | null>('issues');
+  // Expand ALL sections by default
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['issues', 'timeHeatmap', 'projectHeatmap'])
+  );
 
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
+  const [modalFilterType, setModalFilterType] = useState<'heatmap' | 'issue'>('heatmap');
   const [heatmapFilter, setHeatmapFilter] = useState<HeatmapFilter | undefined>();
+  const [issueFilter, setIssueFilter] = useState<IssueCardFilter | undefined>();
 
   const criticalCount = issues.filter((i) => i.severity === 'critical').length;
   const warningCount = issues.filter((i) => i.severity === 'warning').length;
 
   const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
+    setExpandedSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(section)) {
+        newSet.delete(section);
+      } else {
+        newSet.add(section);
+      }
+      return newSet;
+    });
   };
 
   // Handle click on day/hour heatmap cell
   const handleDayHourClick = (x: string, y: string, value: number) => {
     if (value === 0) return; // Don't open modal for empty cells
     setModalTitle(`Tickets Created: ${y} at ${x}`);
+    setModalFilterType('heatmap');
     setHeatmapFilter({ type: 'dayHour', x, y });
+    setIssueFilter(undefined);
     setModalOpen(true);
   };
 
@@ -73,7 +89,23 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
   const handleProjectStatusClick = (x: string, y: string, value: number) => {
     if (value === 0) return; // Don't open modal for empty cells
     setModalTitle(`${y} - ${x}`);
+    setModalFilterType('heatmap');
     setHeatmapFilter({ type: 'projectStatus', x, y });
+    setIssueFilter(undefined);
+    setModalOpen(true);
+  };
+
+  // Handle click on issue cards
+  const handleIssueClick = (filter: IssueFilter) => {
+    setModalTitle(`${filter.category}: ${filter.metric}`);
+    setModalFilterType('issue');
+    setIssueFilter({
+      type: filter.type,
+      value: filter.value,
+      category: filter.category,
+      metric: filter.metric,
+    });
+    setHeatmapFilter(undefined);
     setModalOpen(true);
   };
 
@@ -178,15 +210,15 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <p className="text-sm text-gray-500">Unresolved tickets requiring attention</p>
               </div>
             </div>
-            {expandedSection === 'issues' ? (
+            {expandedSections.has('issues') ? (
               <ChevronUp className="h-5 w-5 text-gray-400" />
             ) : (
               <ChevronDown className="h-5 w-5 text-gray-400" />
             )}
           </button>
-          {expandedSection === 'issues' && (
+          {expandedSections.has('issues') && (
             <div className="p-4 pt-0">
-              <IssueHeatmap data={issues} title="" />
+              <IssueHeatmap data={issues} title="" onCellClick={handleIssueClick} />
             </div>
           )}
         </div>
@@ -211,14 +243,14 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <MousePointerClick className="h-3 w-3" />
                 Click to drill down
               </span>
-              {expandedSection === 'timeHeatmap' ? (
+              {expandedSections.has('timeHeatmap') ? (
                 <ChevronUp className="h-5 w-5 text-gray-400" />
               ) : (
                 <ChevronDown className="h-5 w-5 text-gray-400" />
               )}
             </div>
           </button>
-          {expandedSection === 'timeHeatmap' && (
+          {expandedSections.has('timeHeatmap') && (
             <div className="p-4 pt-0">
               <Heatmap
                 data={heatmaps.dayHour.data}
@@ -256,14 +288,14 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <MousePointerClick className="h-3 w-3" />
                 Click to drill down
               </span>
-              {expandedSection === 'projectHeatmap' ? (
+              {expandedSections.has('projectHeatmap') ? (
                 <ChevronUp className="h-5 w-5 text-gray-400" />
               ) : (
                 <ChevronDown className="h-5 w-5 text-gray-400" />
               )}
             </div>
           </button>
-          {expandedSection === 'projectHeatmap' && (
+          {expandedSections.has('projectHeatmap') && (
             <div className="p-4 pt-0">
               <Heatmap
                 data={heatmaps.projectStatus.data}
@@ -287,9 +319,10 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         title={modalTitle}
-        filterType="heatmap"
+        filterType={modalFilterType}
         filterValue=""
         heatmapFilter={heatmapFilter}
+        issueFilter={issueFilter}
       />
     </div>
   );

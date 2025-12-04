@@ -128,8 +128,10 @@ export default function TranscriptsAnalysis() {
   const [selectedSentiment, setSelectedSentiment] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Expanded sections
-  const [expandedSection, setExpandedSection] = useState<string | null>('overview');
+  // Expanded sections - expand ALL by default
+  const [expandedSections, setExpandedSections] = useState<Set<string>>(
+    new Set(['calendar', 'overview', 'topics', 'time', 'departments', 'agents'])
+  );
 
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
@@ -244,7 +246,15 @@ export default function TranscriptsAnalysis() {
   }, [stats]);
 
   const toggleSection = (section: string) => {
-    setExpandedSection(expandedSection === section ? null : section);
+    setExpandedSections(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(section)) {
+        newSet.delete(section);
+      } else {
+        newSet.add(section);
+      }
+      return newSet;
+    });
   };
 
   // Drill-down handlers
@@ -362,14 +372,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">See sentiment breakdown for each day <span className="text-blue-400">Click any day to view transcripts</span></p>
             </div>
           </div>
-          {expandedSection === 'calendar' ? (
+          {expandedSections.has('calendar') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'calendar' && (
+        {expandedSections.has('calendar') && (
           <div className="p-6 pt-0">
             {/* Legend */}
             <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
@@ -511,14 +521,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">Call sentiment distribution and trends</p>
             </div>
           </div>
-          {expandedSection === 'overview' ? (
+          {expandedSections.has('overview') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'overview' && (
+        {expandedSections.has('overview') && (
           <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Sentiment Distribution Pie */}
             <div className="bg-gray-800/30 rounded-xl p-4">
@@ -540,11 +550,15 @@ export default function TranscriptsAnalysis() {
                     nameKey="name"
                     label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
                     labelLine={false}
-                    onClick={(data) => handleSentimentClick(data.name)}
                     style={{ cursor: 'pointer' }}
                   >
                     {sentimentPieData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} className="hover:opacity-80 transition-opacity" />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={entry.color}
+                        className="hover:opacity-80 transition-opacity cursor-pointer"
+                        onClick={() => handleSentimentClick(entry.name)}
+                      />
                     ))}
                   </Pie>
                   <Tooltip
@@ -633,14 +647,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">What are customers calling about? <span className="text-blue-400">Click bars to drill down</span></p>
             </div>
           </div>
-          {expandedSection === 'topics' ? (
+          {expandedSections.has('topics') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'topics' && (
+        {expandedSections.has('topics') && (
           <div className="p-6 pt-0">
             <ResponsiveContainer width="100%" height={350}>
               <BarChart data={topicChartData} layout="vertical">
@@ -663,14 +677,15 @@ export default function TranscriptsAnalysis() {
                 <Bar
                   dataKey="value"
                   radius={[0, 4, 4, 0]}
-                  onClick={(data) => {
-                    const entry = data as unknown as { topic: string; name: string };
-                    handleTopicClick(entry.topic, entry.name);
-                  }}
                   style={{ cursor: 'pointer' }}
                 >
                   {topicChartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={TOPIC_COLORS[index % TOPIC_COLORS.length]} className="hover:opacity-80" />
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={TOPIC_COLORS[index % TOPIC_COLORS.length]}
+                      className="hover:opacity-80 cursor-pointer"
+                      onClick={() => handleTopicClick(entry.topic, entry.name)}
+                    />
                   ))}
                 </Bar>
               </BarChart>
@@ -694,14 +709,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">When are calls happening?</p>
             </div>
           </div>
-          {expandedSection === 'time' ? (
+          {expandedSections.has('time') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'time' && (
+        {expandedSections.has('time') && (
           <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Hourly Distribution */}
             <div className="bg-gray-800/30 rounded-xl p-4">
@@ -767,14 +782,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">Call volume and sentiment by department <span className="text-blue-400">Click rows to drill down</span></p>
             </div>
           </div>
-          {expandedSection === 'departments' ? (
+          {expandedSections.has('departments') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'departments' && (
+        {expandedSections.has('departments') && (
           <div className="p-6 pt-0">
             <div className="overflow-x-auto">
               <table className="w-full">
@@ -844,14 +859,14 @@ export default function TranscriptsAnalysis() {
               <p className="text-sm text-gray-500">Top agents by call volume</p>
             </div>
           </div>
-          {expandedSection === 'agents' ? (
+          {expandedSections.has('agents') ? (
             <ChevronUp className="h-5 w-5 text-gray-400" />
           ) : (
             <ChevronDown className="h-5 w-5 text-gray-400" />
           )}
         </button>
 
-        {expandedSection === 'agents' && (
+        {expandedSections.has('agents') && (
           <div className="p-6 pt-0">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {agentLeaderboard.map((agent, index) => (
