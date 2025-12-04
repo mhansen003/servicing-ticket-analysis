@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { PrismaNeon } from '@prisma/adapter-neon';
-import { Pool } from '@neondatabase/serverless';
+import { neonConfig, Pool } from '@neondatabase/serverless';
 
 // Prevent multiple instances in development
 const globalForPrisma = globalThis as unknown as {
@@ -13,6 +13,10 @@ function createPrismaClient() {
   if (!connectionString) {
     throw new Error('DATABASE_URL environment variable is not set');
   }
+
+  // Configure for serverless environment - use HTTP fetch instead of WebSocket
+  // This is more reliable on Vercel serverless functions
+  neonConfig.poolQueryViaFetch = true;
 
   const pool = new Pool({ connectionString });
   const adapter = new PrismaNeon(pool);
