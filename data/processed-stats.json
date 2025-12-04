@@ -1510,15 +1510,6 @@
         "Communication/Forwarded": 683,
         "Loan-Specific Inquiry": 643,
         "Automated System Messages": 0
-      },
-      {
-        "month": "2025-12",
-        "Documentation": 107,
-        "Payment Issues": 135,
-        "Other": 68,
-        "Communication/Forwarded": 64,
-        "Loan-Specific Inquiry": 68,
-        "Automated System Messages": 0
       }
     ],
     "timeSeries": {
@@ -1534,10 +1525,6 @@
         {
           "date": "2025-11",
           "count": 6968
-        },
-        {
-          "date": "2025-12",
-          "count": 556
         }
       ],
       "weekly": [
@@ -2852,5 +2839,5 @@
     "projectsAtRisk": 4,
     "overloadedAssignees": 11
   },
-  "processedAt": "2025-12-04T18:27:57.011Z"
+  "processedAt": "2025-12-04T18:30:41.103Z"
 }

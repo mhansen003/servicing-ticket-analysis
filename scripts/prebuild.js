@@ -460,19 +460,24 @@ console.log(`📅 Last ticket date: ${lastTicketDate.toISOString().slice(0, 10)}
 
 // Helper to check if a period is complete (has ended before last ticket date)
 const isCompletePeriod = (periodStart, periodType) => {
-  const start = new Date(periodStart);
+  // Parse date string directly to avoid timezone issues
+  const parts = periodStart.split('-').map(Number);
+  const year = parts[0];
+  const month = parts[1]; // 1-indexed from string (1=Jan, 12=Dec)
+  const day = parts[2] || 1;
+
   let periodEnd;
 
   if (periodType === 'monthly') {
     // Period ends at the last day of the month
-    periodEnd = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+    // new Date(year, month, 0) gives last day of month (month is 1-indexed here)
+    periodEnd = new Date(year, month, 0); // month is already 1-indexed, so this gives last day
   } else if (periodType === 'weekly') {
     // Period ends 6 days after start (week = 7 days)
-    periodEnd = new Date(start);
-    periodEnd.setDate(start.getDate() + 6);
+    periodEnd = new Date(year, month - 1, day + 6);
   } else {
     // Daily - period is complete if it's before or equal to last ticket date
-    periodEnd = start;
+    periodEnd = new Date(year, month - 1, day);
   }
 
   return periodEnd <= lastTicketDate;
