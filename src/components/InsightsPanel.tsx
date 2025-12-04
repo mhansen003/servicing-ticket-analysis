@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Heatmap, IssueHeatmap } from './Heatmap';
+import { TicketModal, HeatmapFilter } from './TicketModal';
 import {
   AlertTriangle,
   TrendingUp,
@@ -12,6 +13,7 @@ import {
   Zap,
   ChevronDown,
   ChevronUp,
+  MousePointerClick,
 } from 'lucide-react';
 
 interface HeatmapData {
@@ -47,11 +49,32 @@ interface InsightsPanelProps {
 export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) {
   const [expandedSection, setExpandedSection] = useState<string | null>('issues');
 
+  // Modal state for drill-down
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+  const [heatmapFilter, setHeatmapFilter] = useState<HeatmapFilter | undefined>();
+
   const criticalCount = issues.filter((i) => i.severity === 'critical').length;
   const warningCount = issues.filter((i) => i.severity === 'warning').length;
 
   const toggleSection = (section: string) => {
     setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  // Handle click on day/hour heatmap cell
+  const handleDayHourClick = (x: string, y: string, value: number) => {
+    if (value === 0) return; // Don't open modal for empty cells
+    setModalTitle(`Tickets Created: ${y} at ${x}`);
+    setHeatmapFilter({ type: 'dayHour', x, y });
+    setModalOpen(true);
+  };
+
+  // Handle click on project/status heatmap cell
+  const handleProjectStatusClick = (x: string, y: string, value: number) => {
+    if (value === 0) return; // Don't open modal for empty cells
+    setModalTitle(`${y} - ${x}`);
+    setHeatmapFilter({ type: 'projectStatus', x, y });
+    setModalOpen(true);
   };
 
   return (
@@ -179,15 +202,21 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <Calendar className="h-4 w-4 text-blue-400" />
               </div>
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-white">Ticket Volume Heatmap</h3>
-                <p className="text-sm text-gray-500">When tickets are created (Day × Hour)</p>
+                <h3 className="text-lg font-semibold text-white">Ticket Creation Patterns</h3>
+                <p className="text-sm text-gray-500">When are tickets being submitted? (Day of Week × Hour)</p>
               </div>
             </div>
-            {expandedSection === 'timeHeatmap' ? (
-              <ChevronUp className="h-5 w-5 text-gray-400" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-gray-400" />
-            )}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-blue-400 flex items-center gap-1">
+                <MousePointerClick className="h-3 w-3" />
+                Click to drill down
+              </span>
+              {expandedSection === 'timeHeatmap' ? (
+                <ChevronUp className="h-5 w-5 text-gray-400" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-gray-400" />
+              )}
+            </div>
           </button>
           {expandedSection === 'timeHeatmap' && (
             <div className="p-4 pt-0">
@@ -196,8 +225,12 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 xLabels={heatmaps.dayHour.xLabels}
                 yLabels={heatmaps.dayHour.yLabels}
                 title=""
-                subtitle="Shows ticket creation patterns by day of week and hour"
+                subtitle="Identify peak times for ticket submissions. Darker cells = more tickets created during that time slot."
                 colorScale="blue"
+                legendLowLabel="Quiet period"
+                legendHighLabel="High volume"
+                legendDescription="Number of tickets created during each day/hour combination"
+                onCellClick={handleDayHourClick}
               />
             </div>
           )}
@@ -214,15 +247,21 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <TrendingUp className="h-4 w-4 text-purple-400" />
               </div>
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-white">Project × Status Matrix</h3>
-                <p className="text-sm text-gray-500">Status distribution across projects</p>
+                <h3 className="text-lg font-semibold text-white">Workload Distribution</h3>
+                <p className="text-sm text-gray-500">How are tickets distributed across projects and statuses?</p>
               </div>
             </div>
-            {expandedSection === 'projectHeatmap' ? (
-              <ChevronUp className="h-5 w-5 text-gray-400" />
-            ) : (
-              <ChevronDown className="h-5 w-5 text-gray-400" />
-            )}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-purple-400 flex items-center gap-1">
+                <MousePointerClick className="h-3 w-3" />
+                Click to drill down
+              </span>
+              {expandedSection === 'projectHeatmap' ? (
+                <ChevronUp className="h-5 w-5 text-gray-400" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-gray-400" />
+              )}
+            </div>
           </button>
           {expandedSection === 'projectHeatmap' && (
             <div className="p-4 pt-0">
@@ -231,13 +270,27 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 xLabels={heatmaps.projectStatus.xLabels}
                 yLabels={heatmaps.projectStatus.yLabels}
                 title=""
-                subtitle="Shows how tickets are distributed across statuses per project"
+                subtitle="Compare ticket volumes by project and current status. Darker cells = more tickets in that project/status combination."
                 colorScale="purple"
+                legendLowLabel="Few tickets"
+                legendHighLabel="Many tickets"
+                legendDescription="Number of tickets in each project/status combination"
+                onCellClick={handleProjectStatusClick}
               />
             </div>
           )}
         </div>
       </div>
+
+      {/* Drill-down Modal */}
+      <TicketModal
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
+        title={modalTitle}
+        filterType="heatmap"
+        filterValue=""
+        heatmapFilter={heatmapFilter}
+      />
     </div>
   );
 }

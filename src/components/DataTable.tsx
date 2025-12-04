@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   Search,
   ChevronDown,
   ChevronUp,
-  ChevronLeft,
-  ChevronRight,
   Filter,
   X,
   Layers,
@@ -73,8 +71,13 @@ interface DataTableProps {
 export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps) {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
-  const [pagination, setPagination] = useState({ page: 1, limit: 50, total: 0, totalPages: 0 });
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
   const [filterOptions, setFilterOptions] = useState<FilterOptions | null>(null);
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const PAGE_SIZE = 50;
 
   // Filters - arrays for multi-select
   const [search, setSearch] = useState('');
@@ -134,23 +137,29 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
 
       // Reset to table view and page 1
       setViewMode('table');
-      setPagination(prev => ({ ...prev, page: 1 }));
+      setPage(1);
+      setTickets([]);
+      setHasMore(true);
     }
   }, [drillDownFilter]);
 
-  // Fetch tickets
-  const fetchTickets = useCallback(async () => {
-    setLoading(true);
+  // Fetch tickets (initial load or filter change)
+  const fetchTickets = useCallback(async (pageNum: number, append: boolean = false) => {
+    if (append) {
+      setLoadingMore(true);
+    } else {
+      setLoading(true);
+    }
     try {
       const params = new URLSearchParams({
-        page: pagination.page.toString(),
-        limit: pagination.limit.toString(),
+        page: pageNum.toString(),
+        limit: PAGE_SIZE.toString(),
         search: debouncedSearch,
-        status: statusFilter.join(','), // Multi-select as comma-separated
+        status: statusFilter.join(','),
         project: projectFilter.join(','),
         priority: priorityFilter.join(','),
         assignee: assigneeFilter.join(','),
-        category: categoryFilter, // Add category filter for drill-down
+        category: categoryFilter,
         sortField,
         sortOrder,
       });
@@ -158,25 +167,50 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
       const response = await fetch(`/api/tickets?${params}`);
       const data = await response.json();
 
-      setTickets(data.tickets);
-      setPagination(prev => ({
-        ...prev,
-        total: data.pagination.total,
-        totalPages: data.pagination.totalPages,
-      }));
+      if (append) {
+        setTickets(prev => [...prev, ...data.tickets]);
+      } else {
+        setTickets(data.tickets);
+      }
+
+      setTotal(data.pagination.total);
+      setHasMore(pageNum < data.pagination.totalPages);
       setFilterOptions(data.filterOptions);
     } catch (error) {
       console.error('Failed to fetch tickets:', error);
     } finally {
       setLoading(false);
+      setLoadingMore(false);
     }
-  }, [pagination.page, pagination.limit, debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter, sortField, sortOrder]);
+  }, [debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter, sortField, sortOrder]);
 
+  // Initial load when filters change
   useEffect(() => {
     if (viewMode === 'table') {
-      fetchTickets();
+      setPage(1);
+      setTickets([]);
+      setHasMore(true);
+      fetchTickets(1, false);
     }
-  }, [fetchTickets, viewMode]);
+  }, [viewMode, debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter, sortField, sortOrder]);
+
+  // Load more when page changes (for infinite scroll)
+  useEffect(() => {
+    if (viewMode === 'table' && page > 1) {
+      fetchTickets(page, true);
+    }
+  }, [page]);
+
+  // Infinite scroll handler
+  const handleScroll = useCallback(() => {
+    if (!tableContainerRef.current || loadingMore || !hasMore) return;
+
+    const { scrollTop, scrollHeight, clientHeight } = tableContainerRef.current;
+    // Load more when scrolled to 80% of content
+    if (scrollTop + clientHeight >= scrollHeight * 0.8) {
+      setPage(prev => prev + 1);
+    }
+  }, [loadingMore, hasMore]);
 
   // Fetch grouped data with multi-level support
   const fetchGroupedData = useCallback(async () => {
@@ -203,10 +237,6 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     }
   }, [fetchGroupedData, viewMode]);
 
-  // Reset to page 1 when filters change
-  useEffect(() => {
-    setPagination(prev => ({ ...prev, page: 1 }));
-  }, [debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -563,7 +593,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
             <div>
               <h3 className="text-lg font-semibold text-white">Raw Ticket Data</h3>
               <p className="text-sm text-gray-500">
-                {loading ? 'Loading...' : `${pagination.total.toLocaleString()} tickets`}
+                {loading ? 'Loading...' : `${total.toLocaleString()} tickets`}
                 {drillDownFilter && ' (filtered)'}
               </p>
             </div>
@@ -696,10 +726,10 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
             {activeFilterCount > 0 && (
               <button
                 onClick={clearFilters}
-                className="flex items-center gap-1 px-3 py-2.5 text-gray-400 hover:text-white transition-colors"
+                className="flex items-center gap-1.5 px-3 py-2.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all"
               >
                 <X className="h-4 w-4" />
-                Clear
+                Clear Filters
               </button>
             )}
           </div>
@@ -743,9 +773,13 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
       {/* Table View */}
       {viewMode === 'table' && (
         <>
-          <div className="overflow-x-auto">
+          <div
+            ref={tableContainerRef}
+            onScroll={handleScroll}
+            className="overflow-auto max-h-[600px]"
+          >
             <table className="w-full">
-              <thead className="bg-[#0a0e17]/50">
+              <thead className="bg-[#0a0e17]/50 sticky top-0 z-10">
                 <tr>
                   {[
                     { field: 'key' as SortField, label: 'Key', width: 'w-24' },
@@ -825,46 +859,36 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
                 )}
               </tbody>
             </table>
-          </div>
 
-          {/* Pagination */}
-          <div className="flex items-center justify-between px-4 py-3 border-t border-white/[0.06]">
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-500">Rows per page:</span>
-              <select
-                value={pagination.limit}
-                onChange={(e) => setPagination(prev => ({ ...prev, limit: parseInt(e.target.value), page: 1 }))}
-                className="px-2 py-1 bg-[#0a0e17] border border-white/[0.08] rounded text-sm text-white focus:outline-none"
-              >
-                {[25, 50, 100, 200].map(n => (
-                  <option key={n} value={n}>{n}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">
-                {((pagination.page - 1) * pagination.limit) + 1}-{Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total.toLocaleString()}
-              </span>
-
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
-                  disabled={pagination.page === 1}
-                  className="p-1.5 rounded-lg hover:bg-white/[0.05] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-400" />
-                </button>
-                <button
-                  onClick={() => setPagination(prev => ({ ...prev, page: prev.page + 1 }))}
-                  disabled={pagination.page >= pagination.totalPages}
-                  className="p-1.5 rounded-lg hover:bg-white/[0.05] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-400" />
-                </button>
+            {/* Load More Indicator */}
+            {loadingMore && (
+              <div className="flex items-center justify-center py-4 border-t border-white/[0.06]">
+                <Loader2 className="h-5 w-5 animate-spin text-blue-400 mr-2" />
+                <span className="text-sm text-gray-400">Loading more tickets...</span>
               </div>
-            </div>
+            )}
+
+            {/* End of Data Indicator */}
+            {!loading && !loadingMore && !hasMore && tickets.length > 0 && (
+              <div className="flex items-center justify-center py-4 border-t border-white/[0.06]">
+                <span className="text-sm text-gray-500">
+                  Showing all {tickets.length.toLocaleString()} of {total.toLocaleString()} tickets
+                </span>
+              </div>
+            )}
           </div>
+
+          {/* Scroll Status Bar */}
+          {!loading && tickets.length > 0 && (
+            <div className="flex items-center justify-between px-4 py-2 border-t border-white/[0.06] bg-[#0a0e17]/50">
+              <span className="text-xs text-gray-500">
+                Loaded {tickets.length.toLocaleString()} of {total.toLocaleString()} tickets
+              </span>
+              {hasMore && !loadingMore && (
+                <span className="text-xs text-gray-500">Scroll down to load more</span>
+              )}
+            </div>
+          )}
         </>
       )}
 

@@ -1,0 +1,714 @@
+{
+  "totalCalls": 26898,
+  "generatedAt": "2025-12-04T20:35:18.257Z",
+  "sentimentDistribution": {
+    "positive": 17592,
+    "neutral": 9274,
+    "negative": 32
+  },
+  "emotionDistribution": {
+    "neutral": 26898
+  },
+  "resolutionDistribution": {
+    "unknown": 26898
+  },
+  "topicDistribution": {
+    "loan_assumption": 172,
+    "refinance": 477,
+    "payment_inquiry": 16367,
+    "statement_request": 1962,
+    "complaint": 562,
+    "payoff_quote": 1756,
+    "general_inquiry": 6094,
+    "escrow": 2340,
+    "property_taxes": 1753,
+    "transfer": 5121,
+    "insurance": 3301,
+    "account_access": 1688,
+    "loan_modification": 672
+  },
+  "escalationRiskDistribution": {
+    "unknown": 26898
+  },
+  "byDepartment": {
+    "SRVC - Customer Care": {
+      "count": 16343,
+      "negative": 16,
+      "positive": 11297
+    },
+    "SRVC - Unauthenticated": {
+      "count": 5099,
+      "negative": 7,
+      "positive": 2914
+    },
+    "Interim Servicing": {
+      "count": 1008,
+      "negative": 3,
+      "positive": 654
+    },
+    "SRVC - Collection": {
+      "count": 1353,
+      "negative": 2,
+      "positive": 1015
+    },
+    "Interim servicing Corporate": {
+      "count": 72,
+      "negative": 0,
+      "positive": 51
+    },
+    "Interim Servicing Password Reset": {
+      "count": 204,
+      "negative": 1,
+      "positive": 119
+    },
+    "SRVC - Escrow": {
+      "count": 444,
+      "negative": 1,
+      "positive": 308
+    },
+    "SRVC/IRS - Agent Outbound": {
+      "count": 1659,
+      "negative": 0,
+      "positive": 775
+    },
+    "SRVC - Loss Mit": {
+      "count": 42,
+      "negative": 0,
+      "positive": 30
+    },
+    "Interim-Servicing": {
+      "count": 39,
+      "negative": 0,
+      "positive": 20
+    },
+    "Interim Servicing Unauthenticated": {
+      "count": 392,
+      "negative": 2,
+      "positive": 258
+    },
+    "SRVC DID Executive": {
+      "count": 33,
+      "negative": 0,
+      "positive": 14
+    },
+    "SRVC - Bankruptcy": {
+      "count": 2,
+      "negative": 0,
+      "positive": 2
+    },
+    "NULL": {
+      "count": 207,
+      "negative": 0,
+      "positive": 135
+    },
+    "SRVC - Disaster": {
+      "count": 1,
+      "negative": 0,
+      "positive": 0
+    }
+  },
+  "byAgent": {
+    "Jackie Wilson": {
+      "count": 338,
+      "avgPerformance": 0
+    },
+    "Brian De La Cruz": {
+      "count": 266,
+      "avgPerformance": 0
+    },
+    "Alec Parent": {
+      "count": 457,
+      "avgPerformance": 0
+    },
+    "Lyn Zse Seville": {
+      "count": 475,
+      "avgPerformance": 0
+    },
+    "Shura Rodriguez": {
+      "count": 227,
+      "avgPerformance": 0
+    },
+    "John Bula": {
+      "count": 541,
+      "avgPerformance": 0
+    },
+    "Javier Jiminez": {
+      "count": 424,
+      "avgPerformance": 0
+    },
+    "Emilyza Salvy Paragoso": {
+      "count": 549,
+      "avgPerformance": 0
+    },
+    "Vivian Laurencio": {
+      "count": 545,
+      "avgPerformance": 0
+    },
+    "Francisco Hernandez": {
+      "count": 483,
+      "avgPerformance": 0
+    },
+    "Maria Hernandez": {
+      "count": 602,
+      "avgPerformance": 0
+    },
+    "Victor Dominguez": {
+      "count": 224,
+      "avgPerformance": 0
+    },
+    "Krsna Guzman": {
+      "count": 483,
+      "avgPerformance": 0
+    },
+    "Maybelyn Macatangay": {
+      "count": 594,
+      "avgPerformance": 0
+    },
+    "Yarah Hernandez": {
+      "count": 315,
+      "avgPerformance": 0
+    },
+    "Fernando Vanegas": {
+      "count": 524,
+      "avgPerformance": 0
+    },
+    "Dewin Vien Bontigao": {
+      "count": 643,
+      "avgPerformance": 0
+    },
+    "Victor Noble": {
+      "count": 629,
+      "avgPerformance": 0
+    },
+    "John Allen Romualdo": {
+      "count": 436,
+      "avgPerformance": 0
+    },
+    "Marvin Molojedo": {
+      "count": 400,
+      "avgPerformance": 0
+    },
+    "Bernardo Ahumada": {
+      "count": 365,
+      "avgPerformance": 0
+    },
+    "Dianne Aguilo": {
+      "count": 733,
+      "avgPerformance": 0
+    },
+    "Rolando Velazquez": {
+      "count": 245,
+      "avgPerformance": 0
+    },
+    "Maria Reyes": {
+      "count": 284,
+      "avgPerformance": 0
+    },
+    "Tiffany Barksdale": {
+      "count": 349,
+      "avgPerformance": 0
+    },
+    "Johana Paola": {
+      "count": 501,
+      "avgPerformance": 0
+    },
+    "Julio Hernandez": {
+      "count": 256,
+      "avgPerformance": 0
+    },
+    "John Rey Tubera": {
+      "count": 677,
+      "avgPerformance": 0
+    },
+    "Valeryyahaira Contreras": {
+      "count": 578,
+      "avgPerformance": 0
+    },
+    "Dearl Goins": {
+      "count": 423,
+      "avgPerformance": 0
+    },
+    "Emilio Cargenelutti": {
+      "count": 495,
+      "avgPerformance": 0
+    },
+    "Christina Pinckney": {
+      "count": 624,
+      "avgPerformance": 0
+    },
+    "Jacob Gironza": {
+      "count": 354,
+      "avgPerformance": 0
+    },
+    "Kiera Woodman": {
+      "count": 519,
+      "avgPerformance": 0
+    },
+    "Lenette Ga": {
+      "count": 532,
+      "avgPerformance": 0
+    },
+    "Sandra Vargas": {
+      "count": 367,
+      "avgPerformance": 0
+    },
+    "Racquel Gabriel": {
+      "count": 29,
+      "avgPerformance": 0
+    },
+    "Justin Stevenson": {
+      "count": 60,
+      "avgPerformance": 0
+    },
+    "Jon Davis": {
+      "count": 179,
+      "avgPerformance": 0
+    },
+    "Bu Nino Arana": {
+      "count": 722,
+      "avgPerformance": 0
+    },
+    "China Ervin": {
+      "count": 425,
+      "avgPerformance": 0
+    },
+    "Donavan Truance": {
+      "count": 417,
+      "avgPerformance": 0
+    },
+    "Perrjqueeniii Magaling": {
+      "count": 408,
+      "avgPerformance": 0
+    },
+    "Melissa Korte": {
+      "count": 86,
+      "avgPerformance": 0
+    },
+    "Christian Coronado": {
+      "count": 602,
+      "avgPerformance": 0
+    },
+    "John Tamo": {
+      "count": 662,
+      "avgPerformance": 0
+    },
+    "Patrick Mendoza": {
+      "count": 556,
+      "avgPerformance": 0
+    },
+    "Hector Gaytan": {
+      "count": 463,
+      "avgPerformance": 0
+    },
+    "Claudia Santos": {
+      "count": 706,
+      "avgPerformance": 0
+    },
+    "Emma Sides": {
+      "count": 434,
+      "avgPerformance": 0
+    },
+    "Cesar Cruz": {
+      "count": 385,
+      "avgPerformance": 0
+    },
+    "Marianne Rios": {
+      "count": 429,
+      "avgPerformance": 0
+    },
+    "Pauline Dela Cruz": {
+      "count": 396,
+      "avgPerformance": 0
+    },
+    "Nigel Roberts": {
+      "count": 33,
+      "avgPerformance": 0
+    },
+    "Tristina Thornton": {
+      "count": 33,
+      "avgPerformance": 0
+    },
+    "Catherine Toledo": {
+      "count": 574,
+      "avgPerformance": 0
+    },
+    "Rodrigo Cunanan Jr": {
+      "count": 56,
+      "avgPerformance": 0
+    },
+    "Lydia Mejia": {
+      "count": 25,
+      "avgPerformance": 0
+    },
+    "Kenneth Rico": {
+      "count": 527,
+      "avgPerformance": 0
+    },
+    "Venus Arguelles": {
+      "count": 15,
+      "avgPerformance": 0
+    },
+    "Maria Ondoy": {
+      "count": 398,
+      "avgPerformance": 0
+    },
+    "Marquisha Kennedy": {
+      "count": 249,
+      "avgPerformance": 0
+    },
+    "Said Flores": {
+      "count": 13,
+      "avgPerformance": 0
+    },
+    "Henrietta Porter": {
+      "count": 372,
+      "avgPerformance": 0
+    },
+    "Alyannah Jo Tucay": {
+      "count": 32,
+      "avgPerformance": 0
+    },
+    "Kathrina Penaflor": {
+      "count": 319,
+      "avgPerformance": 0
+    },
+    "Princess Bonde": {
+      "count": 8,
+      "avgPerformance": 0
+    },
+    "Justin Boni": {
+      "count": 5,
+      "avgPerformance": 0
+    },
+    "Francisco Lopez": {
+      "count": 17,
+      "avgPerformance": 0
+    },
+    "testA1 svcng": {
+      "count": 72,
+      "avgPerformance": 0
+    },
+    "Tony Song": {
+      "count": 4,
+      "avgPerformance": 0
+    },
+    "Fernando Garcia": {
+      "count": 8,
+      "avgPerformance": 0
+    },
+    "Joe Porter": {
+      "count": 49,
+      "avgPerformance": 0
+    },
+    "Nicte Munoz": {
+      "count": 395,
+      "avgPerformance": 0
+    },
+    "Kristine McCallum": {
+      "count": 6,
+      "avgPerformance": 0
+    },
+    "Zakeer Ismail": {
+      "count": 94,
+      "avgPerformance": 0
+    },
+    "Mariana Mondragon": {
+      "count": 116,
+      "avgPerformance": 0
+    },
+    "Lyndsay Savage": {
+      "count": 1,
+      "avgPerformance": 0
+    },
+    "Yahir Enriquez": {
+      "count": 56,
+      "avgPerformance": 0
+    },
+    "Jackie Chaves": {
+      "count": 3,
+      "avgPerformance": 0
+    },
+    "Israel Sanchez": {
+      "count": 1,
+      "avgPerformance": 0
+    },
+    "George Monsanto": {
+      "count": 1,
+      "avgPerformance": 0
+    }
+  },
+  "byDayOfWeek": {
+    "Thu": 3818,
+    "Wed": 6068,
+    "Tue": 5352,
+    "Mon": 6954,
+    "Sat": 556,
+    "Fri": 4150
+  },
+  "byHour": {
+    "0": 1028,
+    "1": 420,
+    "6": 5,
+    "7": 15,
+    "8": 1,
+    "9": 2,
+    "10": 25,
+    "11": 16,
+    "12": 2,
+    "13": 40,
+    "14": 2486,
+    "15": 2632,
+    "16": 2734,
+    "17": 3296,
+    "18": 2799,
+    "19": 2765,
+    "20": 2623,
+    "21": 2442,
+    "22": 2131,
+    "23": 1436
+  },
+  "avgDuration": 1131,
+  "avgHoldTime": 130,
+  "avgMessagesPerCall": 24,
+  "avgAgentPerformance": null,
+  "dailyTrends": [
+    {
+      "date": "2025-11-01",
+      "total": 99,
+      "positive": 54,
+      "negative": 0,
+      "neutral": 45
+    },
+    {
+      "date": "2025-11-03",
+      "total": 330,
+      "positive": 202,
+      "negative": 0,
+      "neutral": 128
+    },
+    {
+      "date": "2025-11-04",
+      "total": 1752,
+      "positive": 1016,
+      "negative": 2,
+      "neutral": 734
+    },
+    {
+      "date": "2025-11-05",
+      "total": 1491,
+      "positive": 898,
+      "negative": 3,
+      "neutral": 590
+    },
+    {
+      "date": "2025-11-06",
+      "total": 1235,
+      "positive": 750,
+      "negative": 0,
+      "neutral": 485
+    },
+    {
+      "date": "2025-11-07",
+      "total": 1288,
+      "positive": 770,
+      "negative": 0,
+      "neutral": 518
+    },
+    {
+      "date": "2025-11-08",
+      "total": 1050,
+      "positive": 648,
+      "negative": 4,
+      "neutral": 398
+    },
+    {
+      "date": "2025-11-09",
+      "total": 13,
+      "positive": 8,
+      "negative": 0,
+      "neutral": 5
+    },
+    {
+      "date": "2025-11-10",
+      "total": 216,
+      "positive": 150,
+      "negative": 1,
+      "neutral": 65
+    },
+    {
+      "date": "2025-11-11",
+      "total": 1197,
+      "positive": 750,
+      "negative": 0,
+      "neutral": 447
+    },
+    {
+      "date": "2025-11-12",
+      "total": 256,
+      "positive": 184,
+      "negative": 1,
+      "neutral": 71
+    },
+    {
+      "date": "2025-11-13",
+      "total": 1342,
+      "positive": 877,
+      "negative": 4,
+      "neutral": 461
+    },
+    {
+      "date": "2025-11-14",
+      "total": 1158,
+      "positive": 774,
+      "negative": 0,
+      "neutral": 384
+    },
+    {
+      "date": "2025-11-15",
+      "total": 1077,
+      "positive": 744,
+      "negative": 1,
+      "neutral": 332
+    },
+    {
+      "date": "2025-11-16",
+      "total": 22,
+      "positive": 17,
+      "negative": 0,
+      "neutral": 5
+    },
+    {
+      "date": "2025-11-17",
+      "total": 233,
+      "positive": 162,
+      "negative": 0,
+      "neutral": 71
+    },
+    {
+      "date": "2025-11-18",
+      "total": 1323,
+      "positive": 804,
+      "negative": 1,
+      "neutral": 518
+    },
+    {
+      "date": "2025-11-19",
+      "total": 1074,
+      "positive": 700,
+      "negative": 2,
+      "neutral": 372
+    },
+    {
+      "date": "2025-11-20",
+      "total": 996,
+      "positive": 665,
+      "negative": 0,
+      "neutral": 331
+    },
+    {
+      "date": "2025-11-21",
+      "total": 868,
+      "positive": 580,
+      "negative": 0,
+      "neutral": 288
+    },
+    {
+      "date": "2025-11-22",
+      "total": 755,
+      "positive": 519,
+      "negative": 2,
+      "neutral": 234
+    },
+    {
+      "date": "2025-11-23",
+      "total": 12,
+      "positive": 8,
+      "negative": 0,
+      "neutral": 4
+    },
+    {
+      "date": "2025-11-24",
+      "total": 205,
+      "positive": 143,
+      "negative": 0,
+      "neutral": 62
+    },
+    {
+      "date": "2025-11-25",
+      "total": 1125,
+      "positive": 793,
+      "negative": 0,
+      "neutral": 332
+    },
+    {
+      "date": "2025-11-26",
+      "total": 1025,
+      "positive": 715,
+      "negative": 0,
+      "neutral": 310
+    },
+    {
+      "date": "2025-11-27",
+      "total": 831,
+      "positive": 566,
+      "negative": 0,
+      "neutral": 265
+    },
+    {
+      "date": "2025-11-28",
+      "total": 153,
+      "positive": 110,
+      "negative": 0,
+      "neutral": 43
+    },
+    {
+      "date": "2025-11-29",
+      "total": 666,
+      "positive": 450,
+      "negative": 2,
+      "neutral": 214
+    },
+    {
+      "date": "2025-11-30",
+      "total": 24,
+      "positive": 21,
+      "negative": 0,
+      "neutral": 3
+    },
+    {
+      "date": "2025-12-01",
+      "total": 280,
+      "positive": 200,
+      "negative": 0,
+      "neutral": 80
+    },
+    {
+      "date": "2025-12-02",
+      "total": 1734,
+      "positive": 1127,
+      "negative": 4,
+      "neutral": 603
+    },
+    {
+      "date": "2025-12-03",
+      "total": 1480,
+      "positive": 1062,
+      "negative": 4,
+      "neutral": 414
+    },
+    {
+      "date": "2025-12-04",
+      "total": 1329,
+      "positive": 944,
+      "negative": 1,
+      "neutral": 384
+    },
+    {
+      "date": "2025-12-05",
+      "total": 259,
+      "positive": 181,
+      "negative": 0,
+      "neutral": 78
+    }
+  ]
+}
