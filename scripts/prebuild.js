@@ -532,7 +532,12 @@ console.log(`📊 Servicing Analysis: ${servicingTickets.length.toLocaleString()
 // ========================================
 // ALL TICKETS FOR RAW DATA TABLE
 // ========================================
-const allTicketsPath = path.join(__dirname, '..', 'data', 'all-tickets.json');
+// Write to public/data for static file serving in Next.js
+const publicDataDir = path.join(__dirname, '..', 'public', 'data');
+if (!fs.existsSync(publicDataDir)) {
+  fs.mkdirSync(publicDataDir, { recursive: true });
+}
+const allTicketsPath = path.join(publicDataDir, 'all-tickets.json');
 const allTickets = tickets.map((t) => ({
   id: t.ticket_key || t.ticket_id,
   key: t.ticket_key,
