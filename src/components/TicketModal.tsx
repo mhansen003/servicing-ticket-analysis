@@ -22,13 +22,22 @@ export interface HeatmapFilter {
   y: string;  // For dayHour: day (e.g., "Mon"), for projectStatus: project
 }
 
+// Filter for issue card drill-down
+export interface IssueCardFilter {
+  type: 'project' | 'assignee' | 'noResponse';
+  value: string;
+  category: string;
+  metric: string;
+}
+
 interface TicketModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  filterType: 'category' | 'project' | 'status' | 'heatmap';
+  filterType: 'category' | 'project' | 'status' | 'heatmap' | 'issue';
   filterValue: string;
   heatmapFilter?: HeatmapFilter;
+  issueFilter?: IssueCardFilter;
 }
 
 // Map short day names to day numbers for filtering
@@ -59,7 +68,7 @@ const statusNameMap: Record<string, string> = {
   'Closed': 'Closed',
 };
 
-export function TicketModal({ isOpen, onClose, title, filterType, filterValue, heatmapFilter }: TicketModalProps) {
+export function TicketModal({ isOpen, onClose, title, filterType, filterValue, heatmapFilter, issueFilter }: TicketModalProps) {
   const [allTickets, setAllTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
@@ -85,7 +94,7 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
   useEffect(() => {
     setVisibleCount(BATCH_SIZE);
     setSearch('');
-  }, [filterValue, heatmapFilter]);
+  }, [filterValue, heatmapFilter, issueFilter]);
 
   // Filter tickets based on filter type and search
   const filteredTickets = useMemo(() => {

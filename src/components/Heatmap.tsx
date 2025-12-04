@@ -184,18 +184,27 @@ interface IssueCell {
   description?: string;
 }
 
+// Filter info for issue drill-down
+export interface IssueFilter {
+  type: 'project' | 'assignee' | 'status' | 'noResponse';
+  value: string;
+  category: string;
+  metric: string;
+}
+
 interface IssueHeatmapProps {
   data: IssueCell[];
   title: string;
+  onCellClick?: (filter: IssueFilter) => void;
 }
 
 // Category descriptions to explain what each section means
 const categoryDescriptions: Record<string, string> = {
-  'Project Health': 'Open rate by project — % of tickets still unresolved',
-  'Workload': 'Assignees with high open ticket counts',
-  'Response Time': 'Tickets waiting for initial response',
-  'Volume Trend': 'Month-over-month ticket volume change',
-  'Summary': 'Overall ticket metrics',
+  'Project Health': 'Percentage of tickets that are still OPEN (not resolved) per project',
+  'Workload': 'Team members with the most OPEN tickets assigned to them',
+  'Response Time': 'OPEN tickets that have been waiting too long without a response',
+  'Volume Trend': 'How ticket volume is changing month-over-month',
+  'Summary': 'Overall open ticket metrics across all projects',
 };
 
 // Format value based on category type for clarity
@@ -211,15 +220,15 @@ const formatIssueValue = (category: string, value: number): string => {
 
 // Get a label that explains what the value means
 const getValueLabel = (category: string): string => {
-  if (category === 'Project Health') return 'open rate';
+  if (category === 'Project Health') return 'still open';
   if (category === 'Workload') return 'open tickets';
-  if (category === 'Response Time') return 'tickets';
+  if (category === 'Response Time') return 'waiting';
   if (category === 'Volume Trend') return 'vs last month';
-  if (category === 'Summary') return '';
+  if (category === 'Summary') return 'open';
   return '';
 };
 
-export function IssueHeatmap({ data, title }: IssueHeatmapProps) {
+export function IssueHeatmap({ data, title, onCellClick }: IssueHeatmapProps) {
   const severityColors = {
     critical: 'bg-red-500/20 border-red-500/40',
     warning: 'bg-amber-500/20 border-amber-500/40',
@@ -267,30 +276,59 @@ export function IssueHeatmap({ data, title }: IssueHeatmapProps) {
               )}
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-              {cells.map((cell) => (
-                <div
-                  key={`${cell.category}-${cell.metric}`}
-                  className={`p-4 rounded-xl border ${severityColors[cell.severity]} transition-all hover:scale-[1.02]`}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-200 truncate">{cell.metric}</p>
-                      <div className="flex items-baseline gap-1.5 mt-1">
-                        <p className="text-2xl font-bold text-white">
-                          {formatIssueValue(cell.category, cell.value)}
-                        </p>
-                        {getValueLabel(cell.category) && (
-                          <span className="text-xs text-gray-500">{getValueLabel(cell.category)}</span>
-                        )}
+              {cells.map((cell) => {
+                // Determine filter type based on category
+                const getFilterType = (): IssueFilter['type'] => {
+                  if (cell.category === 'Project Health') return 'project';
+                  if (cell.category === 'Workload') return 'assignee';
+                  if (cell.category === 'Response Time') return 'noResponse';
+                  return 'project';
+                };
+
+                const handleClick = () => {
+                  if (onCellClick && cell.category !== 'Volume Trend' && cell.category !== 'Summary') {
+                    onCellClick({
+                      type: getFilterType(),
+                      value: cell.metric,
+                      category: cell.category,
+                      metric: cell.metric,
+                    });
+                  }
+                };
+
+                const isClickable = onCellClick && cell.category !== 'Volume Trend' && cell.category !== 'Summary';
+
+                return (
+                  <div
+                    key={`${cell.category}-${cell.metric}`}
+                    onClick={handleClick}
+                    className={`p-4 rounded-xl border ${severityColors[cell.severity]} transition-all hover:scale-[1.02] ${
+                      isClickable ? 'cursor-pointer hover:ring-2 hover:ring-white/20' : ''
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-200 truncate">{cell.metric}</p>
+                        <div className="flex items-baseline gap-1.5 mt-1">
+                          <p className="text-2xl font-bold text-white">
+                            {formatIssueValue(cell.category, cell.value)}
+                          </p>
+                          {getValueLabel(cell.category) && (
+                            <span className="text-xs text-gray-500">{getValueLabel(cell.category)}</span>
+                          )}
+                        </div>
                       </div>
+                      <span className="text-lg flex-shrink-0">{severityLabels[cell.severity].icon}</span>
                     </div>
-                    <span className="text-lg flex-shrink-0">{severityLabels[cell.severity].icon}</span>
+                    {cell.description && (
+                      <p className="text-xs text-gray-400 mt-2 leading-relaxed">{cell.description}</p>
+                    )}
+                    {isClickable && (
+                      <p className="text-xs text-blue-400 mt-2">Click to view tickets →</p>
+                    )}
                   </div>
-                  {cell.description && (
-                    <p className="text-xs text-gray-400 mt-2 leading-relaxed">{cell.description}</p>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}

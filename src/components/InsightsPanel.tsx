@@ -174,8 +174,8 @@ export function InsightsPanel({ heatmaps, issues, trends }: InsightsPanelProps) 
                 <AlertTriangle className="h-4 w-4 text-red-400" />
               </div>
               <div className="text-left">
-                <h3 className="text-lg font-semibold text-white">Issue Detection</h3>
-                <p className="text-sm text-gray-500">Potential problems requiring attention</p>
+                <h3 className="text-lg font-semibold text-white">Open Ticket Issues</h3>
+                <p className="text-sm text-gray-500">Unresolved tickets requiring attention</p>
               </div>
             </div>
             {expandedSection === 'issues' ? (

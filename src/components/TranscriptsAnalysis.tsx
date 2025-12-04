@@ -347,7 +347,7 @@ export default function TranscriptsAnalysis() {
         </div>
       </div>
 
-      {/* Calendar Heatmap View */}
+      {/* Calendar Sentiment View */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
         <button
           onClick={() => toggleSection('calendar')}
@@ -358,8 +358,8 @@ export default function TranscriptsAnalysis() {
               <Calendar className="h-5 w-5 text-emerald-400" />
             </div>
             <div className="text-left">
-              <h3 className="text-lg font-semibold text-white">Call Calendar</h3>
-              <p className="text-sm text-gray-500">Daily heatmap by sentiment <span className="text-blue-400">Click any day to view transcripts</span></p>
+              <h3 className="text-lg font-semibold text-white">Daily Sentiment Calendar</h3>
+              <p className="text-sm text-gray-500">See sentiment breakdown for each day <span className="text-blue-400">Click any day to view transcripts</span></p>
             </div>
           </div>
           {expandedSection === 'calendar' ? (
@@ -372,42 +372,30 @@ export default function TranscriptsAnalysis() {
         {expandedSection === 'calendar' && (
           <div className="p-6 pt-0">
             {/* Legend */}
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-4 text-xs text-gray-400">
-                <span>Sentiment:</span>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-emerald-500"></div>
-                  <span>Positive</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-gray-500"></div>
-                  <span>Neutral</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-red-500"></div>
-                  <span>Negative</span>
-                </div>
+            <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded bg-emerald-500"></div>
+                <span>Positive</span>
               </div>
-              <div className="flex items-center gap-2 text-xs text-gray-400">
-                <span>Volume:</span>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-white/20"></div>
-                  <span>Low</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <div className="w-3 h-3 rounded bg-white/60"></div>
-                  <span>High</span>
-                </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded bg-gray-500"></div>
+                <span>Neutral</span>
               </div>
+              <div className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded bg-red-500"></div>
+                <span>Negative</span>
+              </div>
+              <span className="text-gray-600">|</span>
+              <span>Bar height = call volume</span>
             </div>
 
             {/* Calendar Grid */}
-            <div className="grid grid-cols-7 gap-1 mb-2">
+            <div className="grid grid-cols-7 gap-2 mb-2">
               {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                <div key={day} className="text-center text-xs text-gray-500 py-1">{day}</div>
+                <div key={day} className="text-center text-xs text-gray-500 py-1 font-medium">{day}</div>
               ))}
             </div>
-            <div className="grid grid-cols-7 gap-1">
+            <div className="grid grid-cols-7 gap-2">
               {(() => {
                 // Generate calendar cells for the date range
                 const sortedDays = [...stats.dailyTrends].sort((a, b) => a.date.localeCompare(b.date));
@@ -431,37 +419,70 @@ export default function TranscriptsAnalysis() {
 
                   if (dayData) {
                     const total = dayData.total;
-                    const positiveRatio = dayData.positive / total;
-                    const negativeRatio = dayData.negative / total;
-                    const opacity = 0.3 + (total / maxTotal) * 0.7;
-
-                    // Calculate color based on sentiment ratio
-                    let bgColor = 'bg-gray-600'; // neutral default
-                    if (negativeRatio > 0.1) bgColor = 'bg-red-500';
-                    else if (positiveRatio > 0.7) bgColor = 'bg-emerald-500';
-                    else if (positiveRatio > 0.5) bgColor = 'bg-emerald-600';
-                    else bgColor = 'bg-gray-500';
+                    const positivePercent = (dayData.positive / total) * 100;
+                    const neutralPercent = (dayData.neutral / total) * 100;
+                    const negativePercent = (dayData.negative / total) * 100;
+                    const heightPercent = Math.max(30, (total / maxTotal) * 100); // Min 30% height
 
                     cells.push(
                       <button
                         key={dateStr}
                         onClick={() => openDrillDown('all', dateStr, `Calls on ${formatDate(dateStr)}`)}
-                        className={`aspect-square rounded-md ${bgColor} hover:ring-2 hover:ring-blue-400 transition-all flex items-center justify-center relative group`}
-                        style={{ opacity }}
-                        title={`${formatDate(dateStr)}: ${total} calls (${(positiveRatio * 100).toFixed(0)}% positive)`}
+                        className="bg-gray-800/50 rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[70px] flex flex-col"
+                        title={`${formatDate(dateStr)}: ${total} calls`}
                       >
-                        <span className="text-[10px] text-white/80 font-medium">{currentDate.getDate()}</span>
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2 py-1 bg-gray-900 rounded text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
-                          {formatDate(dateStr)}: {total} calls
-                          <br />
-                          <span className="text-emerald-400">{dayData.positive} positive</span> / <span className="text-red-400">{dayData.negative} negative</span>
+                        {/* Date label */}
+                        <span className="text-[10px] text-gray-400 font-medium mb-1">{currentDate.getDate()}</span>
+
+                        {/* Stacked sentiment bar */}
+                        <div className="flex-1 flex items-end justify-center">
+                          <div
+                            className="w-full max-w-[32px] rounded-sm overflow-hidden flex flex-col-reverse"
+                            style={{ height: `${heightPercent}%` }}
+                          >
+                            {/* Negative (bottom - red) */}
+                            {negativePercent > 0 && (
+                              <div
+                                className="w-full bg-red-500 transition-all"
+                                style={{ height: `${negativePercent}%` }}
+                              />
+                            )}
+                            {/* Neutral (middle - gray) */}
+                            {neutralPercent > 0 && (
+                              <div
+                                className="w-full bg-gray-500 transition-all"
+                                style={{ height: `${neutralPercent}%` }}
+                              />
+                            )}
+                            {/* Positive (top - green) */}
+                            {positivePercent > 0 && (
+                              <div
+                                className="w-full bg-emerald-500 transition-all"
+                                style={{ height: `${positivePercent}%` }}
+                              />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Call count */}
+                        <span className="text-[9px] text-gray-500 mt-1">{total}</span>
+
+                        {/* Hover tooltip */}
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-20 border border-gray-700 shadow-xl">
+                          <div className="font-medium text-white mb-1">{formatDate(dateStr)}</div>
+                          <div className="text-gray-400">{total} total calls</div>
+                          <div className="flex flex-col gap-0.5 mt-1">
+                            <span className="text-emerald-400">● {dayData.positive} positive ({positivePercent.toFixed(0)}%)</span>
+                            <span className="text-gray-400">● {dayData.neutral} neutral ({neutralPercent.toFixed(0)}%)</span>
+                            <span className="text-red-400">● {dayData.negative} negative ({negativePercent.toFixed(0)}%)</span>
+                          </div>
                         </div>
                       </button>
                     );
                   } else {
                     // Empty cell for days outside range
                     cells.push(
-                      <div key={dateStr} className="aspect-square rounded-md bg-gray-800/30"></div>
+                      <div key={dateStr} className="bg-gray-800/20 rounded-lg min-h-[70px]"></div>
                     );
                   }
 
