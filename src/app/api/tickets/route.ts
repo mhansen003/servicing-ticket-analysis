@@ -23,6 +23,14 @@ function loadTickets(): RawTicket[] {
   if (cachedTickets) return cachedTickets;
 
   const jsonPath = path.join(process.cwd(), 'data', 'all-tickets.json');
+
+  // Check if file exists - it may not in production without the CSV
+  if (!fs.existsSync(jsonPath)) {
+    console.warn('all-tickets.json not found - Raw data table will be empty');
+    cachedTickets = [];
+    return cachedTickets;
+  }
+
   const jsonContent = fs.readFileSync(jsonPath, 'utf-8');
   cachedTickets = JSON.parse(jsonContent);
 

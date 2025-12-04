@@ -370,9 +370,11 @@ const allTickets = tickets.map((t) => ({
   complete: t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1',
 }));
 
+// Write minified JSON without formatting to save space
 fs.writeFileSync(allTicketsPath, JSON.stringify(allTickets));
 const allTicketsSizeKB = Math.round(fs.statSync(allTicketsPath).size / 1024);
-console.log(`✅ Generated all-tickets.json (${allTicketsSizeKB} KB) with ${allTickets.length.toLocaleString()} tickets`);
+const allTicketsSizeMB = (allTicketsSizeKB / 1024).toFixed(1);
+console.log(`✅ Generated all-tickets.json (${allTicketsSizeMB} MB) with ${allTickets.length.toLocaleString()} tickets`);
 
 // Write output
 const output = {

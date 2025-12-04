@@ -42,6 +42,8 @@ next-env.d.ts
 
 # Large data files (CSV source data)
 data/tickets.csv
+# All tickets JSON is generated at build time
+data/all-tickets.json
 
 .vercel
 
