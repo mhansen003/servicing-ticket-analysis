@@ -1,10 +1,10 @@
 {
   "totalCalls": 26898,
-  "generatedAt": "2025-12-04T20:35:18.257Z",
+  "generatedAt": "2025-12-04T20:47:33.323Z",
   "sentimentDistribution": {
-    "positive": 17592,
-    "neutral": 9274,
-    "negative": 32
+    "negative": 9573,
+    "neutral": 4171,
+    "positive": 13154
   },
   "emotionDistribution": {
     "neutral": 26898
@@ -33,77 +33,77 @@
   "byDepartment": {
     "SRVC - Customer Care": {
       "count": 16343,
-      "negative": 16,
-      "positive": 11297
+      "negative": 6219,
+      "positive": 8106
     },
     "SRVC - Unauthenticated": {
       "count": 5099,
-      "negative": 7,
-      "positive": 2914
+      "negative": 1438,
+      "positive": 2578
     },
     "Interim Servicing": {
       "count": 1008,
-      "negative": 3,
-      "positive": 654
+      "negative": 229,
+      "positive": 604
     },
     "SRVC - Collection": {
       "count": 1353,
-      "negative": 2,
-      "positive": 1015
+      "negative": 703,
+      "positive": 537
     },
     "Interim servicing Corporate": {
       "count": 72,
-      "negative": 0,
-      "positive": 51
+      "negative": 24,
+      "positive": 36
     },
     "Interim Servicing Password Reset": {
       "count": 204,
-      "negative": 1,
-      "positive": 119
+      "negative": 74,
+      "positive": 99
     },
     "SRVC - Escrow": {
       "count": 444,
-      "negative": 1,
-      "positive": 308
+      "negative": 153,
+      "positive": 236
     },
     "SRVC/IRS - Agent Outbound": {
       "count": 1659,
-      "negative": 0,
-      "positive": 775
+      "negative": 505,
+      "positive": 583
     },
     "SRVC - Loss Mit": {
       "count": 42,
-      "negative": 0,
-      "positive": 30
+      "negative": 23,
+      "positive": 15
     },
     "Interim-Servicing": {
       "count": 39,
-      "negative": 0,
+      "negative": 8,
       "positive": 20
     },
     "Interim Servicing Unauthenticated": {
       "count": 392,
-      "negative": 2,
-      "positive": 258
+      "negative": 110,
+      "positive": 221
     },
     "SRVC DID Executive": {
       "count": 33,
-      "negative": 0,
-      "positive": 14
+      "negative": 12,
+      "positive": 17
     },
     "SRVC - Bankruptcy": {
       "count": 2,
-      "negative": 0,
-      "positive": 2
+      "negative": 2,
+      "positive": 0
     },
     "NULL": {
       "count": 207,
-      "negative": 0,
-      "positive": 135
+      "negative": 72,
+      "positive": 102
     },
     "SRVC - Disaster": {
       "count": 1,
-      "negative": 0,
+      "negative": 1,
       "positive": 0
     }
   },
@@ -475,240 +475,240 @@
     {
       "date": "2025-11-01",
       "total": 99,
-      "positive": 54,
-      "negative": 0,
-      "neutral": 45
+      "positive": 42,
+      "negative": 41,
+      "neutral": 16
     },
     {
       "date": "2025-11-03",
       "total": 330,
-      "positive": 202,
-      "negative": 0,
-      "neutral": 128
+      "positive": 158,
+      "negative": 131,
+      "neutral": 41
     },
     {
       "date": "2025-11-04",
       "total": 1752,
-      "positive": 1016,
-      "negative": 2,
-      "neutral": 734
+      "positive": 825,
+      "negative": 575,
+      "neutral": 352
     },
     {
       "date": "2025-11-05",
       "total": 1491,
-      "positive": 898,
-      "negative": 3,
-      "neutral": 590
+      "positive": 691,
+      "negative": 517,
+      "neutral": 283
     },
     {
       "date": "2025-11-06",
       "total": 1235,
-      "positive": 750,
-      "negative": 0,
-      "neutral": 485
+      "positive": 562,
+      "negative": 429,
+      "neutral": 244
     },
     {
       "date": "2025-11-07",
       "total": 1288,
-      "positive": 770,
-      "negative": 0,
-      "neutral": 518
+      "positive": 581,
+      "negative": 434,
+      "neutral": 273
     },
     {
       "date": "2025-11-08",
       "total": 1050,
-      "positive": 648,
-      "negative": 4,
-      "neutral": 398
+      "positive": 519,
+      "negative": 347,
+      "neutral": 184
     },
     {
       "date": "2025-11-09",
       "total": 13,
-      "positive": 8,
-      "negative": 0,
-      "neutral": 5
+      "positive": 5,
+      "negative": 5,
+      "neutral": 3
     },
     {
       "date": "2025-11-10",
       "total": 216,
-      "positive": 150,
-      "negative": 1,
-      "neutral": 65
+      "positive": 105,
+      "negative": 87,
+      "neutral": 24
     },
     {
       "date": "2025-11-11",
       "total": 1197,
-      "positive": 750,
-      "negative": 0,
-      "neutral": 447
+      "positive": 564,
+      "negative": 429,
+      "neutral": 204
     },
     {
       "date": "2025-11-12",
       "total": 256,
-      "positive": 184,
-      "negative": 1,
-      "neutral": 71
+      "positive": 126,
+      "negative": 100,
+      "neutral": 30
     },
     {
       "date": "2025-11-13",
       "total": 1342,
-      "positive": 877,
-      "negative": 4,
-      "neutral": 461
+      "positive": 664,
+      "negative": 470,
+      "neutral": 208
     },
     {
       "date": "2025-11-14",
       "total": 1158,
-      "positive": 774,
-      "negative": 0,
-      "neutral": 384
+      "positive": 601,
+      "negative": 391,
+      "neutral": 166
     },
     {
       "date": "2025-11-15",
       "total": 1077,
-      "positive": 744,
-      "negative": 1,
-      "neutral": 332
+      "positive": 567,
+      "negative": 362,
+      "neutral": 148
     },
     {
       "date": "2025-11-16",
       "total": 22,
-      "positive": 17,
-      "negative": 0,
+      "positive": 13,
+      "negative": 4,
       "neutral": 5
     },
     {
       "date": "2025-11-17",
       "total": 233,
-      "positive": 162,
-      "negative": 0,
-      "neutral": 71
+      "positive": 98,
+      "negative": 104,
+      "neutral": 31
     },
     {
       "date": "2025-11-18",
       "total": 1323,
-      "positive": 804,
-      "negative": 1,
-      "neutral": 518
+      "positive": 630,
+      "negative": 468,
+      "neutral": 225
     },
     {
       "date": "2025-11-19",
       "total": 1074,
-      "positive": 700,
-      "negative": 2,
-      "neutral": 372
+      "positive": 535,
+      "negative": 376,
+      "neutral": 163
     },
     {
       "date": "2025-11-20",
       "total": 996,
-      "positive": 665,
-      "negative": 0,
-      "neutral": 331
+      "positive": 503,
+      "negative": 350,
+      "neutral": 143
     },
     {
       "date": "2025-11-21",
       "total": 868,
-      "positive": 580,
-      "negative": 0,
-      "neutral": 288
+      "positive": 433,
+      "negative": 294,
+      "neutral": 141
     },
     {
       "date": "2025-11-22",
       "total": 755,
-      "positive": 519,
-      "negative": 2,
-      "neutral": 234
+      "positive": 384,
+      "negative": 269,
+      "neutral": 102
     },
     {
       "date": "2025-11-23",
       "total": 12,
-      "positive": 8,
-      "negative": 0,
-      "neutral": 4
+      "positive": 5,
+      "negative": 4,
+      "neutral": 3
     },
     {
       "date": "2025-11-24",
       "total": 205,
-      "positive": 143,
-      "negative": 0,
-      "neutral": 62
+      "positive": 109,
+      "negative": 75,
+      "neutral": 21
     },
     {
       "date": "2025-11-25",
       "total": 1125,
-      "positive": 793,
-      "negative": 0,
-      "neutral": 332
+      "positive": 617,
+      "negative": 377,
+      "neutral": 131
     },
     {
       "date": "2025-11-26",
       "total": 1025,
-      "positive": 715,
-      "negative": 0,
-      "neutral": 310
+      "positive": 514,
+      "negative": 375,
+      "neutral": 136
     },
     {
       "date": "2025-11-27",
       "total": 831,
-      "positive": 566,
-      "negative": 0,
-      "neutral": 265
+      "positive": 426,
+      "negative": 280,
+      "neutral": 125
     },
     {
       "date": "2025-11-28",
       "total": 153,
-      "positive": 110,
-      "negative": 0,
-      "neutral": 43
+      "positive": 78,
+      "negative": 57,
+      "neutral": 18
     },
     {
       "date": "2025-11-29",
       "total": 666,
-      "positive": 450,
-      "negative": 2,
-      "neutral": 214
+      "positive": 327,
+      "negative": 249,
+      "neutral": 90
     },
     {
       "date": "2025-11-30",
       "total": 24,
-      "positive": 21,
-      "negative": 0,
-      "neutral": 3
+      "positive": 20,
+      "negative": 4,
+      "neutral": 0
     },
     {
       "date": "2025-12-01",
       "total": 280,
-      "positive": 200,
-      "negative": 0,
-      "neutral": 80
+      "positive": 138,
+      "negative": 100,
+      "neutral": 42
     },
     {
       "date": "2025-12-02",
       "total": 1734,
-      "positive": 1127,
-      "negative": 4,
-      "neutral": 603
+      "positive": 849,
+      "negative": 608,
+      "neutral": 277
     },
     {
       "date": "2025-12-03",
       "total": 1480,
-      "positive": 1062,
-      "negative": 4,
-      "neutral": 414
+      "positive": 737,
+      "negative": 595,
+      "neutral": 148
     },
     {
       "date": "2025-12-04",
       "total": 1329,
-      "positive": 944,
-      "negative": 1,
-      "neutral": 384
+      "positive": 639,
+      "negative": 536,
+      "neutral": 154
     },
     {
       "date": "2025-12-05",
       "total": 259,
-      "positive": 181,
-      "negative": 0,
-      "neutral": 78
+      "positive": 89,
+      "negative": 130,
+      "neutral": 40
     }
   ]
 }

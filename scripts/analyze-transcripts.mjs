@@ -145,16 +145,68 @@ function extractBasicMetadata(record) {
   if (allText.includes('complaint') || allText.includes('supervisor') || allText.includes('manager')) detectedTopics.push('complaint');
   if (allText.includes('transfer')) detectedTopics.push('transfer');
 
-  // Basic sentiment indicators
-  const positiveWords = ['thank', 'great', 'perfect', 'appreciate', 'wonderful', 'excellent', 'happy'];
-  const negativeWords = ['frustrated', 'angry', 'upset', 'terrible', 'horrible', 'worst', 'ridiculous', 'unacceptable'];
+  // Enhanced sentiment analysis - be more CRITICAL
+  // Only count as positive if genuinely expressing satisfaction
+  const strongPositiveWords = ['excellent', 'wonderful', 'amazing', 'fantastic', 'perfect', 'awesome'];
+  const mildPositiveWords = ['thank', 'thanks', 'appreciate', 'great', 'good', 'helpful', 'happy'];
 
-  const positiveCount = positiveWords.filter(w => allText.includes(w)).length;
-  const negativeCount = negativeWords.filter(w => allText.includes(w)).length;
+  // Expanded negative indicators - catch subtle frustration
+  const strongNegativeWords = [
+    'frustrated', 'frustrating', 'angry', 'furious', 'livid', 'outraged',
+    'terrible', 'horrible', 'awful', 'worst', 'ridiculous', 'unacceptable',
+    'incompetent', 'useless', 'pathetic', 'disgraceful', 'disgusting'
+  ];
+  const negativeExperience = [
+    'been waiting', 'still waiting', 'waited', 'waiting for',
+    'no one', 'nobody', 'never called', 'never received', 'never got',
+    'called multiple', 'called several', 'called many', 'keep calling',
+    'third time', 'fourth time', 'fifth time', 'again and again',
+    'not resolved', 'still not', 'hasn\'t been', 'hasn\'t happened',
+    'wrong', 'incorrect', 'error', 'mistake', 'messed up',
+    'overcharged', 'charged twice', 'double charged',
+    'disappointed', 'disappointing', 'let down',
+    'don\'t understand', 'doesn\'t make sense', 'confused',
+    'not what i', 'not what was', 'that\'s not',
+    'lied', 'lying', 'dishonest', 'misleading', 'misled',
+    'complaint', 'complain', 'supervisor', 'manager', 'escalate',
+    'cancel', 'closing', 'refinance away', 'going elsewhere', 'another company',
+    'wasting my time', 'waste of time', 'taking forever',
+    'unresponsive', 'no response', 'no reply', 'ignored',
+    'rude', 'disrespectful', 'unprofessional',
+    'problem', 'issue', 'trouble', 'difficult', 'hassle',
+    'can\'t believe', 'cannot believe', 'seriously',
+    'this is crazy', 'this is insane', 'how is this',
+    'for weeks', 'for months', 'over a month', 'over a week'
+  ];
+  const negativeEmotion = [
+    'upset', 'unhappy', 'annoyed', 'irritated', 'aggravated',
+    'stressed', 'worried', 'concerned', 'anxious', 'nervous',
+    'tired of', 'sick of', 'fed up', 'had enough', 'done with'
+  ];
 
+  // Count indicators
+  const strongPositiveCount = strongPositiveWords.filter(w => allText.includes(w)).length;
+  const mildPositiveCount = mildPositiveWords.filter(w => allText.includes(w)).length;
+  const strongNegativeCount = strongNegativeWords.filter(w => allText.includes(w)).length;
+  const negativeExpCount = negativeExperience.filter(phrase => allText.includes(phrase)).length;
+  const negativeEmotionCount = negativeEmotion.filter(w => allText.includes(w)).length;
+
+  // Calculate scores - weight negative experience phrases heavily
+  const positiveScore = strongPositiveCount * 3 + mildPositiveCount * 1;
+  const negativeScore = strongNegativeCount * 4 + negativeExpCount * 3 + negativeEmotionCount * 2;
+
+  // Determine sentiment with critical eye
   let basicSentiment = 'neutral';
-  if (positiveCount > negativeCount + 1) basicSentiment = 'positive';
-  else if (negativeCount > positiveCount) basicSentiment = 'negative';
+  if (negativeScore >= 3) {
+    basicSentiment = 'negative';  // Any significant negative signals = negative
+  } else if (negativeScore >= 1 && positiveScore < 5) {
+    basicSentiment = 'negative';  // Some negative without strong positive = negative
+  } else if (positiveScore >= 5 && negativeScore === 0) {
+    basicSentiment = 'positive';  // Strong positive with NO negative = positive
+  } else if (positiveScore >= 2 && negativeScore === 0) {
+    basicSentiment = 'positive';  // Mild positive with no negative
+  }
+  // Otherwise stays neutral
 
   // Build structured conversation messages for display
   const conversationMessages = conversation
