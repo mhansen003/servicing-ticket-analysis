@@ -22,6 +22,7 @@ import {
 import { AIAnalysis } from '@/components/AIAnalysis';
 import { InsightsPanel } from '@/components/InsightsPanel';
 import { DataTable } from '@/components/DataTable';
+import ServicingAnalysis from '@/components/ServicingAnalysis';
 
 interface HeatmapData {
   data: { x: string; y: string; value: number }[];
@@ -78,7 +79,7 @@ interface DashboardData {
   trends?: Trends;
 }
 
-type TabType = 'overview' | 'insights' | 'data' | 'ai';
+type TabType = 'overview' | 'servicing' | 'insights' | 'data' | 'ai';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -137,6 +138,7 @@ export default function Dashboard() {
 
   const tabs = [
     { id: 'overview' as TabType, label: 'Overview', icon: BarChart3 },
+    { id: 'servicing' as TabType, label: 'Servicing', icon: Ticket },
     { id: 'insights' as TabType, label: 'Insights', icon: Brain },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
@@ -312,6 +314,8 @@ export default function Dashboard() {
             </div>
           </>
         )}
+
+        {activeTab === 'servicing' && <ServicingAnalysis />}
 
         {activeTab === 'insights' && data.heatmaps && data.issues && data.trends && (
           <InsightsPanel heatmaps={data.heatmaps} issues={data.issues} trends={data.trends} />

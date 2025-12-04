@@ -9,6 +9,7 @@ import {
   getHeatmaps,
   getIssues,
   getTrends,
+  getServicingAnalysis,
 } from '@/lib/data-loader';
 
 export async function GET() {
@@ -23,6 +24,7 @@ export async function GET() {
       heatmaps,
       issues,
       trends,
+      servicingAnalysis,
     ] = await Promise.all([
       getTicketStats(),
       getTicketsByMonth(),
@@ -33,6 +35,7 @@ export async function GET() {
       getHeatmaps(),
       getIssues(),
       getTrends(),
+      getServicingAnalysis(),
     ]);
 
     return NextResponse.json({
@@ -45,6 +48,7 @@ export async function GET() {
       heatmaps,
       issues,
       trends,
+      servicingAnalysis,
     });
   } catch (error) {
     console.error('Error loading stats:', error);

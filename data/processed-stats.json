@@ -1406,6 +1406,366 @@
       "is_ticket_complete": "YES"
     }
   ],
+  "servicingAnalysis": {
+    "totalTickets": 24687,
+    "projects": [
+      {
+        "name": "Servicing Help",
+        "count": 20979
+      },
+      {
+        "name": "ServApp Support",
+        "count": 1923
+      },
+      {
+        "name": "CMG Servicing Oversight",
+        "count": 927
+      },
+      {
+        "name": "Servicing Escalations WG",
+        "count": 858
+      }
+    ],
+    "categories": [
+      {
+        "name": "Documentation",
+        "count": 5863,
+        "percent": 24
+      },
+      {
+        "name": "Payment Issues",
+        "count": 3971,
+        "percent": 16
+      },
+      {
+        "name": "Other",
+        "count": 3015,
+        "percent": 12
+      },
+      {
+        "name": "Communication/Forwarded",
+        "count": 2435,
+        "percent": 10
+      },
+      {
+        "name": "Loan-Specific Inquiry",
+        "count": 2023,
+        "percent": 8
+      },
+      {
+        "name": "Automated System Messages",
+        "count": 1657,
+        "percent": 7
+      },
+      {
+        "name": "Escrow",
+        "count": 1653,
+        "percent": 7
+      },
+      {
+        "name": "General Inquiry",
+        "count": 838,
+        "percent": 3
+      },
+      {
+        "name": "Voice/Alert Requests",
+        "count": 594,
+        "percent": 2
+      },
+      {
+        "name": "Transfer/Boarding",
+        "count": 529,
+        "percent": 2
+      },
+      {
+        "name": "Complaints/Escalations",
+        "count": 513,
+        "percent": 2
+      },
+      {
+        "name": "Loan Info Request",
+        "count": 479,
+        "percent": 2
+      },
+      {
+        "name": "Loan Changes",
+        "count": 479,
+        "percent": 2
+      },
+      {
+        "name": "Insurance/Coverage",
+        "count": 418,
+        "percent": 2
+      },
+      {
+        "name": "Account Access",
+        "count": 220,
+        "percent": 1
+      }
+    ],
+    "topCategories": [
+      {
+        "name": "Documentation",
+        "count": 5863,
+        "percent": 24
+      },
+      {
+        "name": "Payment Issues",
+        "count": 3971,
+        "percent": 16
+      },
+      {
+        "name": "Other",
+        "count": 3015,
+        "percent": 12
+      },
+      {
+        "name": "Communication/Forwarded",
+        "count": 2435,
+        "percent": 10
+      },
+      {
+        "name": "Loan-Specific Inquiry",
+        "count": 2023,
+        "percent": 8
+      },
+      {
+        "name": "Automated System Messages",
+        "count": 1657,
+        "percent": 7
+      }
+    ],
+    "categoryTrends": [
+      {
+        "month": "2025-09",
+        "Documentation": 1840,
+        "Payment Issues": 1315,
+        "Other": 1037,
+        "Communication/Forwarded": 802,
+        "Loan-Specific Inquiry": 603,
+        "Automated System Messages": 1421
+      },
+      {
+        "month": "2025-10",
+        "Documentation": 1976,
+        "Payment Issues": 1316,
+        "Other": 1031,
+        "Communication/Forwarded": 886,
+        "Loan-Specific Inquiry": 709,
+        "Automated System Messages": 236
+      },
+      {
+        "month": "2025-11",
+        "Documentation": 1940,
+        "Payment Issues": 1205,
+        "Other": 879,
+        "Communication/Forwarded": 683,
+        "Loan-Specific Inquiry": 643,
+        "Automated System Messages": 0
+      },
+      {
+        "month": "2025-12",
+        "Documentation": 107,
+        "Payment Issues": 135,
+        "Other": 68,
+        "Communication/Forwarded": 64,
+        "Loan-Specific Inquiry": 68,
+        "Automated System Messages": 0
+      }
+    ],
+    "timeSeries": {
+      "monthly": [
+        {
+          "date": "2025-09",
+          "count": 9262
+        },
+        {
+          "date": "2025-10",
+          "count": 7901
+        },
+        {
+          "date": "2025-11",
+          "count": 6968
+        },
+        {
+          "date": "2025-12",
+          "count": 556
+        }
+      ],
+      "weekly": [
+        {
+          "date": "2025-10-26",
+          "count": 764
+        },
+        {
+          "date": "2025-10-27",
+          "count": 943
+        },
+        {
+          "date": "2025-11-02",
+          "count": 697
+        },
+        {
+          "date": "2025-11-03",
+          "count": 1625
+        },
+        {
+          "date": "2025-11-09",
+          "count": 531
+        },
+        {
+          "date": "2025-11-10",
+          "count": 1281
+        },
+        {
+          "date": "2025-11-16",
+          "count": 442
+        },
+        {
+          "date": "2025-11-17",
+          "count": 1206
+        },
+        {
+          "date": "2025-11-23",
+          "count": 337
+        },
+        {
+          "date": "2025-11-24",
+          "count": 763
+        },
+        {
+          "date": "2025-11-30",
+          "count": 194
+        },
+        {
+          "date": "2025-12-01",
+          "count": 386
+        }
+      ],
+      "daily": [
+        {
+          "date": "2025-11-03",
+          "count": 146
+        },
+        {
+          "date": "2025-11-04",
+          "count": 539
+        },
+        {
+          "date": "2025-11-05",
+          "count": 490
+        },
+        {
+          "date": "2025-11-06",
+          "count": 422
+        },
+        {
+          "date": "2025-11-07",
+          "count": 380
+        },
+        {
+          "date": "2025-11-08",
+          "count": 321
+        },
+        {
+          "date": "2025-11-09",
+          "count": 16
+        },
+        {
+          "date": "2025-11-10",
+          "count": 108
+        },
+        {
+          "date": "2025-11-11",
+          "count": 365
+        },
+        {
+          "date": "2025-11-12",
+          "count": 173
+        },
+        {
+          "date": "2025-11-13",
+          "count": 477
+        },
+        {
+          "date": "2025-11-14",
+          "count": 388
+        },
+        {
+          "date": "2025-11-15",
+          "count": 276
+        },
+        {
+          "date": "2025-11-16",
+          "count": 29
+        },
+        {
+          "date": "2025-11-17",
+          "count": 81
+        },
+        {
+          "date": "2025-11-18",
+          "count": 384
+        },
+        {
+          "date": "2025-11-19",
+          "count": 378
+        },
+        {
+          "date": "2025-11-20",
+          "count": 326
+        },
+        {
+          "date": "2025-11-21",
+          "count": 278
+        },
+        {
+          "date": "2025-11-22",
+          "count": 179
+        },
+        {
+          "date": "2025-11-23",
+          "count": 22
+        },
+        {
+          "date": "2025-11-24",
+          "count": 68
+        },
+        {
+          "date": "2025-11-25",
+          "count": 347
+        },
+        {
+          "date": "2025-11-26",
+          "count": 301
+        },
+        {
+          "date": "2025-11-27",
+          "count": 214
+        },
+        {
+          "date": "2025-11-28",
+          "count": 16
+        },
+        {
+          "date": "2025-11-29",
+          "count": 131
+        },
+        {
+          "date": "2025-11-30",
+          "count": 22
+        },
+        {
+          "date": "2025-12-01",
+          "count": 119
+        },
+        {
+          "date": "2025-12-02",
+          "count": 451
+        }
+      ]
+    }
+  },
   "heatmaps": {
     "dayHour": {
       "data": [
@@ -2793,5 +3153,5 @@
     "projectsAtRisk": 10,
     "overloadedAssignees": 15
   },
-  "processedAt": "2025-12-04T17:46:36.475Z"
+  "processedAt": "2025-12-04T18:07:57.398Z"
 }

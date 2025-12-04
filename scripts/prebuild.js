@@ -363,6 +363,119 @@ const ticketSample = tickets.slice(0, 100).map((t) => ({
 }));
 
 // ========================================
+// SERVICING ANALYSIS (Filtered Data)
+// ========================================
+const servicingProjects = ['Servicing Help', 'Servicing Escalations WG', 'ServApp Support', 'CMG Servicing Oversight'];
+const servicingTickets = tickets.filter(t => servicingProjects.includes(t.project_name));
+
+// Category keywords for classification
+const categoryKeywords = {
+  'Automated System Messages': ['automatic reply', 'unmonitored mailbox', 'sagentsupport', 'auto-reply'],
+  'Payment Issues': ['payment', 'pay ', 'ach', 'autopay', 'draft', 'misapplied', 'overpayment', 'underpayment', 'double draft'],
+  'Escrow': ['escrow', 'tax bill', 'tax ', 'insurance', 'hoi ', 'pmi', 'shortage', 'surplus', 'flood', 'hazard'],
+  'Documentation': ['statement', 'letter', 'document', '1098', 'payoff', 'release', 'mortgage release', 'amortization', 'confirmation'],
+  'Transfer/Boarding': ['transfer', 'board', 'cenlar', 'sold', 'subservicer', 'lakeview', 'servicemac', 'notice of servicing'],
+  'Voice/Alert Requests': ['voice mail', 'voicemail', 'alert', 'interim'],
+  'Account Access': ['login', 'password', 'access', 'portal', 'locked out', 'reset', 'website link', 'online'],
+  'Loan Info Request': ['loan number', 'loan info', 'balance', 'rate', 'mailing address', 'wire', 'reimbursement'],
+  'Insurance/Coverage': ['mycoverageinfo', 'covius', 'coverage', 'policy'],
+  'Loan Changes': ['recast', 'buyout', 'assumption', 'modification', 'forbearance', 'hardship', 'loss mitigation', 'deferment'],
+  'Complaints/Escalations': ['complaint', 'escalat', 'elevated', 'urgent', 'mess', 'facebook', 'issue'],
+  'General Inquiry': ['help', 'question', 'request', 'information', 'needed', 'assistance'],
+  'Communication/Forwarded': ['fw:', 'fwd:', 're:', 'follow up', 'call back'],
+};
+const loanNumberPattern = /\b(r[a-z]{2}\d{7,}|0\d{9}|\d{10,}|loan\s*#?\s*\d+)/i;
+
+// Categorize tickets
+function categorizeTicket(title) {
+  const lowerTitle = String(title || '').toLowerCase();
+  for (const [cat, terms] of Object.entries(categoryKeywords)) {
+    if (terms.some(term => lowerTitle.includes(term))) {
+      return cat;
+    }
+  }
+  if (loanNumberPattern.test(String(title || ''))) {
+    return 'Loan-Specific Inquiry';
+  }
+  return 'Other';
+}
+
+// Calculate servicing stats
+const servicingCategories = {};
+const servicingByMonth = {};
+const servicingByWeek = {};
+const servicingByDay = {};
+const servicingCategoryByMonth = {};
+
+servicingTickets.forEach(t => {
+  const category = categorizeTicket(t.ticket_title);
+  servicingCategories[category] = (servicingCategories[category] || 0) + 1;
+
+  if (t.ticket_created_at_utc) {
+    const date = new Date(t.ticket_created_at_utc);
+    if (!isNaN(date.getTime())) {
+      // Monthly
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+      servicingByMonth[monthKey] = (servicingByMonth[monthKey] || 0) + 1;
+
+      // Weekly (week starting Sunday)
+      const weekStart = new Date(date);
+      weekStart.setDate(date.getDate() - date.getDay());
+      const weekKey = weekStart.toISOString().slice(0, 10);
+      servicingByWeek[weekKey] = (servicingByWeek[weekKey] || 0) + 1;
+
+      // Daily
+      const dayKey = date.toISOString().slice(0, 10);
+      servicingByDay[dayKey] = (servicingByDay[dayKey] || 0) + 1;
+
+      // Category by month (for trend analysis)
+      if (!servicingCategoryByMonth[monthKey]) {
+        servicingCategoryByMonth[monthKey] = {};
+      }
+      servicingCategoryByMonth[monthKey][category] = (servicingCategoryByMonth[monthKey][category] || 0) + 1;
+    }
+  }
+});
+
+// Top 6 categories
+const topCategories = Object.entries(servicingCategories)
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 6)
+  .map(([name, count]) => ({ name, count, percent: Math.round(count / servicingTickets.length * 100) }));
+
+// Category trends by month
+const categoryTrends = Object.entries(servicingCategoryByMonth)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([month, cats]) => ({
+    month,
+    ...Object.fromEntries(topCategories.map(c => [c.name, cats[c.name] || 0]))
+  }));
+
+// Format time series data
+const servicingTimeSeries = {
+  monthly: Object.entries(servicingByMonth).sort(([a], [b]) => a.localeCompare(b)).map(([date, count]) => ({ date, count })),
+  weekly: Object.entries(servicingByWeek).sort(([a], [b]) => a.localeCompare(b)).slice(-12).map(([date, count]) => ({ date, count })),
+  daily: Object.entries(servicingByDay).sort(([a], [b]) => a.localeCompare(b)).slice(-30).map(([date, count]) => ({ date, count })),
+};
+
+// Servicing analysis object
+const servicingAnalysis = {
+  totalTickets: servicingTickets.length,
+  projects: servicingProjects.map(p => ({
+    name: p,
+    count: servicingTickets.filter(t => t.project_name === p).length
+  })).sort((a, b) => b.count - a.count),
+  categories: Object.entries(servicingCategories)
+    .sort((a, b) => b[1] - a[1])
+    .map(([name, count]) => ({ name, count, percent: Math.round(count / servicingTickets.length * 100) })),
+  topCategories,
+  categoryTrends,
+  timeSeries: servicingTimeSeries,
+};
+
+console.log(`📊 Servicing Analysis: ${servicingTickets.length.toLocaleString()} tickets in ${topCategories.length} top categories`);
+
+// ========================================
 // ALL TICKETS FOR RAW DATA TABLE
 // ========================================
 const allTicketsPath = path.join(__dirname, '..', 'data', 'all-tickets.json');
@@ -396,6 +509,8 @@ const output = {
   statusBreakdown,
   priorityBreakdown,
   ticketSample,
+  // Servicing-only analysis
+  servicingAnalysis,
   // New analytics data
   heatmaps: {
     dayHour: {

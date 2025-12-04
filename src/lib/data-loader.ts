@@ -29,6 +29,30 @@ interface Trends {
   overloadedAssignees: number;
 }
 
+export interface ServicingCategory {
+  name: string;
+  count: number;
+  percent: number;
+}
+
+export interface CategoryTrend {
+  month: string;
+  [category: string]: string | number;
+}
+
+export interface ServicingAnalysis {
+  totalTickets: number;
+  projects: { name: string; count: number }[];
+  categories: ServicingCategory[];
+  topCategories: ServicingCategory[];
+  categoryTrends: CategoryTrend[];
+  timeSeries: {
+    monthly: TimeSeriesData[];
+    weekly: TimeSeriesData[];
+    daily: TimeSeriesData[];
+  };
+}
+
 interface ProcessedData {
   stats: TicketStats;
   ticketsByMonth: TimeSeriesData[];
@@ -47,6 +71,7 @@ interface ProcessedData {
     time_to_resolution_in_minutes: number | null;
     is_ticket_complete: string;
   }[];
+  servicingAnalysis?: ServicingAnalysis;
   heatmaps?: {
     dayHour: HeatmapData;
     projectStatus: HeatmapData;
@@ -122,4 +147,9 @@ export async function getIssues() {
 export async function getTrends() {
   const data = loadProcessedData();
   return data.trends;
+}
+
+export async function getServicingAnalysis(): Promise<ServicingAnalysis | undefined> {
+  const data = loadProcessedData();
+  return data.servicingAnalysis;
 }
