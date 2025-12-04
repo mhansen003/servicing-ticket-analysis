@@ -47,24 +47,24 @@ type TimeView = 'daily' | 'weekly' | 'monthly';
 
 const COLORS = ['#3b82f6', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16'];
 
-// Category keywords for search matching (same as prebuild.js)
-const CATEGORY_KEYWORDS: Record<string, string[]> = {
-  'Automated System Messages': ['automatic reply', 'unmonitored mailbox', 'sagentsupport', 'auto-reply'],
-  'Payment Issues': ['payment', 'ach', 'autopay', 'draft', 'misapplied'],
-  'Escrow': ['escrow', 'tax bill', 'insurance', 'hoi', 'pmi', 'shortage'],
-  'Documentation': ['statement', 'letter', 'document', '1098', 'payoff', 'release', 'amortization'],
-  'Transfer/Boarding': ['transfer', 'board', 'cenlar', 'sold', 'lakeview', 'servicemac'],
-  'Voice/Alert Requests': ['voice mail', 'voicemail', 'alert', 'interim'],
-  'Account Access': ['login', 'password', 'access', 'portal', 'locked out'],
-  'Loan Info Request': ['loan number', 'loan info', 'balance', 'rate'],
-  'Insurance/Coverage': ['mycoverageinfo', 'covius', 'coverage', 'policy'],
-  'Loan Changes': ['recast', 'buyout', 'assumption', 'modification', 'forbearance'],
-  'Complaints/Escalations': ['complaint', 'escalat', 'elevated', 'urgent'],
-  'General Inquiry': ['help', 'question', 'request', 'information'],
-  'Communication/Forwarded': ['fw:', 'fwd:', 're:', 'follow up'],
-  'Loan-Specific Inquiry': ['loan'],
-  'Other': [''],
-};
+// Valid category names (must match prebuild.js categorization)
+const VALID_CATEGORIES = [
+  'Automated System Messages',
+  'Payment Issues',
+  'Escrow',
+  'Documentation',
+  'Transfer/Boarding',
+  'Voice/Alert Requests',
+  'Account Access',
+  'Loan Info Request',
+  'Insurance/Coverage',
+  'Loan Changes',
+  'Complaints/Escalations',
+  'General Inquiry',
+  'Communication/Forwarded',
+  'Loan-Specific Inquiry',
+  'Other',
+];
 
 interface ServicingAnalysisProps {
   onDrillDown?: (filter: DrillDownFilter) => void;
@@ -130,22 +130,13 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
 
   const timeSeriesData = getTimeSeriesData();
 
-  // Helper to get search term for a category
-  const getCategorySearchTerm = (categoryName: string): string => {
-    const keywords = CATEGORY_KEYWORDS[categoryName];
-    if (keywords && keywords.length > 0 && keywords[0] !== '') {
-      return keywords[0]; // Use first keyword as search term
-    }
-    return categoryName.toLowerCase();
-  };
-
-  // Handle category click - drill down to raw data
+  // Handle category click - drill down to raw data using exact category name
   const handleCategoryClick = (categoryName: string) => {
     if (onDrillDown) {
-      const searchTerm = getCategorySearchTerm(categoryName);
+      // Pass the exact category name - DataTable will filter by category field
       onDrillDown({
         type: 'category',
-        value: searchTerm,
+        value: categoryName, // Exact category name for filtering
         label: `Category: ${categoryName}`,
       });
     }

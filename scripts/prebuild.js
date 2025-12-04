@@ -546,6 +546,8 @@ const allTickets = tickets.map((t) => ({
   responseTime: t.time_to_first_response_in_minutes,
   resolutionTime: t.time_to_resolution_in_minutes,
   complete: t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1',
+  // Add category for drill-down filtering (uses same categorization as analytics)
+  category: categorizeTicket(t.ticket_title),
 }));
 
 // Write minified JSON without formatting to save space

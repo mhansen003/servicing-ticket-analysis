@@ -66,6 +66,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
   const [projectFilter, setProjectFilter] = useState('');
   const [priorityFilter, setPriorityFilter] = useState('');
   const [assigneeFilter, setAssigneeFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState(''); // For drill-down from category charts
 
   // Sorting
   const [sortField, setSortField] = useState<SortField>('created');
@@ -93,22 +94,20 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
       setStatusFilter('');
       setPriorityFilter('');
       setAssigneeFilter('');
+      setCategoryFilter('');
+      setSearch('');
+      setProjectFilter('');
 
       if (drillDownFilter.type === 'project') {
         setProjectFilter(drillDownFilter.value);
-        setSearch('');
       } else if (drillDownFilter.type === 'category') {
-        // Categories are matched via search on ticket title
-        setSearch(drillDownFilter.value);
-        setProjectFilter('');
+        // Use category filter - exact match on the category field in tickets
+        setCategoryFilter(drillDownFilter.value);
       } else if (drillDownFilter.type === 'search') {
         setSearch(drillDownFilter.value);
-        setProjectFilter('');
       } else if (drillDownFilter.type === 'dateRange') {
         // For date range, we'll use the search field with date info
-        // The API will need to handle date filtering
         setSearch(drillDownFilter.value);
-        setProjectFilter('');
       }
 
       // Reset to table view and page 1
@@ -129,6 +128,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
         project: projectFilter,
         priority: priorityFilter,
         assignee: assigneeFilter,
+        category: categoryFilter, // Add category filter for drill-down
         sortField,
         sortOrder,
       });
@@ -148,7 +148,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     } finally {
       setLoading(false);
     }
-  }, [pagination.page, pagination.limit, debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, sortField, sortOrder]);
+  }, [pagination.page, pagination.limit, debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter, sortField, sortOrder]);
 
   useEffect(() => {
     if (viewMode === 'table') {
@@ -183,7 +183,7 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
   // Reset to page 1 when filters change
   useEffect(() => {
     setPagination(prev => ({ ...prev, page: 1 }));
-  }, [debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter]);
+  }, [debouncedSearch, statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -205,9 +205,10 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
     setProjectFilter('');
     setPriorityFilter('');
     setAssigneeFilter('');
+    setCategoryFilter('');
   };
 
-  const activeFilterCount = [statusFilter, projectFilter, priorityFilter, assigneeFilter].filter(Boolean).length;
+  const activeFilterCount = [statusFilter, projectFilter, priorityFilter, assigneeFilter, categoryFilter].filter(Boolean).length;
 
   const formatTime = (minutes: number | null) => {
     if (!minutes) return '-';
