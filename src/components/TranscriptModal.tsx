@@ -83,6 +83,51 @@ const TOPIC_LABELS: Record<string, string> = {
   other: 'Other',
 };
 
+// Sentiment data from AI analysis
+interface MessageSentiment {
+  score: number;  // -1 to 1
+  emotion: string;
+}
+
+// Get background color based on sentiment score and message role
+function getMessageSentimentStyle(sentiment: number, role: 'agent' | 'customer'): string {
+  if (role === 'agent') {
+    // Agent messages stay blue-tinted but can shift slightly
+    if (sentiment > 0.3) {
+      return 'bg-gradient-to-r from-blue-500/20 to-emerald-500/20 text-blue-100';
+    } else if (sentiment < -0.3) {
+      return 'bg-gradient-to-r from-blue-500/20 to-orange-500/15 text-blue-100';
+    }
+    return 'bg-blue-500/20 text-blue-100';
+  }
+
+  // Customer messages show more dramatic sentiment coloring
+  if (sentiment > 0.5) {
+    return 'bg-gradient-to-r from-emerald-500/25 to-emerald-500/15 text-emerald-100 border-l-2 border-emerald-500';
+  } else if (sentiment > 0.2) {
+    return 'bg-gradient-to-r from-emerald-500/15 to-[#1a1f2e] text-gray-200 border-l-2 border-emerald-500/50';
+  } else if (sentiment < -0.5) {
+    return 'bg-gradient-to-r from-red-500/25 to-red-500/15 text-red-100 border-l-2 border-red-500';
+  } else if (sentiment < -0.2) {
+    return 'bg-gradient-to-r from-orange-500/20 to-[#1a1f2e] text-gray-200 border-l-2 border-orange-500/50';
+  }
+
+  return 'bg-[#1a1f2e] text-gray-200';
+}
+
+// Get emotion badge color
+function getEmotionBadgeStyle(emotion: string): string {
+  const emotionLower = emotion.toLowerCase();
+  if (['grateful', 'satisfied', 'relieved', 'happy', 'pleased'].includes(emotionLower)) {
+    return 'bg-emerald-500/20 text-emerald-300';
+  } else if (['frustrated', 'angry', 'annoyed', 'upset', 'furious'].includes(emotionLower)) {
+    return 'bg-red-500/20 text-red-300';
+  } else if (['confused', 'uncertain', 'worried'].includes(emotionLower)) {
+    return 'bg-amber-500/20 text-amber-300';
+  }
+  return 'bg-gray-500/20 text-gray-300';
+}
+
 export function TranscriptModal({
   isOpen,
   onClose,
@@ -97,6 +142,9 @@ export function TranscriptModal({
   const [visibleCount, setVisibleCount] = useState(50);
   const [conversationCache, setConversationCache] = useState<Record<string, ConversationMessage[]>>({});
   const [loadingConversation, setLoadingConversation] = useState(false);
+  const [messageSentiments, setMessageSentiments] = useState<MessageSentiment[]>([]);
+  const [analyzingSentiment, setAnalyzingSentiment] = useState(false);
+  const [sentimentCache, setSentimentCache] = useState<Record<string, MessageSentiment[]>>({});
   const listRef = useRef<HTMLDivElement>(null);
 
   // Load transcript metadata
@@ -173,12 +221,61 @@ export function TranscriptModal({
     loadConversation();
   }, [selectedTranscript, conversationCache]);
 
+  // Analyze sentiment when conversation is loaded
+  useEffect(() => {
+    if (!selectedTranscript?.conversation?.length) {
+      setMessageSentiments([]);
+      return;
+    }
+
+    const transcriptId = selectedTranscript.id;
+
+    // Check cache first
+    if (sentimentCache[transcriptId]) {
+      setMessageSentiments(sentimentCache[transcriptId]);
+      return;
+    }
+
+    async function analyzeSentiment() {
+      setAnalyzingSentiment(true);
+      try {
+        const response = await fetch('/api/sentiment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: selectedTranscript?.conversation?.map(m => ({
+              role: m.role,
+              text: m.text,
+            })),
+          }),
+        });
+
+        if (response.ok) {
+          const { sentiments } = await response.json();
+          setMessageSentiments(sentiments);
+          // Cache the results
+          setSentimentCache(prev => ({
+            ...prev,
+            [transcriptId]: sentiments,
+          }));
+        }
+      } catch (error) {
+        console.error('Failed to analyze sentiment:', error);
+      } finally {
+        setAnalyzingSentiment(false);
+      }
+    }
+
+    analyzeSentiment();
+  }, [selectedTranscript?.conversation, selectedTranscript?.id, sentimentCache]);
+
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
       setSelectedTranscript(null);
       setSearchTerm('');
       setVisibleCount(50);
+      setMessageSentiments([]);
     }
   }, [isOpen, filterType, filterValue]);
 
@@ -463,6 +560,33 @@ export function TranscriptModal({
 
               {/* Conversation Messages */}
               <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                {/* Sentiment Analysis Status */}
+                {analyzingSentiment && (
+                  <div className="flex items-center justify-center py-2 px-4 bg-blue-500/10 rounded-lg border border-blue-500/20 mb-3">
+                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500/20 border-t-blue-500 mr-2" />
+                    <span className="text-sm text-blue-300">Analyzing conversation sentiment...</span>
+                  </div>
+                )}
+
+                {/* Sentiment Legend */}
+                {messageSentiments.length > 0 && !analyzingSentiment && (
+                  <div className="flex items-center justify-center gap-4 py-2 px-4 bg-white/[0.02] rounded-lg border border-white/[0.05] mb-3 text-xs">
+                    <span className="text-gray-500">Sentiment:</span>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-emerald-500/50" />
+                      <span className="text-emerald-400">Positive</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-gray-500/50" />
+                      <span className="text-gray-400">Neutral</span>
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <div className="w-3 h-3 rounded bg-red-500/50" />
+                      <span className="text-red-400">Negative</span>
+                    </div>
+                  </div>
+                )}
+
                 {loadingConversation ? (
                   <div className="flex items-center justify-center h-48">
                     <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-500" />
@@ -473,25 +597,44 @@ export function TranscriptModal({
                     No conversation data available
                   </div>
                 ) : (
-                  selectedTranscript.conversation.map((msg, idx) => (
-                    <div
-                      key={idx}
-                      className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
-                    >
+                  selectedTranscript.conversation.map((msg, idx) => {
+                    const sentiment = messageSentiments[idx];
+                    const sentimentScore = sentiment?.score ?? 0;
+                    const emotion = sentiment?.emotion ?? '';
+
+                    // Get the style based on sentiment
+                    const messageStyle = messageSentiments.length > 0
+                      ? getMessageSentimentStyle(sentimentScore, msg.role)
+                      : msg.role === 'agent'
+                        ? 'bg-blue-500/20 text-blue-100'
+                        : 'bg-[#1a1f2e] text-gray-200';
+
+                    return (
                       <div
-                        className={`max-w-[80%] rounded-2xl px-4 py-2 ${
-                          msg.role === 'agent'
-                            ? 'bg-blue-500/20 text-blue-100 rounded-br-md'
-                            : 'bg-[#1a1f2e] text-gray-200 rounded-bl-md'
-                        }`}
+                        key={idx}
+                        className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
                       >
-                        <p className="text-xs font-medium mb-1 opacity-60">
-                          {msg.role === 'agent' ? 'Agent' : 'Customer'}
-                        </p>
-                        <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
+                        <div
+                          className={`max-w-[80%] rounded-2xl px-4 py-2 transition-all ${messageStyle} ${
+                            msg.role === 'agent' ? 'rounded-br-md' : 'rounded-bl-md'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2 mb-1">
+                            <p className="text-xs font-medium opacity-60">
+                              {msg.role === 'agent' ? 'Agent' : 'Customer'}
+                            </p>
+                            {/* Show emotion badge for customer messages with sentiment */}
+                            {msg.role === 'customer' && emotion && messageSentiments.length > 0 && (
+                              <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${getEmotionBadgeStyle(emotion)}`}>
+                                {emotion}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
+                        </div>
                       </div>
-                    </div>
-                  ))
+                    );
+                  })
                 )}
               </div>
             </div>
