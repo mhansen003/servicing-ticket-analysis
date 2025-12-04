@@ -31,6 +31,7 @@
       "total": 24523,
       "completed": 0,
       "open": 24523,
+      "openRate": 100,
       "avgResolutionHours": 16
     },
     {
@@ -38,6 +39,7 @@
       "total": 20979,
       "completed": 0,
       "open": 20979,
+      "openRate": 100,
       "avgResolutionHours": 87
     },
     {
@@ -45,6 +47,7 @@
       "total": 1923,
       "completed": 0,
       "open": 1923,
+      "openRate": 100,
       "avgResolutionHours": 0
     },
     {
@@ -52,6 +55,7 @@
       "total": 927,
       "completed": 0,
       "open": 927,
+      "openRate": 100,
       "avgResolutionHours": 88
     },
     {
@@ -59,6 +63,7 @@
       "total": 858,
       "completed": 0,
       "open": 858,
+      "openRate": 100,
       "avgResolutionHours": 140
     },
     {
@@ -66,6 +71,7 @@
       "total": 490,
       "completed": 0,
       "open": 490,
+      "openRate": 100,
       "avgResolutionHours": 0
     },
     {
@@ -73,6 +79,7 @@
       "total": 325,
       "completed": 0,
       "open": 325,
+      "openRate": 100,
       "avgResolutionHours": 0
     },
     {
@@ -80,6 +87,7 @@
       "total": 308,
       "completed": 0,
       "open": 308,
+      "openRate": 100,
       "avgResolutionHours": 229
     },
     {
@@ -87,6 +95,7 @@
       "total": 91,
       "completed": 0,
       "open": 91,
+      "openRate": 100,
       "avgResolutionHours": 17
     },
     {
@@ -94,6 +103,7 @@
       "total": 90,
       "completed": 0,
       "open": 90,
+      "openRate": 100,
       "avgResolutionHours": 2
     }
   ],
@@ -103,6 +113,8 @@
       "name": "Kailani, Sarah",
       "total": 4640,
       "completed": 0,
+      "open": 4640,
+      "openRate": 100,
       "avgResolutionHours": 21
     },
     {
@@ -110,6 +122,8 @@
       "name": "Caliri, Victoria",
       "total": 4548,
       "completed": 0,
+      "open": 4548,
+      "openRate": 100,
       "avgResolutionHours": 18
     },
     {
@@ -117,6 +131,8 @@
       "name": "Doherty, Sam",
       "total": 3660,
       "completed": 0,
+      "open": 3660,
+      "openRate": 100,
       "avgResolutionHours": 80
     },
     {
@@ -124,6 +140,8 @@
       "name": "Eich, Janet",
       "total": 2675,
       "completed": 0,
+      "open": 2675,
+      "openRate": 100,
       "avgResolutionHours": 24
     },
     {
@@ -131,6 +149,8 @@
       "name": "Chaves, Jackie",
       "total": 2488,
       "completed": 0,
+      "open": 2488,
+      "openRate": 100,
       "avgResolutionHours": 60
     },
     {
@@ -138,6 +158,8 @@
       "name": "Newton, Jaime",
       "total": 1867,
       "completed": 0,
+      "open": 1867,
+      "openRate": 100,
       "avgResolutionHours": 18
     },
     {
@@ -145,6 +167,8 @@
       "name": "Macadangdang, Tara",
       "total": 1623,
       "completed": 0,
+      "open": 1623,
+      "openRate": 100,
       "avgResolutionHours": 18
     },
     {
@@ -152,6 +176,8 @@
       "name": "Vue, Ky",
       "total": 1354,
       "completed": 0,
+      "open": 1354,
+      "openRate": 100,
       "avgResolutionHours": 109
     },
     {
@@ -159,6 +185,8 @@
       "name": "Martin, Lauren",
       "total": 975,
       "completed": 0,
+      "open": 975,
+      "openRate": 100,
       "avgResolutionHours": 114
     },
     {
@@ -166,6 +194,8 @@
       "name": "Schreiner, Katie",
       "total": 879,
       "completed": 0,
+      "open": 879,
+      "openRate": 100,
       "avgResolutionHours": 129
     },
     {
@@ -173,6 +203,8 @@
       "name": "McCallum, Kristine",
       "total": 783,
       "completed": 0,
+      "open": 783,
+      "openRate": 100,
       "avgResolutionHours": 178
     },
     {
@@ -180,6 +212,8 @@
       "name": "Pinckney, Christina",
       "total": 656,
       "completed": 0,
+      "open": 656,
+      "openRate": 100,
       "avgResolutionHours": 92
     },
     {
@@ -187,6 +221,8 @@
       "name": "Smith, Kristi",
       "total": 645,
       "completed": 0,
+      "open": 645,
+      "openRate": 100,
       "avgResolutionHours": 76
     },
     {
@@ -194,6 +230,8 @@
       "name": "Yang, Duo",
       "total": 586,
       "completed": 0,
+      "open": 586,
+      "openRate": 100,
       "avgResolutionHours": 95
     },
     {
@@ -201,6 +239,8 @@
       "name": "Woodman, Kiera",
       "total": 585,
       "completed": 0,
+      "open": 585,
+      "openRate": 100,
       "avgResolutionHours": 45
     }
   ],
@@ -1366,5 +1406,1392 @@
       "is_ticket_complete": "YES"
     }
   ],
-  "processedAt": "2025-12-04T16:48:08.854Z"
+  "heatmaps": {
+    "dayHour": {
+      "data": [
+        {
+          "x": "00:00",
+          "y": "Sun",
+          "value": 68
+        },
+        {
+          "x": "01:00",
+          "y": "Sun",
+          "value": 71
+        },
+        {
+          "x": "02:00",
+          "y": "Sun",
+          "value": 64
+        },
+        {
+          "x": "03:00",
+          "y": "Sun",
+          "value": 48
+        },
+        {
+          "x": "04:00",
+          "y": "Sun",
+          "value": 48
+        },
+        {
+          "x": "05:00",
+          "y": "Sun",
+          "value": 34
+        },
+        {
+          "x": "06:00",
+          "y": "Sun",
+          "value": 34
+        },
+        {
+          "x": "07:00",
+          "y": "Sun",
+          "value": 38
+        },
+        {
+          "x": "08:00",
+          "y": "Sun",
+          "value": 43
+        },
+        {
+          "x": "09:00",
+          "y": "Sun",
+          "value": 32
+        },
+        {
+          "x": "10:00",
+          "y": "Sun",
+          "value": 38
+        },
+        {
+          "x": "11:00",
+          "y": "Sun",
+          "value": 51
+        },
+        {
+          "x": "12:00",
+          "y": "Sun",
+          "value": 48
+        },
+        {
+          "x": "13:00",
+          "y": "Sun",
+          "value": 56
+        },
+        {
+          "x": "14:00",
+          "y": "Sun",
+          "value": 68
+        },
+        {
+          "x": "15:00",
+          "y": "Sun",
+          "value": 78
+        },
+        {
+          "x": "16:00",
+          "y": "Sun",
+          "value": 67
+        },
+        {
+          "x": "17:00",
+          "y": "Sun",
+          "value": 98
+        },
+        {
+          "x": "18:00",
+          "y": "Sun",
+          "value": 121
+        },
+        {
+          "x": "19:00",
+          "y": "Sun",
+          "value": 88
+        },
+        {
+          "x": "20:00",
+          "y": "Sun",
+          "value": 89
+        },
+        {
+          "x": "21:00",
+          "y": "Sun",
+          "value": 83
+        },
+        {
+          "x": "22:00",
+          "y": "Sun",
+          "value": 74
+        },
+        {
+          "x": "23:00",
+          "y": "Sun",
+          "value": 62
+        },
+        {
+          "x": "00:00",
+          "y": "Mon",
+          "value": 65
+        },
+        {
+          "x": "01:00",
+          "y": "Mon",
+          "value": 23
+        },
+        {
+          "x": "02:00",
+          "y": "Mon",
+          "value": 26
+        },
+        {
+          "x": "03:00",
+          "y": "Mon",
+          "value": 34
+        },
+        {
+          "x": "04:00",
+          "y": "Mon",
+          "value": 57
+        },
+        {
+          "x": "05:00",
+          "y": "Mon",
+          "value": 25
+        },
+        {
+          "x": "06:00",
+          "y": "Mon",
+          "value": 41
+        },
+        {
+          "x": "07:00",
+          "y": "Mon",
+          "value": 7
+        },
+        {
+          "x": "08:00",
+          "y": "Mon",
+          "value": 23
+        },
+        {
+          "x": "09:00",
+          "y": "Mon",
+          "value": 22
+        },
+        {
+          "x": "10:00",
+          "y": "Mon",
+          "value": 28
+        },
+        {
+          "x": "11:00",
+          "y": "Mon",
+          "value": 48
+        },
+        {
+          "x": "12:00",
+          "y": "Mon",
+          "value": 238
+        },
+        {
+          "x": "13:00",
+          "y": "Mon",
+          "value": 524
+        },
+        {
+          "x": "14:00",
+          "y": "Mon",
+          "value": 831
+        },
+        {
+          "x": "15:00",
+          "y": "Mon",
+          "value": 994
+        },
+        {
+          "x": "16:00",
+          "y": "Mon",
+          "value": 1053
+        },
+        {
+          "x": "17:00",
+          "y": "Mon",
+          "value": 1097
+        },
+        {
+          "x": "18:00",
+          "y": "Mon",
+          "value": 1083
+        },
+        {
+          "x": "19:00",
+          "y": "Mon",
+          "value": 1086
+        },
+        {
+          "x": "20:00",
+          "y": "Mon",
+          "value": 956
+        },
+        {
+          "x": "21:00",
+          "y": "Mon",
+          "value": 813
+        },
+        {
+          "x": "22:00",
+          "y": "Mon",
+          "value": 659
+        },
+        {
+          "x": "23:00",
+          "y": "Mon",
+          "value": 429
+        },
+        {
+          "x": "00:00",
+          "y": "Tue",
+          "value": 323
+        },
+        {
+          "x": "01:00",
+          "y": "Tue",
+          "value": 174
+        },
+        {
+          "x": "02:00",
+          "y": "Tue",
+          "value": 113
+        },
+        {
+          "x": "03:00",
+          "y": "Tue",
+          "value": 68
+        },
+        {
+          "x": "04:00",
+          "y": "Tue",
+          "value": 60
+        },
+        {
+          "x": "05:00",
+          "y": "Tue",
+          "value": 31
+        },
+        {
+          "x": "06:00",
+          "y": "Tue",
+          "value": 23
+        },
+        {
+          "x": "07:00",
+          "y": "Tue",
+          "value": 16
+        },
+        {
+          "x": "08:00",
+          "y": "Tue",
+          "value": 27
+        },
+        {
+          "x": "09:00",
+          "y": "Tue",
+          "value": 28
+        },
+        {
+          "x": "10:00",
+          "y": "Tue",
+          "value": 31
+        },
+        {
+          "x": "11:00",
+          "y": "Tue",
+          "value": 83
+        },
+        {
+          "x": "12:00",
+          "y": "Tue",
+          "value": 228
+        },
+        {
+          "x": "13:00",
+          "y": "Tue",
+          "value": 554
+        },
+        {
+          "x": "14:00",
+          "y": "Tue",
+          "value": 843
+        },
+        {
+          "x": "15:00",
+          "y": "Tue",
+          "value": 940
+        },
+        {
+          "x": "16:00",
+          "y": "Tue",
+          "value": 966
+        },
+        {
+          "x": "17:00",
+          "y": "Tue",
+          "value": 994
+        },
+        {
+          "x": "18:00",
+          "y": "Tue",
+          "value": 1034
+        },
+        {
+          "x": "19:00",
+          "y": "Tue",
+          "value": 985
+        },
+        {
+          "x": "20:00",
+          "y": "Tue",
+          "value": 862
+        },
+        {
+          "x": "21:00",
+          "y": "Tue",
+          "value": 652
+        },
+        {
+          "x": "22:00",
+          "y": "Tue",
+          "value": 574
+        },
+        {
+          "x": "23:00",
+          "y": "Tue",
+          "value": 360
+        },
+        {
+          "x": "00:00",
+          "y": "Wed",
+          "value": 252
+        },
+        {
+          "x": "01:00",
+          "y": "Wed",
+          "value": 140
+        },
+        {
+          "x": "02:00",
+          "y": "Wed",
+          "value": 86
+        },
+        {
+          "x": "03:00",
+          "y": "Wed",
+          "value": 41
+        },
+        {
+          "x": "04:00",
+          "y": "Wed",
+          "value": 37
+        },
+        {
+          "x": "05:00",
+          "y": "Wed",
+          "value": 13
+        },
+        {
+          "x": "06:00",
+          "y": "Wed",
+          "value": 12
+        },
+        {
+          "x": "07:00",
+          "y": "Wed",
+          "value": 13
+        },
+        {
+          "x": "08:00",
+          "y": "Wed",
+          "value": 20
+        },
+        {
+          "x": "09:00",
+          "y": "Wed",
+          "value": 30
+        },
+        {
+          "x": "10:00",
+          "y": "Wed",
+          "value": 30
+        },
+        {
+          "x": "11:00",
+          "y": "Wed",
+          "value": 61
+        },
+        {
+          "x": "12:00",
+          "y": "Wed",
+          "value": 248
+        },
+        {
+          "x": "13:00",
+          "y": "Wed",
+          "value": 556
+        },
+        {
+          "x": "14:00",
+          "y": "Wed",
+          "value": 764
+        },
+        {
+          "x": "15:00",
+          "y": "Wed",
+          "value": 919
+        },
+        {
+          "x": "16:00",
+          "y": "Wed",
+          "value": 973
+        },
+        {
+          "x": "17:00",
+          "y": "Wed",
+          "value": 1003
+        },
+        {
+          "x": "18:00",
+          "y": "Wed",
+          "value": 1079
+        },
+        {
+          "x": "19:00",
+          "y": "Wed",
+          "value": 936
+        },
+        {
+          "x": "20:00",
+          "y": "Wed",
+          "value": 923
+        },
+        {
+          "x": "21:00",
+          "y": "Wed",
+          "value": 704
+        },
+        {
+          "x": "22:00",
+          "y": "Wed",
+          "value": 567
+        },
+        {
+          "x": "23:00",
+          "y": "Wed",
+          "value": 426
+        },
+        {
+          "x": "00:00",
+          "y": "Thu",
+          "value": 292
+        },
+        {
+          "x": "01:00",
+          "y": "Thu",
+          "value": 146
+        },
+        {
+          "x": "02:00",
+          "y": "Thu",
+          "value": 80
+        },
+        {
+          "x": "03:00",
+          "y": "Thu",
+          "value": 55
+        },
+        {
+          "x": "04:00",
+          "y": "Thu",
+          "value": 44
+        },
+        {
+          "x": "05:00",
+          "y": "Thu",
+          "value": 29
+        },
+        {
+          "x": "06:00",
+          "y": "Thu",
+          "value": 25
+        },
+        {
+          "x": "07:00",
+          "y": "Thu",
+          "value": 22
+        },
+        {
+          "x": "08:00",
+          "y": "Thu",
+          "value": 26
+        },
+        {
+          "x": "09:00",
+          "y": "Thu",
+          "value": 32
+        },
+        {
+          "x": "10:00",
+          "y": "Thu",
+          "value": 34
+        },
+        {
+          "x": "11:00",
+          "y": "Thu",
+          "value": 59
+        },
+        {
+          "x": "12:00",
+          "y": "Thu",
+          "value": 235
+        },
+        {
+          "x": "13:00",
+          "y": "Thu",
+          "value": 476
+        },
+        {
+          "x": "14:00",
+          "y": "Thu",
+          "value": 663
+        },
+        {
+          "x": "15:00",
+          "y": "Thu",
+          "value": 776
+        },
+        {
+          "x": "16:00",
+          "y": "Thu",
+          "value": 812
+        },
+        {
+          "x": "17:00",
+          "y": "Thu",
+          "value": 920
+        },
+        {
+          "x": "18:00",
+          "y": "Thu",
+          "value": 890
+        },
+        {
+          "x": "19:00",
+          "y": "Thu",
+          "value": 867
+        },
+        {
+          "x": "20:00",
+          "y": "Thu",
+          "value": 804
+        },
+        {
+          "x": "21:00",
+          "y": "Thu",
+          "value": 666
+        },
+        {
+          "x": "22:00",
+          "y": "Thu",
+          "value": 583
+        },
+        {
+          "x": "23:00",
+          "y": "Thu",
+          "value": 396
+        },
+        {
+          "x": "00:00",
+          "y": "Fri",
+          "value": 268
+        },
+        {
+          "x": "01:00",
+          "y": "Fri",
+          "value": 138
+        },
+        {
+          "x": "02:00",
+          "y": "Fri",
+          "value": 55
+        },
+        {
+          "x": "03:00",
+          "y": "Fri",
+          "value": 40
+        },
+        {
+          "x": "04:00",
+          "y": "Fri",
+          "value": 23
+        },
+        {
+          "x": "05:00",
+          "y": "Fri",
+          "value": 26
+        },
+        {
+          "x": "06:00",
+          "y": "Fri",
+          "value": 16
+        },
+        {
+          "x": "07:00",
+          "y": "Fri",
+          "value": 22
+        },
+        {
+          "x": "08:00",
+          "y": "Fri",
+          "value": 21
+        },
+        {
+          "x": "09:00",
+          "y": "Fri",
+          "value": 21
+        },
+        {
+          "x": "10:00",
+          "y": "Fri",
+          "value": 21
+        },
+        {
+          "x": "11:00",
+          "y": "Fri",
+          "value": 52
+        },
+        {
+          "x": "12:00",
+          "y": "Fri",
+          "value": 225
+        },
+        {
+          "x": "13:00",
+          "y": "Fri",
+          "value": 394
+        },
+        {
+          "x": "14:00",
+          "y": "Fri",
+          "value": 577
+        },
+        {
+          "x": "15:00",
+          "y": "Fri",
+          "value": 740
+        },
+        {
+          "x": "16:00",
+          "y": "Fri",
+          "value": 811
+        },
+        {
+          "x": "17:00",
+          "y": "Fri",
+          "value": 816
+        },
+        {
+          "x": "18:00",
+          "y": "Fri",
+          "value": 863
+        },
+        {
+          "x": "19:00",
+          "y": "Fri",
+          "value": 1011
+        },
+        {
+          "x": "20:00",
+          "y": "Fri",
+          "value": 805
+        },
+        {
+          "x": "21:00",
+          "y": "Fri",
+          "value": 596
+        },
+        {
+          "x": "22:00",
+          "y": "Fri",
+          "value": 424
+        },
+        {
+          "x": "23:00",
+          "y": "Fri",
+          "value": 408
+        },
+        {
+          "x": "00:00",
+          "y": "Sat",
+          "value": 226
+        },
+        {
+          "x": "01:00",
+          "y": "Sat",
+          "value": 133
+        },
+        {
+          "x": "02:00",
+          "y": "Sat",
+          "value": 97
+        },
+        {
+          "x": "03:00",
+          "y": "Sat",
+          "value": 57
+        },
+        {
+          "x": "04:00",
+          "y": "Sat",
+          "value": 54
+        },
+        {
+          "x": "05:00",
+          "y": "Sat",
+          "value": 51
+        },
+        {
+          "x": "06:00",
+          "y": "Sat",
+          "value": 51
+        },
+        {
+          "x": "07:00",
+          "y": "Sat",
+          "value": 42
+        },
+        {
+          "x": "08:00",
+          "y": "Sat",
+          "value": 42
+        },
+        {
+          "x": "09:00",
+          "y": "Sat",
+          "value": 35
+        },
+        {
+          "x": "10:00",
+          "y": "Sat",
+          "value": 40
+        },
+        {
+          "x": "11:00",
+          "y": "Sat",
+          "value": 52
+        },
+        {
+          "x": "12:00",
+          "y": "Sat",
+          "value": 66
+        },
+        {
+          "x": "13:00",
+          "y": "Sat",
+          "value": 81
+        },
+        {
+          "x": "14:00",
+          "y": "Sat",
+          "value": 88
+        },
+        {
+          "x": "15:00",
+          "y": "Sat",
+          "value": 90
+        },
+        {
+          "x": "16:00",
+          "y": "Sat",
+          "value": 116
+        },
+        {
+          "x": "17:00",
+          "y": "Sat",
+          "value": 112
+        },
+        {
+          "x": "18:00",
+          "y": "Sat",
+          "value": 104
+        },
+        {
+          "x": "19:00",
+          "y": "Sat",
+          "value": 99
+        },
+        {
+          "x": "20:00",
+          "y": "Sat",
+          "value": 89
+        },
+        {
+          "x": "21:00",
+          "y": "Sat",
+          "value": 84
+        },
+        {
+          "x": "22:00",
+          "y": "Sat",
+          "value": 78
+        },
+        {
+          "x": "23:00",
+          "y": "Sat",
+          "value": 57
+        }
+      ],
+      "xLabels": [
+        "00:00",
+        "03:00",
+        "06:00",
+        "09:00",
+        "12:00",
+        "15:00",
+        "18:00",
+        "21:00"
+      ],
+      "yLabels": [
+        "Sun",
+        "Mon",
+        "Tue",
+        "Wed",
+        "Thu",
+        "Fri",
+        "Sat"
+      ]
+    },
+    "projectStatus": {
+      "data": [
+        {
+          "x": "Request Comp..",
+          "y": "RED Team",
+          "value": 24205
+        },
+        {
+          "x": "New",
+          "y": "RED Team",
+          "value": 0
+        },
+        {
+          "x": "To Do",
+          "y": "RED Team",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "RED Team",
+          "value": 220
+        },
+        {
+          "x": "Assigned",
+          "y": "RED Team",
+          "value": 24
+        },
+        {
+          "x": "In Progress",
+          "y": "RED Team",
+          "value": 0
+        },
+        {
+          "x": "Request Comp..",
+          "y": "Servicing Help",
+          "value": 20138
+        },
+        {
+          "x": "New",
+          "y": "Servicing Help",
+          "value": 325
+        },
+        {
+          "x": "To Do",
+          "y": "Servicing Help",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "Servicing Help",
+          "value": 113
+        },
+        {
+          "x": "Assigned",
+          "y": "Servicing Help",
+          "value": 181
+        },
+        {
+          "x": "In Progress",
+          "y": "Servicing Help",
+          "value": 116
+        },
+        {
+          "x": "Request Comp..",
+          "y": "ServApp Support",
+          "value": 0
+        },
+        {
+          "x": "New",
+          "y": "ServApp Support",
+          "value": 1920
+        },
+        {
+          "x": "To Do",
+          "y": "ServApp Support",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "ServApp Support",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "ServApp Support",
+          "value": 0
+        },
+        {
+          "x": "In Progress",
+          "y": "ServApp Support",
+          "value": 0
+        },
+        {
+          "x": "Request Comp..",
+          "y": "CMG Servicing O..",
+          "value": 851
+        },
+        {
+          "x": "New",
+          "y": "CMG Servicing O..",
+          "value": 25
+        },
+        {
+          "x": "To Do",
+          "y": "CMG Servicing O..",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "CMG Servicing O..",
+          "value": 19
+        },
+        {
+          "x": "Assigned",
+          "y": "CMG Servicing O..",
+          "value": 20
+        },
+        {
+          "x": "In Progress",
+          "y": "CMG Servicing O..",
+          "value": 9
+        },
+        {
+          "x": "Request Comp..",
+          "y": "Servicing Escal..",
+          "value": 796
+        },
+        {
+          "x": "New",
+          "y": "Servicing Escal..",
+          "value": 17
+        },
+        {
+          "x": "To Do",
+          "y": "Servicing Escal..",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "Servicing Escal..",
+          "value": 1
+        },
+        {
+          "x": "Assigned",
+          "y": "Servicing Escal..",
+          "value": 1
+        },
+        {
+          "x": "In Progress",
+          "y": "Servicing Escal..",
+          "value": 2
+        },
+        {
+          "x": "Request Comp..",
+          "y": "Tim Loss's Mysi..",
+          "value": 0
+        },
+        {
+          "x": "New",
+          "y": "Tim Loss's Mysi..",
+          "value": 0
+        },
+        {
+          "x": "To Do",
+          "y": "Tim Loss's Mysi..",
+          "value": 490
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "Tim Loss's Mysi..",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "Tim Loss's Mysi..",
+          "value": 0
+        },
+        {
+          "x": "In Progress",
+          "y": "Tim Loss's Mysi..",
+          "value": 0
+        },
+        {
+          "x": "Request Comp..",
+          "y": "Consumer Comms",
+          "value": 0
+        },
+        {
+          "x": "New",
+          "y": "Consumer Comms",
+          "value": 325
+        },
+        {
+          "x": "To Do",
+          "y": "Consumer Comms",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "Consumer Comms",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "Consumer Comms",
+          "value": 0
+        },
+        {
+          "x": "In Progress",
+          "y": "Consumer Comms",
+          "value": 0
+        },
+        {
+          "x": "Request Comp..",
+          "y": "DataRequests Se..",
+          "value": 212
+        },
+        {
+          "x": "New",
+          "y": "DataRequests Se..",
+          "value": 0
+        },
+        {
+          "x": "To Do",
+          "y": "DataRequests Se..",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "DataRequests Se..",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "DataRequests Se..",
+          "value": 9
+        },
+        {
+          "x": "In Progress",
+          "y": "DataRequests Se..",
+          "value": 14
+        },
+        {
+          "x": "Request Comp..",
+          "y": "Assumptions",
+          "value": 0
+        },
+        {
+          "x": "New",
+          "y": "Assumptions",
+          "value": 0
+        },
+        {
+          "x": "To Do",
+          "y": "Assumptions",
+          "value": 0
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "Assumptions",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "Assumptions",
+          "value": 0
+        },
+        {
+          "x": "In Progress",
+          "y": "Assumptions",
+          "value": 5
+        },
+        {
+          "x": "Request Comp..",
+          "y": "RED Team Corp W..",
+          "value": 0
+        },
+        {
+          "x": "New",
+          "y": "RED Team Corp W..",
+          "value": 0
+        },
+        {
+          "x": "To Do",
+          "y": "RED Team Corp W..",
+          "value": 6
+        },
+        {
+          "x": "Closed - Mis..",
+          "y": "RED Team Corp W..",
+          "value": 0
+        },
+        {
+          "x": "Assigned",
+          "y": "RED Team Corp W..",
+          "value": 0
+        },
+        {
+          "x": "In Progress",
+          "y": "RED Team Corp W..",
+          "value": 0
+        }
+      ],
+      "xLabels": [
+        "Request Comp..",
+        "New",
+        "To Do",
+        "Closed - Mis..",
+        "Assigned",
+        "In Progress"
+      ],
+      "yLabels": [
+        "RED Team",
+        "Servicing Help",
+        "ServApp Support",
+        "CMG Servicing O..",
+        "Servicing Escal..",
+        "Tim Loss's Mysi..",
+        "Consumer Comms",
+        "DataRequests Se..",
+        "Assumptions",
+        "RED Team Corp W.."
+      ]
+    }
+  },
+  "issues": [
+    {
+      "category": "Project Health",
+      "metric": "RED Team",
+      "value": 100,
+      "severity": "critical",
+      "description": "24,523 open of 24,523 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "Servicing Help",
+      "value": 100,
+      "severity": "critical",
+      "description": "20,979 open of 20,979 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "ServApp Support",
+      "value": 100,
+      "severity": "critical",
+      "description": "1,923 open of 1,923 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "CMG Servicing Oversi",
+      "value": 100,
+      "severity": "critical",
+      "description": "927 open of 927 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "Servicing Escalation",
+      "value": 100,
+      "severity": "critical",
+      "description": "858 open of 858 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "Tim Loss's Mysite",
+      "value": 100,
+      "severity": "critical",
+      "description": "490 open of 490 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "Consumer Comms",
+      "value": 100,
+      "severity": "critical",
+      "description": "325 open of 325 total"
+    },
+    {
+      "category": "Project Health",
+      "metric": "DataRequests Servici",
+      "value": 100,
+      "severity": "critical",
+      "description": "308 open of 308 total"
+    },
+    {
+      "category": "Workload",
+      "metric": "Kailani",
+      "value": 4640,
+      "severity": "critical",
+      "description": "100% of 4,640 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Caliri",
+      "value": 4548,
+      "severity": "critical",
+      "description": "100% of 4,548 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Doherty",
+      "value": 3660,
+      "severity": "critical",
+      "description": "100% of 3,660 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Eich",
+      "value": 2675,
+      "severity": "warning",
+      "description": "100% of 2,675 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Chaves",
+      "value": 2488,
+      "severity": "warning",
+      "description": "100% of 2,488 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Newton",
+      "value": 1867,
+      "severity": "warning",
+      "description": "100% of 1,867 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Macadangdang",
+      "value": 1623,
+      "severity": "warning",
+      "description": "100% of 1,623 assigned"
+    },
+    {
+      "category": "Workload",
+      "metric": "Vue",
+      "value": 1354,
+      "severity": "warning",
+      "description": "100% of 1,354 assigned"
+    },
+    {
+      "category": "Response Time",
+      "metric": ">24h No Response",
+      "value": 7922,
+      "severity": "critical",
+      "description": "Open tickets waiting over 24 hours"
+    },
+    {
+      "category": "Volume Trend",
+      "metric": "2025-12",
+      "value": -92,
+      "severity": "normal",
+      "description": "-92% vs previous month"
+    },
+    {
+      "category": "Summary",
+      "metric": "Total Open",
+      "value": 50714,
+      "severity": "critical",
+      "description": "0% completion rate"
+    },
+    {
+      "category": "Summary",
+      "metric": "Avg Resolution",
+      "value": 50,
+      "severity": "good",
+      "description": "50 hours average"
+    }
+  ],
+  "trends": {
+    "volumeByDayOfWeek": [
+      {
+        "day": "Sun",
+        "count": 1501
+      },
+      {
+        "day": "Mon",
+        "count": 10162
+      },
+      {
+        "day": "Tue",
+        "count": 9969
+      },
+      {
+        "day": "Wed",
+        "count": 9833
+      },
+      {
+        "day": "Thu",
+        "count": 8932
+      },
+      {
+        "day": "Fri",
+        "count": 8373
+      },
+      {
+        "day": "Sat",
+        "count": 1944
+      }
+    ],
+    "peakHours": [
+      {
+        "hour": "18:00",
+        "count": 5174
+      },
+      {
+        "hour": "19:00",
+        "count": 5072
+      },
+      {
+        "hour": "17:00",
+        "count": 5040
+      },
+      {
+        "hour": "16:00",
+        "count": 4798
+      },
+      {
+        "hour": "15:00",
+        "count": 4537
+      }
+    ],
+    "projectsAtRisk": 10,
+    "overloadedAssignees": 15
+  },
+  "processedAt": "2025-12-04T16:55:30.182Z"
 }

@@ -9,6 +9,8 @@ import {
   AlertCircle,
   Activity,
   TrendingUp,
+  Brain,
+  BarChart3,
 } from 'lucide-react';
 import { StatsCard } from '@/components/StatsCard';
 import {
@@ -18,6 +20,28 @@ import {
   AssigneeBarChart,
 } from '@/components/Charts';
 import { AIAnalysis } from '@/components/AIAnalysis';
+import { InsightsPanel } from '@/components/InsightsPanel';
+
+interface HeatmapData {
+  data: { x: string; y: string; value: number }[];
+  xLabels: string[];
+  yLabels: string[];
+}
+
+interface Issue {
+  category: string;
+  metric: string;
+  value: number;
+  severity: 'critical' | 'warning' | 'normal' | 'good';
+  description?: string;
+}
+
+interface Trends {
+  volumeByDayOfWeek: { day: string; count: number }[];
+  peakHours: { hour: string; count: number }[];
+  projectsAtRisk: number;
+  overloadedAssignees: number;
+}
 
 interface DashboardData {
   stats: {
@@ -45,12 +69,21 @@ interface DashboardData {
   }[];
   statusBreakdown: { name: string; value: number }[];
   priorityBreakdown: { name: string; value: number }[];
+  heatmaps?: {
+    dayHour: HeatmapData;
+    projectStatus: HeatmapData;
+  };
+  issues?: Issue[];
+  trends?: Trends;
 }
+
+type TabType = 'overview' | 'insights' | 'ai';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
 
   useEffect(() => {
     async function fetchData() {
@@ -101,6 +134,12 @@ export default function Dashboard() {
     return `${Math.round(minutes / 1440)}d`;
   };
 
+  const tabs = [
+    { id: 'overview' as TabType, label: 'Overview', icon: BarChart3 },
+    { id: 'insights' as TabType, label: 'AI Insights', icon: Brain },
+    { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
+  ];
+
   return (
     <div className="min-h-screen bg-[#0a0e17]">
       {/* Header */}
@@ -116,6 +155,25 @@ export default function Dashboard() {
                 <p className="text-xs text-gray-500">Servicing Performance Dashboard</p>
               </div>
             </div>
+
+            {/* Tab Navigation */}
+            <div className="hidden md:flex items-center gap-1 bg-[#131a29] rounded-xl p-1 border border-white/[0.08]">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-blue-500 text-white'
+                      : 'text-gray-400 hover:text-white hover:bg-white/[0.05]'
+                  }`}
+                >
+                  <tab.icon className="h-4 w-4" />
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -129,11 +187,29 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+
+          {/* Mobile Tab Navigation */}
+          <div className="flex md:hidden items-center gap-1 mt-4 bg-[#131a29] rounded-xl p-1 border border-white/[0.08]">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
+                  activeTab === tab.id
+                    ? 'bg-blue-500 text-white'
+                    : 'text-gray-400 hover:text-white'
+                }`}
+              >
+                <tab.icon className="h-4 w-4" />
+                <span className="hidden sm:inline">{tab.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-6 py-8">
-        {/* Stats Cards */}
+        {/* Stats Cards - Always visible */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
           <StatsCard
             title="Total Tickets"
@@ -166,75 +242,88 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* AI Analysis Section */}
-        <div className="mb-8">
-          <AIAnalysis />
-        </div>
-
-        {/* Charts Row 1 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <TimeSeriesChart data={data.ticketsByMonth} title="Ticket Volume Over Time" />
-          <DonutChart data={data.statusBreakdown} title="Status Distribution" />
-        </div>
-
-        {/* Charts Row 2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <ProjectStackedBarChart data={data.projectBreakdown} title="Projects Breakdown" />
-          <AssigneeBarChart data={data.assigneeBreakdown} title="Top Assignees" />
-        </div>
-
-        {/* Bottom Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <DonutChart data={data.priorityBreakdown} title="Priority Levels" />
-
-          {/* Project Performance Table */}
-          <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-white">Project Performance</h3>
-              <TrendingUp className="h-5 w-5 text-gray-500" />
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <>
+            {/* Charts Row 1 */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <TimeSeriesChart data={data.ticketsByMonth} title="Ticket Volume Over Time" />
+              <DonutChart data={data.statusBreakdown} title="Status Distribution" />
             </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-white/[0.06]">
-                    <th className="text-left py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
-                    <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
-                    <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Avg Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.projectBreakdown.slice(0, 8).map((project) => (
-                    <tr key={project.project} className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors">
-                      <td className="py-4 text-sm text-gray-300">
-                        {project.project.length > 22
-                          ? project.project.substring(0, 22) + '...'
-                          : project.project}
-                      </td>
-                      <td className="py-4 text-right">
-                        <span className="text-sm font-medium text-white">{project.total.toLocaleString()}</span>
-                      </td>
-                      <td className="py-4 text-right">
-                        <span className="text-sm text-gray-400">{project.avgResolutionHours}h</span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+
+            {/* Charts Row 2 */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              <ProjectStackedBarChart data={data.projectBreakdown} title="Projects Breakdown" />
+              <AssigneeBarChart data={data.assigneeBreakdown} title="Top Assignees" />
             </div>
-          </div>
-        </div>
+
+            {/* Bottom Section */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+              <DonutChart data={data.priorityBreakdown} title="Priority Levels" />
+
+              {/* Project Performance Table */}
+              <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-lg font-semibold text-white">Project Performance</h3>
+                  <TrendingUp className="h-5 w-5 text-gray-500" />
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-white/[0.06]">
+                        <th className="text-left py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Project
+                        </th>
+                        <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Tickets
+                        </th>
+                        <th className="text-right py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Avg Time
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {data.projectBreakdown.slice(0, 8).map((project) => (
+                        <tr
+                          key={project.project}
+                          className="border-b border-white/[0.04] hover:bg-white/[0.02] transition-colors"
+                        >
+                          <td className="py-4 text-sm text-gray-300">
+                            {project.project.length > 22
+                              ? project.project.substring(0, 22) + '...'
+                              : project.project}
+                          </td>
+                          <td className="py-4 text-right">
+                            <span className="text-sm font-medium text-white">
+                              {project.total.toLocaleString()}
+                            </span>
+                          </td>
+                          <td className="py-4 text-right">
+                            <span className="text-sm text-gray-400">{project.avgResolutionHours}h</span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {activeTab === 'insights' && data.heatmaps && data.issues && data.trends && (
+          <InsightsPanel heatmaps={data.heatmaps} issues={data.issues} trends={data.trends} />
+        )}
+
+        {activeTab === 'ai' && <AIAnalysis />}
       </main>
 
       {/* Footer */}
       <footer className="border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <p className="text-xs text-gray-600">
-              Servicing Ticket Analysis Dashboard
-            </p>
-            <p className="text-xs text-gray-600">
-              Last updated: {new Date().toLocaleDateString()}
-            </p>
+            <p className="text-xs text-gray-600">Servicing Ticket Analysis Dashboard</p>
+            <p className="text-xs text-gray-600">Last updated: {new Date().toLocaleDateString()}</p>
           </div>
         </div>
       </footer>
