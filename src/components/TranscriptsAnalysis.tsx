@@ -423,14 +423,22 @@ export default function TranscriptsAnalysis() {
                 const cells = [];
                 const dayMap = new Map(sortedDays.map(d => [d.date, d]));
 
+                // Helper to format date consistently (avoiding timezone issues)
+                const formatDateStr = (d: Date) => {
+                  const year = d.getFullYear();
+                  const month = String(d.getMonth() + 1).padStart(2, '0');
+                  const day = String(d.getDate()).padStart(2, '0');
+                  return `${year}-${month}-${day}`;
+                };
+
                 // Helper to get sparkline data for a date (±3 days)
                 const getSparklineData = (centerDate: string) => {
-                  const center = new Date(centerDate);
+                  const center = new Date(centerDate + 'T12:00:00'); // Use noon to avoid DST issues
                   const data = [];
                   for (let offset = -3; offset <= 3; offset++) {
                     const d = new Date(center);
                     d.setDate(d.getDate() + offset);
-                    const dateStr = d.toISOString().split('T')[0];
+                    const dateStr = formatDateStr(d);
                     const dayData = dayMap.get(dateStr);
                     if (dayData && dayData.total > 0) {
                       data.push({
@@ -446,7 +454,11 @@ export default function TranscriptsAnalysis() {
 
                 const currentDate = new Date(calendarStart);
                 while (currentDate <= endDate || currentDate.getDay() !== 0) {
-                  const dateStr = currentDate.toISOString().split('T')[0];
+                  // Use local date formatting to avoid timezone issues
+                  const year = currentDate.getFullYear();
+                  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+                  const day = String(currentDate.getDate()).padStart(2, '0');
+                  const dateStr = `${year}-${month}-${day}`;
                   const dayData = dayMap.get(dateStr);
 
                   if (dayData) {
