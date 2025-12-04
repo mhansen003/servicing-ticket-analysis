@@ -450,15 +450,7 @@ const topCategories = Object.entries(servicingCategories)
   .slice(0, 6)
   .map(([name, count]) => ({ name, count, percent: Math.round(count / servicingTickets.length * 100) }));
 
-// Category trends by month
-const categoryTrends = Object.entries(servicingCategoryByMonth)
-  .sort(([a], [b]) => a.localeCompare(b))
-  .map(([month, cats]) => ({
-    month,
-    ...Object.fromEntries(topCategories.map(c => [c.name, cats[c.name] || 0]))
-  }));
-
-// Find the last date with actual ticket data
+// Find the last date with actual ticket data (moved up to use in categoryTrends)
 const allDates = servicingTickets
   .map(t => new Date(t.ticket_created_at_utc))
   .filter(d => !isNaN(d.getTime()))
@@ -485,6 +477,15 @@ const isCompletePeriod = (periodStart, periodType) => {
 
   return periodEnd <= lastTicketDate;
 };
+
+// Category trends by month - only include complete months
+const categoryTrends = Object.entries(servicingCategoryByMonth)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .filter(([month]) => isCompletePeriod(month + '-01', 'monthly'))
+  .map(([month, cats]) => ({
+    month,
+    ...Object.fromEntries(topCategories.map(c => [c.name, cats[c.name] || 0]))
+  }));
 
 // Format time series data - only include complete periods to avoid misleading downward slopes
 const servicingTimeSeries = {
