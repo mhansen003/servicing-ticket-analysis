@@ -35,8 +35,11 @@ import {
   ChevronUp,
   Loader2,
   MousePointerClick,
+  Award,
+  Star,
 } from 'lucide-react';
 import { TranscriptModal } from './TranscriptModal';
+import { AgentRankingsModal } from './AgentRankingsModal';
 
 interface TranscriptStats {
   totalCalls: number;
@@ -140,6 +143,9 @@ export default function TranscriptsAnalysis() {
   const [modalTitle, setModalTitle] = useState('');
   const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
+
+  // Agent Rankings Modal state
+  const [agentRankingsOpen, setAgentRankingsOpen] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -316,6 +322,18 @@ export default function TranscriptsAnalysis() {
 
   return (
     <div className="space-y-6">
+      {/* Agent Performance Button - Prominent CTA */}
+      <div className="flex justify-end">
+        <button
+          onClick={() => setAgentRankingsOpen(true)}
+          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-purple-500/20 to-blue-500/20 hover:from-purple-500/30 hover:to-blue-500/30 border border-purple-500/30 rounded-xl text-purple-300 hover:text-purple-200 transition-all group"
+        >
+          <Award className="h-5 w-5 group-hover:scale-110 transition-transform" />
+          <span className="font-medium">Agent Performance Rankings</span>
+          <Star className="h-4 w-4 text-amber-400" />
+        </button>
+      </div>
+
       {/* Header Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
@@ -962,6 +980,16 @@ export default function TranscriptsAnalysis() {
         title={modalTitle}
         filterType={modalFilterType}
         filterValue={modalFilterValue}
+      />
+
+      {/* Agent Rankings Modal */}
+      <AgentRankingsModal
+        isOpen={agentRankingsOpen}
+        onClose={() => setAgentRankingsOpen(false)}
+        onViewTranscripts={(agentName) => {
+          setAgentRankingsOpen(false);
+          handleAgentClick(agentName);
+        }}
       />
     </div>
   );
