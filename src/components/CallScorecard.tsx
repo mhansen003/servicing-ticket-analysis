@@ -191,14 +191,15 @@ function SectionHeader({
 }
 
 export function CallScorecard({ analysis, loading, error }: CallScorecardProps) {
+  // All sections expanded by default for full visibility
   const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({
     summary: true,
     scores: true,
-    sentiment: false,
-    communication: false,
-    behavioral: false,
-    insights: false,
-    followUp: false,
+    sentiment: true,
+    communication: true,
+    behavioral: true,
+    insights: true,
+    followUp: true,
   });
 
   const toggleSection = (section: string) => {
