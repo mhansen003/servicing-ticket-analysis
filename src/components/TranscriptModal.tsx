@@ -236,6 +236,8 @@ export function TranscriptModal({
   const [callAnalysisCache, setCallAnalysisCache] = useState<Record<string, CallAnalysis>>({});
   const [callAnalysisError, setCallAnalysisError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const callAnalysisAbortRef = useRef<AbortController | null>(null);
+  const sentimentAbortRef = useRef<AbortController | null>(null);
 
   // Load transcript metadata
   useEffect(() => {
@@ -326,6 +328,12 @@ export function TranscriptModal({
       return;
     }
 
+    // Cancel any pending sentiment request
+    if (sentimentAbortRef.current) {
+      sentimentAbortRef.current.abort();
+    }
+    sentimentAbortRef.current = new AbortController();
+
     async function analyzeSentiment() {
       setAnalyzingSentiment(true);
       try {
@@ -338,6 +346,7 @@ export function TranscriptModal({
               text: m.text,
             })),
           }),
+          signal: sentimentAbortRef.current?.signal,
         });
 
         if (response.ok) {
@@ -350,13 +359,21 @@ export function TranscriptModal({
           }));
         }
       } catch (error) {
-        console.error('Failed to analyze sentiment:', error);
+        if ((error as Error).name !== 'AbortError') {
+          console.error('Failed to analyze sentiment:', error);
+        }
       } finally {
         setAnalyzingSentiment(false);
       }
     }
 
     analyzeSentiment();
+
+    return () => {
+      if (sentimentAbortRef.current) {
+        sentimentAbortRef.current.abort();
+      }
+    };
   }, [selectedTranscript?.conversation, selectedTranscript?.id, sentimentCache]);
 
   // Reset state when modal opens
@@ -385,7 +402,7 @@ export function TranscriptModal({
   }, [selectedTranscript?.id, callAnalysisCache]);
 
   // Function to analyze the call comprehensively
-  const analyzeCall = useCallback(async () => {
+  const analyzeCall = useCallback(async (sentiments?: MessageSentiment[]) => {
     if (!selectedTranscript?.conversation?.length) return;
 
     const transcriptId = selectedTranscript.id;
@@ -396,10 +413,47 @@ export function TranscriptModal({
       return;
     }
 
+    // Cancel any pending call analysis request
+    if (callAnalysisAbortRef.current) {
+      callAnalysisAbortRef.current.abort();
+    }
+    callAnalysisAbortRef.current = new AbortController();
+
     setAnalyzingCall(true);
     setCallAnalysisError(null);
 
     try {
+      // Calculate sentiment summary from message-level analysis
+      let sentimentContext = '';
+      if (sentiments && sentiments.length > 0) {
+        const customerScores = sentiments
+          .filter((_, idx) => selectedTranscript.conversation[idx]?.role === 'customer')
+          .map(s => s.score);
+        const agentScores = sentiments
+          .filter((_, idx) => selectedTranscript.conversation[idx]?.role === 'agent')
+          .map(s => s.score);
+
+        const avgCustomer = customerScores.length > 0
+          ? customerScores.reduce((a, b) => a + b, 0) / customerScores.length
+          : 0;
+        const avgAgent = agentScores.length > 0
+          ? agentScores.reduce((a, b) => a + b, 0) / agentScores.length
+          : 0;
+
+        // Include emotions for context
+        const customerEmotions = sentiments
+          .filter((_, idx) => selectedTranscript.conversation[idx]?.role === 'customer')
+          .map(s => s.emotion)
+          .filter(e => e && e !== 'neutral');
+
+        sentimentContext = `
+IMPORTANT - Sentence-level sentiment already analyzed:
+- Customer average sentiment: ${avgCustomer.toFixed(2)} (${avgCustomer > 0.2 ? 'positive' : avgCustomer < -0.2 ? 'negative' : 'neutral'})
+- Agent average sentiment: ${avgAgent.toFixed(2)} (${avgAgent > 0.2 ? 'positive' : avgAgent < -0.2 ? 'negative' : 'neutral'})
+- Customer emotions detected: ${customerEmotions.length > 0 ? [...new Set(customerEmotions)].join(', ') : 'mostly neutral'}
+Your scores MUST be consistent with this analysis. If customer sentiment is negative, CSAT should be 1-2. If positive, CSAT should be 4-5.`;
+      }
+
       const response = await fetch('/api/call-analysis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -414,7 +468,9 @@ export function TranscriptModal({
             durationSeconds: selectedTranscript.durationSeconds,
             callStart: selectedTranscript.callStart,
           },
+          sentimentContext,
         }),
+        signal: callAnalysisAbortRef.current?.signal,
       });
 
       if (response.ok) {
@@ -430,23 +486,42 @@ export function TranscriptModal({
         setCallAnalysisError(error.error || 'Failed to analyze call');
       }
     } catch (error) {
-      console.error('Failed to analyze call:', error);
-      setCallAnalysisError('Failed to analyze call');
+      if ((error as Error).name !== 'AbortError') {
+        console.error('Failed to analyze call:', error);
+        setCallAnalysisError('Failed to analyze call');
+      }
     } finally {
       setAnalyzingCall(false);
     }
   }, [selectedTranscript, callAnalysisCache]);
 
-  // Auto-load call analysis when conversation is loaded
+  // Auto-load call analysis when sentiment analysis is complete
   useEffect(() => {
-    if (selectedTranscript?.conversation?.length && !callAnalysis && !analyzingCall && !callAnalysisError) {
-      // Small delay to let sentiment analysis start first
-      const timer = setTimeout(() => {
-        analyzeCall();
-      }, 500);
-      return () => clearTimeout(timer);
+    // Wait for sentiment analysis to complete before starting call analysis
+    if (
+      selectedTranscript?.conversation?.length &&
+      !callAnalysis &&
+      !analyzingCall &&
+      !callAnalysisError &&
+      !analyzingSentiment && // Wait for sentiment analysis
+      messageSentiments.length > 0 // Ensure we have sentiments
+    ) {
+      // Pass the sentiments to ensure consistency
+      analyzeCall(messageSentiments);
     }
-  }, [selectedTranscript?.conversation, callAnalysis, analyzingCall, callAnalysisError, analyzeCall]);
+  }, [selectedTranscript?.conversation, callAnalysis, analyzingCall, callAnalysisError, analyzingSentiment, messageSentiments, analyzeCall]);
+
+  // Cleanup abort controllers on unmount
+  useEffect(() => {
+    return () => {
+      if (callAnalysisAbortRef.current) {
+        callAnalysisAbortRef.current.abort();
+      }
+      if (sentimentAbortRef.current) {
+        sentimentAbortRef.current.abort();
+      }
+    };
+  }, []);
 
   // Filter transcripts based on filter type and search
   const filteredTranscripts = useMemo(() => {

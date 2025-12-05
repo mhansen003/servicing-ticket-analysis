@@ -104,9 +104,10 @@ export interface CallAnalysis {
 
 export async function POST(request: NextRequest) {
   try {
-    const { messages, metadata } = await request.json() as {
+    const { messages, metadata, sentimentContext } = await request.json() as {
       messages: Message[];
       metadata?: CallMetadata;
+      sentimentContext?: string;
     };
 
     if (!messages || !Array.isArray(messages)) {
@@ -222,6 +223,7 @@ SCORING GUIDE (1-5):
 1 = Very Poor (negative, escalated, or damaging experience)
 
 Be critical but fair. Mortgage calls are high-stakes - customers are often stressed about their finances.
+${sentimentContext || ''}
 Return ONLY the JSON object, no other text.`;
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
