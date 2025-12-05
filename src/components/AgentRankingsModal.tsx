@@ -4,17 +4,7 @@ import { useState, useEffect, useCallback } from 'react';
 import {
   X,
   Users,
-  TrendingUp,
-  TrendingDown,
-  Award,
-  AlertTriangle,
   Search,
-  BarChart3,
-  Star,
-  Target,
-  ChevronRight,
-  Phone,
-  Loader2,
 } from 'lucide-react';
 import { AgentProfileCard } from './AgentProfileCard';
 
@@ -80,16 +70,6 @@ interface AgentRankingsModalProps {
   onViewTranscripts: (agentName: string) => void;
 }
 
-type TabType = 'top' | 'improvement' | 'all';
-
-const tierColors = {
-  top: 'bg-emerald-500',
-  good: 'bg-blue-500',
-  average: 'bg-gray-500',
-  needsImprovement: 'bg-amber-500',
-  critical: 'bg-red-500',
-};
-
 export function AgentRankingsModal({
   isOpen,
   onClose,
@@ -100,7 +80,6 @@ export function AgentRankingsModal({
   const [selectedAgent, setSelectedAgent] = useState<AgentStats | null>(null);
   const [agentProfile, setAgentProfile] = useState<AgentProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabType>('top');
   const [searchTerm, setSearchTerm] = useState('');
 
   // Load rankings data
@@ -159,28 +138,16 @@ export function AgentRankingsModal({
     if (!isOpen) {
       setSelectedAgent(null);
       setAgentProfile(null);
-      setActiveTab('top');
       setSearchTerm('');
     }
   }, [isOpen]);
 
-  // Get filtered agents based on tab and search
+  // Get all agents sorted by sentiment score (top performers first), with search filter
   const getDisplayedAgents = (): AgentStats[] => {
     if (!rankings) return [];
 
-    let agents: AgentStats[];
-    switch (activeTab) {
-      case 'top':
-        agents = rankings.topPerformers;
-        break;
-      case 'improvement':
-        agents = rankings.needsImprovement;
-        break;
-      case 'all':
-      default:
-        agents = rankings.allAgents;
-        break;
-    }
+    // Sort all agents by sentiment score descending (best first)
+    let agents = [...rankings.allAgents].sort((a, b) => b.sentimentScore - a.sentimentScore);
 
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
@@ -277,43 +244,6 @@ export function AgentRankingsModal({
                 </div>
               </div>
             )}
-
-            {/* Tabs */}
-            <div className="flex gap-1 p-2 bg-[#131a29] border-b border-white/[0.08]">
-              <button
-                onClick={() => setActiveTab('top')}
-                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === 'top'
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'text-gray-400 hover:bg-white/[0.05]'
-                }`}
-              >
-                <Star className="h-4 w-4" />
-                Top Performers
-              </button>
-              <button
-                onClick={() => setActiveTab('improvement')}
-                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === 'improvement'
-                    ? 'bg-amber-500/20 text-amber-400'
-                    : 'text-gray-400 hover:bg-white/[0.05]'
-                }`}
-              >
-                <Target className="h-4 w-4" />
-                Needs Improvement
-              </button>
-              <button
-                onClick={() => setActiveTab('all')}
-                className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === 'all'
-                    ? 'bg-blue-500/20 text-blue-400'
-                    : 'text-gray-400 hover:bg-white/[0.05]'
-                }`}
-              >
-                <Users className="h-4 w-4" />
-                All Agents
-              </button>
-            </div>
 
             {/* Search */}
             <div className="p-3 border-b border-white/[0.08]">
