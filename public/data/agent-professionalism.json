@@ -1,0 +1,4664 @@
+{
+  "generatedAt": "2025-12-05T01:44:15.289Z",
+  "methodology": "AI-based professionalism analysis",
+  "description": "Agents scored on behavior, not call outcomes. Frustration penalty applied when agent CAUSED customer frustration.",
+  "totalAgentsAnalyzed": 82,
+  "scoringWeights": {
+    "professionalism": 3,
+    "empathy": 2,
+    "activeListening": 2,
+    "communicationClarity": 1.5,
+    "deEscalation": 1.5,
+    "frustrationPenalty": "-2% per incident"
+  },
+  "tiers": {
+    "exemplary": "4.2+",
+    "professional": "3.5-4.2",
+    "adequate": "2.8-3.5",
+    "needs-coaching": "2.0-2.8",
+    "critical": "<2.0"
+  },
+  "agents": {
+    "Alec Parent": {
+      "totalCalls": 457,
+      "analyzedCalls": 80,
+      "scores": {
+        "professionalism": 4.03,
+        "clarity": 3.96,
+        "empathy": 3.79,
+        "listening": 3.9,
+        "deEscalation": 3.45
+      },
+      "frustrationCaused": 5,
+      "frustrationRate": "6.3",
+      "overallScore": "3.73",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent was unable to immediately resolve the issue with setting up autopay from the customer's credit union account",
+          "count": 1
+        },
+        {
+          "issue": "The agent initially misunderstood the reason for the $25 fee, thinking it was due to non-sufficient funds when it was actually due to a stop payment requested by the customer",
+          "count": 1
+        },
+        {
+          "issue": "Language barrier made it difficult to fully understand the customer's needs",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to provide a solution to the customer's issue with making online payments, which caused frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were somewhat unclear and lacked empathy, which did not help de-escalate the situation",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 5
+        }
+      ]
+    },
+    "Alyannah Jo Tucay": {
+      "totalCalls": 32,
+      "analyzedCalls": 29,
+      "scores": {
+        "professionalism": 3.59,
+        "clarity": 3.59,
+        "empathy": 3.03,
+        "listening": 3.41,
+        "deEscalation": 2.33
+      },
+      "frustrationCaused": 9,
+      "frustrationRate": "31.0",
+      "overallScore": "2.63",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "The agent did not properly identify the customer or the reason for the call",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not respond coherently to the customer's requests and instead made nonsensical statements",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate any understanding of the customer's needs or the context of the call",
+          "count": 1
+        },
+        {
+          "issue": "The agent's behavior was highly unprofessional and likely worsened the customer's frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not properly identify the customer and verify their identity, leading to confusion and frustration.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Greeted the customer politely",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional, clear, and empathetic throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "Demonstrated excellent listening skills",
+          "count": 2
+        },
+        {
+          "strength": "Clearly communicated with the customer",
+          "count": 2
+        },
+        {
+          "strength": "Handled the test call professionally",
+          "count": 2
+        }
+      ]
+    },
+    "Bernardo Ahumada": {
+      "totalCalls": 365,
+      "analyzedCalls": 39,
+      "scores": {
+        "professionalism": 3.69,
+        "clarity": 3.64,
+        "empathy": 3.64,
+        "listening": 3.64,
+        "deEscalation": 3
+      },
+      "frustrationCaused": 7,
+      "frustrationRate": "17.9",
+      "overallScore": "3.20",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "The agent kept the customer on hold for an extended period, which likely caused frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide clear updates or communicate the reason for the delay",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were somewhat disjointed and lacked a sense of urgency in addressing the customer's request",
+          "count": 1
+        },
+        {
+          "issue": "The agent initially had difficulty understanding the customer's request to stop the additional $25 principal payment while keeping the recurring biweekly payment.",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear communication and understanding",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 2
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the conversation",
+          "count": 2
+        }
+      ]
+    },
+    "Brian De La Cruz": {
+      "totalCalls": 266,
+      "analyzedCalls": 86,
+      "scores": {
+        "professionalism": 3.78,
+        "clarity": 3.64,
+        "empathy": 3.49,
+        "listening": 3.71,
+        "deEscalation": 2.95
+      },
+      "frustrationCaused": 11,
+      "frustrationRate": "12.8",
+      "overallScore": "3.31",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication and problem-solving",
+          "count": 2
+        },
+        {
+          "issue": "The agent struggled to communicate effectively with the customer, often responding with nonsensical or incorrect Spanish phrases.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not make a clear effort to understand the customer's needs or provide helpful information.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were disorganized and lacked structure, making it difficult for the customer to follow the conversation.",
+          "count": 1
+        },
+        {
+          "issue": "The agent initially had trouble understanding the customer's issue and had to ask for clarification multiple times.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Bu Nino Arana": {
+      "totalCalls": 722,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.94,
+        "clarity": 3.86,
+        "empathy": 3.77,
+        "listening": 3.87,
+        "deEscalation": 3.46
+      },
+      "frustrationCaused": 5,
+      "frustrationRate": "5.6",
+      "overallScore": "3.70",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent was unable to immediately locate the customer's account information using the ID number provided",
+          "count": 1
+        },
+        {
+          "issue": "The agent's line was breaking in and out, making it difficult to communicate clearly",
+          "count": 1
+        },
+        {
+          "issue": "Provided inaccurate information about the customer's monthly payment and interest rate",
+          "count": 1
+        },
+        {
+          "issue": "Did not take ownership of the issue or offer to follow up",
+          "count": 1
+        },
+        {
+          "issue": "Suggested the customer refer to their contract rather than trying to resolve the discrepancy",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 11
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent demonstrated empathy and understanding towards the customer's situation.",
+          "count": 3
+        }
+      ]
+    },
+    "Catherine Toledo": {
+      "totalCalls": 574,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.74,
+        "clarity": 3.65,
+        "empathy": 3.37,
+        "listening": 3.56,
+        "deEscalation": 2.71
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "15.1",
+      "overallScore": "3.16",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent was inflexible and did not try to find an alternative solution for the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent used inappropriate language like 'I'm forbidding to do that'",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not show empathy or try to de-escalate the customer's frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not clearly understand the reason for the customer's call, leading to confusion",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Cesar Cruz": {
+      "totalCalls": 385,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.39,
+        "clarity": 3.19,
+        "empathy": 3.13,
+        "listening": 3.29,
+        "deEscalation": 2.48
+      },
+      "frustrationCaused": 22,
+      "frustrationRate": "24.4",
+      "overallScore": "2.66",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 3
+        },
+        {
+          "issue": "Unclear communication and lack of understanding of the customer's issue",
+          "count": 2
+        },
+        {
+          "issue": "Unclear communication and explanations",
+          "count": 2
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent's speech is somewhat disjointed and unclear at times, making it difficult for the customer to fully understand the explanation",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Polite and courteous tone",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent remained calm and polite throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous",
+          "count": 3
+        }
+      ]
+    },
+    "China Ervin": {
+      "totalCalls": 425,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.52,
+        "clarity": 3.34,
+        "empathy": 3.23,
+        "listening": 3.33,
+        "deEscalation": 2.7
+      },
+      "frustrationCaused": 25,
+      "frustrationRate": "26.9",
+      "overallScore": "2.74",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Unclear and disjointed responses",
+          "count": 2
+        },
+        {
+          "issue": "The agent's initial response was unclear and disjointed, which may have contributed to the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not fully understand the customer's issue and had difficulty providing a clear explanation or resolution.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were sometimes vague or lacked the necessary details to address the customer's concerns effectively.",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed confused and struggled to understand the customer's issue",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent did not cause or worsen any frustration, and handled the call well.",
+          "count": 3
+        },
+        {
+          "strength": "The agent remained calm and professional throughout the call, even when the customer seemed a bit frustrated.",
+          "count": 3
+        }
+      ]
+    },
+    "Christian Coronado": {
+      "totalCalls": 602,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.62,
+        "clarity": 3.52,
+        "empathy": 3.42,
+        "listening": 3.58,
+        "deEscalation": 3
+      },
+      "frustrationCaused": 16,
+      "frustrationRate": "17.8",
+      "overallScore": "3.11",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "The agent had some difficulty understanding the customer's issue with the refunded payment and could not provide a clear explanation for it",
+          "count": 1
+        },
+        {
+          "issue": "The agent's communication could have been more clear and concise at times",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed unsure and hesitant at times, which could come across as unprofessional",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Polite and courteous tone",
+          "count": 3
+        }
+      ]
+    },
+    "Christina Pinckney": {
+      "totalCalls": 624,
+      "analyzedCalls": 81,
+      "scores": {
+        "professionalism": 4.01,
+        "clarity": 3.98,
+        "empathy": 3.86,
+        "listening": 3.98,
+        "deEscalation": 4.08
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "1.2",
+      "overallScore": "3.96",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Uncertainty about the impact on the customer's credit",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear and definitive information",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication about electronic payment options",
+          "count": 1
+        },
+        {
+          "issue": "Long wait times and customers being hung up on",
+          "count": 1
+        },
+        {
+          "issue": "Unable to view the full account number",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional and helpful tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Claudia Santos": {
+      "totalCalls": 706,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.48,
+        "clarity": 3.38,
+        "empathy": 3.19,
+        "listening": 3.4,
+        "deEscalation": 2.49
+      },
+      "frustrationCaused": 30,
+      "frustrationRate": "33.3",
+      "overallScore": "2.58",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not handle the customer's frustration well and seemed to contribute to it rather than try to de-escalate the situation.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide clear or satisfactory responses to the customer's concerns.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate strong listening skills or empathy towards the customer's situation.",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear explanation for the incorrect submission",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and tried to assist the customer",
+          "count": 2
+        },
+        {
+          "strength": "Provided clear and concise information to the customer",
+          "count": 2
+        }
+      ]
+    },
+    "Dearl Goins": {
+      "totalCalls": 423,
+      "analyzedCalls": 87,
+      "scores": {
+        "professionalism": 3.87,
+        "clarity": 3.83,
+        "empathy": 3.63,
+        "listening": 3.74,
+        "deEscalation": 2.6
+      },
+      "frustrationCaused": 8,
+      "frustrationRate": "9.2",
+      "overallScore": "3.42",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 2
+        },
+        {
+          "issue": "Some confusion around terminology (biweekly vs. bimonthly)",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication about the website and payment issues",
+          "count": 1
+        },
+        {
+          "issue": "Inability to provide a timeline for when the issues will be resolved",
+          "count": 1
+        },
+        {
+          "issue": "Uncertainty about whether the customer will be charged a late fee",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Provided a clear callback number",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a polite and friendly tone throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        }
+      ]
+    },
+    "Dewin Vien Bontigao": {
+      "totalCalls": 643,
+      "analyzedCalls": 95,
+      "scores": {
+        "professionalism": 3.93,
+        "clarity": 3.89,
+        "empathy": 3.69,
+        "listening": 3.86,
+        "deEscalation": 3.27
+      },
+      "frustrationCaused": 7,
+      "frustrationRate": "7.4",
+      "overallScore": "3.62",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Failure to address the customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "Unclear on the specific issues with the customer's account",
+          "count": 1
+        },
+        {
+          "issue": "The agent could not provide the document by the customer's deadline",
+          "count": 1
+        },
+        {
+          "issue": "Failed to fully understand the customer's concerns about the tax implications of the delayed payment application",
+          "count": 1
+        },
+        {
+          "issue": "Provided generic, scripted responses instead of addressing the specific issue",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 8
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 8
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the conversation",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "Dianne Aguilo": {
+      "totalCalls": 733,
+      "analyzedCalls": 99,
+      "scores": {
+        "professionalism": 3.86,
+        "clarity": 3.78,
+        "empathy": 3.6,
+        "listening": 3.78,
+        "deEscalation": 2.91
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.1",
+      "overallScore": "3.35",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Provided unclear and confusing instructions for accessing the website portal",
+          "count": 1
+        },
+        {
+          "issue": "Struggled to communicate the website URL and login details clearly",
+          "count": 1
+        },
+        {
+          "issue": "Did not effectively troubleshoot when the customer was unable to access the portal",
+          "count": 1
+        },
+        {
+          "issue": "The agent repeatedly asked for the loan number, even after the customer stated they did not have it with them",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent demonstrated empathy and understanding towards the customer's situation",
+          "count": 3
+        }
+      ]
+    },
+    "Donavan Truance": {
+      "totalCalls": 417,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.98,
+        "clarity": 3.91,
+        "empathy": 3.83,
+        "listening": 3.91,
+        "deEscalation": 3.29
+      },
+      "frustrationCaused": 12,
+      "frustrationRate": "13.3",
+      "overallScore": "3.56",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent initially seemed distracted and unresponsive, causing frustration for the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not effectively address the customer's concerns or provide a clear resolution",
+          "count": 1
+        },
+        {
+          "issue": "Difficulty explaining the 14-day mail processing time",
+          "count": 1
+        },
+        {
+          "issue": "Language barrier made it difficult to communicate clearly",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was very professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        }
+      ]
+    },
+    "Emilio Cargenelutti": {
+      "totalCalls": 495,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.35,
+        "clarity": 3.13,
+        "empathy": 2.94,
+        "listening": 3.27,
+        "deEscalation": 2.55
+      },
+      "frustrationCaused": 30,
+      "frustrationRate": "32.3",
+      "overallScore": "2.45",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Inability to understand customer's needs",
+          "count": 3
+        },
+        {
+          "issue": "Inability to communicate effectively with the customer",
+          "count": 2
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "Inability to understand or address the customer's needs",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not demonstrate strong empathy or attempt to de-escalate the customer's frustration",
+          "count": 2
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Remained polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional tone throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent remained polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent remained calm and polite throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Emilyza Salvy Paragoso": {
+      "totalCalls": 549,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.73,
+        "clarity": 3.61,
+        "empathy": 3.53,
+        "listening": 3.67,
+        "deEscalation": 3.26
+      },
+      "frustrationCaused": 13,
+      "frustrationRate": "14.4",
+      "overallScore": "3.30",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Unclear about the customer's issue and how to assist",
+          "count": 1
+        },
+        {
+          "issue": "Unable to transfer the customer to the appropriate department",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not clearly address the customer's concerns about not being able to pay the bill through the regular phone number",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a clear resolution or next steps to help the customer feel more at ease",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Remained calm and professional despite the customer's frustration",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and respectful throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Emma Sides": {
+      "totalCalls": 434,
+      "analyzedCalls": 83,
+      "scores": {
+        "professionalism": 4.08,
+        "clarity": 4.06,
+        "empathy": 3.86,
+        "listening": 3.98,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 2,
+      "frustrationRate": "2.4",
+      "overallScore": "3.95",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Unclear purpose of the call",
+          "count": 1
+        },
+        {
+          "issue": "Lack of context about the customer's issue",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were somewhat unclear and lacked a clear direction in addressing the customer's concerns",
+          "count": 1
+        },
+        {
+          "issue": "The agent could have shown more empathy and actively listened to the customer's needs",
+          "count": 1
+        },
+        {
+          "issue": "Confusion over payment dates",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 8
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 8
+        },
+        {
+          "strength": "The agent was polite and responsive throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent maintained a professional and courteous tone throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Fernando Garcia": {
+      "totalCalls": 8,
+      "analyzedCalls": 8,
+      "scores": {
+        "professionalism": 2.75,
+        "clarity": 2.5,
+        "empathy": 2.38,
+        "listening": 2.63,
+        "deEscalation": 2.5
+      },
+      "frustrationCaused": 5,
+      "frustrationRate": "62.5",
+      "overallScore": "1.33",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "The agent did not take full responsibility for the company's mistake and instead asked the customer to pay for it, which caused frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were not very clear and lacked empathy, which made it difficult for the customer to understand the options being presented.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not handle the customer's frustration well and did not effectively de-escalate the situation.",
+          "count": 1
+        },
+        {
+          "issue": "Unclear explanation of the escrow situation and the steps required to resolve it",
+          "count": 1
+        },
+        {
+          "issue": "Unclear and disjointed communication",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent tried to offer a quicker solution, even though it was not the ideal option for the customer.",
+          "count": 1
+        },
+        {
+          "strength": "The agent listened to the customer and acknowledged their concerns, even if the responses were not fully satisfactory.",
+          "count": 1
+        },
+        {
+          "strength": "Apologized for the delay in returning the call",
+          "count": 1
+        },
+        {
+          "strength": "Provided relevant details about the escrow situation and the steps needed to resolve it",
+          "count": 1
+        },
+        {
+          "strength": "Demonstrated empathy and a willingness to assist the customer",
+          "count": 1
+        }
+      ]
+    },
+    "Fernando Vanegas": {
+      "totalCalls": 524,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.59,
+        "clarity": 3.54,
+        "empathy": 3.44,
+        "listening": 3.53,
+        "deEscalation": 2.81
+      },
+      "frustrationCaused": 18,
+      "frustrationRate": "18.6",
+      "overallScore": "3.05",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Inability to understand or address the customer's needs",
+          "count": 2
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "None",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Greeted the customer politely and introduced himself",
+          "count": 3
+        }
+      ]
+    },
+    "Francisco Hernandez": {
+      "totalCalls": 483,
+      "analyzedCalls": 98,
+      "scores": {
+        "professionalism": 3.53,
+        "clarity": 3.39,
+        "empathy": 3.08,
+        "listening": 3.39,
+        "deEscalation": 2.61
+      },
+      "frustrationCaused": 19,
+      "frustrationRate": "19.4",
+      "overallScore": "2.87",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 5
+        },
+        {
+          "issue": "Lack of response to customer",
+          "count": 4
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 3
+        },
+        {
+          "issue": "Inability to understand customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to provide clear and helpful information",
+          "count": 2
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a polite and professional tone throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "Francisco Lopez": {
+      "totalCalls": 17,
+      "analyzedCalls": 16,
+      "scores": {
+        "professionalism": 2.75,
+        "clarity": 2.56,
+        "empathy": 2.5,
+        "listening": 2.63,
+        "deEscalation": 2.5
+      },
+      "frustrationCaused": 9,
+      "frustrationRate": "56.3",
+      "overallScore": "1.48",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Poor communication and understanding of the customer's needs",
+          "count": 2
+        },
+        {
+          "issue": "Inability to guide the customer through the issue",
+          "count": 1
+        },
+        {
+          "issue": "Lack of empathy and understanding of the customer's situation",
+          "count": 1
+        },
+        {
+          "issue": "Inability to provide clear and coherent responses",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Took ownership of the issue and took steps to resolve it",
+          "count": 1
+        },
+        {
+          "strength": "Provided clear explanations and next steps",
+          "count": 1
+        },
+        {
+          "strength": "Demonstrated empathy and a desire to help the customer",
+          "count": 1
+        },
+        {
+          "strength": "Listened attentively and addressed the customer's concerns",
+          "count": 1
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call, even after the initial call drop.",
+          "count": 1
+        }
+      ]
+    },
+    "George Monsanto": {
+      "totalCalls": 1,
+      "analyzedCalls": 1,
+      "scores": {
+        "professionalism": 2,
+        "clarity": 2,
+        "empathy": 2,
+        "listening": 2,
+        "deEscalation": null
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "100.0",
+      "overallScore": "0.15",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Unclear and disjointed responses",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear direction or resolution for the customer",
+          "count": 1
+        },
+        {
+          "issue": "Failure to address the customer's initial request",
+          "count": 1
+        }
+      ],
+      "commonStrengths": []
+    },
+    "Hector Gaytan": {
+      "totalCalls": 463,
+      "analyzedCalls": 95,
+      "scores": {
+        "professionalism": 3.41,
+        "clarity": 3.25,
+        "empathy": 3.22,
+        "listening": 3.27,
+        "deEscalation": 2.6
+      },
+      "frustrationCaused": 29,
+      "frustrationRate": "30.5",
+      "overallScore": "2.59",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 2
+        },
+        {
+          "issue": "Lack of empathy and active listening",
+          "count": 2
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent's speech was unclear and difficult to understand at times, which could have contributed to the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a clear timeline or resolution for the customer's issue, which was ongoing for 15-16 months.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent did not cause or worsen the customer's frustration",
+          "count": 3
+        },
+        {
+          "strength": "Greeted the customer politely and introduced himself",
+          "count": 3
+        },
+        {
+          "strength": "The agent was generally professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Henrietta Porter": {
+      "totalCalls": 372,
+      "analyzedCalls": 91,
+      "scores": {
+        "professionalism": 4.07,
+        "clarity": 4.03,
+        "empathy": 3.89,
+        "listening": 4.03,
+        "deEscalation": 3.22
+      },
+      "frustrationCaused": 7,
+      "frustrationRate": "7.7",
+      "overallScore": "3.74",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Unprofessional responses",
+          "count": 2
+        },
+        {
+          "issue": "Struggled to clearly identify the customer's name and loan details",
+          "count": 1
+        },
+        {
+          "issue": "Could have provided more empathetic and reassuring responses to the customer's concerns",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed flustered and unsure at times, using phrases like 'God' and 'OK' repeatedly, which could come across as unprofessional.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not directly address the customer being on hold, which could have further frustrated the customer.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a friendly and helpful tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Israel Sanchez": {
+      "totalCalls": 1,
+      "analyzedCalls": 1,
+      "scores": {
+        "professionalism": 4,
+        "clarity": 4,
+        "empathy": 3,
+        "listening": 4,
+        "deEscalation": null
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "3.65",
+      "tier": "professional",
+      "commonIssues": [],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional in their tone and language.",
+          "count": 1
+        },
+        {
+          "strength": "The agent provided clear instructions on the information needed to process the refund.",
+          "count": 1
+        },
+        {
+          "strength": "The agent listened to the customer's request to call the bank and get back to them, showing they were willing to accommodate the customer's needs.",
+          "count": 1
+        }
+      ]
+    },
+    "Jackie Chaves": {
+      "totalCalls": 3,
+      "analyzedCalls": 2,
+      "scores": {
+        "professionalism": 5,
+        "clarity": 5,
+        "empathy": 5,
+        "listening": 5,
+        "deEscalation": null
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "4.70",
+      "tier": "exemplary",
+      "commonIssues": [],
+      "commonStrengths": [
+        {
+          "strength": "Provided clear and concise answers",
+          "count": 1
+        },
+        {
+          "strength": "Demonstrated excellent customer service skills",
+          "count": 1
+        },
+        {
+          "strength": "Showed genuine interest in the customer's needs",
+          "count": 1
+        },
+        {
+          "strength": "Maintained a professional and friendly tone throughout the call",
+          "count": 1
+        },
+        {
+          "strength": "Offered to provide further assistance if needed",
+          "count": 1
+        }
+      ]
+    },
+    "Jackie Wilson": {
+      "totalCalls": 338,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 3.99,
+        "clarity": 3.94,
+        "empathy": 3.78,
+        "listening": 3.92,
+        "deEscalation": 2.71
+      },
+      "frustrationCaused": 8,
+      "frustrationRate": "8.9",
+      "overallScore": "3.56",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent struggled to understand the customer's needs and provide clear information",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were disjointed and lacked a coherent flow",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate strong listening skills or empathy towards the customer's situation",
+          "count": 1
+        },
+        {
+          "issue": "Could have shown more empathy towards the customer's issue",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and friendly throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Jacob Gironza": {
+      "totalCalls": 354,
+      "analyzedCalls": 91,
+      "scores": {
+        "professionalism": 4.02,
+        "clarity": 4,
+        "empathy": 3.97,
+        "listening": 3.98,
+        "deEscalation": 3.88
+      },
+      "frustrationCaused": 6,
+      "frustrationRate": "6.6",
+      "overallScore": "3.85",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "Confusion about the transaction details",
+          "count": 1
+        },
+        {
+          "issue": "Difficulty finding the $20,000 payment",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clarity in explaining the loan payoff date",
+          "count": 1
+        },
+        {
+          "issue": "Inability to understand or respond to customer requests",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 13
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Javier Jiminez": {
+      "totalCalls": 424,
+      "analyzedCalls": 95,
+      "scores": {
+        "professionalism": 3.82,
+        "clarity": 3.68,
+        "empathy": 3.65,
+        "listening": 3.73,
+        "deEscalation": 2.89
+      },
+      "frustrationCaused": 9,
+      "frustrationRate": "9.5",
+      "overallScore": "3.42",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication and explanations",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear resolution or next steps for the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed unsure of the process and requirements, which led to some confusion",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide clear next steps or a resolution to the customer's issue",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to clearly explain the customer's account details and payment history, leading to confusion and frustration",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 12
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Joe Porter": {
+      "totalCalls": 49,
+      "analyzedCalls": 47,
+      "scores": {
+        "professionalism": 3.68,
+        "clarity": 3.62,
+        "empathy": 3.34,
+        "listening": 3.6,
+        "deEscalation": 3.25
+      },
+      "frustrationCaused": 7,
+      "frustrationRate": "14.9",
+      "overallScore": "3.22",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Difficulty understanding the customer's issue due to language barriers",
+          "count": 1
+        },
+        {
+          "issue": "Inability to provide a clear resolution or next steps",
+          "count": 1
+        },
+        {
+          "issue": "Confusion about the loan payment and refund",
+          "count": 1
+        },
+        {
+          "issue": "Lack of empathy",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer.",
+          "count": 2
+        },
+        {
+          "strength": "The agent listened attentively and addressed the customer's concerns.",
+          "count": 2
+        },
+        {
+          "strength": "Remained calm and professional despite the customer's frustration",
+          "count": 2
+        }
+      ]
+    },
+    "Johana Paola": {
+      "totalCalls": 501,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.84,
+        "clarity": 3.75,
+        "empathy": 3.69,
+        "listening": 3.78,
+        "deEscalation": 2.94
+      },
+      "frustrationCaused": 11,
+      "frustrationRate": "11.8",
+      "overallScore": "3.41",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "The agent initially seemed a bit confused about the customer's issue, but was able to clarify and provide a reasonable explanation.",
+          "count": 1
+        },
+        {
+          "issue": "The agent struggled to find the customer's email and payoff request, causing significant delays and frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses became disjointed and incoherent at times, indicating a lack of focus",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not effectively communicate the status of the request or provide clear next steps to the customer",
+          "count": 1
+        },
+        {
+          "issue": "Unable to directly modify the autopay amount on the customer's account",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 11
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent did not cause or worsen any frustration on the customer's part.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and responsive throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "John Allen Romualdo": {
+      "totalCalls": 436,
+      "analyzedCalls": 100,
+      "scores": {
+        "professionalism": 3.64,
+        "clarity": 3.45,
+        "empathy": 3.32,
+        "listening": 3.52,
+        "deEscalation": 2.74
+      },
+      "frustrationCaused": 27,
+      "frustrationRate": "27.0",
+      "overallScore": "2.85",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 2
+        },
+        {
+          "issue": "The agent was unable to assist the customer with making a payment due to technical issues with their tools",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to provide the correct address information the customer requested",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were unclear and did not fully address the customer's needs",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate sufficient empathy or attempt to de-escalate the customer's frustration",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 11
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and respectful throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent remained polite and courteous throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "John Bula": {
+      "totalCalls": 541,
+      "analyzedCalls": 100,
+      "scores": {
+        "professionalism": 3.82,
+        "clarity": 3.63,
+        "empathy": 3.42,
+        "listening": 3.68,
+        "deEscalation": 2.94
+      },
+      "frustrationCaused": 13,
+      "frustrationRate": "13.0",
+      "overallScore": "3.29",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Struggled to get the customer's email address correct on the first few tries",
+          "count": 1
+        },
+        {
+          "issue": "The agent's speech is somewhat disjointed and unclear at times, making it difficult for the customer to follow",
+          "count": 1
+        },
+        {
+          "issue": "The agent does not demonstrate a high level of empathy or concern for the customer's situation",
+          "count": 1
+        },
+        {
+          "issue": "The agent could have been more proactive in addressing the customer's concerns and frustrations, rather than just apologizing and offering to send an email.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent demonstrated empathy and understanding towards the customer's situation",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "John Rey Tubera": {
+      "totalCalls": 677,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 4.01,
+        "clarity": 3.98,
+        "empathy": 3.84,
+        "listening": 3.96,
+        "deEscalation": 3.29
+      },
+      "frustrationCaused": 7,
+      "frustrationRate": "7.2",
+      "overallScore": "3.71",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent was unable to resolve the customer's issue of accessing the online account, despite the customer providing the necessary information",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a clear solution or next steps to help the customer access the online account",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication about the limitations of the agent's ability to set up autopay",
+          "count": 1
+        },
+        {
+          "issue": "Lack of response from the customer",
+          "count": 1
+        },
+        {
+          "issue": "Difficulty verifying the customer's identity",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "John Tamo": {
+      "totalCalls": 662,
+      "analyzedCalls": 98,
+      "scores": {
+        "professionalism": 3.82,
+        "clarity": 3.72,
+        "empathy": 3.65,
+        "listening": 3.76,
+        "deEscalation": 2.63
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.3",
+      "overallScore": "3.29",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "The agent was unable to effectively assist the customer with setting up automatic payments for their mortgage, which is a common customer request.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were disjointed and lacked clear direction, causing confusion for the customer.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate strong listening skills, as they seemed to struggle to understand the customer's needs and provide a helpful solution.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's lack of empathy and inability to de-escalate the situation likely contributed to the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "Kept the customer on hold for an extended period of time",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent provided clear and helpful information to the customer",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Jon Davis": {
+      "totalCalls": 179,
+      "analyzedCalls": 84,
+      "scores": {
+        "professionalism": 4.05,
+        "clarity": 4.01,
+        "empathy": 3.9,
+        "listening": 4.01,
+        "deEscalation": 3.4
+      },
+      "frustrationCaused": 3,
+      "frustrationRate": "3.6",
+      "overallScore": "3.84",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Background noise made it difficult for the customer to hear the agent clearly",
+          "count": 1
+        },
+        {
+          "issue": "Struggled to clearly explain the policy and timeline around making advance payments",
+          "count": 1
+        },
+        {
+          "issue": "Became defensive when the customer requested a specific policy citation",
+          "count": 1
+        },
+        {
+          "issue": "Did not effectively resolve the customer's confusion",
+          "count": 1
+        },
+        {
+          "issue": "Poor call quality and connection issues",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 11
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Julio Hernandez": {
+      "totalCalls": 256,
+      "analyzedCalls": 94,
+      "scores": {
+        "professionalism": 3.52,
+        "clarity": 3.36,
+        "empathy": 3.37,
+        "listening": 3.43,
+        "deEscalation": 2.56
+      },
+      "frustrationCaused": 25,
+      "frustrationRate": "26.6",
+      "overallScore": "2.77",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "The agent did not effectively de-escalate the customer's frustration",
+          "count": 3
+        },
+        {
+          "issue": "The agent was unable to understand the customer's issue and kept repeating that they had no record of the payment, even after the customer clearly explained the situation.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not take ownership of the problem or offer any solutions to resolve the issue.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were not clear and lacked empathy, which further frustrated the customer.",
+          "count": 1
+        },
+        {
+          "issue": "The agent initially mispronounced the customer's name, which could be seen as unprofessional.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent remained calm and professional throughout the call, even when the customer was frustrated.",
+          "count": 3
+        }
+      ]
+    },
+    "Justin Boni": {
+      "totalCalls": 5,
+      "analyzedCalls": 2,
+      "scores": {
+        "professionalism": 4,
+        "clarity": 4,
+        "empathy": 4,
+        "listening": 4,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "4.00",
+      "tier": "professional",
+      "commonIssues": [],
+      "commonStrengths": [
+        {
+          "strength": "The agent acknowledged the customer's frustration and expressed a commitment to improving the experience.",
+          "count": 1
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to address the customer's concerns.",
+          "count": 1
+        },
+        {
+          "strength": "The agent maintained a professional and courteous tone throughout the conversation.",
+          "count": 1
+        },
+        {
+          "strength": "The agent remained professional and courteous throughout the interaction, even when the customer's voicemail was full and unable to accept messages.",
+          "count": 1
+        },
+        {
+          "strength": "The agent did not cause or worsen any frustration, and instead provided clear instructions for the customer to call back or leave a message.",
+          "count": 1
+        }
+      ]
+    },
+    "Justin Stevenson": {
+      "totalCalls": 60,
+      "analyzedCalls": 49,
+      "scores": {
+        "professionalism": 4.1,
+        "clarity": 4.14,
+        "empathy": 4.02,
+        "listening": 4.08,
+        "deEscalation": 4.06
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "4.08",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent did not directly address the customer's concerns about the escrow account and the homeowner's insurance policy",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide clear instructions on how the customer can resolve the issues",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "The agent listened attentively to the customer's concerns and responded appropriately.",
+          "count": 2
+        },
+        {
+          "strength": "Maintained a professional and empathetic tone throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 2
+        }
+      ]
+    },
+    "Kathrina Penaflor": {
+      "totalCalls": 319,
+      "analyzedCalls": 98,
+      "scores": {
+        "professionalism": 3.73,
+        "clarity": 3.56,
+        "empathy": 3.36,
+        "listening": 3.61,
+        "deEscalation": 2.41
+      },
+      "frustrationCaused": 20,
+      "frustrationRate": "20.4",
+      "overallScore": "3.00",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "The agent did not effectively communicate with the customer and failed to understand the customer's issue",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were unclear and did not provide any meaningful assistance",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate empathy or attempt to de-escalate the situation",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not respond to the customer for an extended period of time, causing the customer to become increasingly frustrated and agitated.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide any explanation or acknowledgement of the customer's concerns.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Kenneth Rico": {
+      "totalCalls": 527,
+      "analyzedCalls": 91,
+      "scores": {
+        "professionalism": 3.7,
+        "clarity": 3.65,
+        "empathy": 3.51,
+        "listening": 3.64,
+        "deEscalation": 2.78
+      },
+      "frustrationCaused": 15,
+      "frustrationRate": "16.5",
+      "overallScore": "3.17",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Mispronounced the customer's name",
+          "count": 2
+        },
+        {
+          "issue": "Provided unclear and confusing responses",
+          "count": 2
+        },
+        {
+          "issue": "Provided incorrect information about the balance and next payment due date",
+          "count": 1
+        },
+        {
+          "issue": "Used unprofessional language ('That is crack, sir')",
+          "count": 1
+        },
+        {
+          "issue": "Struggled to clearly communicate the payment details",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Remained calm and professional despite the customer's repeated holds",
+          "count": 2
+        }
+      ]
+    },
+    "Kiera Woodman": {
+      "totalCalls": 519,
+      "analyzedCalls": 90,
+      "scores": {
+        "professionalism": 4.04,
+        "clarity": 4.02,
+        "empathy": 3.93,
+        "listening": 4.01,
+        "deEscalation": 3.8
+      },
+      "frustrationCaused": 3,
+      "frustrationRate": "3.3",
+      "overallScore": "3.91",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Lack of clarity around the repayment plan",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear communication from the agent about the timeline for the customer to receive the letter",
+          "count": 1
+        },
+        {
+          "issue": "Failure to proactively address the customer's concerns about lack of communication",
+          "count": 1
+        },
+        {
+          "issue": "Hesitant speech and lack of confidence in responses",
+          "count": 1
+        },
+        {
+          "issue": "Unclear explanations",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 17
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 11
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 4
+        }
+      ]
+    },
+    "Kristine McCallum": {
+      "totalCalls": 6,
+      "analyzedCalls": 6,
+      "scores": {
+        "professionalism": 4.17,
+        "clarity": 4.17,
+        "empathy": 4.17,
+        "listening": 4.17,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "4.14",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Occasional audio breakup",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Acknowledged customer's concerns about security and previous scams",
+          "count": 1
+        },
+        {
+          "strength": "Offered to provide information via email and direct line to avoid further issues",
+          "count": 1
+        },
+        {
+          "strength": "Remained calm and reassuring despite customer's nervousness",
+          "count": 1
+        },
+        {
+          "strength": "The agent was polite and responsive to the customer's concerns",
+          "count": 1
+        },
+        {
+          "strength": "The agent acknowledged the customer's frustration and promised to follow up",
+          "count": 1
+        }
+      ]
+    },
+    "Krsna Guzman": {
+      "totalCalls": 483,
+      "analyzedCalls": 96,
+      "scores": {
+        "professionalism": 3.68,
+        "clarity": 3.61,
+        "empathy": 3.53,
+        "listening": 3.64,
+        "deEscalation": 2.78
+      },
+      "frustrationCaused": 18,
+      "frustrationRate": "18.8",
+      "overallScore": "3.12",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 3
+        },
+        {
+          "issue": "Inability to understand customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "The agent mispronounced the customer's name multiple times, which could come across as unprofessional",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional, courteous, and helpful throughout the call.",
+          "count": 4
+        }
+      ]
+    },
+    "Lenette Ga": {
+      "totalCalls": 532,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.8,
+        "clarity": 3.69,
+        "empathy": 3.48,
+        "listening": 3.71,
+        "deEscalation": 2.3
+      },
+      "frustrationCaused": 12,
+      "frustrationRate": "12.4",
+      "overallScore": "3.23",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Some confusion in communication and information exchange",
+          "count": 1
+        },
+        {
+          "issue": "Struggled to correctly identify the customer's name and loan details",
+          "count": 1
+        },
+        {
+          "issue": "Provided incorrect information about the servicing company",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication and lack of empathy",
+          "count": 1
+        },
+        {
+          "issue": "The agent had difficulty understanding the customer's question and providing a clear, direct answer",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Lydia Mejia": {
+      "totalCalls": 25,
+      "analyzedCalls": 21,
+      "scores": {
+        "professionalism": 3.71,
+        "clarity": 3.57,
+        "empathy": 3.57,
+        "listening": 3.67,
+        "deEscalation": 3
+      },
+      "frustrationCaused": 3,
+      "frustrationRate": "14.3",
+      "overallScore": "3.26",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication in some parts, such as the instructions for making online payments",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear communication about the escrow analysis and payment timeline",
+          "count": 1
+        },
+        {
+          "issue": "Inability to provide definitive answers to the customer's concerns",
+          "count": 1
+        },
+        {
+          "issue": "Failure to fully address the customer's frustration and confusion",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed unsure of the process and had difficulty providing clear instructions",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and responsive to the customer's requests.",
+          "count": 1
+        },
+        {
+          "strength": "The agent provided clear information about the next steps and when they would follow up.",
+          "count": 1
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer.",
+          "count": 1
+        },
+        {
+          "strength": "The agent provided clear instructions on how to properly apply the payment to the principal",
+          "count": 1
+        },
+        {
+          "strength": "The agent acknowledged the customer's previous request and confirmed that it was being addressed",
+          "count": 1
+        }
+      ]
+    },
+    "Lyn Zse Seville": {
+      "totalCalls": 475,
+      "analyzedCalls": 94,
+      "scores": {
+        "professionalism": 3.67,
+        "clarity": 3.48,
+        "empathy": 3.41,
+        "listening": 3.53,
+        "deEscalation": 3.07
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.9",
+      "overallScore": "3.17",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent initially seemed unsure if the customer was an agent from another company, which caused some confusion",
+          "count": 1
+        },
+        {
+          "issue": "The agent put the customer on hold for an extended period of time without providing updates",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses lacked clarity and empathy at times, which could have further frustrated the customer",
+          "count": 1
+        },
+        {
+          "issue": "Struggled to quickly locate the customer's account information",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a polite and friendly tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent did not cause or worsen the customer's frustration",
+          "count": 3
+        }
+      ]
+    },
+    "Lyndsay Savage": {
+      "totalCalls": 1,
+      "analyzedCalls": 1,
+      "scores": {
+        "professionalism": 2,
+        "clarity": 2,
+        "empathy": 2,
+        "listening": 2,
+        "deEscalation": 2
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "100.0",
+      "overallScore": "0.00",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Unclear and disjointed communication",
+          "count": 1
+        },
+        {
+          "issue": "Inability to address the customer's issue",
+          "count": 1
+        },
+        {
+          "issue": "Lack of professionalism and focus",
+          "count": 1
+        }
+      ],
+      "commonStrengths": []
+    },
+    "Maria Hernandez": {
+      "totalCalls": 602,
+      "analyzedCalls": 92,
+      "scores": {
+        "professionalism": 3.48,
+        "clarity": 3.4,
+        "empathy": 3.27,
+        "listening": 3.41,
+        "deEscalation": 2.44
+      },
+      "frustrationCaused": 23,
+      "frustrationRate": "25.0",
+      "overallScore": "2.76",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Some technical issues with the computer system",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication at times",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear explanations or solutions",
+          "count": 1
+        },
+        {
+          "issue": "Inconsistent use of first name only policy",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Maria Ondoy": {
+      "totalCalls": 398,
+      "analyzedCalls": 99,
+      "scores": {
+        "professionalism": 3.72,
+        "clarity": 3.51,
+        "empathy": 3.3,
+        "listening": 3.51,
+        "deEscalation": 2.75
+      },
+      "frustrationCaused": 19,
+      "frustrationRate": "19.2",
+      "overallScore": "3.03",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Difficulty understanding customer's inputs",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not successfully transfer the call, which led to the customer having to navigate the automated system multiple times",
+          "count": 1
+        },
+        {
+          "issue": "The agent's instructions were not clear enough for the customer to successfully verify their account",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear explanations or troubleshooting steps",
+          "count": 1
+        },
+        {
+          "issue": "Unclear instructions for account verification",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Greeted the customer politely",
+          "count": 2
+        }
+      ]
+    },
+    "Maria Reyes": {
+      "totalCalls": 284,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.8,
+        "clarity": 3.77,
+        "empathy": 3.54,
+        "listening": 3.73,
+        "deEscalation": 3
+      },
+      "frustrationCaused": 15,
+      "frustrationRate": "15.5",
+      "overallScore": "3.30",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear on the specific details of the refund and charges",
+          "count": 1
+        },
+        {
+          "issue": "The agent put the customer on hold multiple times without explanation, which could be frustrating",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not handle the customer's frustration well, as evidenced by the customer being put on hold repeatedly without resolution.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were not very clear or empathetic, which could have contributed to the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent provided unclear and confusing information about the payment process, which caused the customer to become suspicious and frustrated.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Remained calm and professional despite the customer's frustration",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Mariana Mondragon": {
+      "totalCalls": 116,
+      "analyzedCalls": 63,
+      "scores": {
+        "professionalism": 3.97,
+        "clarity": 3.87,
+        "empathy": 3.86,
+        "listening": 3.92,
+        "deEscalation": 3.4
+      },
+      "frustrationCaused": 4,
+      "frustrationRate": "6.3",
+      "overallScore": "3.71",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent did not handle the customer's frustration well, causing further escalation",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were brief and lacked clarity",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate strong listening skills or empathy towards the customer's concerns",
+          "count": 1
+        },
+        {
+          "issue": "Unclear explanation of escrow account and payment options",
+          "count": 1
+        },
+        {
+          "issue": "The agent's tone and language came across as somewhat dismissive and unhelpful, which likely contributed to the customer's frustration.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Checked if the customer needed anything else",
+          "count": 3
+        }
+      ]
+    },
+    "Marianne Rios": {
+      "totalCalls": 429,
+      "analyzedCalls": 89,
+      "scores": {
+        "professionalism": 3.73,
+        "clarity": 3.66,
+        "empathy": 3.53,
+        "listening": 3.64,
+        "deEscalation": 2.5
+      },
+      "frustrationCaused": 13,
+      "frustrationRate": "14.6",
+      "overallScore": "3.18",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 4
+        },
+        {
+          "issue": "Inability to understand customer",
+          "count": 2
+        },
+        {
+          "issue": "Inability to understand or address the customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not directly address the customer's concerns about the legitimacy of the letter received",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were somewhat vague and did not provide clear explanations",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Maintained a polite and friendly tone throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Maintained a polite and professional tone throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a polite and courteous tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Marquisha Kennedy": {
+      "totalCalls": 249,
+      "analyzedCalls": 86,
+      "scores": {
+        "professionalism": 3.93,
+        "clarity": 3.9,
+        "empathy": 3.84,
+        "listening": 3.87,
+        "deEscalation": 3.27
+      },
+      "frustrationCaused": 8,
+      "frustrationRate": "9.3",
+      "overallScore": "3.61",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "Confusion over which department the customer was calling",
+          "count": 1
+        },
+        {
+          "issue": "Difficulty understanding the customer's requests",
+          "count": 1
+        },
+        {
+          "issue": "Unclear on the specifics of the loan and insurance process",
+          "count": 1
+        },
+        {
+          "issue": "Could not provide a clear solution",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Checked if the customer needed any further assistance",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the interaction",
+          "count": 2
+        },
+        {
+          "strength": "Maintained a calm and professional tone throughout the call",
+          "count": 2
+        }
+      ]
+    },
+    "Marvin Molojedo": {
+      "totalCalls": 400,
+      "analyzedCalls": 96,
+      "scores": {
+        "professionalism": 3.7,
+        "clarity": 3.51,
+        "empathy": 3.27,
+        "listening": 3.5,
+        "deEscalation": 2.67
+      },
+      "frustrationCaused": 22,
+      "frustrationRate": "22.9",
+      "overallScore": "2.93",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of empathy and active listening",
+          "count": 2
+        },
+        {
+          "issue": "Limited access to escrow information",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication and explanations",
+          "count": 1
+        },
+        {
+          "issue": "Excessive hold time without updates",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to clearly understand and address the customer's issue with making an online payment",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "Apologized for the long wait and acknowledged the customer's patience",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a professional tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Maybelyn Macatangay": {
+      "totalCalls": 594,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.74,
+        "clarity": 3.61,
+        "empathy": 3.52,
+        "listening": 3.65,
+        "deEscalation": 2.85
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.4",
+      "overallScore": "3.24",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Struggled to locate the customer's account information",
+          "count": 1
+        },
+        {
+          "issue": "Provided unclear and confusing instructions for making the payment",
+          "count": 1
+        },
+        {
+          "issue": "Failed to effectively de-escalate the customer's frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to clearly explain the discrepancy between the customer's online account and the information the agent had access to.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's response about the website being updated was unclear and did not provide a satisfactory explanation.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "Remained calm and polite throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "Melissa Korte": {
+      "totalCalls": 86,
+      "analyzedCalls": 44,
+      "scores": {
+        "professionalism": 4.41,
+        "clarity": 4.43,
+        "empathy": 4.34,
+        "listening": 4.41,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "4.34",
+      "tier": "exemplary",
+      "commonIssues": [
+        {
+          "issue": "Mailbox was full and unable to accept messages",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clarity in explaining the impact on credit score",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was very professional and courteous throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and friendly throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional, courteous, and helpful throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "The agent quickly identified the issue and took steps to resolve it",
+          "count": 2
+        }
+      ]
+    },
+    "Nicte Munoz": {
+      "totalCalls": 395,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.78,
+        "clarity": 3.74,
+        "empathy": 3.65,
+        "listening": 3.74,
+        "deEscalation": 2.81
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.4",
+      "overallScore": "3.31",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Extremely poor communication and language skills",
+          "count": 2
+        },
+        {
+          "issue": "Lack of professionalism and customer service",
+          "count": 2
+        },
+        {
+          "issue": "The agent was not clear in communicating the timeline for the payoff statement, causing confusion for the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not fully address the customer's question about the payment method, leaving some uncertainty",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were somewhat disjointed and lacked a smooth flow of conversation",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 8
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 8
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 5
+        }
+      ]
+    },
+    "Nigel Roberts": {
+      "totalCalls": 33,
+      "analyzedCalls": 27,
+      "scores": {
+        "professionalism": 4.07,
+        "clarity": 4.07,
+        "empathy": 3.93,
+        "listening": 4.04,
+        "deEscalation": 4.6
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "3.7",
+      "overallScore": "4.04",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Unclear message left on voicemail",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 1
+        },
+        {
+          "issue": "Failure to establish rapport with the customer",
+          "count": 1
+        },
+        {
+          "issue": "Inability to handle the situation effectively",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "The agent demonstrated empathy and listened attentively to the customer's concerns.",
+          "count": 2
+        },
+        {
+          "strength": "The agent remained calm and professional throughout the call, even when the customer expressed frustration.",
+          "count": 1
+        },
+        {
+          "strength": "The agent actively listened to the customer's concerns and tried to understand the root of the issue.",
+          "count": 1
+        }
+      ]
+    },
+    "Patrick Mendoza": {
+      "totalCalls": 556,
+      "analyzedCalls": 100,
+      "scores": {
+        "professionalism": 3.58,
+        "clarity": 3.43,
+        "empathy": 3.2,
+        "listening": 3.44,
+        "deEscalation": 2.67
+      },
+      "frustrationCaused": 24,
+      "frustrationRate": "24.0",
+      "overallScore": "2.84",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent did not demonstrate strong empathy or attempt to de-escalate the customer's frustration",
+          "count": 2
+        },
+        {
+          "issue": "The agent had difficulty understanding the customer's request and seemed unsure of how to handle the situation",
+          "count": 1
+        },
+        {
+          "issue": "The agent put the customer on hold multiple times, which could have been frustrating",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were not always clear or helpful, and they did not demonstrate strong listening skills",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        }
+      ]
+    },
+    "Pauline Dela Cruz": {
+      "totalCalls": 396,
+      "analyzedCalls": 98,
+      "scores": {
+        "professionalism": 3.45,
+        "clarity": 3.24,
+        "empathy": 3.1,
+        "listening": 3.29,
+        "deEscalation": 2.48
+      },
+      "frustrationCaused": 37,
+      "frustrationRate": "37.8",
+      "overallScore": "2.42",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Did not effectively de-escalate the customer's frustration",
+          "count": 2
+        },
+        {
+          "issue": "Unclear and confusing responses",
+          "count": 1
+        },
+        {
+          "issue": "Inability to provide requested information",
+          "count": 1
+        },
+        {
+          "issue": "Failure to properly address the customer's needs",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not fully address the customer's concern about their credit being impacted by the late payment, even after the customer explicitly stated this was their concern",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent demonstrated empathy and listened attentively to the customer's concerns",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "Polite and courteous tone",
+          "count": 4
+        }
+      ]
+    },
+    "Perrjqueeniii Magaling": {
+      "totalCalls": 408,
+      "analyzedCalls": 96,
+      "scores": {
+        "professionalism": 3.84,
+        "clarity": 3.74,
+        "empathy": 3.69,
+        "listening": 3.77,
+        "deEscalation": 3.08
+      },
+      "frustrationCaused": 10,
+      "frustrationRate": "10.4",
+      "overallScore": "3.46",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 2
+        },
+        {
+          "issue": "The agent could have been more clear in explaining the situation and the next steps to resolve the issue",
+          "count": 1
+        },
+        {
+          "issue": "Language barrier made communication difficult",
+          "count": 1
+        },
+        {
+          "issue": "The agent seemed confused and disorganized, with multiple disconnected statements that did not clearly address the customer's needs.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not effectively handle the customer being on hold, and their responses indicated a lack of understanding of the situation.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and respectful throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Princess Bonde": {
+      "totalCalls": 8,
+      "analyzedCalls": 8,
+      "scores": {
+        "professionalism": 3.13,
+        "clarity": 3.13,
+        "empathy": 2.25,
+        "listening": 2.63,
+        "deEscalation": null
+      },
+      "frustrationCaused": 3,
+      "frustrationRate": "37.5",
+      "overallScore": "2.08",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "The agent did not properly identify the purpose of the call and seemed to be conducting a test rather than assisting the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were unclear and lacked clarity, causing confusion for the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate empathy or a willingness to help the customer, and the interaction felt impersonal",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not actively listen to the customer's needs and instead asked generic questions",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were brief and lacked empathy, which could have contributed to the customer's frustration",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 1
+        },
+        {
+          "strength": "The agent was clear in their communication and responded appropriately to the customer's questions",
+          "count": 1
+        },
+        {
+          "strength": "The agent demonstrated good listening skills and did not cause any frustration for the customer",
+          "count": 1
+        },
+        {
+          "strength": "Maintained a professional tone throughout the call",
+          "count": 1
+        },
+        {
+          "strength": "Responded appropriately to the customer's requests",
+          "count": 1
+        }
+      ]
+    },
+    "Racquel Gabriel": {
+      "totalCalls": 29,
+      "analyzedCalls": 29,
+      "scores": {
+        "professionalism": 3.59,
+        "clarity": 3.45,
+        "empathy": 3.28,
+        "listening": 3.34,
+        "deEscalation": 2.38
+      },
+      "frustrationCaused": 8,
+      "frustrationRate": "27.6",
+      "overallScore": "2.72",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "The agent did not effectively guide the customer through the verification process, leading to confusion and frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were not clear or helpful, causing the customer to become increasingly frustrated.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate empathy or attempt to de-escalate the situation, which further exacerbated the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent provided an inaccurate estimate of 22 weeks for the replacement check, which could frustrate the customer.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not handle the customer's frustration well, and seemed to struggle to provide clear and empathetic responses.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a polite and friendly tone throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "The agent provided clear and concise information to the customer",
+          "count": 2
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer",
+          "count": 2
+        },
+        {
+          "strength": "Greeted the customer politely",
+          "count": 2
+        }
+      ]
+    },
+    "Rodrigo Cunanan Jr": {
+      "totalCalls": 56,
+      "analyzedCalls": 53,
+      "scores": {
+        "professionalism": 3.4,
+        "clarity": 3.28,
+        "empathy": 3.09,
+        "listening": 3.3,
+        "deEscalation": 2.43
+      },
+      "frustrationCaused": 16,
+      "frustrationRate": "30.2",
+      "overallScore": "2.55",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "The agent was unclear and confusing in their responses, making it difficult for the customer to understand what was happening",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not properly address the customer's initial request and instead asked irrelevant questions",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate good listening skills or attempt to clarify the customer's needs",
+          "count": 1
+        },
+        {
+          "issue": "Lack of empathy in handling the customer",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication about the purpose of the call",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "Polite and courteous tone",
+          "count": 2
+        }
+      ]
+    },
+    "Rolando Velazquez": {
+      "totalCalls": 245,
+      "analyzedCalls": 98,
+      "scores": {
+        "professionalism": 3.41,
+        "clarity": 3.24,
+        "empathy": 3.14,
+        "listening": 3.29,
+        "deEscalation": 2.48
+      },
+      "frustrationCaused": 28,
+      "frustrationRate": "28.6",
+      "overallScore": "2.60",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 3
+        },
+        {
+          "issue": "The agent had difficulty understanding the customer's question and provided unclear and confusing responses.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's language and communication style were unprofessional, with inappropriate use of names and phrases.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not effectively address the customer's concerns or provide a clear resolution, which likely increased the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "Lack of clarity in explaining the first payment process",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "The agent demonstrated empathy and understanding towards the customer's situation",
+          "count": 2
+        }
+      ]
+    },
+    "Said Flores": {
+      "totalCalls": 13,
+      "analyzedCalls": 11,
+      "scores": {
+        "professionalism": 4,
+        "clarity": 3.91,
+        "empathy": 3.91,
+        "listening": 4,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 0,
+      "frustrationRate": "0.0",
+      "overallScore": "3.97",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Mispronounced the customer's name",
+          "count": 1
+        },
+        {
+          "issue": "Provided a lot of detailed information without checking if the customer was available to receive it",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a direct phone number for the customer to reach back, which could make it difficult for the customer to follow up",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 2
+        },
+        {
+          "strength": "Addressed the customer's concern about the payment processing status",
+          "count": 1
+        },
+        {
+          "strength": "Provided clear and concise information about the timeline for the payment to be processed",
+          "count": 1
+        },
+        {
+          "strength": "Confirmed the customer's understanding and asked if there was anything else they could assist with",
+          "count": 1
+        },
+        {
+          "strength": "Maintained a polite and friendly tone throughout the conversation",
+          "count": 1
+        }
+      ]
+    },
+    "Sandra Vargas": {
+      "totalCalls": 367,
+      "analyzedCalls": 96,
+      "scores": {
+        "professionalism": 3.67,
+        "clarity": 3.51,
+        "empathy": 3.45,
+        "listening": 3.56,
+        "deEscalation": 2.88
+      },
+      "frustrationCaused": 18,
+      "frustrationRate": "18.8",
+      "overallScore": "3.09",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "The agent was unclear about the reason for the payment reversal and did not provide a clear explanation to the customer",
+          "count": 1
+        },
+        {
+          "issue": "The agent put the customer on hold for an extended period of time, which likely increased the customer's frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate strong problem-solving skills or take ownership of the issue to resolve it effectively",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "Remained calm and professional despite the customer's frustration",
+          "count": 6
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 4
+        }
+      ]
+    },
+    "Shura Rodriguez": {
+      "totalCalls": 227,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.74,
+        "clarity": 3.66,
+        "empathy": 3.52,
+        "listening": 3.65,
+        "deEscalation": 2.83
+      },
+      "frustrationCaused": 15,
+      "frustrationRate": "16.1",
+      "overallScore": "3.21",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Did not initially see the faxed request, which caused some confusion",
+          "count": 1
+        },
+        {
+          "issue": "The agent was initially confused about the customer's name and had to ask for clarification multiple times.",
+          "count": 1
+        },
+        {
+          "issue": "The agent incorrectly stated that the company does not have the capability to fax payoff letters, despite the customer pointing out that the company's prompt says they can.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a clear timeline for when the payoff letter would be sent, and instead suggested the customer do it themselves on the website, which could be seen as passing the responsibility.",
+          "count": 1
+        },
+        {
+          "issue": "The agent put the customer on hold multiple times without providing updates, which could be frustrating for the customer.",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 9
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Tiffany Barksdale": {
+      "totalCalls": 349,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.67,
+        "clarity": 3.58,
+        "empathy": 3.47,
+        "listening": 3.56,
+        "deEscalation": 3.19
+      },
+      "frustrationCaused": 19,
+      "frustrationRate": "20.4",
+      "overallScore": "3.11",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "The agent struggled to communicate clearly and seemed disorganized, which likely contributed to the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not handle the customer's concerns about the payment amount effectively, leading to further confusion.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses were often vague and lacked the necessary details to address the customer's questions.",
+          "count": 1
+        },
+        {
+          "issue": "The agent incorrectly identified the customer as Michael Claiborne, when the customer's name is Nicky",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent maintained a professional and courteous tone throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Tony Song": {
+      "totalCalls": 4,
+      "analyzedCalls": 2,
+      "scores": {
+        "professionalism": 2.5,
+        "clarity": 2.5,
+        "empathy": 2,
+        "listening": 2,
+        "deEscalation": null
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "50.0",
+      "overallScore": "1.38",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "The agent did not properly address the customer's needs and instead focused on explaining a fake loan process.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's tone and responses were unprofessional and dismissive, which could have worsened the customer's frustration.",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not demonstrate active listening or attempt to understand the customer's concerns.",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication",
+          "count": 1
+        },
+        {
+          "issue": "Lack of direct responses",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Maintained a professional tone",
+          "count": 1
+        }
+      ]
+    },
+    "Tristina Thornton": {
+      "totalCalls": 33,
+      "analyzedCalls": 30,
+      "scores": {
+        "professionalism": 3.83,
+        "clarity": 3.77,
+        "empathy": 3.67,
+        "listening": 3.7,
+        "deEscalation": 4
+      },
+      "frustrationCaused": 1,
+      "frustrationRate": "3.3",
+      "overallScore": "3.72",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "The agent's response about the news being 'bad' or 'depending on how the customer takes it' could have been more tactful and reassuring.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses towards the end of the call became a bit disjointed and unclear",
+          "count": 1
+        },
+        {
+          "issue": "The customer initially had difficulty reaching a live agent",
+          "count": 1
+        },
+        {
+          "issue": "Mispronounced the customer's name",
+          "count": 1
+        },
+        {
+          "issue": "Stumbled over some details in the message",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent demonstrated empathy and listened attentively to the customer's concerns",
+          "count": 2
+        },
+        {
+          "strength": "The agent demonstrated empathy and understanding towards the customer's situation.",
+          "count": 2
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer",
+          "count": 2
+        }
+      ]
+    },
+    "Valeryyahaira Contreras": {
+      "totalCalls": 578,
+      "analyzedCalls": 100,
+      "scores": {
+        "professionalism": 3.8,
+        "clarity": 3.77,
+        "empathy": 3.6,
+        "listening": 3.71,
+        "deEscalation": 2.6
+      },
+      "frustrationCaused": 14,
+      "frustrationRate": "14.0",
+      "overallScore": "3.28",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Poor communication and language skills",
+          "count": 2
+        },
+        {
+          "issue": "The agent's responses were somewhat disjointed and lacked clarity at times, making it difficult for the customer to follow the conversation.",
+          "count": 1
+        },
+        {
+          "issue": "The agent's message was a bit unclear and could have been more concise. The agent also did not demonstrate strong listening skills when the customer was trying to interact with the voicemail system.",
+          "count": 1
+        },
+        {
+          "issue": "Extremely poor communication and language skills",
+          "count": 1
+        },
+        {
+          "issue": "Inability to understand the customer's needs",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 10
+        },
+        {
+          "strength": "Greeted the customer politely and professionally",
+          "count": 4
+        },
+        {
+          "strength": "The agent listened to the customer's concerns and addressed them appropriately",
+          "count": 4
+        },
+        {
+          "strength": "The agent demonstrated empathy and a willingness to assist the customer",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and helpful tone throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "Venus Arguelles": {
+      "totalCalls": 15,
+      "analyzedCalls": 13,
+      "scores": {
+        "professionalism": 2,
+        "clarity": 1.85,
+        "empathy": 1.85,
+        "listening": 1.92,
+        "deEscalation": 1.5
+      },
+      "frustrationCaused": 11,
+      "frustrationRate": "84.6",
+      "overallScore": "0.16",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 3
+        },
+        {
+          "issue": "Struggled to understand the customer's request",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address the customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "Failure to properly verify customer identity",
+          "count": 1
+        },
+        {
+          "issue": "Inability to handle customer frustration",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Remained calm and professional despite the customer's frustration",
+          "count": 1
+        },
+        {
+          "strength": "Provided clear instructions for the customer to access their account online",
+          "count": 1
+        },
+        {
+          "strength": "Ended the call politely and on a positive note",
+          "count": 1
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 1
+        },
+        {
+          "strength": "The agent listened attentively and asked for clarification when needed.",
+          "count": 1
+        }
+      ]
+    },
+    "Victor Dominguez": {
+      "totalCalls": 224,
+      "analyzedCalls": 92,
+      "scores": {
+        "professionalism": 3.23,
+        "clarity": 3.05,
+        "empathy": 3,
+        "listening": 3.07,
+        "deEscalation": 2.34
+      },
+      "frustrationCaused": 31,
+      "frustrationRate": "33.7",
+      "overallScore": "2.32",
+      "tier": "needs-coaching",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "Lack of understanding of the customer's needs",
+          "count": 2
+        },
+        {
+          "issue": "Unintelligible responses",
+          "count": 2
+        },
+        {
+          "issue": "The agent seemed unsure and struggled to gather the necessary information to address the customer's issue",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not clearly explain the reason for the payment rejection or provide a clear resolution",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was polite and responsive throughout the call",
+          "count": 3
+        },
+        {
+          "strength": "The agent was generally professional and courteous throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "Maintained a polite and helpful tone throughout the interaction",
+          "count": 2
+        }
+      ]
+    },
+    "Victor Noble": {
+      "totalCalls": 629,
+      "analyzedCalls": 94,
+      "scores": {
+        "professionalism": 3.89,
+        "clarity": 3.83,
+        "empathy": 3.77,
+        "listening": 3.83,
+        "deEscalation": 3.24
+      },
+      "frustrationCaused": 10,
+      "frustrationRate": "10.6",
+      "overallScore": "3.53",
+      "tier": "professional",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication at times",
+          "count": 2
+        },
+        {
+          "issue": "Lack of clear communication",
+          "count": 2
+        },
+        {
+          "issue": "Slight confusion around the date the payoff quote should be valid through",
+          "count": 1
+        },
+        {
+          "issue": "The agent could have been more clear in their responses and provided more specific details about the next steps they would take to resolve the issue",
+          "count": 1
+        },
+        {
+          "issue": "Provided incorrect information about business hours",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 8
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "Remained calm and professional despite the customer being on hold multiple times",
+          "count": 4
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 4
+        }
+      ]
+    },
+    "Vivian Laurencio": {
+      "totalCalls": 545,
+      "analyzedCalls": 97,
+      "scores": {
+        "professionalism": 3.84,
+        "clarity": 3.69,
+        "empathy": 3.54,
+        "listening": 3.69,
+        "deEscalation": 2.79
+      },
+      "frustrationCaused": 11,
+      "frustrationRate": "11.3",
+      "overallScore": "3.34",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "The agent was unable to directly connect the customer to a live representative in the escrow department, despite the customer's repeated requests",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not provide a clear explanation for why the customer could not be directly connected to a live representative",
+          "count": 1
+        },
+        {
+          "issue": "The agent's responses did not effectively de-escalate the customer's frustration",
+          "count": 1
+        },
+        {
+          "issue": "The agent was unable to confirm the information the customer provided about the payment address, which caused some uncertainty",
+          "count": 1
+        },
+        {
+          "issue": "The agent did not take a proactive approach to resolving the customer's issue and instead suggested transferring the call to another department",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 7
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 7
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 6
+        },
+        {
+          "strength": "The agent was polite and courteous throughout the call",
+          "count": 5
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 4
+        }
+      ]
+    },
+    "Yahir Enriquez": {
+      "totalCalls": 56,
+      "analyzedCalls": 53,
+      "scores": {
+        "professionalism": 3.6,
+        "clarity": 3.45,
+        "empathy": 3.28,
+        "listening": 3.53,
+        "deEscalation": 3.11
+      },
+      "frustrationCaused": 9,
+      "frustrationRate": "17.0",
+      "overallScore": "3.09",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Unclear communication",
+          "count": 2
+        },
+        {
+          "issue": "Lack of response to customer",
+          "count": 2
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 2
+        },
+        {
+          "issue": "Lack of confidence in responses",
+          "count": 1
+        },
+        {
+          "issue": "Unclear communication about the website functionality and the customer's ability to access certain features",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was professional and courteous throughout the call",
+          "count": 4
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 3
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 2
+        },
+        {
+          "strength": "The agent provided clear and concise responses to the customer's questions",
+          "count": 2
+        },
+        {
+          "strength": "The agent provided clear and concise information to the customer.",
+          "count": 2
+        }
+      ]
+    },
+    "Yarah Hernandez": {
+      "totalCalls": 315,
+      "analyzedCalls": 93,
+      "scores": {
+        "professionalism": 3.61,
+        "clarity": 3.51,
+        "empathy": 3.45,
+        "listening": 3.49,
+        "deEscalation": 2.5
+      },
+      "frustrationCaused": 21,
+      "frustrationRate": "22.6",
+      "overallScore": "2.92",
+      "tier": "adequate",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 3
+        },
+        {
+          "issue": "Unclear communication and instructions",
+          "count": 1
+        },
+        {
+          "issue": "Repeated requests for the same information",
+          "count": 1
+        },
+        {
+          "issue": "Lengthy hold times without updates",
+          "count": 1
+        },
+        {
+          "issue": "Failure to resolve the customer's issue in a timely manner",
+          "count": 1
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent was polite and professional throughout the call",
+          "count": 10
+        },
+        {
+          "strength": "The agent was polite and professional throughout the call.",
+          "count": 6
+        },
+        {
+          "strength": "The agent was professional and courteous throughout the call.",
+          "count": 5
+        },
+        {
+          "strength": "Greeted the customer politely and introduced themselves",
+          "count": 3
+        },
+        {
+          "strength": "Maintained a professional and courteous tone throughout the call",
+          "count": 3
+        }
+      ]
+    },
+    "Zakeer Ismail": {
+      "totalCalls": 94,
+      "analyzedCalls": 69,
+      "scores": {
+        "professionalism": 1.94,
+        "clarity": 1.8,
+        "empathy": 1.52,
+        "listening": 1.64,
+        "deEscalation": 1.6
+      },
+      "frustrationCaused": 63,
+      "frustrationRate": "91.3",
+      "overallScore": "0.00",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 24
+        },
+        {
+          "issue": "Unclear communication",
+          "count": 8
+        },
+        {
+          "issue": "Unclear and disjointed communication",
+          "count": 8
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 7
+        },
+        {
+          "issue": "Failure to address the customer's concerns",
+          "count": 5
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "Followed through on customer request",
+          "count": 1
+        },
+        {
+          "strength": "Attempted to guide the customer through the issue",
+          "count": 1
+        },
+        {
+          "strength": "The agent acknowledged the issue and said they would keep the customer posted",
+          "count": 1
+        },
+        {
+          "strength": "The agent is attempting to be helpful and responsive to the customer's requests.",
+          "count": 1
+        },
+        {
+          "strength": "Tried to create a solution and test it",
+          "count": 1
+        }
+      ]
+    },
+    "testA1 svcng": {
+      "totalCalls": 72,
+      "analyzedCalls": 39,
+      "scores": {
+        "professionalism": 1.85,
+        "clarity": 1.79,
+        "empathy": 1.59,
+        "listening": 1.74,
+        "deEscalation": 1.33
+      },
+      "frustrationCaused": 35,
+      "frustrationRate": "89.7",
+      "overallScore": "0.00",
+      "tier": "critical",
+      "commonIssues": [
+        {
+          "issue": "Lack of clear communication",
+          "count": 12
+        },
+        {
+          "issue": "Failure to address customer's needs",
+          "count": 5
+        },
+        {
+          "issue": "Lack of empathy and understanding",
+          "count": 4
+        },
+        {
+          "issue": "Unclear and disjointed communication",
+          "count": 4
+        },
+        {
+          "issue": "Failure to address customer's concerns",
+          "count": 3
+        }
+      ],
+      "commonStrengths": [
+        {
+          "strength": "The agent provided relevant information about the new features and functionality",
+          "count": 1
+        },
+        {
+          "strength": "The agent remained professional and did not worsen the customer's frustration",
+          "count": 1
+        },
+        {
+          "strength": "The agent was generally professional and provided clear instructions to the customer.",
+          "count": 1
+        },
+        {
+          "strength": "The agent did not cause or worsen any frustration from the customer.",
+          "count": 1
+        },
+        {
+          "strength": "The agent listened well and responded appropriately to the customer's inputs.",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

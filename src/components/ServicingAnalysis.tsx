@@ -15,9 +15,10 @@ import {
   AreaChart,
   Area,
 } from 'recharts';
-import { TrendingUp, TrendingDown, Calendar, BarChart3, PieChartIcon, Layers, MousePointer } from 'lucide-react';
+import { TrendingUp, TrendingDown, Calendar, BarChart3, PieChartIcon, Layers, MousePointer, Sparkles } from 'lucide-react';
 import type { DrillDownFilter } from '@/app/page';
 import { TicketModal } from './TicketModal';
+import { AdvancedCharts } from './AdvancedCharts';
 
 interface ServicingCategory {
   name: string;
@@ -71,19 +72,34 @@ interface ServicingAnalysisProps {
   onDrillDown?: (filter: DrillDownFilter) => void;
 }
 
+interface Ticket {
+  id: string;
+  key: string;
+  title: string;
+  status: string;
+  priority: string;
+  project: string;
+  assignee: string;
+  responseTime: number;
+  resolutionTime: number;
+  category: string;
+}
+
 export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProps) {
   const [data, setData] = useState<ServicingData | null>(null);
   const [loading, setLoading] = useState(true);
   const [timeView, setTimeView] = useState<TimeView>('weekly');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [allTickets, setAllTickets] = useState<Ticket[]>([]);
 
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalFilterType, setModalFilterType] = useState<'category' | 'project'>('category');
+  const [modalFilterType, setModalFilterType] = useState<'category' | 'project' | 'status'>('category');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
   useEffect(() => {
+    // Load stats
     fetch('/api/stats')
       .then((res) => res.json())
       .then((result) => {
@@ -93,6 +109,12 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
         setLoading(false);
       })
       .catch(() => setLoading(false));
+
+    // Load all tickets for advanced charts
+    fetch('/data/all-tickets.json')
+      .then((res) => res.json())
+      .then((tickets) => setAllTickets(tickets))
+      .catch((err) => console.error('Failed to load tickets:', err));
   }, []);
 
   if (loading) {
@@ -142,6 +164,14 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
     setModalTitle(`Category: ${categoryName}`);
     setModalFilterType('category');
     setModalFilterValue(categoryName);
+    setModalOpen(true);
+  };
+
+  // Handle advanced chart drill-down
+  const handleAdvancedDrillDown = (filterType: 'category' | 'project' | 'status', filterValue: string, title: string) => {
+    setModalTitle(title);
+    setModalFilterType(filterType);
+    setModalFilterValue(filterValue);
     setModalOpen(true);
   };
 
@@ -411,8 +441,27 @@ export default function ServicingAnalysis({ onDrillDown }: ServicingAnalysisProp
         </div>
       </div>
 
+      {/* Advanced Analytics Section */}
+      {allTickets.length > 0 && (
+        <div className="space-y-6">
+          {/* Section Header */}
+          <div className="flex items-center gap-3 pt-4">
+            <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600">
+              <Sparkles className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-white">Advanced Analytics</h2>
+              <p className="text-sm text-gray-400">Deep-dive visualizations for actionable insights</p>
+            </div>
+          </div>
+
+          {/* Advanced Charts */}
+          <AdvancedCharts tickets={allTickets} onDrillDown={handleAdvancedDrillDown} />
+        </div>
+      )}
+
       {/* Projects included */}
-      <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+      <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700 mt-6">
         <h3 className="text-white font-medium mb-4 flex items-center gap-2">
           Servicing Projects Included
           <span className="ml-auto text-xs text-gray-500 flex items-center gap-1">

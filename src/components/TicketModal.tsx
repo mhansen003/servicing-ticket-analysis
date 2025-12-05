@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { X, Search, Loader2 } from 'lucide-react';
+import { X, Search, Loader2, FileText, Calendar, User, Clock, Tag, AlertCircle, CheckCircle, AlertTriangle } from 'lucide-react';
 
 interface Ticket {
   id: string;
@@ -13,6 +13,28 @@ interface Ticket {
   assignee: string;
   created: string;
   category: string;
+  // Extended fields from full ticket data
+  ticket_description?: string;
+  ticket_reporter_name?: string;
+  ticket_reporter_email?: string;
+  assigned_user_email?: string;
+  ticket_updated_at_utc?: string;
+  ticket_type?: string;
+  first_response_sent_utc?: string;
+  time_to_first_response_in_minutes?: number | null;
+  first_responder_name?: string;
+  latest_response_sent_utc?: string;
+  latest_responder_name?: string;
+  due_date_utc?: string;
+  sla_ever_breached?: string;
+  first_sla_breached_at_utc?: string;
+  is_ticket_complete?: string;
+  ticket_completed_at_utc?: string;
+  time_to_resolution_in_minutes?: number | null;
+  ticket_tags?: string;
+  custom_fields?: string;
+  org_name?: string;
+  org_status_name?: string;
 }
 
 // Extended filter for heatmap drill-down
@@ -73,6 +95,8 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [visibleCount, setVisibleCount] = useState(50);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [showRawData, setShowRawData] = useState(false);
   const tableContainerRef = useRef<HTMLDivElement>(null);
   const BATCH_SIZE = 50;
 
@@ -278,12 +302,19 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
           </div>
         </div>
 
-        {/* Table */}
-        <div
-          ref={tableContainerRef}
-          onScroll={handleScroll}
-          className="flex-1 overflow-auto"
-        >
+        {/* Content Area: Table and Detail Panel */}
+        <div className="flex-1 flex overflow-hidden">
+          {/* Table Section */}
+          <div
+            className={`flex flex-col transition-all ${
+              selectedTicket ? 'w-1/2 border-r border-white/[0.08]' : 'w-full'
+            }`}
+          >
+            <div
+              ref={tableContainerRef}
+              onScroll={handleScroll}
+              className="flex-1 overflow-auto"
+            >
           {loading ? (
             <div className="flex items-center justify-center h-64">
               <Loader2 className="h-6 w-6 animate-spin text-blue-400 mx-auto" />
@@ -312,7 +343,15 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
                     </tr>
                   ) : (
                     visibleTickets.map((ticket) => (
-                      <tr key={ticket.id} className="hover:bg-white/[0.02] transition-colors">
+                      <tr
+                        key={ticket.id}
+                        onClick={() => setSelectedTicket(ticket)}
+                        className={`cursor-pointer transition-colors ${
+                          selectedTicket?.id === ticket.id
+                            ? 'bg-blue-500/10'
+                            : 'hover:bg-white/[0.02]'
+                        }`}
+                      >
                         <td className="px-4 py-3 text-sm font-mono text-blue-400">
                           {ticket.key}
                         </td>
@@ -363,19 +402,333 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
               )}
             </>
           )}
-        </div>
+            </div>
 
-        {/* Scroll Status Bar */}
-        {!loading && filteredTickets.length > 0 && (
-          <div className="flex items-center justify-between px-6 py-2 border-t border-white/[0.06] bg-[#0a0e17]/50">
-            <span className="text-xs text-gray-500">
-              Showing {visibleTickets.length.toLocaleString()} of {filteredTickets.length.toLocaleString()} tickets
-            </span>
-            {hasMore && (
-              <span className="text-xs text-gray-500">Scroll down to load more</span>
+            {/* Scroll Status Bar */}
+            {!loading && filteredTickets.length > 0 && (
+              <div className="flex items-center justify-between px-6 py-2 border-t border-white/[0.06] bg-[#0a0e17]/50">
+                <span className="text-xs text-gray-500">
+                  Showing {visibleTickets.length.toLocaleString()} of {filteredTickets.length.toLocaleString()} tickets
+                </span>
+                {hasMore && (
+                  <span className="text-xs text-gray-500">Scroll down to load more</span>
+                )}
+              </div>
             )}
           </div>
-        )}
+
+          {/* Ticket Detail Panel */}
+          {selectedTicket && (
+            <div className="w-1/2 flex flex-col overflow-hidden">
+              {/* Detail Header */}
+              <div className="p-4 border-b border-white/[0.08] bg-[#131a29]">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-lg font-semibold text-white">
+                    Ticket Details
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setSelectedTicket(null);
+                      setShowRawData(false);
+                    }}
+                    className="p-1 rounded hover:bg-white/[0.05]"
+                  >
+                    <X className="h-4 w-4 text-gray-400" />
+                  </button>
+                </div>
+
+                {/* Ticket Key and Title */}
+                <div className="mb-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-sm font-mono text-blue-400">{selectedTicket.key}</span>
+                    <span className={`px-2 py-0.5 text-xs rounded-full ${
+                      priorityColors[selectedTicket.priority] || 'bg-gray-500/20 text-gray-400'
+                    }`}>
+                      {selectedTicket.priority}
+                    </span>
+                    <span className="px-2 py-0.5 text-xs rounded-full bg-white/[0.06] text-gray-300">
+                      {selectedTicket.status}
+                    </span>
+                  </div>
+                  <h4 className="text-base font-medium text-white">{selectedTicket.title}</h4>
+                </div>
+
+                {/* Quick Metadata */}
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4 text-gray-500" />
+                    <span className="text-gray-400">Assignee:</span>
+                    <span className="text-white truncate">{selectedTicket.assignee || 'Unassigned'}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4 text-gray-500" />
+                    <span className="text-gray-400">Created:</span>
+                    <span className="text-white">{formatDate(selectedTicket.created)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tabs: Details / Raw Data */}
+              <div className="flex border-b border-white/[0.08]">
+                <button
+                  onClick={() => setShowRawData(false)}
+                  className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+                    !showRawData
+                      ? 'text-blue-400 border-b-2 border-blue-400'
+                      : 'text-gray-400 hover:text-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Details
+                  </div>
+                </button>
+                <button
+                  onClick={() => setShowRawData(true)}
+                  className={`flex-1 px-4 py-2 text-sm font-medium transition-colors ${
+                    showRawData
+                      ? 'text-blue-400 border-b-2 border-blue-400'
+                      : 'text-gray-400 hover:text-gray-300'
+                  }`}
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <Tag className="h-4 w-4" />
+                    Raw Data
+                  </div>
+                </button>
+              </div>
+
+              {/* Scrollable Content */}
+              <div className="flex-1 overflow-y-auto p-4">
+                {!showRawData ? (
+                  <div className="space-y-4">
+                    {/* Description */}
+                    {selectedTicket.ticket_description && (
+                      <div className="bg-[#1a1f2e] rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <FileText className="h-4 w-4 text-blue-400" />
+                          <h5 className="text-sm font-semibold text-white">Description</h5>
+                        </div>
+                        <div className="text-sm text-gray-300 whitespace-pre-wrap">
+                          {selectedTicket.ticket_description}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Project & Organization */}
+                    <div className="bg-[#1a1f2e] rounded-lg p-4">
+                      <h5 className="text-sm font-semibold text-white mb-3">Project Information</h5>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Project:</span>
+                          <span className="text-white">{selectedTicket.project}</span>
+                        </div>
+                        {selectedTicket.ticket_type && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Type:</span>
+                            <span className="text-white">{selectedTicket.ticket_type}</span>
+                          </div>
+                        )}
+                        {selectedTicket.category && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Category:</span>
+                            <span className="text-white">{selectedTicket.category}</span>
+                          </div>
+                        )}
+                        {selectedTicket.org_name && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Organization:</span>
+                            <span className="text-white">{selectedTicket.org_name}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* People */}
+                    <div className="bg-[#1a1f2e] rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <User className="h-4 w-4 text-blue-400" />
+                        <h5 className="text-sm font-semibold text-white">People</h5>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        {selectedTicket.ticket_reporter_name && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Reporter:</span>
+                            <span className="text-white">{selectedTicket.ticket_reporter_name}</span>
+                          </div>
+                        )}
+                        {selectedTicket.ticket_reporter_email && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Reporter Email:</span>
+                            <span className="text-white text-xs">{selectedTicket.ticket_reporter_email}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Assignee:</span>
+                          <span className="text-white">{selectedTicket.assignee || 'Unassigned'}</span>
+                        </div>
+                        {selectedTicket.assigned_user_email && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Assignee Email:</span>
+                            <span className="text-white text-xs">{selectedTicket.assigned_user_email}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Timeline */}
+                    <div className="bg-[#1a1f2e] rounded-lg p-4">
+                      <div className="flex items-center gap-2 mb-3">
+                        <Clock className="h-4 w-4 text-blue-400" />
+                        <h5 className="text-sm font-semibold text-white">Timeline</h5>
+                      </div>
+                      <div className="space-y-2 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-400">Created:</span>
+                          <span className="text-white">{formatDate(selectedTicket.created)}</span>
+                        </div>
+                        {selectedTicket.ticket_updated_at_utc && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Last Updated:</span>
+                            <span className="text-white">{formatDate(selectedTicket.ticket_updated_at_utc)}</span>
+                          </div>
+                        )}
+                        {selectedTicket.first_response_sent_utc && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">First Response:</span>
+                            <span className="text-white">{formatDate(selectedTicket.first_response_sent_utc)}</span>
+                          </div>
+                        )}
+                        {selectedTicket.time_to_first_response_in_minutes !== null && selectedTicket.time_to_first_response_in_minutes !== undefined && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Response Time:</span>
+                            <span className="text-white">
+                              {Math.round(selectedTicket.time_to_first_response_in_minutes)} min
+                            </span>
+                          </div>
+                        )}
+                        {selectedTicket.first_responder_name && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">First Responder:</span>
+                            <span className="text-white">{selectedTicket.first_responder_name}</span>
+                          </div>
+                        )}
+                        {selectedTicket.latest_response_sent_utc && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Latest Response:</span>
+                            <span className="text-white">{formatDate(selectedTicket.latest_response_sent_utc)}</span>
+                          </div>
+                        )}
+                        {selectedTicket.latest_responder_name && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Latest Responder:</span>
+                            <span className="text-white">{selectedTicket.latest_responder_name}</span>
+                          </div>
+                        )}
+                        {selectedTicket.due_date_utc && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Due Date:</span>
+                            <span className="text-white">{formatDate(selectedTicket.due_date_utc)}</span>
+                          </div>
+                        )}
+                        {selectedTicket.ticket_completed_at_utc && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Completed:</span>
+                            <span className="text-white">{formatDate(selectedTicket.ticket_completed_at_utc)}</span>
+                          </div>
+                        )}
+                        {selectedTicket.time_to_resolution_in_minutes !== null && selectedTicket.time_to_resolution_in_minutes !== undefined && (
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Resolution Time:</span>
+                            <span className="text-white">
+                              {Math.round(selectedTicket.time_to_resolution_in_minutes)} min
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* SLA Information */}
+                    {selectedTicket.sla_ever_breached && (
+                      <div className="bg-[#1a1f2e] rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          {selectedTicket.sla_ever_breached === 'Yes' ? (
+                            <AlertTriangle className="h-4 w-4 text-orange-400" />
+                          ) : (
+                            <CheckCircle className="h-4 w-4 text-green-400" />
+                          )}
+                          <h5 className="text-sm font-semibold text-white">SLA Status</h5>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-400">Ever Breached:</span>
+                            <span className={selectedTicket.sla_ever_breached === 'Yes' ? 'text-orange-400' : 'text-green-400'}>
+                              {selectedTicket.sla_ever_breached}
+                            </span>
+                          </div>
+                          {selectedTicket.first_sla_breached_at_utc && (
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">First Breach:</span>
+                              <span className="text-white">{formatDate(selectedTicket.first_sla_breached_at_utc)}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tags */}
+                    {selectedTicket.ticket_tags && (
+                      <div className="bg-[#1a1f2e] rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Tag className="h-4 w-4 text-blue-400" />
+                          <h5 className="text-sm font-semibold text-white">Tags</h5>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          {selectedTicket.ticket_tags.split(',').map((tag, idx) => (
+                            <span
+                              key={idx}
+                              className="px-2 py-1 text-xs rounded-full bg-blue-500/20 text-blue-300"
+                            >
+                              {tag.trim()}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Custom Fields */}
+                    {selectedTicket.custom_fields && (
+                      <div className="bg-[#1a1f2e] rounded-lg p-4">
+                        <h5 className="text-sm font-semibold text-white mb-3">Custom Fields</h5>
+                        <pre className="text-xs text-gray-300 whitespace-pre-wrap overflow-x-auto">
+                          {selectedTicket.custom_fields}
+                        </pre>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  // Raw JSON Data
+                  <div className="bg-[#1a1f2e] rounded-lg p-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <h5 className="text-sm font-semibold text-white">Raw Ticket Data</h5>
+                      <button
+                        onClick={() => {
+                          navigator.clipboard.writeText(JSON.stringify(selectedTicket, null, 2));
+                        }}
+                        className="px-2 py-1 text-xs bg-blue-500/20 text-blue-300 rounded hover:bg-blue-500/30 transition-colors"
+                      >
+                        Copy JSON
+                      </button>
+                    </div>
+                    <pre className="text-xs text-gray-300 whitespace-pre-wrap overflow-x-auto font-mono bg-[#0a0e17] p-3 rounded border border-white/[0.08]">
+                      {JSON.stringify(selectedTicket, null, 2)}
+                    </pre>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

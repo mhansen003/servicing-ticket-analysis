@@ -135,10 +135,13 @@ export default function TranscriptsAnalysis() {
     new Set(['calendar', 'overview', 'topics', 'time', 'departments', 'agents'])
   );
 
+  // Calendar month navigation
+  const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
+
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all'>('all');
+  const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
   useEffect(() => {
@@ -262,7 +265,7 @@ export default function TranscriptsAnalysis() {
   };
 
   // Drill-down handlers
-  const openDrillDown = (filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all', filterValue: string, title: string) => {
+  const openDrillDown = (filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date', filterValue: string, title: string) => {
     setModalFilterType(filterType);
     setModalFilterValue(filterValue);
     setModalTitle(title);
@@ -385,6 +388,38 @@ export default function TranscriptsAnalysis() {
 
         {expandedSections.has('calendar') && (
           <div className="p-6 pt-0">
+            {/* Month Navigation */}
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={() => {
+                  const newMonth = new Date(calendarMonth);
+                  newMonth.setMonth(newMonth.getMonth() - 1);
+                  setCalendarMonth(newMonth);
+                }}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg transition-colors text-sm text-gray-300"
+              >
+                <ChevronDown className="h-4 w-4 rotate-90" />
+                Previous
+              </button>
+              <div className="text-lg font-semibold text-white">
+                {calendarMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              </div>
+              <button
+                onClick={() => {
+                  const newMonth = new Date(calendarMonth);
+                  newMonth.setMonth(newMonth.getMonth() + 1);
+                  if (newMonth <= new Date()) {
+                    setCalendarMonth(newMonth);
+                  }
+                }}
+                disabled={new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 1) > new Date()}
+                className="flex items-center gap-2 px-3 py-2 bg-gray-800/50 hover:bg-gray-700/50 rounded-lg transition-colors text-sm text-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+                <ChevronDown className="h-4 w-4 -rotate-90" />
+              </button>
+            </div>
+
             {/* Legend */}
             <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
               <div className="flex items-center gap-1">
@@ -411,16 +446,21 @@ export default function TranscriptsAnalysis() {
             </div>
             <div className="grid grid-cols-7 gap-2">
               {(() => {
-                // Generate calendar cells for the date range
+                // Generate calendar cells for the selected month
                 const sortedDays = [...stats.dailyTrends].sort((a, b) => a.date.localeCompare(b.date));
                 if (sortedDays.length === 0) return null;
 
-                const startDate = new Date(sortedDays[0].date);
-                const endDate = new Date(sortedDays[sortedDays.length - 1].date);
+                // Calculate start and end of selected month
+                const monthStart = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth(), 1);
+                const monthEnd = new Date(calendarMonth.getFullYear(), calendarMonth.getMonth() + 1, 0);
 
-                // Adjust start to beginning of week
-                const calendarStart = new Date(startDate);
+                // Adjust to beginning of week for calendar grid
+                const calendarStart = new Date(monthStart);
                 calendarStart.setDate(calendarStart.getDate() - calendarStart.getDay());
+
+                // Adjust to end of week for calendar grid
+                const calendarEnd = new Date(monthEnd);
+                calendarEnd.setDate(calendarEnd.getDate() + (6 - calendarEnd.getDay()));
 
                 const cells = [];
                 const dayMap = new Map(sortedDays.map(d => [d.date, d]));
@@ -455,13 +495,16 @@ export default function TranscriptsAnalysis() {
                 };
 
                 const currentDate = new Date(calendarStart);
-                while (currentDate <= endDate || currentDate.getDay() !== 0) {
+                while (currentDate <= calendarEnd) {
                   // Use local date formatting to avoid timezone issues
                   const year = currentDate.getFullYear();
                   const month = String(currentDate.getMonth() + 1).padStart(2, '0');
                   const day = String(currentDate.getDate()).padStart(2, '0');
                   const dateStr = `${year}-${month}-${day}`;
                   const dayData = dayMap.get(dateStr);
+
+                  // Check if this day is in the current calendar month
+                  const isCurrentMonth = currentDate.getMonth() === calendarMonth.getMonth();
 
                   if (dayData) {
                     const total = dayData.total;
@@ -473,12 +516,16 @@ export default function TranscriptsAnalysis() {
                     cells.push(
                       <button
                         key={dateStr}
-                        onClick={() => openDrillDown('all', dateStr, `Calls on ${formatDate(dateStr)}`)}
-                        className="bg-gray-800/50 rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[80px] flex flex-col"
+                        onClick={() => openDrillDown('date', dateStr, `Calls on ${formatDate(dateStr)}`)}
+                        className={`rounded-lg p-1.5 hover:ring-2 hover:ring-blue-400 transition-all relative group min-h-[80px] flex flex-col ${
+                          isCurrentMonth ? 'bg-gray-800/50' : 'bg-gray-900/30 opacity-40'
+                        }`}
                         title={`${formatDate(dateStr)}: ${total} calls`}
                       >
                         {/* Date label */}
-                        <span className="text-[10px] text-gray-400 font-medium">{currentDate.getDate()}</span>
+                        <span className={`text-[10px] font-medium ${isCurrentMonth ? 'text-gray-400' : 'text-gray-600'}`}>
+                          {currentDate.getDate()}
+                        </span>
 
                         {/* Mini sparkline chart */}
                         <div className="flex-1 w-full">
@@ -537,9 +584,18 @@ export default function TranscriptsAnalysis() {
                       </button>
                     );
                   } else {
-                    // Empty cell for days outside range
+                    // Empty cell for days without data
                     cells.push(
-                      <div key={dateStr} className="bg-gray-800/20 rounded-lg min-h-[80px]"></div>
+                      <div
+                        key={dateStr}
+                        className={`rounded-lg p-1.5 min-h-[80px] flex flex-col ${
+                          isCurrentMonth ? 'bg-gray-900/20' : 'bg-gray-900/10 opacity-20'
+                        }`}
+                      >
+                        <span className={`text-[10px] font-medium ${isCurrentMonth ? 'text-gray-600' : 'text-gray-700'}`}>
+                          {currentDate.getDate()}
+                        </span>
+                      </div>
                     );
                   }
 

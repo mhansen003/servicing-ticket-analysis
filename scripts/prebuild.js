@@ -32,8 +32,10 @@ const SERVICING_PROJECTS = ['Servicing Help', 'Servicing Escalations WG', 'ServA
 // Filter valid tickets AND only servicing projects
 const allValidTickets = result.data.filter((ticket) => {
   if (!ticket.ticket_created_at_utc) return false;
-  if (ticket.ticket_created_at_utc.length > 30) return false;
-  if (!ticket.ticket_created_at_utc.includes('-')) return false;
+  // Convert to string if it's not already (handles both dynamicTyping true/false)
+  const dateStr = String(ticket.ticket_created_at_utc);
+  if (dateStr.length > 30) return false;
+  if (!dateStr.includes('-')) return false;
   return true;
 });
 

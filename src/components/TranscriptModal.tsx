@@ -831,44 +831,75 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                         No conversation data available
                       </div>
                     ) : (
-                      selectedTranscript.conversation.map((msg, idx) => {
-                        const sentiment = messageSentiments[idx];
-                        const sentimentScore = sentiment?.score ?? 0;
-                        const emotion = sentiment?.emotion ?? '';
+                      (() => {
+                        // Extract customer name from conversation (usually in first few messages)
+                        let customerName = 'Customer';
+                        const agentName = selectedTranscript.agentName?.split(',')[0]?.trim() || 'Agent';
 
-                        // Get the style based on sentiment
-                        const messageStyle = messageSentiments.length > 0
-                          ? getMessageSentimentStyle(sentimentScore, msg.role)
-                          : msg.role === 'agent'
-                            ? 'bg-blue-500/20 text-blue-100'
-                            : 'bg-[#1a1f2e] text-gray-200';
+                        // Look for customer name in first 10 messages where they introduce themselves
+                        for (let i = 0; i < Math.min(10, selectedTranscript.conversation.length); i++) {
+                          const msg = selectedTranscript.conversation[i];
+                          if (msg.role === 'customer') {
+                            const text = msg.text.toLowerCase();
+                            // Common patterns: "this is X", "yes, X", "my name is X"
+                            const namePatterns = [
+                              /(?:this is|i'm|i am|my name is|speaking)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                              /^yes,?\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)/i,
+                              /^([A-Z][a-z]+\s+[A-Z][a-z]+)$/,
+                            ];
 
-                        return (
-                          <div
-                            key={idx}
-                            className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
-                          >
+                            for (const pattern of namePatterns) {
+                              const match = msg.text.match(pattern);
+                              if (match && match[1]) {
+                                customerName = match[1].trim();
+                                break;
+                              }
+                            }
+                            if (customerName !== 'Customer') break;
+                          }
+                        }
+
+                        return selectedTranscript.conversation.map((msg, idx) => {
+                          const sentiment = messageSentiments[idx];
+                          const sentimentScore = sentiment?.score ?? 0;
+                          const emotion = sentiment?.emotion ?? '';
+
+                          // Get the style based on sentiment
+                          const messageStyle = messageSentiments.length > 0
+                            ? getMessageSentimentStyle(sentimentScore, msg.role)
+                            : msg.role === 'agent'
+                              ? 'bg-blue-500/20 text-blue-100'
+                              : 'bg-[#1a1f2e] text-gray-200';
+
+                          const displayName = msg.role === 'agent' ? agentName : customerName;
+
+                          return (
                             <div
-                              className={`max-w-[85%] rounded-2xl px-3 py-2 transition-all ${messageStyle} ${
-                                msg.role === 'agent' ? 'rounded-br-md' : 'rounded-bl-md'
-                              }`}
+                              key={idx}
+                              className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
                             >
-                              <div className="flex items-center justify-between gap-2 mb-1">
-                                <p className="text-xs font-medium opacity-60">
-                                  {msg.role === 'agent' ? 'Agent' : 'Customer'}
-                                </p>
-                                {/* Show emotion badge for all messages with sentiment */}
-                                {emotion && messageSentiments.length > 0 && (
-                                  <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${getEmotionBadgeStyle(emotion)}`}>
-                                    {emotion}
-                                  </span>
-                                )}
+                              <div
+                                className={`max-w-[85%] rounded-2xl px-3 py-2 transition-all ${messageStyle} ${
+                                  msg.role === 'agent' ? 'rounded-br-md' : 'rounded-bl-md'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-2 mb-1">
+                                  <p className="text-xs font-medium opacity-60">
+                                    {displayName}
+                                  </p>
+                                  {/* Show emotion badge for all messages with sentiment */}
+                                  {emotion && messageSentiments.length > 0 && (
+                                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full ${getEmotionBadgeStyle(emotion)}`}>
+                                      {emotion}
+                                    </span>
+                                  )}
+                                </div>
+                                <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                               </div>
-                              <p className="text-sm whitespace-pre-wrap">{msg.text}</p>
                             </div>
-                          </div>
-                        );
-                      })
+                          );
+                        });
+                      })()
                     )}
                   </div>
                 </div>
