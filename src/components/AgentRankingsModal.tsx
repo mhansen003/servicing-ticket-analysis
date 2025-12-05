@@ -329,8 +329,8 @@ export function AgentRankingsModal({
               </div>
             </div>
 
-            {/* Agent List */}
-            <div className="flex-1 overflow-y-auto p-3 space-y-2">
+            {/* Agent Grid */}
+            <div className="flex-1 overflow-y-auto p-4">
               {loading ? (
                 <div className="flex items-center justify-center h-48">
                   <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-500" />
@@ -341,7 +341,8 @@ export function AgentRankingsModal({
                   <p>No agents found</p>
                 </div>
               ) : (
-                displayedAgents.map((agent, idx) => (
+                <div className={`grid gap-4 ${selectedAgent ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
+                  {displayedAgents.map((agent) => (
                   <div
                     key={agent.name}
                     onClick={() => handleSelectAgent(agent)}
@@ -355,7 +356,8 @@ export function AgentRankingsModal({
                       onViewTranscripts={() => handleSelectAgent(agent)}
                     />
                   </div>
-                ))
+                  ))}
+                </div>
               )}
             </div>
           </div>

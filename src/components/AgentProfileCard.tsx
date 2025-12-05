@@ -134,36 +134,85 @@ export function AgentProfileCard({
   const TierIcon = tier.icon;
 
   if (compact) {
-    // Compact card for rankings list
+    // Rich tile card for rankings grid
     return (
       <div
-        className={`p-3 rounded-xl border ${tier.bgColor} ${tier.borderColor} hover:bg-white/[0.02] transition-all cursor-pointer`}
+        className={`p-4 rounded-xl border ${tier.bgColor} ${tier.borderColor} hover:scale-[1.02] hover:shadow-lg hover:shadow-black/20 transition-all cursor-pointer group`}
         onClick={() => onViewTranscripts?.(agent.name)}
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        {/* Header: Name + Tier Badge */}
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center gap-2">
             <div className={`p-2 rounded-lg ${tier.bgColor}`}>
-              <User className={`h-4 w-4 ${tier.iconColor}`} />
+              <User className={`h-5 w-5 ${tier.iconColor}`} />
             </div>
             <div>
-              <p className="font-medium text-white">{agent.name}</p>
-              <p className="text-xs text-gray-400">
-                {agent.department || 'Unknown'} • {agent.callCount} calls
-              </p>
+              <p className="font-semibold text-white group-hover:text-blue-300 transition-colors">{agent.name}</p>
+              <p className="text-xs text-gray-500">{agent.department || 'Unknown Dept'}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="text-right">
-              <p className={`text-lg font-semibold ${agent.sentimentScore >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-                {agent.sentimentScore > 0 ? '+' : ''}{agent.sentimentScore}
-              </p>
-              <p className="text-xs text-gray-500">Score</p>
-            </div>
-            <div className={`px-2 py-1 rounded-lg ${tier.bgColor} ${tier.borderColor} border`}>
-              <TierIcon className={`h-4 w-4 ${tier.iconColor}`} />
-            </div>
-            <ChevronRight className="h-4 w-4 text-gray-500" />
+          <div className={`flex items-center gap-1.5 px-2 py-1 rounded-lg ${tier.bgColor} ${tier.borderColor} border`}>
+            <TierIcon className={`h-3.5 w-3.5 ${tier.iconColor}`} />
+            <span className={`text-xs font-medium ${tier.textColor}`}>{tier.label}</span>
           </div>
+        </div>
+
+        {/* Score + Key Metrics Row */}
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="text-center p-2 bg-[#0f1420] rounded-lg">
+            <p className={`text-xl font-bold ${agent.sentimentScore >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              {agent.sentimentScore > 0 ? '+' : ''}{agent.sentimentScore}
+            </p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Score</p>
+          </div>
+          <div className="text-center p-2 bg-[#0f1420] rounded-lg">
+            <p className="text-xl font-bold text-white">{agent.callCount}</p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Calls</p>
+          </div>
+          <div className="text-center p-2 bg-[#0f1420] rounded-lg">
+            <p className="text-xl font-bold text-white">{formatDuration(agent.avgDuration).replace(' ', '')}</p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Avg</p>
+          </div>
+        </div>
+
+        {/* Sentiment Bar */}
+        <div className="mb-2">
+          <div className="flex items-center h-2 rounded-full overflow-hidden bg-[#0f1420]">
+            <div
+              className="h-full bg-emerald-500 transition-all"
+              style={{ width: `${agent.positiveRate}%` }}
+            />
+            <div
+              className="h-full bg-gray-600"
+              style={{ width: `${agent.neutralRate}%` }}
+            />
+            <div
+              className="h-full bg-red-500 transition-all"
+              style={{ width: `${agent.negativeRate}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Sentiment Labels */}
+        <div className="flex justify-between text-[10px]">
+          <span className="flex items-center gap-1 text-emerald-400">
+            <ThumbsUp className="h-2.5 w-2.5" />
+            {agent.positiveRate}%
+          </span>
+          <span className="flex items-center gap-1 text-gray-500">
+            <Minus className="h-2.5 w-2.5" />
+            {agent.neutralRate}%
+          </span>
+          <span className="flex items-center gap-1 text-red-400">
+            <ThumbsDown className="h-2.5 w-2.5" />
+            {agent.negativeRate}%
+          </span>
+        </div>
+
+        {/* Click hint */}
+        <div className="mt-3 pt-2 border-t border-white/[0.06] flex items-center justify-center gap-1 text-[10px] text-gray-600 group-hover:text-blue-400 transition-colors">
+          <span>Click for full profile</span>
+          <ChevronRight className="h-3 w-3" />
         </div>
       </div>
     );
