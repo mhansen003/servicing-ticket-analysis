@@ -8,12 +8,14 @@ import {
   Brain,
   BarChart3,
   Phone,
+  Users,
 } from 'lucide-react';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import { InsightsPanel } from '@/components/InsightsPanel';
 import { DataTable } from '@/components/DataTable';
 import ServicingAnalysis from '@/components/ServicingAnalysis';
 import TranscriptsAnalysis from '@/components/TranscriptsAnalysis';
+import AgentsAnalysis from '@/components/AgentsAnalysis';
 
 // Drill-down filter interface for navigating from charts to raw data
 export interface DrillDownFilter {
@@ -60,7 +62,7 @@ interface DashboardData {
   trends?: Trends;
 }
 
-type TabType = 'overview' | 'insights' | 'data' | 'transcripts' | 'ai';
+type TabType = 'overview' | 'insights' | 'data' | 'transcripts' | 'agents' | 'ai';
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -128,6 +130,7 @@ export default function Dashboard() {
     { id: 'insights' as TabType, label: 'Insights', icon: Brain },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone },
+    { id: 'agents' as TabType, label: 'Agents', icon: Users },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
   ];
 
@@ -218,6 +221,8 @@ export default function Dashboard() {
         )}
 
         {activeTab === 'transcripts' && <TranscriptsAnalysis />}
+
+        {activeTab === 'agents' && <AgentsAnalysis />}
 
         {activeTab === 'ai' && (
           <div className="space-y-6">
