@@ -1,213 +1,205 @@
 {
   "stats": {
-    "totalTickets": 24687,
-    "completedTickets": 0,
-    "openTickets": 24687,
-    "avgResponseTimeMinutes": 2960,
-    "avgResolutionTimeMinutes": 5328,
-    "completionRate": 0
+    "totalTickets": 23167,
+    "completedTickets": 19716,
+    "openTickets": 3451,
+    "avgResponseTimeMinutes": 2983,
+    "avgResolutionTimeMinutes": 5329,
+    "completionRate": 85
   },
   "ticketsByMonth": [
     {
       "date": "2025-09",
-      "count": 9262
+      "count": 7771
     },
     {
       "date": "2025-10",
-      "count": 7901
+      "count": 7565
     },
     {
       "date": "2025-11",
-      "count": 6968
+      "count": 6877
     },
     {
       "date": "2025-12",
-      "count": 556
+      "count": 954
     }
   ],
   "projectBreakdown": [
     {
       "project": "Servicing Help",
-      "total": 20979,
-      "completed": 0,
-      "open": 20979,
-      "openRate": 100,
-      "avgResolutionHours": 87
-    },
-    {
-      "project": "ServApp Support",
-      "total": 1923,
-      "completed": 0,
-      "open": 1923,
-      "openRate": 100,
-      "avgResolutionHours": 0
+      "total": 21335,
+      "completed": 18174,
+      "open": 3161,
+      "openRate": 15,
+      "avgResolutionHours": 86
     },
     {
       "project": "CMG Servicing Oversight",
-      "total": 927,
-      "completed": 0,
-      "open": 927,
-      "openRate": 100,
+      "total": 954,
+      "completed": 748,
+      "open": 206,
+      "openRate": 22,
       "avgResolutionHours": 88
     },
     {
       "project": "Servicing Escalations WG",
-      "total": 858,
-      "completed": 0,
-      "open": 858,
-      "openRate": 100,
-      "avgResolutionHours": 140
+      "total": 878,
+      "completed": 794,
+      "open": 84,
+      "openRate": 10,
+      "avgResolutionHours": 143
     }
   ],
   "assigneeBreakdown": [
     {
       "email": "sdoherty@cmgfi.com",
       "name": "Doherty, Sam",
-      "total": 3660,
-      "completed": 0,
-      "open": 3660,
-      "openRate": 100,
-      "avgResolutionHours": 80
+      "total": 3765,
+      "completed": 3718,
+      "open": 47,
+      "openRate": 1,
+      "avgResolutionHours": 79
     },
     {
       "email": "jchaves@cmgfi.com",
       "name": "Chaves, Jackie",
-      "total": 2488,
-      "completed": 0,
-      "open": 2488,
-      "openRate": 100,
-      "avgResolutionHours": 60
+      "total": 2498,
+      "completed": 2302,
+      "open": 196,
+      "openRate": 8,
+      "avgResolutionHours": 64
     },
     {
       "email": "kvue@cmgfi.com",
       "name": "Vue, Ky",
-      "total": 1354,
-      "completed": 0,
-      "open": 1354,
-      "openRate": 100,
+      "total": 1371,
+      "completed": 1233,
+      "open": 138,
+      "openRate": 10,
       "avgResolutionHours": 109
     },
     {
       "email": "lmartin@cmgfi.com",
       "name": "Martin, Lauren",
       "total": 975,
-      "completed": 0,
-      "open": 975,
-      "openRate": 100,
+      "completed": 935,
+      "open": 40,
+      "openRate": 4,
       "avgResolutionHours": 114
     },
     {
       "email": "kschreiner@cmgfi.com",
       "name": "Schreiner, Katie",
-      "total": 878,
-      "completed": 0,
-      "open": 878,
-      "openRate": 100,
+      "total": 893,
+      "completed": 859,
+      "open": 34,
+      "openRate": 4,
       "avgResolutionHours": 129
     },
     {
       "email": "kmccallum@cmgfi.com",
       "name": "McCallum, Kristine",
-      "total": 783,
-      "completed": 0,
-      "open": 783,
-      "openRate": 100,
-      "avgResolutionHours": 178
-    },
-    {
-      "email": "cpinckney@cmgfi.com",
-      "name": "Pinckney, Christina",
-      "total": 656,
-      "completed": 0,
-      "open": 656,
-      "openRate": 100,
-      "avgResolutionHours": 92
+      "total": 796,
+      "completed": 741,
+      "open": 55,
+      "openRate": 7,
+      "avgResolutionHours": 182
     },
     {
       "email": "kristis@cmgfi.com",
       "name": "Smith, Kristi",
-      "total": 645,
-      "completed": 0,
-      "open": 645,
-      "openRate": 100,
-      "avgResolutionHours": 76
+      "total": 671,
+      "completed": 670,
+      "open": 1,
+      "openRate": 0,
+      "avgResolutionHours": 72
     },
     {
-      "email": "duoy@cmgfi.com",
-      "name": "Yang, Duo",
-      "total": 586,
-      "completed": 0,
-      "open": 586,
-      "openRate": 100,
-      "avgResolutionHours": 95
+      "email": "cpinckney@cmgfi.com",
+      "name": "Pinckney, Christina",
+      "total": 660,
+      "completed": 638,
+      "open": 22,
+      "openRate": 3,
+      "avgResolutionHours": 92
     },
     {
       "email": "kwoodman@cmgfi.com",
       "name": "Woodman, Kiera",
-      "total": 585,
-      "completed": 0,
-      "open": 585,
-      "openRate": 100,
+      "total": 601,
+      "completed": 581,
+      "open": 20,
+      "openRate": 3,
       "avgResolutionHours": 45
+    },
+    {
+      "email": "duoy@cmgfi.com",
+      "name": "Yang, Duo",
+      "total": 599,
+      "completed": 574,
+      "open": 25,
+      "openRate": 4,
+      "avgResolutionHours": 94
     },
     {
       "email": "LMathis@cmgfi.com",
       "name": "Mathis, Laecene",
-      "total": 525,
-      "completed": 0,
-      "open": 525,
-      "openRate": 100,
-      "avgResolutionHours": 71
+      "total": 553,
+      "completed": 508,
+      "open": 45,
+      "openRate": 8,
+      "avgResolutionHours": 70
     },
     {
       "email": "jporter@cmgfi.com",
       "name": "Porter, Joe",
-      "total": 486,
-      "completed": 0,
-      "open": 486,
-      "openRate": 100,
+      "total": 489,
+      "completed": 476,
+      "open": 13,
+      "openRate": 3,
       "avgResolutionHours": 108
     },
     {
       "email": "mburnip@cmgfi.com",
       "name": "Burnip, Marlea",
-      "total": 400,
-      "completed": 0,
-      "open": 400,
-      "openRate": 100,
+      "total": 402,
+      "completed": 325,
+      "open": 77,
+      "openRate": 19,
       "avgResolutionHours": 147
     },
     {
       "email": "jond@cmgfi.com",
       "name": "Davis, Jon",
-      "total": 398,
-      "completed": 0,
-      "open": 398,
-      "openRate": 100,
+      "total": 399,
+      "completed": 378,
+      "open": 21,
+      "openRate": 5,
       "avgResolutionHours": 97
     },
     {
       "email": "nobrien@cmgfi.com",
       "name": "O'Brien, Noreen",
-      "total": 384,
-      "completed": 0,
-      "open": 384,
-      "openRate": 100,
+      "total": 389,
+      "completed": 324,
+      "open": 65,
+      "openRate": 17,
       "avgResolutionHours": 193
     }
   ],
   "statusBreakdown": [
     {
       "name": "Request Complete",
-      "value": 21785
+      "value": 22147
     },
     {
       "name": "New",
-      "value": 2287
+      "value": 373
     },
     {
       "name": "Assigned",
-      "value": 202
+      "value": 230
     },
     {
       "name": "Closed - Missing Info",
@@ -215,1428 +207,1415 @@
     },
     {
       "name": "In Progress",
-      "value": 127
+      "value": 121
     },
     {
       "name": "Reopened",
-      "value": 74
+      "value": 71
     },
     {
       "name": "Pending Internal Response",
-      "value": 36
+      "value": 53
     },
     {
       "name": "Pending External Response",
-      "value": 34
+      "value": 31
     },
     {
       "name": "More Borrower Info Requested",
-      "value": 6
-    },
-    {
-      "name": "Self Closed",
-      "value": 3
+      "value": 8
     }
   ],
   "priorityBreakdown": [
     {
       "name": "Medium",
-      "value": 24669
-    },
-    {
-      "name": "High",
-      "value": 8
+      "value": 23149
     },
     {
       "name": "Critical",
       "value": 10
+    },
+    {
+      "name": "High",
+      "value": 8
     }
   ],
   "ticketSample": [
     {
-      "ticket_key": "SH-104533",
-      "ticket_title": "Annual Escrow Account Disclosure Statement Inaccuracy",
+      "ticket_key": "SH-112429",
+      "ticket_title": "Hard Credit Inquiry",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-10-06T13:49:27.000000000",
-      "time_to_resolution_in_minutes": 3417,
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-11-07T19:31:24.000000000",
+      "time_to_resolution_in_minutes": 7516,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-104435",
-      "ticket_title": "Nelson Fernandez loan number 0179218250",
+      "ticket_key": "SH-112507",
+      "ticket_title": "Attn: Joe -  Loan Number 0818792210",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-10-03T21:37:50.000000000",
-      "time_to_resolution_in_minutes": 5547,
+      "assigned_user_name": "Porter, Joe",
+      "ticket_created_at_utc": "2025-11-07T21:34:10.000000000",
+      "time_to_resolution_in_minutes": 15668,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-104803",
-      "ticket_title": "Re: Cannot get anyone one the phone... double drafted my loan payment 9/4",
-      "ticket_status": "Reopened",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-10-06T20:41:18.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
-    },
-    {
-      "ticket_key": "SH-102505",
-      "ticket_title": "FW: Regarding Loan# 0163485915 (137 Elisha Dr) Kondai",
+      "ticket_key": "SH-95999",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-26T20:16:01.000000000",
-      "time_to_resolution_in_minutes": 8620,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-01T11:41:09.000000000",
+      "time_to_resolution_in_minutes": 753,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-112362",
-      "ticket_title": "Immediate Attention Required: Client Auto-Payment Issue",
-      "ticket_status": "Pending Internal Response",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-11-07T17:29:25.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
-    },
-    {
-      "ticket_key": "SH-97587",
-      "ticket_title": "RE: Payment issue",
+      "ticket_key": "SH-96002",
+      "ticket_title": "I cannot access my loan",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-05T18:06:16.000000000",
-      "time_to_resolution_in_minutes": 19975,
+      "assigned_user_name": "Davis, Jon",
+      "ticket_created_at_utc": "2025-09-01T13:06:17.000000000",
+      "time_to_resolution_in_minutes": 11,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97631",
-      "ticket_title": "FW: Ninteau 0140009499 -134 Palmer rd candia nh Fw: Sending Funds for Escrow Account",
+      "ticket_key": "SH-96003",
+      "ticket_title": "SRC VM – 9/1/2025 6:20:57 AM",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-05T19:26:33.000000000",
-      "time_to_resolution_in_minutes": 46206,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-01T13:21:51.000000000",
+      "time_to_resolution_in_minutes": 1409,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97989",
-      "ticket_title": "FW: Mortgage amount issue -- RTX53125 Afflerbach - 606 Ridgewood Dr",
+      "ticket_key": "SH-96004",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-08T18:39:40.000000000",
-      "time_to_resolution_in_minutes": 14601,
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-09-01T13:38:29.000000000",
+      "time_to_resolution_in_minutes": 5762,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98208",
-      "ticket_title": "FW: Account issues",
+      "ticket_key": "SH-96015",
+      "ticket_title": "Clarification on Partial Payment Options – CMG Loan #3000004741 - Albrecht",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-09T14:38:07.000000000",
-      "time_to_resolution_in_minutes": 32954,
+      "assigned_user_name": "Davis, Jon",
+      "ticket_created_at_utc": "2025-09-01T15:18:47.000000000",
+      "time_to_resolution_in_minutes": 4302,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97774",
-      "ticket_title": "15526 SE 169th Street",
+      "ticket_key": "SH-96010",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-06T15:45:17.000000000",
-      "time_to_resolution_in_minutes": 17625,
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-01T14:41:21.000000000",
+      "time_to_resolution_in_minutes": 4387,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-99298",
-      "ticket_title": "Loan 0152479796  Rebecca Truitt - Flood Insurance Renewal",
+      "ticket_key": "SE-4531",
+      "ticket_title": "RE: Recast Turchin--Urgent",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "McCallum, Kristine",
+      "ticket_created_at_utc": "2025-10-03T14:03:34.000000000",
+      "time_to_resolution_in_minutes": 66552,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-109607",
+      "ticket_title": "Bagwell, Blake",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-13T15:54:19.000000000",
-      "time_to_resolution_in_minutes": 27393,
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-10-29T14:35:16.000000000",
+      "time_to_resolution_in_minutes": 29127,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98787",
-      "ticket_title": "Loan 0139889380",
+      "ticket_key": "SO-8439",
+      "ticket_title": "Offer   0181149097**LPR**pid: 1801221 Addr: 6221 Moreton Pl Ocean Springs MS 39564",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Critical",
+      "project_name": "CMG Servicing Oversight",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-11-06T23:42:16.000000000",
+      "time_to_resolution_in_minutes": 17092,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96074",
+      "ticket_title": "Re: [Send Secure] 3000003383 Recast Conditional Approval Letter",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-11T13:29:43.000000000",
-      "time_to_resolution_in_minutes": 10234,
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-09-02T01:56:17.000000000",
+      "time_to_resolution_in_minutes": 2136,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-114686",
-      "ticket_title": "FW: Customer Issue with Double Payments",
-      "ticket_status": "Closed - Missing Info",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-11-18T14:40:36.000000000",
-      "time_to_resolution_in_minutes": 3219,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-102474",
-      "ticket_title": "FW: Tax question - Pinto RNE*87679",
+      "ticket_key": "SH-96078",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-26T18:52:54.000000000",
-      "time_to_resolution_in_minutes": 8156,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T05:32:35.000000000",
+      "time_to_resolution_in_minutes": 405,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-114633",
-      "ticket_title": "RE: Help !!!!     loan # is 0152531125",
-      "ticket_status": "In Progress",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-11-18T00:38:01.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
-    },
-    {
-      "ticket_key": "SH-112845",
-      "ticket_title": "RE: Immediate Attention Required: Client Auto-Payment Issue",
-      "ticket_status": "Pending Internal Response",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-11-10T19:17:42.000000000",
-      "time_to_resolution_in_minutes": null,
-      "is_ticket_complete": "No"
-    },
-    {
-      "ticket_key": "SH-98032",
-      "ticket_title": "RCE112075 - Janell Liban",
+      "ticket_key": "SH-96017",
+      "ticket_title": "RTX22986 Garza",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-08T19:46:58.000000000",
-      "time_to_resolution_in_minutes": 14377,
+      "assigned_user_name": "Davis, Jon",
+      "ticket_created_at_utc": "2025-09-01T15:35:36.000000000",
+      "time_to_resolution_in_minutes": 9901,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-99152",
-      "ticket_title": "File #2708363 - Hunt - 518 E Main St., Rogersville, TN 37857",
+      "ticket_key": "SH-96090",
+      "ticket_title": "KT Payment Conformation ",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-12T17:46:16.000000000",
-      "time_to_resolution_in_minutes": 8517,
+      "assigned_user_name": "Ervin, China",
+      "ticket_created_at_utc": "2025-09-02T13:15:17.000000000",
+      "time_to_resolution_in_minutes": 52,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-99031",
-      "ticket_title": "Removal of PMI",
+      "ticket_key": "SH-96096",
+      "ticket_title": "FW: Escrow - Toper RNN14398",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Boni, Justin",
-      "ticket_created_at_utc": "2025-09-12T13:03:11.000000000",
-      "time_to_resolution_in_minutes": 8812,
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T13:19:55.000000000",
+      "time_to_resolution_in_minutes": 14943,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-101515",
-      "ticket_title": "Re: Henze Gongola - 3000004571 - Servicing Portal Question",
+      "ticket_key": "SH-96118",
+      "ticket_title": "FW: Voice Mail alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-23T20:11:38.000000000",
-      "time_to_resolution_in_minutes": 2457,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T13:47:59.000000000",
+      "time_to_resolution_in_minutes": 15,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98830",
-      "ticket_title": "Portal Link",
+      "ticket_key": "SH-112236",
+      "ticket_title": "RE: RSC0000002203 Zuniga - 139 Vistawood Dr Charleston, SC 29414 (SH-103914)",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-11T15:04:58.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-07T13:43:39.000000000",
+      "time_to_resolution_in_minutes": 8581,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-110334",
-      "ticket_title": "Re: Payment Issues",
+      "ticket_key": "SH-96120",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-10-31T18:40:48.000000000",
-      "time_to_resolution_in_minutes": 10127,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-98232",
-      "ticket_title": "Confirmation Number/Instructions",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-09T15:28:29.000000000",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T13:52:00.000000000",
       "time_to_resolution_in_minutes": 5,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97860",
-      "ticket_title": "Escrow Statement",
+      "ticket_key": "SH-96142",
+      "ticket_title": "CMG Financial.Lakeview Servicing Missing Documents Report 2025-09-02",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-08T14:34:33.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "Burnip, Marlea",
+      "ticket_created_at_utc": "2025-09-02T14:20:30.000000000",
+      "time_to_resolution_in_minutes": 9066,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-96354",
-      "ticket_title": "Service Transfer Letter",
+      "ticket_key": "SH-96145",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-02T18:10:01.000000000",
-      "time_to_resolution_in_minutes": 1,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T14:22:40.000000000",
+      "time_to_resolution_in_minutes": 49,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98688",
-      "ticket_title": "Ayoub 0139959134",
+      "ticket_key": "SH-96149",
+      "ticket_title": "Re: Loan A059332 - Borrower states his payment is higher than what our documents show.",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-10T20:40:42.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-09-02T14:26:56.000000000",
+      "time_to_resolution_in_minutes": 59402,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97787",
-      "ticket_title": "Hicks RWE 0000039225",
+      "ticket_key": "SH-96185",
+      "ticket_title": "Principal Reduction for Onslow Bay",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-06T18:33:59.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "Yang, Duo",
+      "ticket_created_at_utc": "2025-09-02T15:19:37.000000000",
+      "time_to_resolution_in_minutes": 2769,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97939",
-      "ticket_title": "sturchen RNW0000005975",
+      "ticket_key": "SH-96188",
+      "ticket_title": "Loan number:  0152100020 Escrow shortage spread for 60 months.",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-08T16:55:08.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "Yang, Duo",
+      "ticket_created_at_utc": "2025-09-02T15:20:49.000000000",
+      "time_to_resolution_in_minutes": 47,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-96609",
-      "ticket_title": "COntent RNN0000008809",
+      "ticket_key": "SH-111937",
+      "ticket_title": "Pham CSR0000143034 Repurchase Figures needed please",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-02T23:36:22.000000000",
-      "time_to_resolution_in_minutes": 913,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-05T17:01:25.000000000",
+      "time_to_resolution_in_minutes": 11479,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98638",
-      "ticket_title": "tuteja  RCE0000099336",
+      "ticket_key": "SH-111916",
+      "ticket_title": "PAYOFF REQUEST Sajan George 1225738091 213 Birchwood Drive 3545738",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-10T18:47:42.000000000",
-      "time_to_resolution_in_minutes": 3,
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-06T15:09:47.000000000",
+      "time_to_resolution_in_minutes": 17779,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97616",
-      "ticket_title": "Fowles REA0000168388",
+      "ticket_key": "SH-113333",
+      "ticket_title": "Payoff Needed ** Asetre** please confirm receipt*",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Robinson, Christopher",
-      "ticket_created_at_utc": "2025-09-05T19:00:36.000000000",
-      "time_to_resolution_in_minutes": 3,
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-12T18:59:37.000000000",
+      "time_to_resolution_in_minutes": 8911,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-116887",
-      "ticket_title": "RE: Payoff Request Closing 11/14 (SH-111378)",
-      "ticket_status": "Assigned",
+      "ticket_key": "SH-113316",
+      "ticket_title": "File 2538732-WLK 3912 Hargis St, Austin, TX 78723 - Payoff Request",
+      "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-12-01T15:02:32.000000000",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-12T18:42:11.000000000",
+      "time_to_resolution_in_minutes": 8926,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96169",
+      "ticket_title": "RE: Loan A059332 - Borrower states his payment is higher than what our documents show.",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-09-02T14:52:00.000000000",
       "time_to_resolution_in_minutes": null,
       "is_ticket_complete": "No"
     },
     {
-      "ticket_key": "SH-96162",
-      "ticket_title": "Transfer letter",
+      "ticket_key": "SH-114078",
+      "ticket_title": "RE: Payoff needed: 0198379307 SS#7018/Schmoll",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-02T14:42:59.000000000",
-      "time_to_resolution_in_minutes": 3108,
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-14T18:54:08.000000000",
+      "time_to_resolution_in_minutes": 6039,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97636",
-      "ticket_title": "Detailed Payment History",
+      "ticket_key": "SH-105482",
+      "ticket_title": "Re: [SENDSECURE]  Appraisal Report",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-05T19:34:15.000000000",
-      "time_to_resolution_in_minutes": 21676,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-109475",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-28T19:27:07.000000000",
-      "time_to_resolution_in_minutes": 1509,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-102741",
-      "ticket_title": "Transfer Letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-29T15:03:54.000000000",
-      "time_to_resolution_in_minutes": 399,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-104268",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-03T16:28:14.000000000",
-      "time_to_resolution_in_minutes": 5888,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-103700",
-      "ticket_title": "Transfer letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-01T20:29:25.000000000",
-      "time_to_resolution_in_minutes": 8326,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-105822",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-10T13:54:26.000000000",
-      "time_to_resolution_in_minutes": 4366,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-106834",
-      "ticket_title": "Notice of servicing",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-15T16:18:23.000000000",
-      "time_to_resolution_in_minutes": 1361,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-97991",
-      "ticket_title": "Escrow Disclosure",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-08T18:40:40.000000000",
-      "time_to_resolution_in_minutes": 17413,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-104346",
-      "ticket_title": "Insurance Documents",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-03T18:46:35.000000000",
-      "time_to_resolution_in_minutes": 5751,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-107479",
-      "ticket_title": "Payment History",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-17T16:07:19.000000000",
-      "time_to_resolution_in_minutes": 4230,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-103689",
-      "ticket_title": "Payoff Statement Request / 3250 North 96th Street, Milwaukee, WI 53222 / 18-25-46877AN",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-01T20:08:39.000000000",
-      "time_to_resolution_in_minutes": 16953,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-105008",
-      "ticket_title": "October Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-07T16:15:43.000000000",
-      "time_to_resolution_in_minutes": 142,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-99165",
-      "ticket_title": "Insurance Policy Update",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-12T18:11:02.000000000",
-      "time_to_resolution_in_minutes": 11685,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-112346",
-      "ticket_title": "Insurance update",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-07T17:02:35.000000000",
-      "time_to_resolution_in_minutes": 115,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-110051",
-      "ticket_title": "Payment History",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-30T18:31:46.000000000",
-      "time_to_resolution_in_minutes": 150,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-109045",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-27T15:36:50.000000000",
-      "time_to_resolution_in_minutes": 1352,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-103692",
-      "ticket_title": "PMI removal",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-01T20:10:19.000000000",
-      "time_to_resolution_in_minutes": 8546,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-107676",
-      "ticket_title": "Online account",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-18T18:25:51.000000000",
-      "time_to_resolution_in_minutes": 7011,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-113208",
-      "ticket_title": "Transfer letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-12T16:23:47.000000000",
-      "time_to_resolution_in_minutes": 11457,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-106850",
-      "ticket_title": "Transfer letter- Hohenberger RCA0000010161",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-15T16:52:42.000000000",
-      "time_to_resolution_in_minutes": 9877,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-110661",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-03T17:09:42.000000000",
-      "time_to_resolution_in_minutes": 4131,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-104747",
-      "ticket_title": "Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-06T19:03:48.000000000",
-      "time_to_resolution_in_minutes": 1414,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108048",
-      "ticket_title": "ServiceMac Contact Info",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-21T16:38:24.000000000",
-      "time_to_resolution_in_minutes": 1225,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-103829",
-      "ticket_title": "Transfer letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-02T13:52:54.000000000",
-      "time_to_resolution_in_minutes": 7282,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108000",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-21T14:35:40.000000000",
-      "time_to_resolution_in_minutes": 30,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-112835",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-10T18:55:08.000000000",
-      "time_to_resolution_in_minutes": 121,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-111947",
-      "ticket_title": "Notice of Transfer",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-06T15:53:47.000000000",
-      "time_to_resolution_in_minutes": 1624,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108787",
-      "ticket_title": "Payment",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-24T16:02:43.000000000",
-      "time_to_resolution_in_minutes": 5647,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108394",
-      "ticket_title": "CMG Home Loans",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-22T20:30:59.000000000",
-      "time_to_resolution_in_minutes": 10127,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-99796",
-      "ticket_title": "Escrow Analysis",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-16T18:09:37.000000000",
-      "time_to_resolution_in_minutes": 30258,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-116264",
-      "ticket_title": "Please rush payoff demand for loan #0140106907 - FMNA-6012500626 - 131 Legend Road, San Anselmo CA 9",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-25T18:47:58.000000000",
-      "time_to_resolution_in_minutes": 193,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-110047",
-      "ticket_title": "Website link",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-30T18:27:52.000000000",
-      "time_to_resolution_in_minutes": 154,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-106161",
-      "ticket_title": "October Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-13T14:16:09.000000000",
-      "time_to_resolution_in_minutes": 23,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-96582",
-      "ticket_title": "Hills REA 202756",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-02T22:43:30.000000000",
-      "time_to_resolution_in_minutes": 25803,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-100371",
-      "ticket_title": "Transfer letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-18T14:03:35.000000000",
-      "time_to_resolution_in_minutes": 27629,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-97187",
-      "ticket_title": "Reimbursement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-04T16:14:02.000000000",
-      "time_to_resolution_in_minutes": 23315,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-103986",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-02T18:39:46.000000000",
-      "time_to_resolution_in_minutes": 7197,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-102146",
-      "ticket_title": "Insurance claim",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-25T19:13:04.000000000",
-      "time_to_resolution_in_minutes": 17039,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-107671",
-      "ticket_title": "Lewandowski : First Payment - Online Payment Set Up",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-18T14:49:11.000000000",
-      "time_to_resolution_in_minutes": 4345,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108438",
-      "ticket_title": "loan mortgage statement monthly",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-23T01:50:32.000000000",
-      "time_to_resolution_in_minutes": 772,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-110563",
-      "ticket_title": "Transfer letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-11-03T15:13:09.000000000",
-      "time_to_resolution_in_minutes": 4247,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-109331",
-      "ticket_title": "Escrow Analysis",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-28T14:51:04.000000000",
-      "time_to_resolution_in_minutes": 1786,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-107854",
-      "ticket_title": "RTX8962 - Marissa Clay - 11721 Murano",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-20T19:45:08.000000000",
-      "time_to_resolution_in_minutes": 11187,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-96973",
-      "ticket_title": "Online portal link",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-03T21:25:50.000000000",
-      "time_to_resolution_in_minutes": 24444,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-102489",
-      "ticket_title": "Original documents",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-26T19:17:22.000000000",
-      "time_to_resolution_in_minutes": 15595,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-105613",
-      "ticket_title": "September Payment",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-09T15:09:21.000000000",
-      "time_to_resolution_in_minutes": 5733,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-105666",
-      "ticket_title": "Wire Transfer verification",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-09T17:08:56.000000000",
-      "time_to_resolution_in_minutes": 20211,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-105270",
-      "ticket_title": "Wire Reference number",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-08T14:51:08.000000000",
-      "time_to_resolution_in_minutes": 7169,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-101317",
-      "ticket_title": "October Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-23T14:23:59.000000000",
-      "time_to_resolution_in_minutes": 20410,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-109118",
-      "ticket_title": "First payment letter",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-27T18:12:11.000000000",
-      "time_to_resolution_in_minutes": 1190,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-108450",
-      "ticket_title": "Monthly Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-23T13:14:27.000000000",
-      "time_to_resolution_in_minutes": 88,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-97665",
-      "ticket_title": "ACH form",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-09-05T20:23:05.000000000",
-      "time_to_resolution_in_minutes": 21629,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-107618",
-      "ticket_title": "October payment",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-17T21:22:16.000000000",
-      "time_to_resolution_in_minutes": 13972,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-117233",
-      "ticket_title": "Transfer Letter",
-      "ticket_status": "New",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-12-01T22:30:47.000000000",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-10-08T22:15:21.000000000",
       "time_to_resolution_in_minutes": null,
       "is_ticket_complete": "No"
     },
     {
-      "ticket_key": "SH-109355",
-      "ticket_title": "Mailing address",
+      "ticket_key": "SH-111308",
+      "ticket_title": "Nelson 3000001633 PAYOFF",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Gironza, Jake",
-      "ticket_created_at_utc": "2025-10-28T15:33:43.000000000",
-      "time_to_resolution_in_minutes": 1743,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-04T20:17:59.000000000",
+      "time_to_resolution_in_minutes": 12748,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-100732",
-      "ticket_title": "Escrow",
+      "ticket_key": "SH-111528",
+      "ticket_title": "0189199490 Ketcham- PAYOFF",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-19T17:03:33.000000000",
-      "time_to_resolution_in_minutes": 220,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-05T15:17:44.000000000",
+      "time_to_resolution_in_minutes": 11638,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-96228",
-      "ticket_title": "Service Transfer",
+      "ticket_key": "SH-111502",
+      "ticket_title": "0189160443 THOMAS - Netted Payoff",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-02T15:55:20.000000000",
-      "time_to_resolution_in_minutes": 2,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-05T14:33:17.000000000",
+      "time_to_resolution_in_minutes": 11673,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-100358",
-      "ticket_title": "Statements",
+      "ticket_key": "SH-96191",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-18T13:08:25.000000000",
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T15:22:59.000000000",
+      "time_to_resolution_in_minutes": 3106,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96200",
+      "ticket_title": "Transfer Letter",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Pinckney, Christina",
+      "ticket_created_at_utc": "2025-09-02T15:27:39.000000000",
       "time_to_resolution_in_minutes": 1,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-99455",
-      "ticket_title": "Confirmation",
+      "ticket_key": "SH-96214",
+      "ticket_title": "ACH RCA0000007924 ",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-15T17:17:40.000000000",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T15:41:49.000000000",
+      "time_to_resolution_in_minutes": 152,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96215",
+      "ticket_title": "3rd Party Authorization and 30 day pay off request Loan number 0152118501",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Yang, Duo",
+      "ticket_created_at_utc": "2025-09-02T15:42:22.000000000",
+      "time_to_resolution_in_minutes": 1468,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96178",
+      "ticket_title": "FW: [External Email] Complaint - Rodriguez, Blanca Cenlar 0163476526",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Critical",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-09-02T15:00:26.000000000",
+      "time_to_resolution_in_minutes": 1695,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-111604",
+      "ticket_title": "Siddique Loan# 3000189282106/PAYOFF NEEDED 11/7",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Yang, Duo",
+      "ticket_created_at_utc": "2025-11-05T16:42:48.000000000",
+      "time_to_resolution_in_minutes": 11684,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-113559",
+      "ticket_title": "Re: How to make your first mortgage payment",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Pinckney, Christina",
+      "ticket_created_at_utc": "2025-11-13T03:11:36.000000000",
+      "time_to_resolution_in_minutes": 9303,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114283",
+      "ticket_title": "Customer",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-11-17T12:02:12.000000000",
+      "time_to_resolution_in_minutes": 3017,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112579",
+      "ticket_title": "REA0000297335 Carla Dillard",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-11-08T04:10:04.000000000",
+      "time_to_resolution_in_minutes": 16461,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112141",
+      "ticket_title": "Payoff Request - Loan # 0152154043 - 9588 West Cashman Drive - Medaramitta",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-06T21:18:34.000000000",
+      "time_to_resolution_in_minutes": 9953,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112163",
+      "ticket_title": "File Number-4308862-Payoff Request (Email Ref=2545381329)",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-06T22:08:47.000000000",
+      "time_to_resolution_in_minutes": 9908,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112140",
+      "ticket_title": "payoff authorization 0121343347",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-06T21:18:31.000000000",
+      "time_to_resolution_in_minutes": 9955,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-111960",
+      "ticket_title": "Currier, 0189088412, PAYOFF",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-06T16:24:32.000000000",
+      "time_to_resolution_in_minutes": 10219,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112276",
+      "ticket_title": "Fw: Request for Payoff Request - Melby",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-07T15:05:09.000000000",
+      "time_to_resolution_in_minutes": 8893,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-106725",
+      "ticket_title": "Payoff Request 0181479239",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-10-15T13:15:34.000000000",
+      "time_to_resolution_in_minutes": 42125,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-113149",
+      "ticket_title": "Taxes - Polarchy - RFL*18588 / 3000009681",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-11-12T14:56:41.000000000",
+      "time_to_resolution_in_minutes": 2844,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96230",
+      "ticket_title": "RTX54484 - McNeil",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-09-02T15:57:53.000000000",
+      "time_to_resolution_in_minutes": 268,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SE-4239",
+      "ticket_title": "Check Issue",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "Yang, Duo",
+      "ticket_created_at_utc": "2025-09-02T16:06:17.000000000",
+      "time_to_resolution_in_minutes": 1303,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96237",
+      "ticket_title": "SRC VM – 9/2/2025 9:01:58 AM",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T16:06:53.000000000",
+      "time_to_resolution_in_minutes": 134,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96251",
+      "ticket_title": "Cantor-RSP0000004977",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T16:15:50.000000000",
+      "time_to_resolution_in_minutes": 1480,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96254",
+      "ticket_title": "TRANSFER LETTER ",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-09-02T16:17:16.000000000",
+      "time_to_resolution_in_minutes": 1458,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96255",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T16:17:27.000000000",
+      "time_to_resolution_in_minutes": 67,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SO-7754",
+      "ticket_title": "RE: [External Email] Re: RE: semi-monthly Assumptions pipeline report (SO-7672)",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "CMG Servicing Oversight",
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-09-02T16:27:35.000000000",
+      "time_to_resolution_in_minutes": 151,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96224",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T15:51:02.000000000",
+      "time_to_resolution_in_minutes": 10,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96226",
+      "ticket_title": "Rague #RNE0000096446",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T15:52:31.000000000",
+      "time_to_resolution_in_minutes": 1539,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96233",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T16:01:41.000000000",
       "time_to_resolution_in_minutes": 1,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-102262",
-      "ticket_title": "RE: Presidential Bank - Morris - First Payment letter & Notice of Transfer - 2248 Ellis Mountain Dri",
+      "ticket_key": "SH-96246",
+      "ticket_title": "SRC VM – 9/2/2025 9:05:48 AM",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-26T00:07:28.000000000",
-      "time_to_resolution_in_minutes": 22546,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T16:11:45.000000000",
+      "time_to_resolution_in_minutes": 128,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97332",
-      "ticket_title": "Escrow Statement",
+      "ticket_key": "SH-96247",
+      "ticket_title": "ACH Form RNT0000038918 ",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-04T20:41:45.000000000",
-      "time_to_resolution_in_minutes": 3,
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T16:12:18.000000000",
+      "time_to_resolution_in_minutes": 1507,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-98827",
-      "ticket_title": "Portal Link",
+      "ticket_key": "SH-96259",
+      "ticket_title": "Interim Voice Mail Alert",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-11T14:49:33.000000000",
-      "time_to_resolution_in_minutes": 1,
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-09-02T16:22:32.000000000",
+      "time_to_resolution_in_minutes": 3167,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-97793",
-      "ticket_title": "Confirmation",
+      "ticket_key": "SH-96273",
+      "ticket_title": "Payment Confirmation and Loan Info",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-06T19:44:29.000000000",
-      "time_to_resolution_in_minutes": 9,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-96894",
-      "ticket_title": "Mortgage Statement",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-03T19:28:23.000000000",
-      "time_to_resolution_in_minutes": 0,
-      "is_ticket_complete": "YES"
-    },
-    {
-      "ticket_key": "SH-100944",
-      "ticket_title": "Payment",
-      "ticket_status": "Request Complete",
-      "ticket_priority": "Medium",
-      "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-22T13:51:01.000000000",
+      "assigned_user_name": "Woodman, Kiera",
+      "ticket_created_at_utc": "2025-09-02T16:33:14.000000000",
       "time_to_resolution_in_minutes": 8,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-100089",
-      "ticket_title": "Payoff",
+      "ticket_key": "SH-113526",
+      "ticket_title": "TALKINGTON SERVICING LOAN# 0189157043 PAYOFF",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-09-17T17:10:58.000000000",
-      "time_to_resolution_in_minutes": 9,
+      "assigned_user_name": "Schreiner, Katie",
+      "ticket_created_at_utc": "2025-11-12T23:30:42.000000000",
+      "time_to_resolution_in_minutes": 9579,
       "is_ticket_complete": "YES"
     },
     {
-      "ticket_key": "SH-106307",
-      "ticket_title": "Re: Recast information",
+      "ticket_key": "SH-112566",
+      "ticket_title": "PAYOFF REQUEST 0188941579",
       "ticket_status": "Request Complete",
       "ticket_priority": "Medium",
       "project_name": "Servicing Help",
-      "assigned_user_name": "Truance, Donavan",
-      "ticket_created_at_utc": "2025-10-13T19:27:28.000000000",
-      "time_to_resolution_in_minutes": 2470,
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-08T00:34:40.000000000",
+      "time_to_resolution_in_minutes": 8422,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-113078",
+      "ticket_title": "Reaffirmation Agreement - Request to Creditor",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Thornton, Tristina",
+      "ticket_created_at_utc": "2025-11-11T20:55:34.000000000",
+      "time_to_resolution_in_minutes": 11319,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114503",
+      "ticket_title": "Customer",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-11-17T19:32:21.000000000",
+      "time_to_resolution_in_minutes": 2737,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112333",
+      "ticket_title": "Cuth RMA0000036684 - Paid in full, needs letter from CMG",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-11-07T16:52:29.000000000",
+      "time_to_resolution_in_minutes": 17282,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96264",
+      "ticket_title": "Transfer Letter Notice ",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Cunanan, Rodrigo",
+      "ticket_created_at_utc": "2025-09-02T16:28:25.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96269",
+      "ticket_title": "TRANSFER LETTER ",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Jackson, Jennifer",
+      "ticket_created_at_utc": "2025-09-02T16:28:58.000000000",
+      "time_to_resolution_in_minutes": 2,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-107443",
+      "ticket_title": "RE: 2672 Webridge taxes",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "McCallum, Kristine",
+      "ticket_created_at_utc": "2025-10-17T14:56:12.000000000",
+      "time_to_resolution_in_minutes": 47784,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114929",
+      "ticket_title": "Customer",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-11-18T22:00:41.000000000",
+      "time_to_resolution_in_minutes": 1294,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96307",
+      "ticket_title": "Loan assistance",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-09-02T17:11:36.000000000",
+      "time_to_resolution_in_minutes": 236,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96377",
+      "ticket_title": "Dahl - RMA0000042587",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T18:45:58.000000000",
+      "time_to_resolution_in_minutes": 1441,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96378",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T18:47:55.000000000",
+      "time_to_resolution_in_minutes": 5,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96385",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-09-02T18:52:46.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SO-7757",
+      "ticket_title": "RE: Deed to FHLMC / 407 Tanner Avenue, Cleveland, TX 77327 (Liberty) 1280729028: 1301190: Tbd:",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "CMG Servicing Oversight",
+      "assigned_user_name": "O'Brien, Noreen",
+      "ticket_created_at_utc": "2025-09-02T18:56:39.000000000",
+      "time_to_resolution_in_minutes": 22856,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SE-4849",
+      "ticket_title": "Clark RNW10313 RE: Additional line of credit for remodel",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "McCallum, Kristine",
+      "ticket_created_at_utc": "2025-11-06T00:56:00.000000000",
+      "time_to_resolution_in_minutes": 11667,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96392",
+      "ticket_title": "FW: Flood Information RNN0000022603",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Korte, Melissa",
+      "ticket_created_at_utc": "2025-09-02T19:04:43.000000000",
+      "time_to_resolution_in_minutes": 2501,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SE-4862",
+      "ticket_title": "Mortgage Statements Needed- Boutte- 3434-3436  W 109th Street",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "McCallum, Kristine",
+      "ticket_created_at_utc": "2025-11-06T23:34:28.000000000",
+      "time_to_resolution_in_minutes": 10316,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96287",
+      "ticket_title": "ZAVECZ - RMA0000041808 / CMG LoanServ - 3000003912",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Korte, Melissa",
+      "ticket_created_at_utc": "2025-09-02T16:53:35.000000000",
+      "time_to_resolution_in_minutes": 2687,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96330",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T17:40:52.000000000",
+      "time_to_resolution_in_minutes": 77,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96333",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T17:44:39.000000000",
+      "time_to_resolution_in_minutes": 72,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96390",
+      "ticket_title": "RE: Loan",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-09-02T19:03:29.000000000",
+      "time_to_resolution_in_minutes": 1552,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96530",
+      "ticket_title": "User Name/ Password",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Pinckney, Christina",
+      "ticket_created_at_utc": "2025-09-02T21:25:53.000000000",
+      "time_to_resolution_in_minutes": 5462,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96540",
+      "ticket_title": "ACH Link",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Davis, Jon",
+      "ticket_created_at_utc": "2025-09-02T21:36:37.000000000",
+      "time_to_resolution_in_minutes": 1,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96543",
+      "ticket_title": "SRC VM – 9/2/2025 2:36:22 PM",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Chaves, Jackie",
+      "ticket_created_at_utc": "2025-09-02T21:37:02.000000000",
+      "time_to_resolution_in_minutes": 951,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96545",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-09-02T21:39:49.000000000",
+      "time_to_resolution_in_minutes": 3929,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96335",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Martin, Lauren",
+      "ticket_created_at_utc": "2025-09-02T17:48:40.000000000",
+      "time_to_resolution_in_minutes": null,
+      "is_ticket_complete": "No"
+    },
+    {
+      "ticket_key": "SH-96337",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-09-02T17:50:21.000000000",
+      "time_to_resolution_in_minutes": 4105,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96343",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-09-02T17:59:04.000000000",
+      "time_to_resolution_in_minutes": 52,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96546",
+      "ticket_title": "2024 Tax Document Needed",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Vue, Ky",
+      "ticket_created_at_utc": "2025-09-02T21:42:44.000000000",
+      "time_to_resolution_in_minutes": 1320,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96551",
+      "ticket_title": "RE: De Bolt; 7250702036; Loan Purchased",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": null,
+      "ticket_created_at_utc": "2025-09-02T21:45:01.000000000",
+      "time_to_resolution_in_minutes": 232,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-112613",
+      "ticket_title": "***URGENT*** McGurk #0163669716 - Hazard Insurance Cancellation",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-11-09T19:54:19.000000000",
+      "time_to_resolution_in_minutes": 5474,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-114102",
+      "ticket_title": "Christensen PAYOFF REQUEST (910060228800) 0188987937",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Smith, Kristi",
+      "ticket_created_at_utc": "2025-11-14T19:25:43.000000000",
+      "time_to_resolution_in_minutes": 7444,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-111639",
+      "ticket_title": "Hardship Assistance Request",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Woodman, Kiera",
+      "ticket_created_at_utc": "2025-11-05T17:18:36.000000000",
+      "time_to_resolution_in_minutes": 12785,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SE-4945",
+      "ticket_title": "0179232343 - LOPSEY - PAYMENT MISSING",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "Stevenson, Justin",
+      "ticket_created_at_utc": "2025-11-15T17:44:50.000000000",
+      "time_to_resolution_in_minutes": 6255,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SE-4948",
+      "ticket_title": "3000003634 - JOHNSON - Payment Issues - Buydown",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Escalations WG",
+      "assigned_user_name": "Stevenson, Justin",
+      "ticket_created_at_utc": "2025-11-17T12:57:43.000000000",
+      "time_to_resolution_in_minutes": 3657,
+      "is_ticket_complete": "YES"
+    },
+    {
+      "ticket_key": "SH-96549",
+      "ticket_title": "Interim Voice Mail Alert",
+      "ticket_status": "Request Complete",
+      "ticket_priority": "Medium",
+      "project_name": "Servicing Help",
+      "assigned_user_name": "Doherty, Sam",
+      "ticket_created_at_utc": "2025-09-02T21:43:36.000000000",
+      "time_to_resolution_in_minutes": 3890,
       "is_ticket_complete": "YES"
     }
   ],
   "servicingAnalysis": {
-    "totalTickets": 24687,
+    "totalTickets": 23167,
     "projects": [
       {
         "name": "Servicing Help",
-        "count": 20979
-      },
-      {
-        "name": "ServApp Support",
-        "count": 1923
+        "count": 21335
       },
       {
         "name": "CMG Servicing Oversight",
-        "count": 927
+        "count": 954
       },
       {
         "name": "Servicing Escalations WG",
-        "count": 858
+        "count": 878
+      },
+      {
+        "name": "ServApp Support",
+        "count": 0
       }
     ],
     "categories": [
       {
         "name": "Documentation",
-        "count": 5863,
-        "percent": 24
+        "count": 5958,
+        "percent": 26
       },
       {
         "name": "Payment Issues",
-        "count": 3971,
-        "percent": 16
+        "count": 4042,
+        "percent": 17
       },
       {
         "name": "Other",
-        "count": 3015,
-        "percent": 12
+        "count": 3030,
+        "percent": 13
       },
       {
         "name": "Communication/Forwarded",
-        "count": 2435,
-        "percent": 10
+        "count": 2492,
+        "percent": 11
       },
       {
         "name": "Loan-Specific Inquiry",
-        "count": 2023,
-        "percent": 8
-      },
-      {
-        "name": "Automated System Messages",
-        "count": 1657,
-        "percent": 7
+        "count": 2054,
+        "percent": 9
       },
       {
         "name": "Escrow",
-        "count": 1653,
+        "count": 1689,
         "percent": 7
       },
       {
         "name": "General Inquiry",
-        "count": 838,
+        "count": 771,
         "percent": 3
       },
       {
         "name": "Voice/Alert Requests",
-        "count": 594,
-        "percent": 2
+        "count": 597,
+        "percent": 3
       },
       {
         "name": "Transfer/Boarding",
-        "count": 529,
+        "count": 543,
         "percent": 2
       },
       {
         "name": "Complaints/Escalations",
-        "count": 513,
+        "count": 514,
         "percent": 2
       },
       {
         "name": "Loan Info Request",
-        "count": 479,
+        "count": 491,
         "percent": 2
       },
       {
         "name": "Loan Changes",
-        "count": 479,
+        "count": 482,
         "percent": 2
       },
       {
         "name": "Insurance/Coverage",
-        "count": 418,
-        "percent": 2
+        "count": 313,
+        "percent": 1
       },
       {
         "name": "Account Access",
-        "count": 220,
+        "count": 191,
         "percent": 1
       }
     ],
     "topCategories": [
       {
         "name": "Documentation",
-        "count": 5863,
-        "percent": 24
+        "count": 5958,
+        "percent": 26
       },
       {
         "name": "Payment Issues",
-        "count": 3971,
-        "percent": 16
+        "count": 4042,
+        "percent": 17
       },
       {
         "name": "Other",
-        "count": 3015,
-        "percent": 12
+        "count": 3030,
+        "percent": 13
       },
       {
         "name": "Communication/Forwarded",
-        "count": 2435,
-        "percent": 10
+        "count": 2492,
+        "percent": 11
       },
       {
         "name": "Loan-Specific Inquiry",
-        "count": 2023,
-        "percent": 8
+        "count": 2054,
+        "percent": 9
       },
       {
-        "name": "Automated System Messages",
-        "count": 1657,
+        "name": "Escrow",
+        "count": 1689,
         "percent": 7
       }
     ],
     "categoryTrends": [
       {
         "month": "2025-09",
-        "Documentation": 1840,
+        "Documentation": 1837,
         "Payment Issues": 1315,
-        "Other": 1037,
+        "Other": 1031,
         "Communication/Forwarded": 802,
         "Loan-Specific Inquiry": 603,
-        "Automated System Messages": 1421
+        "Escrow": 555
       },
       {
         "month": "2025-10",
-        "Documentation": 1976,
+        "Documentation": 1972,
         "Payment Issues": 1316,
-        "Other": 1031,
-        "Communication/Forwarded": 886,
+        "Other": 1019,
+        "Communication/Forwarded": 885,
         "Loan-Specific Inquiry": 709,
-        "Automated System Messages": 236
+        "Escrow": 559
       },
       {
         "month": "2025-11",
         "Documentation": 1940,
-        "Payment Issues": 1205,
-        "Other": 879,
+        "Payment Issues": 1206,
+        "Other": 861,
         "Communication/Forwarded": 683,
         "Loan-Specific Inquiry": 643,
-        "Automated System Messages": 0
+        "Escrow": 504
       }
     ],
     "timeSeries": {
       "monthly": [
         {
           "date": "2025-09",
-          "count": 9262
+          "count": 7771
         },
         {
           "date": "2025-10",
-          "count": 7901
+          "count": 7565
         },
         {
           "date": "2025-11",
-          "count": 6968
+          "count": 6877
         }
       ],
       "weekly": [
         {
           "date": "2025-10-19",
-          "count": 649
+          "count": 631
         },
         {
           "date": "2025-10-20",
-          "count": 795
+          "count": 787
         },
         {
           "date": "2025-10-26",
-          "count": 764
+          "count": 737
         },
         {
           "date": "2025-10-27",
-          "count": 943
+          "count": 914
         },
         {
           "date": "2025-11-02",
-          "count": 697
+          "count": 675
         },
         {
           "date": "2025-11-03",
-          "count": 1625
+          "count": 1605
         },
         {
           "date": "2025-11-09",
-          "count": 531
+          "count": 521
         },
         {
           "date": "2025-11-10",
-          "count": 1281
+          "count": 1271
         },
         {
           "date": "2025-11-16",
-          "count": 442
+          "count": 439
         },
         {
           "date": "2025-11-17",
-          "count": 1206
+          "count": 1196
         },
         {
           "date": "2025-11-23",
-          "count": 337
+          "count": 335
         },
         {
           "date": "2025-11-24",
-          "count": 763
+          "count": 759
         }
       ],
       "daily": [
         {
-          "date": "2025-11-03",
-          "count": 146
-        },
-        {
           "date": "2025-11-04",
-          "count": 539
+          "count": 527
         },
         {
           "date": "2025-11-05",
-          "count": 490
+          "count": 486
         },
         {
           "date": "2025-11-06",
-          "count": 422
+          "count": 415
         },
         {
           "date": "2025-11-07",
-          "count": 380
+          "count": 379
         },
         {
           "date": "2025-11-08",
-          "count": 321
+          "count": 313
         },
         {
           "date": "2025-11-09",
-          "count": 16
+          "count": 15
         },
         {
           "date": "2025-11-10",
-          "count": 108
+          "count": 106
         },
         {
           "date": "2025-11-11",
-          "count": 365
+          "count": 362
         },
         {
           "date": "2025-11-12",
-          "count": 173
+          "count": 169
         },
         {
           "date": "2025-11-13",
-          "count": 477
+          "count": 471
         },
         {
           "date": "2025-11-14",
-          "count": 388
+          "count": 385
         },
         {
           "date": "2025-11-15",
-          "count": 276
+          "count": 274
         },
         {
           "date": "2025-11-16",
-          "count": 29
+          "count": 27
         },
         {
           "date": "2025-11-17",
-          "count": 81
+          "count": 80
         },
         {
           "date": "2025-11-18",
@@ -1644,19 +1623,19 @@
         },
         {
           "date": "2025-11-19",
-          "count": 378
+          "count": 377
         },
         {
           "date": "2025-11-20",
-          "count": 326
+          "count": 321
         },
         {
           "date": "2025-11-21",
-          "count": 278
+          "count": 276
         },
         {
           "date": "2025-11-22",
-          "count": 179
+          "count": 177
         },
         {
           "date": "2025-11-23",
@@ -1664,7 +1643,7 @@
         },
         {
           "date": "2025-11-24",
-          "count": 68
+          "count": 67
         },
         {
           "date": "2025-11-25",
@@ -1672,11 +1651,11 @@
         },
         {
           "date": "2025-11-26",
-          "count": 301
+          "count": 299
         },
         {
           "date": "2025-11-27",
-          "count": 214
+          "count": 211
         },
         {
           "date": "2025-11-28",
@@ -1692,11 +1671,15 @@
         },
         {
           "date": "2025-12-01",
-          "count": 119
+          "count": 116
         },
         {
           "date": "2025-12-02",
-          "count": 451
+          "count": 486
+        },
+        {
+          "date": "2025-12-03",
+          "count": 366
         }
       ]
     }
@@ -1707,122 +1690,122 @@
         {
           "x": "00:00",
           "y": "Sun",
-          "value": 37
+          "value": 8
         },
         {
           "x": "01:00",
           "y": "Sun",
-          "value": 42
+          "value": 8
         },
         {
           "x": "02:00",
           "y": "Sun",
-          "value": 44
+          "value": 5
         },
         {
           "x": "03:00",
           "y": "Sun",
-          "value": 35
+          "value": 5
         },
         {
           "x": "04:00",
           "y": "Sun",
-          "value": 34
+          "value": 3
         },
         {
           "x": "05:00",
           "y": "Sun",
-          "value": 32
+          "value": 1
         },
         {
           "x": "06:00",
           "y": "Sun",
-          "value": 30
+          "value": 1
         },
         {
           "x": "07:00",
           "y": "Sun",
-          "value": 33
+          "value": 5
         },
         {
           "x": "08:00",
           "y": "Sun",
-          "value": 29
+          "value": 3
         },
         {
           "x": "09:00",
           "y": "Sun",
-          "value": 29
+          "value": 0
         },
         {
           "x": "10:00",
           "y": "Sun",
-          "value": 33
+          "value": 4
         },
         {
           "x": "11:00",
           "y": "Sun",
-          "value": 44
+          "value": 13
         },
         {
           "x": "12:00",
           "y": "Sun",
-          "value": 35
+          "value": 4
         },
         {
           "x": "13:00",
           "y": "Sun",
-          "value": 38
+          "value": 9
         },
         {
           "x": "14:00",
           "y": "Sun",
-          "value": 41
+          "value": 15
         },
         {
           "x": "15:00",
           "y": "Sun",
-          "value": 46
+          "value": 16
         },
         {
           "x": "16:00",
           "y": "Sun",
-          "value": 48
+          "value": 21
         },
         {
           "x": "17:00",
           "y": "Sun",
-          "value": 43
+          "value": 14
         },
         {
           "x": "18:00",
           "y": "Sun",
-          "value": 38
+          "value": 9
         },
         {
           "x": "19:00",
           "y": "Sun",
-          "value": 46
+          "value": 17
         },
         {
           "x": "20:00",
           "y": "Sun",
-          "value": 52
+          "value": 20
         },
         {
           "x": "21:00",
           "y": "Sun",
-          "value": 55
+          "value": 23
         },
         {
           "x": "22:00",
           "y": "Sun",
-          "value": 40
+          "value": 13
         },
         {
           "x": "23:00",
           "y": "Sun",
-          "value": 34
+          "value": 17
         },
         {
           "x": "00:00",
@@ -1887,57 +1870,57 @@
         {
           "x": "12:00",
           "y": "Mon",
-          "value": 111
+          "value": 89
         },
         {
           "x": "13:00",
           "y": "Mon",
-          "value": 255
+          "value": 242
         },
         {
           "x": "14:00",
           "y": "Mon",
-          "value": 430
+          "value": 425
         },
         {
           "x": "15:00",
           "y": "Mon",
-          "value": 481
+          "value": 477
         },
         {
           "x": "16:00",
           "y": "Mon",
-          "value": 492
+          "value": 490
         },
         {
           "x": "17:00",
           "y": "Mon",
-          "value": 507
+          "value": 500
         },
         {
           "x": "18:00",
           "y": "Mon",
-          "value": 522
+          "value": 521
         },
         {
           "x": "19:00",
           "y": "Mon",
-          "value": 507
+          "value": 506
         },
         {
           "x": "20:00",
           "y": "Mon",
-          "value": 486
+          "value": 480
         },
         {
           "x": "21:00",
           "y": "Mon",
-          "value": 368
+          "value": 367
         },
         {
           "x": "22:00",
           "y": "Mon",
-          "value": 306
+          "value": 305
         },
         {
           "x": "23:00",
@@ -1947,7 +1930,7 @@
         {
           "x": "00:00",
           "y": "Tue",
-          "value": 137
+          "value": 136
         },
         {
           "x": "01:00",
@@ -1967,7 +1950,7 @@
         {
           "x": "04:00",
           "y": "Tue",
-          "value": 20
+          "value": 18
         },
         {
           "x": "05:00",
@@ -2002,107 +1985,107 @@
         {
           "x": "11:00",
           "y": "Tue",
-          "value": 63
+          "value": 62
         },
         {
           "x": "12:00",
           "y": "Tue",
-          "value": 96
+          "value": 91
         },
         {
           "x": "13:00",
           "y": "Tue",
-          "value": 292
+          "value": 287
         },
         {
           "x": "14:00",
           "y": "Tue",
-          "value": 428
+          "value": 429
         },
         {
           "x": "15:00",
           "y": "Tue",
-          "value": 477
+          "value": 499
         },
         {
           "x": "16:00",
           "y": "Tue",
-          "value": 470
+          "value": 532
         },
         {
           "x": "17:00",
           "y": "Tue",
-          "value": 482
+          "value": 542
         },
         {
           "x": "18:00",
           "y": "Tue",
-          "value": 485
+          "value": 527
         },
         {
           "x": "19:00",
           "y": "Tue",
-          "value": 459
+          "value": 496
         },
         {
           "x": "20:00",
           "y": "Tue",
-          "value": 467
+          "value": 506
         },
         {
           "x": "21:00",
           "y": "Tue",
-          "value": 327
+          "value": 342
         },
         {
           "x": "22:00",
           "y": "Tue",
-          "value": 265
+          "value": 277
         },
         {
           "x": "23:00",
           "y": "Tue",
-          "value": 168
+          "value": 173
         },
         {
           "x": "00:00",
           "y": "Wed",
-          "value": 111
+          "value": 113
         },
         {
           "x": "01:00",
           "y": "Wed",
-          "value": 54
+          "value": 60
         },
         {
           "x": "02:00",
           "y": "Wed",
-          "value": 38
+          "value": 42
         },
         {
           "x": "03:00",
           "y": "Wed",
-          "value": 19
+          "value": 23
         },
         {
           "x": "04:00",
           "y": "Wed",
-          "value": 16
+          "value": 22
         },
         {
           "x": "05:00",
           "y": "Wed",
-          "value": 7
+          "value": 10
         },
         {
           "x": "06:00",
           "y": "Wed",
-          "value": 9
+          "value": 10
         },
         {
           "x": "07:00",
           "y": "Wed",
-          "value": 3
+          "value": 5
         },
         {
           "x": "08:00",
@@ -2112,12 +2095,12 @@
         {
           "x": "09:00",
           "y": "Wed",
-          "value": 6
+          "value": 7
         },
         {
           "x": "10:00",
           "y": "Wed",
-          "value": 9
+          "value": 11
         },
         {
           "x": "11:00",
@@ -2127,57 +2110,57 @@
         {
           "x": "12:00",
           "y": "Wed",
-          "value": 137
+          "value": 132
         },
         {
           "x": "13:00",
           "y": "Wed",
-          "value": 305
+          "value": 314
         },
         {
           "x": "14:00",
           "y": "Wed",
-          "value": 405
+          "value": 426
         },
         {
           "x": "15:00",
           "y": "Wed",
-          "value": 458
+          "value": 453
         },
         {
           "x": "16:00",
           "y": "Wed",
-          "value": 490
+          "value": 481
         },
         {
           "x": "17:00",
           "y": "Wed",
-          "value": 463
+          "value": 462
         },
         {
           "x": "18:00",
           "y": "Wed",
-          "value": 502
+          "value": 501
         },
         {
           "x": "19:00",
           "y": "Wed",
-          "value": 441
+          "value": 438
         },
         {
           "x": "20:00",
           "y": "Wed",
-          "value": 454
+          "value": 440
         },
         {
           "x": "21:00",
           "y": "Wed",
-          "value": 359
+          "value": 351
         },
         {
           "x": "22:00",
           "y": "Wed",
-          "value": 270
+          "value": 268
         },
         {
           "x": "23:00",
@@ -2192,7 +2175,7 @@
         {
           "x": "01:00",
           "y": "Thu",
-          "value": 55
+          "value": 52
         },
         {
           "x": "02:00",
@@ -2247,72 +2230,72 @@
         {
           "x": "12:00",
           "y": "Thu",
-          "value": 118
+          "value": 110
         },
         {
           "x": "13:00",
           "y": "Thu",
-          "value": 229
+          "value": 226
         },
         {
           "x": "14:00",
           "y": "Thu",
-          "value": 326
+          "value": 323
         },
         {
           "x": "15:00",
           "y": "Thu",
-          "value": 392
+          "value": 391
         },
         {
           "x": "16:00",
           "y": "Thu",
-          "value": 416
+          "value": 409
         },
         {
           "x": "17:00",
           "y": "Thu",
-          "value": 430
+          "value": 428
         },
         {
           "x": "18:00",
           "y": "Thu",
-          "value": 405
+          "value": 403
         },
         {
           "x": "19:00",
           "y": "Thu",
-          "value": 447
+          "value": 426
         },
         {
           "x": "20:00",
           "y": "Thu",
-          "value": 400
+          "value": 354
         },
         {
           "x": "21:00",
           "y": "Thu",
-          "value": 350
+          "value": 300
         },
         {
           "x": "22:00",
           "y": "Thu",
-          "value": 266
+          "value": 210
         },
         {
           "x": "23:00",
           "y": "Thu",
-          "value": 206
+          "value": 170
         },
         {
           "x": "00:00",
           "y": "Fri",
-          "value": 139
+          "value": 112
         },
         {
           "x": "01:00",
           "y": "Fri",
-          "value": 51
+          "value": 50
         },
         {
           "x": "02:00",
@@ -2367,182 +2350,182 @@
         {
           "x": "12:00",
           "y": "Fri",
-          "value": 100
+          "value": 97
         },
         {
           "x": "13:00",
           "y": "Fri",
-          "value": 207
+          "value": 206
         },
         {
           "x": "14:00",
           "y": "Fri",
-          "value": 273
+          "value": 272
         },
         {
           "x": "15:00",
-          "y": "Fri",
-          "value": 401
-        },
-        {
-          "x": "16:00",
           "y": "Fri",
           "value": 397
         },
         {
+          "x": "16:00",
+          "y": "Fri",
+          "value": 394
+        },
+        {
           "x": "17:00",
           "y": "Fri",
-          "value": 391
+          "value": 386
         },
         {
           "x": "18:00",
           "y": "Fri",
-          "value": 388
+          "value": 386
         },
         {
           "x": "19:00",
           "y": "Fri",
-          "value": 425
+          "value": 422
         },
         {
           "x": "20:00",
           "y": "Fri",
-          "value": 385
+          "value": 382
         },
         {
           "x": "21:00",
           "y": "Fri",
-          "value": 290
+          "value": 286
         },
         {
           "x": "22:00",
           "y": "Fri",
-          "value": 210
+          "value": 182
         },
         {
           "x": "23:00",
           "y": "Fri",
-          "value": 174
+          "value": 144
         },
         {
           "x": "00:00",
           "y": "Sat",
-          "value": 93
+          "value": 66
         },
         {
           "x": "01:00",
           "y": "Sat",
-          "value": 51
+          "value": 21
         },
         {
           "x": "02:00",
           "y": "Sat",
-          "value": 61
+          "value": 33
         },
         {
           "x": "03:00",
           "y": "Sat",
-          "value": 46
+          "value": 19
         },
         {
           "x": "04:00",
           "y": "Sat",
-          "value": 41
+          "value": 11
         },
         {
           "x": "05:00",
           "y": "Sat",
-          "value": 33
+          "value": 4
         },
         {
           "x": "06:00",
           "y": "Sat",
-          "value": 31
+          "value": 6
         },
         {
           "x": "07:00",
           "y": "Sat",
-          "value": 28
+          "value": 1
         },
         {
           "x": "08:00",
           "y": "Sat",
-          "value": 27
+          "value": 0
         },
         {
           "x": "09:00",
           "y": "Sat",
-          "value": 28
+          "value": 0
         },
         {
           "x": "10:00",
           "y": "Sat",
-          "value": 32
+          "value": 2
         },
         {
           "x": "11:00",
           "y": "Sat",
-          "value": 33
+          "value": 6
         },
         {
           "x": "12:00",
           "y": "Sat",
-          "value": 38
+          "value": 4
         },
         {
           "x": "13:00",
           "y": "Sat",
-          "value": 62
+          "value": 33
         },
         {
           "x": "14:00",
           "y": "Sat",
-          "value": 69
+          "value": 34
         },
         {
           "x": "15:00",
           "y": "Sat",
-          "value": 59
+          "value": 31
         },
         {
           "x": "16:00",
           "y": "Sat",
-          "value": 72
+          "value": 42
         },
         {
           "x": "17:00",
           "y": "Sat",
-          "value": 54
+          "value": 26
         },
         {
           "x": "18:00",
           "y": "Sat",
-          "value": 60
+          "value": 30
         },
         {
           "x": "19:00",
           "y": "Sat",
-          "value": 53
+          "value": 25
         },
         {
           "x": "20:00",
           "y": "Sat",
-          "value": 51
+          "value": 23
         },
         {
           "x": "21:00",
           "y": "Sat",
-          "value": 42
+          "value": 13
         },
         {
           "x": "22:00",
           "y": "Sat",
-          "value": 47
+          "value": 14
         },
         {
           "x": "23:00",
           "y": "Sat",
-          "value": 38
+          "value": 11
         }
       ],
       "xLabels": [
@@ -2570,17 +2553,17 @@
         {
           "x": "Request Comp..",
           "y": "Servicing Help",
-          "value": 20138
+          "value": 20477
         },
         {
           "x": "New",
           "y": "Servicing Help",
-          "value": 325
+          "value": 314
         },
         {
           "x": "Assigned",
           "y": "Servicing Help",
-          "value": 181
+          "value": 209
         },
         {
           "x": "Closed - Mis..",
@@ -2590,52 +2573,22 @@
         {
           "x": "In Progress",
           "y": "Servicing Help",
-          "value": 116
+          "value": 112
         },
         {
           "x": "Reopened",
           "y": "Servicing Help",
-          "value": 69
-        },
-        {
-          "x": "Request Comp..",
-          "y": "ServApp Support",
-          "value": 0
-        },
-        {
-          "x": "New",
-          "y": "ServApp Support",
-          "value": 1920
-        },
-        {
-          "x": "Assigned",
-          "y": "ServApp Support",
-          "value": 0
-        },
-        {
-          "x": "Closed - Mis..",
-          "y": "ServApp Support",
-          "value": 0
-        },
-        {
-          "x": "In Progress",
-          "y": "ServApp Support",
-          "value": 0
-        },
-        {
-          "x": "Reopened",
-          "y": "ServApp Support",
-          "value": 0
+          "value": 66
         },
         {
           "x": "Request Comp..",
           "y": "CMG Servicing O..",
-          "value": 851
+          "value": 865
         },
         {
           "x": "New",
           "y": "CMG Servicing O..",
-          "value": 25
+          "value": 39
         },
         {
           "x": "Assigned",
@@ -2650,7 +2603,7 @@
         {
           "x": "In Progress",
           "y": "CMG Servicing O..",
-          "value": 9
+          "value": 8
         },
         {
           "x": "Reopened",
@@ -2660,12 +2613,12 @@
         {
           "x": "Request Comp..",
           "y": "Servicing Escal..",
-          "value": 796
+          "value": 805
         },
         {
           "x": "New",
           "y": "Servicing Escal..",
-          "value": 17
+          "value": 20
         },
         {
           "x": "Assigned",
@@ -2680,7 +2633,7 @@
         {
           "x": "In Progress",
           "y": "Servicing Escal..",
-          "value": 2
+          "value": 1
         },
         {
           "x": "Reopened",
@@ -2698,7 +2651,6 @@
       ],
       "yLabels": [
         "Servicing Help",
-        "ServApp Support",
         "CMG Servicing O..",
         "Servicing Escal.."
       ]
@@ -2706,74 +2658,25 @@
   },
   "issues": [
     {
-      "category": "Project Health",
-      "metric": "Servicing Help",
-      "value": 100,
-      "severity": "critical",
-      "description": "20,979 open of 20,979 total"
-    },
-    {
-      "category": "Project Health",
-      "metric": "ServApp Support",
-      "value": 100,
-      "severity": "critical",
-      "description": "1,923 open of 1,923 total"
-    },
-    {
-      "category": "Project Health",
-      "metric": "CMG Servicing Oversi",
-      "value": 100,
-      "severity": "critical",
-      "description": "927 open of 927 total"
-    },
-    {
-      "category": "Project Health",
-      "metric": "Servicing Escalation",
-      "value": 100,
-      "severity": "critical",
-      "description": "858 open of 858 total"
-    },
-    {
-      "category": "Workload",
-      "metric": "Doherty",
-      "value": 3660,
-      "severity": "critical",
-      "description": "100% of 3,660 assigned"
-    },
-    {
-      "category": "Workload",
-      "metric": "Chaves",
-      "value": 2488,
-      "severity": "warning",
-      "description": "100% of 2,488 assigned"
-    },
-    {
-      "category": "Workload",
-      "metric": "Vue",
-      "value": 1354,
-      "severity": "warning",
-      "description": "100% of 1,354 assigned"
-    },
-    {
       "category": "Response Time",
       "metric": ">24h No Response",
-      "value": 7612,
-      "severity": "critical",
+      "value": 197,
+      "severity": "warning",
       "description": "Open tickets waiting over 24 hours"
     },
     {
       "category": "Volume Trend",
       "metric": "2025-12",
-      "value": -92,
+      "value": -86,
       "severity": "normal",
-      "description": "-92% vs previous month"
+      "description": "-86% vs previous month"
     },
     {
       "category": "Summary",
       "metric": "Total Open",
-      "value": 24687,
-      "severity": "warning",
-      "description": "0% completion rate"
+      "value": 3451,
+      "severity": "normal",
+      "description": "85% completion rate"
     },
     {
       "category": "Summary",
@@ -2787,57 +2690,57 @@
     "volumeByDayOfWeek": [
       {
         "day": "Sun",
-        "count": 938
+        "count": 234
       },
       {
         "day": "Mon",
-        "count": 4760
+        "count": 4697
       },
       {
         "day": "Tue",
-        "count": 4809
+        "count": 5090
       },
       {
         "day": "Wed",
-        "count": 4794
+        "count": 4807
       },
       {
         "day": "Thu",
-        "count": 4301
+        "count": 4063
       },
       {
         "day": "Fri",
-        "count": 3936
+        "count": 3821
       },
       {
         "day": "Sat",
-        "count": 1149
+        "count": 455
       }
     ],
     "peakHours": [
       {
         "hour": "18:00",
-        "count": 2400
+        "count": 2377
       },
       {
         "hour": "16:00",
-        "count": 2385
-      },
-      {
-        "hour": "19:00",
-        "count": 2378
+        "count": 2369
       },
       {
         "hour": "17:00",
-        "count": 2370
+        "count": 2358
+      },
+      {
+        "hour": "19:00",
+        "count": 2330
       },
       {
         "hour": "15:00",
-        "count": 2314
+        "count": 2264
       }
     ],
-    "projectsAtRisk": 4,
-    "overloadedAssignees": 11
+    "projectsAtRisk": 0,
+    "overloadedAssignees": 0
   },
-  "processedAt": "2025-12-04T21:01:59.708Z"
+  "processedAt": "2025-12-05T00:03:30.127Z"
 }

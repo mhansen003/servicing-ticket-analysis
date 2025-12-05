@@ -45,7 +45,8 @@ console.log(`📌 Filtered to ${tickets.length.toLocaleString()} servicing ticke
 
 // Helper to check completion
 const isComplete = (t) =>
-  t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1';
+  t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1' ||
+  t.is_ticket_complete === 'YES' || t.is_ticket_complete === 'yes' || t.is_ticket_complete === true;
 
 // Calculate stats
 const completedTickets = tickets.filter(isComplete);
@@ -550,7 +551,7 @@ const allTickets = tickets.map((t) => ({
   created: t.ticket_created_at_utc,
   responseTime: t.time_to_first_response_in_minutes,
   resolutionTime: t.time_to_resolution_in_minutes,
-  complete: t.is_ticket_complete === 'TRUE' || t.is_ticket_complete === 'true' || t.is_ticket_complete === '1',
+  complete: isComplete(t),
   // Add category for drill-down filtering (uses same categorization as analytics)
   category: categorizeTicket(t.ticket_title),
 }));
