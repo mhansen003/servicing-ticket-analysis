@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { Sparkles, Send, Loader2, Bot } from 'lucide-react';
 
 const SUGGESTED_PROMPTS = [
-  'What are the main bottlenecks?',
-  'Which projects need attention?',
-  'Analyze workload distribution',
-  'Response time patterns',
-  'Overall ticket health',
-  'Most efficient assignees',
+  'What are common customer issues?',
+  'Which agents perform best?',
+  'Analyze sentiment trends',
+  'Call duration patterns',
+  'Overall call quality',
+  'Escalation risk analysis',
 ];
 
 export function AIAnalysis() {
@@ -67,7 +67,7 @@ export function AIAnalysis() {
         </div>
         <div>
           <h3 className="text-lg font-semibold text-white">AI-Powered Analysis</h3>
-          <p className="text-sm text-gray-500">Ask questions about your ticket data</p>
+          <p className="text-sm text-gray-500">Ask questions about your transcript data</p>
         </div>
       </div>
 
@@ -94,7 +94,7 @@ export function AIAnalysis() {
             type="text"
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
-            placeholder="Ask a question about your ticket data..."
+            placeholder="Ask a question about your transcript data..."
             className="flex-1 px-4 py-3 bg-[#0a0e17] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 transition-all"
             disabled={loading}
           />
@@ -136,7 +136,7 @@ export function AIAnalysis() {
             <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl animate-pulse" />
             <Loader2 className="h-8 w-8 animate-spin text-blue-400 relative" />
           </div>
-          <p className="mt-4 text-gray-400 text-sm">Analyzing your ticket data...</p>
+          <p className="mt-4 text-gray-400 text-sm">Analyzing your transcript data...</p>
         </div>
       )}
     </div>
