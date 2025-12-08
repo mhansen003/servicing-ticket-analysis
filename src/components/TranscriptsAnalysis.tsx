@@ -35,6 +35,7 @@ import {
   ChevronUp,
   Loader2,
   MousePointerClick,
+  X,
 } from 'lucide-react';
 import { TranscriptModal } from './TranscriptModal';
 
@@ -225,7 +226,7 @@ export default function TranscriptsAnalysis() {
       .sort((a, b) => parseInt(a.hour) - parseInt(b.hour));
   }, [stats]);
 
-  // Prepare agent leaderboard
+  // Prepare agent leaderboard - only show agents with 20+ calls
   const agentLeaderboard = useMemo(() => {
     if (!stats) return [];
     return Object.entries(stats.byAgent)
@@ -234,6 +235,7 @@ export default function TranscriptsAnalysis() {
         count: data.count,
         avgPerformance: data.avgPerformance,
       }))
+      .filter((agent) => agent.count >= 20) // Only show agents with sufficient data
       .sort((a, b) => b.count - a.count)
       .slice(0, 15);
   }, [stats]);
@@ -319,6 +321,55 @@ export default function TranscriptsAnalysis() {
 
   return (
     <div className="space-y-6">
+      {/* Global Search Bar */}
+      <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+            <Search className="h-6 w-6 text-white" />
+          </div>
+          <div>
+            <h2 className="text-xl font-bold text-white">Search Transcripts</h2>
+            <p className="text-sm text-gray-400">Find specific conversations quickly</p>
+          </div>
+        </div>
+        <div className="relative">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && searchQuery.trim()) {
+                openDrillDown('all', searchQuery, `Search: "${searchQuery}"`);
+              }
+            }}
+            placeholder="Search by agent name, department, vendor call key, or keywords..."
+            className="w-full pl-12 pr-32 py-4 bg-[#0a0e17] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all text-lg"
+          />
+          <button
+            onClick={() => {
+              if (searchQuery.trim()) {
+                openDrillDown('all', searchQuery, `Search: "${searchQuery}"`);
+              }
+            }}
+            disabled={!searchQuery.trim()}
+            className="absolute right-2 top-1/2 -translate-y-1/2 px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
+          >
+            <Search className="h-4 w-4" />
+            Search
+          </button>
+        </div>
+        {searchQuery && (
+          <button
+            onClick={() => setSearchQuery('')}
+            className="mt-3 text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1"
+          >
+            <X className="h-3 w-3" />
+            Clear search
+          </button>
+        )}
+      </div>
+
       {/* Header Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
@@ -959,7 +1010,7 @@ export default function TranscriptsAnalysis() {
             </div>
             <div className="text-left">
               <h3 className="text-lg font-semibold text-white">Agent Leaderboard</h3>
-              <p className="text-sm text-gray-500">Top agents by call volume</p>
+              <p className="text-sm text-gray-500">Top agents by call volume (minimum 20 calls)</p>
             </div>
           </div>
           {expandedSections.has('agents') ? (
