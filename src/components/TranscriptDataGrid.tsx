@@ -58,6 +58,7 @@ export default function TranscriptDataGrid() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sentimentFilter, setSentimentFilter] = useState<string>('all');
   const [departmentFilter, setDepartmentFilter] = useState<string>('all');
+  const [daysBack, setDaysBack] = useState<number>(10); // Default to 10 days back
   const [showFilters, setShowFilters] = useState(false);
 
   // Sorting
@@ -92,6 +93,13 @@ export default function TranscriptDataGrid() {
   // Filter and sort transcripts
   const filteredTranscripts = useMemo(() => {
     let filtered = transcripts;
+
+    // Apply date filter (default to last 10 days)
+    if (daysBack > 0) {
+      const cutoffDate = new Date();
+      cutoffDate.setDate(cutoffDate.getDate() - daysBack);
+      filtered = filtered.filter(t => new Date(t.callStart) >= cutoffDate);
+    }
 
     // Apply search query
     if (searchQuery.trim()) {
@@ -133,7 +141,7 @@ export default function TranscriptDataGrid() {
     });
 
     return filtered;
-  }, [transcripts, searchQuery, sentimentFilter, departmentFilter, sortField, sortOrder]);
+  }, [transcripts, daysBack, searchQuery, sentimentFilter, departmentFilter, sortField, sortOrder]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -181,9 +189,10 @@ export default function TranscriptDataGrid() {
     setSearchQuery('');
     setSentimentFilter('all');
     setDepartmentFilter('all');
+    setDaysBack(10); // Reset to default
   };
 
-  const activeFilterCount = (sentimentFilter !== 'all' ? 1 : 0) + (departmentFilter !== 'all' ? 1 : 0);
+  const activeFilterCount = (sentimentFilter !== 'all' ? 1 : 0) + (departmentFilter !== 'all' ? 1 : 0) + (daysBack !== 10 ? 1 : 0);
 
   if (loading) {
     return (
@@ -218,6 +227,7 @@ export default function TranscriptDataGrid() {
               <h3 className="text-lg font-semibold text-white">Raw Transcript Data</h3>
               <p className="text-sm text-gray-500">
                 {loading ? 'Loading...' : `${filteredTranscripts.length.toLocaleString()} of ${transcripts.length.toLocaleString()} calls`}
+                {!loading && daysBack > 0 && ` • Last ${daysBack} days`}
               </p>
             </div>
           </div>
@@ -266,7 +276,23 @@ export default function TranscriptDataGrid() {
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
+            <div>
+              <label className="text-xs text-gray-500 mb-1 block">Date Range</label>
+              <select
+                value={daysBack}
+                onChange={(e) => setDaysBack(Number(e.target.value))}
+                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+              >
+                <option value={7}>Last 7 days</option>
+                <option value={10}>Last 10 days (default)</option>
+                <option value={30}>Last 30 days</option>
+                <option value={60}>Last 60 days</option>
+                <option value={90}>Last 90 days</option>
+                <option value={0}>All time</option>
+              </select>
+            </div>
+
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Sentiment</label>
               <select
