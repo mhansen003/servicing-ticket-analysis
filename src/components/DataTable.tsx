@@ -16,7 +16,16 @@ import {
   ChevronRight as ChevronRightIcon,
   Download,
 } from 'lucide-react';
-import type { DrillDownFilter } from '@/app/page';
+// import type { DrillDownFilter } from '@/app/page'; // Removed - no longer using drill-down filters
+
+// DrillDownFilter interface defined locally since this component is deprecated
+interface DrillDownFilter {
+  type: 'category' | 'project' | 'dateRange' | 'search';
+  value: string;
+  label: string;
+  dateStart?: string;
+  dateEnd?: string;
+}
 
 interface Ticket {
   id: string;
