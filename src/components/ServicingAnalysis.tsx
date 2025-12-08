@@ -16,9 +16,18 @@ import {
   Area,
 } from 'recharts';
 import { TrendingUp, TrendingDown, Calendar, BarChart3, PieChartIcon, Layers, MousePointer, Sparkles } from 'lucide-react';
-import type { DrillDownFilter } from '@/app/page';
+// import type { DrillDownFilter } from '@/app/page'; // Removed - this component is deprecated
 import { TicketModal } from './TicketModal';
 import { AdvancedCharts } from './AdvancedCharts';
+
+// DrillDownFilter interface defined locally since this component is deprecated
+interface DrillDownFilter {
+  type: 'category' | 'project' | 'dateRange' | 'search';
+  value: string;
+  label: string;
+  dateStart?: string;
+  dateEnd?: string;
+}
 
 interface ServicingCategory {
   name: string;
