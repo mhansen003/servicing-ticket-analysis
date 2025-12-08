@@ -58,7 +58,6 @@ export default function TranscriptDataGrid() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sentimentFilter, setSentimentFilter] = useState<string>('all');
   const [departmentFilter, setDepartmentFilter] = useState<string>('all');
-  const [showFilters, setShowFilters] = useState(false);
 
   // Date filters - default to last 10 days
   const getDefaultFromDate = () => {
@@ -251,7 +250,59 @@ export default function TranscriptDataGrid() {
           </div>
         </div>
 
-        {/* Search and Filter Bar */}
+        {/* Date Range Filters - Always Visible */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">From Date</label>
+            <input
+              type="date"
+              value={fromDate}
+              onChange={(e) => setFromDate(e.target.value)}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">To Date</label>
+            <input
+              type="date"
+              value={toDate}
+              onChange={(e) => setToDate(e.target.value)}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">Sentiment</label>
+            <select
+              value={sentimentFilter}
+              onChange={(e) => setSentimentFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+            >
+              <option value="all">All Sentiments</option>
+              <option value="positive">Positive</option>
+              <option value="negative">Negative</option>
+              <option value="neutral">Neutral</option>
+              <option value="mixed">Mixed</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-xs text-gray-500 mb-1 block">Department</label>
+            <select
+              value={departmentFilter}
+              onChange={(e) => setDepartmentFilter(e.target.value)}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+            >
+              <option value="all">All Departments</option>
+              {departments.map(dept => (
+                <option key={dept} value={dept}>{dept.replace('SRVC - ', '').replace('SRVC/', '')}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Search Bar */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
@@ -264,87 +315,16 @@ export default function TranscriptDataGrid() {
             />
           </div>
 
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all ${
-              showFilters || activeFilterCount > 0
-                ? 'bg-blue-500/10 border-blue-500/30 text-blue-400'
-                : 'bg-[#0a0e17] border-white/[0.08] text-gray-400 hover:text-white'
-            }`}
-          >
-            <Filter className="h-4 w-4" />
-            Filters
-            {activeFilterCount > 0 && (
-              <span className="px-1.5 py-0.5 bg-blue-500 text-white text-xs rounded-full">
-                {activeFilterCount}
-              </span>
-            )}
-          </button>
-
           {activeFilterCount > 0 && (
             <button
               onClick={clearFilters}
-              className="flex items-center gap-1.5 px-3 py-2.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all"
+              className="flex items-center gap-1.5 px-4 py-2.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all"
             >
               <X className="h-4 w-4" />
-              Clear
+              Reset Filters
             </button>
           )}
         </div>
-
-        {/* Filter Panel */}
-        {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">From Date</label>
-              <input
-                type="date"
-                value={fromDate}
-                onChange={(e) => setFromDate(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">To Date</label>
-              <input
-                type="date"
-                value={toDate}
-                onChange={(e) => setToDate(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Sentiment</label>
-              <select
-                value={sentimentFilter}
-                onChange={(e) => setSentimentFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="all">All Sentiments</option>
-                <option value="positive">Positive</option>
-                <option value="negative">Negative</option>
-                <option value="neutral">Neutral</option>
-                <option value="mixed">Mixed</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Department</label>
-              <select
-                value={departmentFilter}
-                onChange={(e) => setDepartmentFilter(e.target.value)}
-                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value="all">All Departments</option>
-                {departments.map(dept => (
-                  <option key={dept} value={dept}>{dept.replace('SRVC - ', '').replace('SRVC/', '')}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        )}
       </div>
 
       {/* Table */}
