@@ -97,10 +97,10 @@ export default function TranscriptDataGrid() {
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(t =>
-        t.vendorCallKey.toLowerCase().includes(query) ||
-        t.agentName.toLowerCase().includes(query) ||
-        t.department.toLowerCase().includes(query) ||
-        t.detectedTopics.some(topic => topic.toLowerCase().includes(query)) ||
+        (t.vendorCallKey || '').toLowerCase().includes(query) ||
+        (t.agentName || '').toLowerCase().includes(query) ||
+        (t.department || '').toLowerCase().includes(query) ||
+        (t.detectedTopics || []).some(topic => (topic || '').toLowerCase().includes(query)) ||
         (t.aiAnalysis?.summary || '').toLowerCase().includes(query)
       );
     }
@@ -381,7 +381,7 @@ export default function TranscriptDataGrid() {
                     {transcript.agentName}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-400">
-                    {transcript.department.replace('SRVC - ', '').replace('SRVC/', '')}
+                    {transcript.department ? transcript.department.replace('SRVC - ', '').replace('SRVC/', '') : '-'}
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-500">
                     {formatDuration(transcript.durationSeconds)}
