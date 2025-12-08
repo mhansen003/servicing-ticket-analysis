@@ -6,9 +6,11 @@ import {
   Search,
   X,
   Phone,
+  Info,
 } from 'lucide-react';
 import { AgentProfileCard } from './AgentProfileCard';
 import { TranscriptModal } from './TranscriptModal';
+import { AgentGradingModal } from './AgentGradingModal';
 
 interface AgentStats {
   name: string;
@@ -75,9 +77,10 @@ export default function AgentsAnalysis() {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'performance' | 'calls'>('performance'); // Default to top performers
 
-  // Transcript modal state
+  // Modal state
   const [transcriptModalOpen, setTranscriptModalOpen] = useState(false);
   const [transcriptFilterAgent, setTranscriptFilterAgent] = useState('');
+  const [gradingModalOpen, setGradingModalOpen] = useState(false);
 
   // Load rankings data
   useEffect(() => {
@@ -199,6 +202,13 @@ export default function AgentsAnalysis() {
             </p>
           </div>
         </div>
+        <button
+          onClick={() => setGradingModalOpen(true)}
+          className="flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-xl text-blue-400 hover:text-blue-300 transition-all text-sm"
+        >
+          <Info className="h-4 w-4" />
+          How Are Agents Graded?
+        </button>
       </div>
 
       {/* Performance Distribution - Only ranked agents (20+ calls) */}
@@ -331,6 +341,12 @@ export default function AgentsAnalysis() {
         title={`${transcriptFilterAgent}'s Calls`}
         filterType="agent"
         filterValue={transcriptFilterAgent}
+      />
+
+      {/* Agent Grading Explanation Modal */}
+      <AgentGradingModal
+        isOpen={gradingModalOpen}
+        onClose={() => setGradingModalOpen(false)}
       />
     </div>
   );
