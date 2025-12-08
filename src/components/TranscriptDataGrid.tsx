@@ -58,8 +58,21 @@ export default function TranscriptDataGrid() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sentimentFilter, setSentimentFilter] = useState<string>('all');
   const [departmentFilter, setDepartmentFilter] = useState<string>('all');
-  const [daysBack, setDaysBack] = useState<number>(10); // Default to 10 days back
   const [showFilters, setShowFilters] = useState(false);
+
+  // Date filters - default to last 10 days
+  const getDefaultFromDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 10);
+    return date.toISOString().split('T')[0];
+  };
+
+  const getDefaultToDate = () => {
+    return new Date().toISOString().split('T')[0];
+  };
+
+  const [fromDate, setFromDate] = useState<string>(getDefaultFromDate());
+  const [toDate, setToDate] = useState<string>(getDefaultToDate());
 
   // Sorting
   const [sortField, setSortField] = useState<SortField>('callStart');
@@ -94,11 +107,14 @@ export default function TranscriptDataGrid() {
   const filteredTranscripts = useMemo(() => {
     let filtered = transcripts;
 
-    // Apply date filter (default to last 10 days)
-    if (daysBack > 0) {
-      const cutoffDate = new Date();
-      cutoffDate.setDate(cutoffDate.getDate() - daysBack);
-      filtered = filtered.filter(t => new Date(t.callStart) >= cutoffDate);
+    // Apply date range filter
+    if (fromDate) {
+      const fromDateTime = new Date(fromDate + 'T00:00:00');
+      filtered = filtered.filter(t => new Date(t.callStart) >= fromDateTime);
+    }
+    if (toDate) {
+      const toDateTime = new Date(toDate + 'T23:59:59');
+      filtered = filtered.filter(t => new Date(t.callStart) <= toDateTime);
     }
 
     // Apply search query
@@ -141,7 +157,7 @@ export default function TranscriptDataGrid() {
     });
 
     return filtered;
-  }, [transcripts, daysBack, searchQuery, sentimentFilter, departmentFilter, sortField, sortOrder]);
+  }, [transcripts, fromDate, toDate, searchQuery, sentimentFilter, departmentFilter, sortField, sortOrder]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -189,10 +205,12 @@ export default function TranscriptDataGrid() {
     setSearchQuery('');
     setSentimentFilter('all');
     setDepartmentFilter('all');
-    setDaysBack(10); // Reset to default
+    setFromDate(getDefaultFromDate());
+    setToDate(getDefaultToDate());
   };
 
-  const activeFilterCount = (sentimentFilter !== 'all' ? 1 : 0) + (departmentFilter !== 'all' ? 1 : 0) + (daysBack !== 10 ? 1 : 0);
+  const isDefaultDateRange = fromDate === getDefaultFromDate() && toDate === getDefaultToDate();
+  const activeFilterCount = (sentimentFilter !== 'all' ? 1 : 0) + (departmentFilter !== 'all' ? 1 : 0) + (!isDefaultDateRange ? 1 : 0);
 
   if (loading) {
     return (
@@ -227,7 +245,7 @@ export default function TranscriptDataGrid() {
               <h3 className="text-lg font-semibold text-white">Raw Transcript Data</h3>
               <p className="text-sm text-gray-500">
                 {loading ? 'Loading...' : `${filteredTranscripts.length.toLocaleString()} of ${transcripts.length.toLocaleString()} calls`}
-                {!loading && daysBack > 0 && ` • Last ${daysBack} days`}
+                {!loading && fromDate && toDate && ` • ${new Date(fromDate).toLocaleDateString()} - ${new Date(toDate).toLocaleDateString()}`}
               </p>
             </div>
           </div>
@@ -276,21 +294,25 @@ export default function TranscriptDataGrid() {
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-4 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
             <div>
-              <label className="text-xs text-gray-500 mb-1 block">Date Range</label>
-              <select
-                value={daysBack}
-                onChange={(e) => setDaysBack(Number(e.target.value))}
+              <label className="text-xs text-gray-500 mb-1 block">From Date</label>
+              <input
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
                 className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
-              >
-                <option value={7}>Last 7 days</option>
-                <option value={10}>Last 10 days (default)</option>
-                <option value={30}>Last 30 days</option>
-                <option value={60}>Last 60 days</option>
-                <option value={90}>Last 90 days</option>
-                <option value={0}>All time</option>
-              </select>
+              />
+            </div>
+
+            <div>
+              <label className="text-xs text-gray-500 mb-1 block">To Date</label>
+              <input
+                type="date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+                className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+              />
             </div>
 
             <div>

@@ -73,6 +73,7 @@ export default function AgentsAnalysis() {
   const [agentProfile, setAgentProfile] = useState<AgentProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'performance' | 'calls'>('performance'); // Default to top performers
 
   // Transcript modal state
   const [transcriptModalOpen, setTranscriptModalOpen] = useState(false);
@@ -133,16 +134,15 @@ export default function AgentsAnalysis() {
     setTranscriptModalOpen(true);
   };
 
-  // Get all agents sorted by sentiment score (top performers first), with search filter
+  // Get all agents sorted by selected criteria, with search filter
   // Only show agents with 20+ calls for statistical significance
   const getDisplayedAgents = (): AgentStats[] => {
     if (!rankings) return [];
 
-    // Filter to only agents with 20+ calls, then sort by sentiment score descending (best first)
-    let agents = [...rankings.allAgents]
-      .filter((a) => a.callCount >= 20) // Minimum 20 calls required for ranking
-      .sort((a, b) => b.sentimentScore - a.sentimentScore);
+    // Filter to only agents with 20+ calls
+    let agents = [...rankings.allAgents].filter((a) => a.callCount >= 20);
 
+    // Apply search filter
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
       agents = agents.filter(
@@ -150,6 +150,13 @@ export default function AgentsAnalysis() {
           a.name.toLowerCase().includes(search) ||
           a.department?.toLowerCase().includes(search)
       );
+    }
+
+    // Sort based on selected criteria
+    if (sortBy === 'performance') {
+      agents.sort((a, b) => b.sentimentScore - a.sentimentScore); // Top performers first
+    } else {
+      agents.sort((a, b) => b.callCount - a.callCount); // Most calls first
     }
 
     return agents;
@@ -244,16 +251,26 @@ export default function AgentsAnalysis() {
       <div className="flex gap-6">
         {/* Agent Grid */}
         <div className={`${selectedAgent ? 'w-1/2' : 'w-full'} space-y-4`}>
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-            <input
-              type="text"
-              placeholder="Search agents by name or department..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500/50"
-            />
+          {/* Search and Sort */}
+          <div className="flex gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+              <input
+                type="text"
+                placeholder="Search agents by name or department..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-9 pr-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500/50"
+              />
+            </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as 'performance' | 'calls')}
+              className="px-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white text-sm focus:outline-none focus:border-blue-500/50"
+            >
+              <option value="performance">Top Performers</option>
+              <option value="calls">Most Calls</option>
+            </select>
           </div>
 
           {/* Agent Tiles */}
