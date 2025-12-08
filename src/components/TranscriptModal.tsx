@@ -535,34 +535,43 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
             return (t.aiAnalysis?.sentiment || t.basicSentiment) === filterValue;
           case 'topic':
             return (
-              t.detectedTopics.includes(filterValue) ||
-              t.aiAnalysis?.topics?.includes(filterValue)
+              (t.detectedTopics || []).includes(filterValue) ||
+              (t.aiAnalysis?.topics || []).includes(filterValue)
             );
           case 'department':
             return t.department === filterValue;
           case 'agent':
             return t.agentName === filterValue;
+          case 'date':
+            // Filter by date when filterValue is a date (YYYY-MM-DD)
+            return t.callStart?.startsWith(filterValue);
           case 'all':
-            // Filter by date when filterValue looks like a date (YYYY-MM-DD)
-            if (filterValue.match(/^\d{4}-\d{2}-\d{2}$/)) {
-              return t.callStart?.startsWith(filterValue);
-            }
-            return true;
+            // Global search across all fields
+            const query = filterValue.toLowerCase();
+            return (
+              (t.vendorCallKey || '').toLowerCase().includes(query) ||
+              (t.agentName || '').toLowerCase().includes(query) ||
+              (t.department || '').toLowerCase().includes(query) ||
+              (t.disposition || '').toLowerCase().includes(query) ||
+              (t.detectedTopics || []).some(topic => (topic || '').toLowerCase().includes(query)) ||
+              (t.aiAnalysis?.summary || '').toLowerCase().includes(query) ||
+              (t.conversation || []).some((msg) => (msg?.text || '').toLowerCase().includes(query))
+            );
           default:
             return true;
         }
       });
     }
 
-    // Apply search filter
+    // Apply search filter (from modal's own search box)
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
       filtered = filtered.filter(
         (t) =>
-          t.agentName?.toLowerCase().includes(search) ||
-          t.department?.toLowerCase().includes(search) ||
-          t.disposition?.toLowerCase().includes(search) ||
-          t.conversation.some((msg) => msg.text.toLowerCase().includes(search))
+          (t.agentName || '').toLowerCase().includes(search) ||
+          (t.department || '').toLowerCase().includes(search) ||
+          (t.disposition || '').toLowerCase().includes(search) ||
+          (t.conversation || []).some((msg) => (msg?.text || '').toLowerCase().includes(search))
       );
     }
 
