@@ -134,11 +134,14 @@ export default function AgentsAnalysis() {
   };
 
   // Get all agents sorted by sentiment score (top performers first), with search filter
+  // Only show agents with 20+ calls for statistical significance
   const getDisplayedAgents = (): AgentStats[] => {
     if (!rankings) return [];
 
-    // Sort all agents by sentiment score descending (best first)
-    let agents = [...rankings.allAgents].sort((a, b) => b.sentimentScore - a.sentimentScore);
+    // Filter to only agents with 20+ calls, then sort by sentiment score descending (best first)
+    let agents = [...rankings.allAgents]
+      .filter((a) => a.callCount >= 20) // Minimum 20 calls required for ranking
+      .sort((a, b) => b.sentimentScore - a.sentimentScore);
 
     if (searchTerm) {
       const search = searchTerm.toLowerCase();
@@ -153,6 +156,15 @@ export default function AgentsAnalysis() {
   };
 
   const displayedAgents = getDisplayedAgents();
+
+  // Calculate distribution for ranked agents only (20+ calls)
+  const rankedDistribution = displayedAgents.reduce(
+    (acc, agent) => {
+      acc[agent.performanceTier]++;
+      return acc;
+    },
+    { top: 0, good: 0, average: 0, needsImprovement: 0, critical: 0 } as Record<string, number>
+  );
 
   if (loading) {
     return (
@@ -176,46 +188,46 @@ export default function AgentsAnalysis() {
           <div>
             <h2 className="text-lg font-semibold text-white">Agent Performance Rankings</h2>
             <p className="text-sm text-gray-400">
-              {rankings?.totalAgents} agents • {rankings?.totalCalls.toLocaleString()} total calls
+              {displayedAgents.length} ranked agents (20+ calls) • {rankings?.totalCalls.toLocaleString()} total calls
             </p>
           </div>
         </div>
       </div>
 
-      {/* Performance Distribution */}
-      {rankings && !selectedAgent && (
+      {/* Performance Distribution - Only ranked agents (20+ calls) */}
+      {rankings && !selectedAgent && displayedAgents.length > 0 && (
         <div className="p-4 bg-[#131a29] rounded-xl border border-white/[0.08]">
-          <h3 className="text-sm font-medium text-gray-400 mb-3">Performance Distribution</h3>
+          <h3 className="text-sm font-medium text-gray-400 mb-3">Performance Distribution (Ranked Agents Only)</h3>
           <div className="flex items-center gap-1 h-8 rounded-lg overflow-hidden bg-[#0f1420]">
             <div
               className="h-full bg-emerald-500 flex items-center justify-center"
-              style={{ width: `${(rankings.distribution.top / rankings.totalAgents) * 100}%` }}
+              style={{ width: `${(rankedDistribution.top / displayedAgents.length) * 100}%` }}
             >
-              <span className="text-xs font-medium text-white">{rankings.distribution.top}</span>
+              <span className="text-xs font-medium text-white">{rankedDistribution.top}</span>
             </div>
             <div
               className="h-full bg-blue-500 flex items-center justify-center"
-              style={{ width: `${(rankings.distribution.good / rankings.totalAgents) * 100}%` }}
+              style={{ width: `${(rankedDistribution.good / displayedAgents.length) * 100}%` }}
             >
-              <span className="text-xs font-medium text-white">{rankings.distribution.good}</span>
+              <span className="text-xs font-medium text-white">{rankedDistribution.good}</span>
             </div>
             <div
               className="h-full bg-gray-500 flex items-center justify-center"
-              style={{ width: `${(rankings.distribution.average / rankings.totalAgents) * 100}%` }}
+              style={{ width: `${(rankedDistribution.average / displayedAgents.length) * 100}%` }}
             >
-              <span className="text-xs font-medium text-white">{rankings.distribution.average}</span>
+              <span className="text-xs font-medium text-white">{rankedDistribution.average}</span>
             </div>
             <div
               className="h-full bg-amber-500 flex items-center justify-center"
-              style={{ width: `${(rankings.distribution.needsImprovement / rankings.totalAgents) * 100}%` }}
+              style={{ width: `${(rankedDistribution.needsImprovement / displayedAgents.length) * 100}%` }}
             >
-              <span className="text-xs font-medium text-white">{rankings.distribution.needsImprovement}</span>
+              <span className="text-xs font-medium text-white">{rankedDistribution.needsImprovement}</span>
             </div>
             <div
               className="h-full bg-red-500 flex items-center justify-center"
-              style={{ width: `${(rankings.distribution.critical / rankings.totalAgents) * 100}%` }}
+              style={{ width: `${(rankedDistribution.critical / displayedAgents.length) * 100}%` }}
             >
-              <span className="text-xs font-medium text-white">{rankings.distribution.critical}</span>
+              <span className="text-xs font-medium text-white">{rankedDistribution.critical}</span>
             </div>
           </div>
           <div className="flex justify-between mt-2 text-xs text-gray-500">

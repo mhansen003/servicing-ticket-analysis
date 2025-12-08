@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import {
-  getTicketStats,
-  getProjectBreakdown,
-  getAssigneeBreakdown,
-  getTicketSample,
-} from '@/lib/data-loader';
+import fs from 'fs/promises';
+import path from 'path';
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,31 +15,55 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenRouter API key not configured' }, { status: 500 });
     }
 
-    // Gather context data for the AI
-    const [stats, projectBreakdown, assigneeBreakdown, ticketSample] = await Promise.all([
-      getTicketStats(),
-      getProjectBreakdown(),
-      getAssigneeBreakdown(),
-      getTicketSample(50),
+    // Load transcript statistics and sample data
+    const publicDir = path.join(process.cwd(), 'public', 'data');
+
+    const [statsData, transcriptsData] = await Promise.all([
+      fs.readFile(path.join(publicDir, 'transcript-stats.json'), 'utf-8'),
+      fs.readFile(path.join(publicDir, 'transcript-analysis.json'), 'utf-8'),
     ]);
 
+    const stats = JSON.parse(statsData);
+    const allTranscripts = JSON.parse(transcriptsData);
+
+    // Get sample of recent transcripts
+    const sampleTranscripts = allTranscripts.slice(0, 50);
+
+    // Calculate key metrics
+    const totalCalls = stats.totalCalls;
+    const sentimentBreakdown = stats.sentimentDistribution;
+    const topDepartments = Object.entries(stats.byDepartment)
+      .filter(([name]) => name !== 'NULL')
+      .sort(([, a]: any, [, b]: any) => b.count - a.count)
+      .slice(0, 10);
+    const topAgents = Object.entries(stats.byAgent)
+      .sort(([, a]: any, [, b]: any) => b.count - a.count)
+      .slice(0, 15);
+
     const contextData = `
-## Ticket Statistics Overview
-- Total Tickets: ${stats.totalTickets.toLocaleString()}
-- Completed Tickets: ${stats.completedTickets.toLocaleString()}
-- Open Tickets: ${stats.openTickets.toLocaleString()}
-- Completion Rate: ${stats.completionRate}%
-- Average Response Time: ${stats.avgResponseTimeMinutes} minutes (${Math.round(stats.avgResponseTimeMinutes / 60)} hours)
-- Average Resolution Time: ${stats.avgResolutionTimeMinutes} minutes (${Math.round(stats.avgResolutionTimeMinutes / 60)} hours)
+## Call Transcript Statistics Overview
+- Total Calls: ${totalCalls.toLocaleString()}
+- Average Call Duration: ${Math.floor(stats.avgDuration / 60)}m ${stats.avgDuration % 60}s
+- Average Hold Time: ${Math.floor(stats.avgHoldTime / 60)}m ${stats.avgHoldTime % 60}s
+- Average Messages Per Call: ${stats.avgMessagesPerCall}
 
-## Project Breakdown (Top 10)
-${projectBreakdown.map((p) => `- ${p.project}: ${p.total} total, ${p.completed} completed, avg resolution: ${p.avgResolutionHours} hours`).join('\n')}
+## Sentiment Distribution
+- Positive: ${sentimentBreakdown.positive} calls (${((sentimentBreakdown.positive / totalCalls) * 100).toFixed(1)}%)
+- Negative: ${sentimentBreakdown.negative} calls (${((sentimentBreakdown.negative / totalCalls) * 100).toFixed(1)}%)
+- Neutral: ${sentimentBreakdown.neutral} calls (${((sentimentBreakdown.neutral / totalCalls) * 100).toFixed(1)}%)
+- Mixed: ${sentimentBreakdown.mixed} calls (${((sentimentBreakdown.mixed / totalCalls) * 100).toFixed(1)}%)
 
-## Top Assignees (Top 15)
-${assigneeBreakdown.map((a) => `- ${a.name}: ${a.total} tickets, ${a.completed} completed, avg resolution: ${a.avgResolutionHours} hours`).join('\n')}
+## Top Departments by Call Volume
+${topDepartments.map(([name, data]: [string, any]) => `- ${name.replace('SRVC - ', '').replace('SRVC/', '')}: ${data.count} calls, ${((data.positive / data.count) * 100).toFixed(1)}% positive`).join('\n')}
 
-## Sample Tickets (50 recent)
-${ticketSample.map((t) => `- [${t.ticket_key}] ${t.ticket_title?.substring(0, 60)}... | ${t.ticket_status} | ${t.project_name}`).join('\n')}
+## Top Agents by Call Volume (20+ calls minimum for ranking)
+${topAgents.filter(([, data]: any) => data.count >= 20).map(([name, data]: [string, any]) => `- ${name}: ${data.count} calls, avg performance: ${data.avgPerformance?.toFixed(1) || 'N/A'}`).join('\n')}
+
+## Top Call Topics
+${Object.entries(stats.topicDistribution).sort(([, a]: any, [, b]: any) => b - a).slice(0, 10).map(([topic, count]) => `- ${topic}: ${count} calls`).join('\n')}
+
+## Sample Recent Calls
+${sampleTranscripts.map((t: any) => `- ${t.vendorCallKey} | ${t.agentName} | ${t.basicSentiment} | ${Math.floor(t.durationSeconds / 60)}m ${t.messageCount} msgs | ${t.aiAnalysis?.summary?.substring(0, 80) || 'No summary'}...`).join('\n')}
 `;
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -59,15 +79,16 @@ ${ticketSample.map((t) => `- [${t.ticket_key}] ${t.ticket_title?.substring(0, 60
         messages: [
           {
             role: 'system',
-            content: `You are a helpful data analyst assistant specializing in helpdesk ticket analysis. You have access to the following data about servicing helpdesk tickets. Provide insightful, actionable analysis based on the user's questions.
+            content: `You are a helpful data analyst assistant specializing in call center transcript analysis. You have access to the following data about customer service call transcripts. Provide insightful, actionable analysis based on the user's questions.
 
 ${contextData}
 
 When analyzing, focus on:
-1. Identifying patterns and trends
-2. Highlighting potential issues or bottlenecks
-3. Suggesting actionable improvements
-4. Being specific with numbers and percentages
+1. Identifying patterns in call sentiment and customer satisfaction
+2. Highlighting agent performance trends and coaching opportunities
+3. Spotting common customer issues and pain points
+4. Suggesting actionable improvements for call quality and customer experience
+5. Being specific with numbers, percentages, and metrics
 
 Keep your responses concise but informative. Use bullet points and formatting for clarity.`,
           },
