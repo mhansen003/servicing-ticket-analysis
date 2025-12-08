@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import TranscriptsAnalysis from '@/components/TranscriptsAnalysis';
+import TranscriptDataGrid from '@/components/TranscriptDataGrid';
 import AgentsAnalysis from '@/components/AgentsAnalysis';
 
 type TabType = 'data' | 'transcripts' | 'agents' | 'ai';
@@ -116,7 +117,7 @@ export default function Dashboard() {
         {/* Tab Content */}
         {activeTab === 'transcripts' && <TranscriptsAnalysis />}
 
-        {activeTab === 'data' && <TranscriptsAnalysis />}
+        {activeTab === 'data' && <TranscriptDataGrid />}
 
         {activeTab === 'agents' && <AgentsAnalysis />}
 
