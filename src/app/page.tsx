@@ -17,13 +17,14 @@ import TranscriptDataGrid from '@/components/TranscriptDataGrid';
 import AgentsAnalysis from '@/components/AgentsAnalysis';
 import CategoriesAnalysis from '@/components/CategoriesAnalysis';
 import TrendsAnalysis from '@/components/TrendsAnalysis';
+import CustomDashboard from '@/components/CustomDashboard';
 
-type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
+type TabType = 'dashboard' | 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState<TabType>('transcripts');
+  const [activeTab, setActiveTab] = useState<TabType>('dashboard');
 
   if (loading) {
     return (
@@ -51,12 +52,13 @@ export default function Dashboard() {
   }
 
   const tabs = [
+    { id: 'dashboard' as TabType, label: 'Dashboard', icon: Activity },
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone },
     { id: 'categories' as TabType, label: 'Categories', icon: Tag },
     { id: 'trends' as TabType, label: 'Trends', icon: TrendingUp },
     { id: 'agents' as TabType, label: 'Agents', icon: Users },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
-    { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
+    { id: 'ai' as TabType, label: 'Ask AI', icon: Brain },
   ];
 
   return (
@@ -121,6 +123,8 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Tab Content */}
+        {activeTab === 'dashboard' && <CustomDashboard />}
+
         {activeTab === 'transcripts' && <TranscriptsAnalysis />}
 
         {activeTab === 'categories' && <CategoriesAnalysis />}

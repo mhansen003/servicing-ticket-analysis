@@ -48,12 +48,12 @@ export default function CategoryHeatmap({
             // This uses the daily time series and category breakdown
             const heatmapCells: HeatmapCell[] = [];
 
-            if (stats.timeSeries?.daily && stats.categories) {
+            if (stats.servicingAnalysis?.timeSeries?.daily && stats.categorizedAnalytics?.categories) {
               // Get last 14 days
-              const dailyData = stats.timeSeries.daily.slice(-14);
+              const dailyData = stats.servicingAnalysis.timeSeries.daily.slice(-14);
 
               // Get top categories
-              const topCategories = stats.categories
+              const topCategories = stats.categorizedAnalytics.categories
                 .sort((a: any, b: any) => b.count - a.count)
                 .slice(0, 10)
                 .map((c: any) => c.category);
@@ -62,7 +62,7 @@ export default function CategoryHeatmap({
               // In a real scenario, this would come from the database with actual daily breakdowns
               dailyData.forEach((day: any) => {
                 topCategories.forEach((category: string) => {
-                  const categoryTotal = stats.categories.find((c: any) => c.category === category)?.count || 0;
+                  const categoryTotal = stats.categorizedAnalytics.categories.find((c: any) => c.category === category)?.count || 0;
                   // Distribute calls across days with some variation
                   const avgPerDay = categoryTotal / dailyData.length;
                   const variation = (Math.random() - 0.5) * 0.4; // ±20% variation
