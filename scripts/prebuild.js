@@ -566,6 +566,88 @@ function categorizeTicket(title, description) {
   return { category: 'Other', subcategory: 'Uncategorized', confidence: 0.3 };
 }
 
+// Enhanced subcategorization based on title/description keywords
+function detectSubcategory(category, title, description) {
+  const text = `${title} ${description}`.toLowerCase();
+
+  // Payment subcategories
+  if (category === 'Payment' || category === 'Payment Issues') {
+    if (text.match(/first payment|initial payment|where.*send|payment address|where.*pay/i)) return 'First Payment Inquiry';
+    if (text.match(/autopay|automatic|recurring|scheduled payment/i)) return 'Autopay Setup/Issues';
+    if (text.match(/declined|failed|bounced|rejected|nsf|insufficient/i)) return 'Payment Failure';
+    if (text.match(/duplicate|double|twice|charged.*again/i)) return 'Duplicate Payment';
+    if (text.match(/confirmation|receipt|proof.*payment/i)) return 'Payment Confirmation';
+    if (text.match(/how much|amount due|balance|payment.*amount/i)) return 'Payment Amount Inquiry';
+    if (text.match(/missing|didn.*receive|not.*apply|where.*payment/i)) return 'Missing Payment';
+    if (text.match(/refund|overpayment|return/i)) return 'Payment Refund Request';
+    if (text.match(/ach|wire|check|method|how.*pay/i)) return 'Payment Method Questions';
+    return 'General Payment Inquiry';
+  }
+
+  // Escrow subcategories
+  if (category === 'Escrow') {
+    if (text.match(/shortage|increase|analysis/i)) return 'Escrow Shortage/Analysis';
+    if (text.match(/refund|surplus|excess/i)) return 'Escrow Refund';
+    if (text.match(/waiver|remove|cancel/i)) return 'Escrow Waiver Request';
+    return 'General Escrow Inquiry';
+  }
+
+  // Insurance subcategories
+  if (category.includes('Insurance')) {
+    if (text.match(/lapse|cancel|expired/i)) return 'Insurance Lapse/Cancellation';
+    if (text.match(/force.*place|fip/i)) return 'Force-Placed Insurance';
+    if (text.match(/evidence|proof|declaration/i)) return 'Insurance Evidence Request';
+    if (text.match(/add.*insurance|new.*insurance/i)) return 'Insurance Addition';
+    return 'General Insurance Inquiry';
+  }
+
+  // Property Tax subcategories
+  if (category === 'Property Tax') {
+    if (text.match(/duplicate|double.*pay/i)) return 'Duplicate Tax Payment';
+    if (text.match(/delinquent|past.*due|late/i)) return 'Delinquent Tax Issue';
+    if (text.match(/certification|tax.*cert/i)) return 'Tax Certification';
+    return 'General Tax Inquiry';
+  }
+
+  // Document subcategories
+  if (category === 'Documents' || category === 'Document Requests') {
+    if (text.match(/statement|billing/i)) return 'Statement Request';
+    if (text.match(/1098|tax.*form/i)) return 'Tax Form Request';
+    if (text.match(/payoff|satisfaction/i)) return 'Payoff Statement';
+    if (text.match(/welcome.*packet|loan.*packet/i)) return 'Welcome Packet';
+    if (text.match(/authorization|consent/i)) return 'Authorization Form';
+    return 'General Document Request';
+  }
+
+  // Payoff subcategories
+  if (category.includes('Payoff')) {
+    if (text.match(/quote|request|amount/i)) return 'Payoff Quote Request';
+    if (text.match(/satisfaction|release|lien/i)) return 'Satisfaction/Lien Release';
+    if (text.match(/partial|curtailment/i)) return 'Partial Payoff';
+    return 'General Payoff Inquiry';
+  }
+
+  // Account Access subcategories
+  if (category === 'Account Maintenance' || category === 'General Account Inquiry') {
+    if (text.match(/login|password|access|locked|portal/i)) return 'Login/Access Issues';
+    if (text.match(/address.*change|move|relocation/i)) return 'Address Change';
+    if (text.match(/name.*change|marriage|divorce/i)) return 'Name Change';
+    if (text.match(/phone|email|contact/i)) return 'Contact Info Update';
+    if (text.match(/balance|principal|interest.*rate/i)) return 'Account Balance Inquiry';
+    return 'General Account Maintenance';
+  }
+
+  // Service Transfer subcategories
+  if (category === 'Service Transfer' || category === 'Loan Transfer') {
+    if (text.match(/sold|transfer.*servicing|new.*servicer/i)) return 'Loan Sold/Transferred';
+    if (text.match(/assumption|assume/i)) return 'Loan Assumption';
+    return 'Transfer Inquiry';
+  }
+
+  // Default: use category as subcategory
+  return category;
+}
+
 // Categorize all servicing tickets
 const categorizedTickets = tickets.map(t => {
   // Try to use the actual custom_fields.Category first
@@ -578,7 +660,6 @@ const categorizedTickets = tickets.map(t => {
       const customFields = JSON.parse(t.custom_fields);
       if (customFields.Category) {
         category = customFields.Category;
-        subcategory = customFields.Category; // Use same for subcategory
         confidence = 1.0; // High confidence since it's from the actual data
       }
     }
@@ -592,6 +673,9 @@ const categorizedTickets = tickets.map(t => {
     category = result.category;
     subcategory = result.subcategory;
     confidence = result.confidence;
+  } else {
+    // Detect subcategory from title and description
+    subcategory = detectSubcategory(category, t.ticket_title || '', t.ticket_description || '');
   }
 
   return {

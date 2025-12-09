@@ -2641,7 +2641,7 @@
     "summary": {
       "totalCategorized": 23167,
       "totalCategories": 43,
-      "totalSubcategories": 44,
+      "totalSubcategories": 83,
       "avgConfidence": 0.798
     },
     "categories": [
@@ -2665,9 +2665,54 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Payment",
-            "count": 1382,
-            "percentage": 6
+            "name": "Payment Method Questions",
+            "count": 447,
+            "percentage": 2
+          },
+          {
+            "name": "First Payment Inquiry",
+            "count": 218,
+            "percentage": 1
+          },
+          {
+            "name": "General Payment Inquiry",
+            "count": 198,
+            "percentage": 1
+          },
+          {
+            "name": "Payment Confirmation",
+            "count": 156,
+            "percentage": 1
+          },
+          {
+            "name": "Payment Failure",
+            "count": 134,
+            "percentage": 1
+          },
+          {
+            "name": "Payment Refund Request",
+            "count": 78,
+            "percentage": 0
+          },
+          {
+            "name": "Missing Payment",
+            "count": 63,
+            "percentage": 0
+          },
+          {
+            "name": "Autopay Setup/Issues",
+            "count": 39,
+            "percentage": 0
+          },
+          {
+            "name": "Payment Amount Inquiry",
+            "count": 28,
+            "percentage": 0
+          },
+          {
+            "name": "Duplicate Payment",
+            "count": 21,
+            "percentage": 0
           }
         ]
       },
@@ -2678,9 +2723,29 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Insurance (HOI/Flood)",
-            "count": 925,
-            "percentage": 4
+            "name": "General Insurance Inquiry",
+            "count": 446,
+            "percentage": 2
+          },
+          {
+            "name": "Insurance Evidence Request",
+            "count": 223,
+            "percentage": 1
+          },
+          {
+            "name": "Insurance Addition",
+            "count": 141,
+            "percentage": 1
+          },
+          {
+            "name": "Insurance Lapse/Cancellation",
+            "count": 103,
+            "percentage": 0
+          },
+          {
+            "name": "Force-Placed Insurance",
+            "count": 12,
+            "percentage": 0
           }
         ]
       },
@@ -2704,9 +2769,19 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Netted Payoffs",
-            "count": 789,
+            "name": "General Payoff Inquiry",
+            "count": 730,
             "percentage": 3
+          },
+          {
+            "name": "Payoff Quote Request",
+            "count": 58,
+            "percentage": 0
+          },
+          {
+            "name": "Satisfaction/Lien Release",
+            "count": 1,
+            "percentage": 0
           }
         ]
       },
@@ -2743,9 +2818,29 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Documents",
-            "count": 593,
-            "percentage": 3
+            "name": "General Document Request",
+            "count": 299,
+            "percentage": 1
+          },
+          {
+            "name": "Statement Request",
+            "count": 235,
+            "percentage": 1
+          },
+          {
+            "name": "Tax Form Request",
+            "count": 39,
+            "percentage": 0
+          },
+          {
+            "name": "Authorization Form",
+            "count": 16,
+            "percentage": 0
+          },
+          {
+            "name": "Payoff Statement",
+            "count": 4,
+            "percentage": 0
           }
         ]
       },
@@ -2756,9 +2851,19 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Payoffs/Satisfactions/Lien Release",
-            "count": 588,
-            "percentage": 3
+            "name": "Payoff Quote Request",
+            "count": 400,
+            "percentage": 2
+          },
+          {
+            "name": "General Payoff Inquiry",
+            "count": 161,
+            "percentage": 1
+          },
+          {
+            "name": "Satisfaction/Lien Release",
+            "count": 27,
+            "percentage": 0
           }
         ]
       },
@@ -2774,9 +2879,24 @@
             "percentage": 1
           },
           {
-            "name": "Escrow",
-            "count": 183,
-            "percentage": 1
+            "name": "General Escrow Inquiry",
+            "count": 87,
+            "percentage": 0
+          },
+          {
+            "name": "Escrow Shortage/Analysis",
+            "count": 60,
+            "percentage": 0
+          },
+          {
+            "name": "Escrow Refund",
+            "count": 28,
+            "percentage": 0
+          },
+          {
+            "name": "Escrow Waiver Request",
+            "count": 8,
+            "percentage": 0
           }
         ]
       },
@@ -2813,9 +2933,19 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Service Transfer",
-            "count": 422,
-            "percentage": 2
+            "name": "Transfer Inquiry",
+            "count": 332,
+            "percentage": 1
+          },
+          {
+            "name": "Loan Sold/Transferred",
+            "count": 88,
+            "percentage": 0
+          },
+          {
+            "name": "Loan Assumption",
+            "count": 2,
+            "percentage": 0
           }
         ]
       },
@@ -2826,9 +2956,34 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "General Account Inquiry",
-            "count": 291,
+            "name": "Contact Info Update",
+            "count": 132,
             "percentage": 1
+          },
+          {
+            "name": "General Account Maintenance",
+            "count": 106,
+            "percentage": 0
+          },
+          {
+            "name": "Login/Access Issues",
+            "count": 33,
+            "percentage": 0
+          },
+          {
+            "name": "Address Change",
+            "count": 9,
+            "percentage": 0
+          },
+          {
+            "name": "Account Balance Inquiry",
+            "count": 6,
+            "percentage": 0
+          },
+          {
+            "name": "Name Change",
+            "count": 5,
+            "percentage": 0
           }
         ]
       },
@@ -2878,9 +3033,24 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Property Tax",
-            "count": 175,
+            "name": "General Tax Inquiry",
+            "count": 143,
             "percentage": 1
+          },
+          {
+            "name": "Delinquent Tax Issue",
+            "count": 30,
+            "percentage": 0
+          },
+          {
+            "name": "Duplicate Tax Payment",
+            "count": 1,
+            "percentage": 0
+          },
+          {
+            "name": "Tax Certification",
+            "count": 1,
+            "percentage": 0
           }
         ]
       },
@@ -2956,8 +3126,33 @@
         "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "Account Maintenance",
-            "count": 97,
+            "name": "Contact Info Update",
+            "count": 32,
+            "percentage": 0
+          },
+          {
+            "name": "General Account Maintenance",
+            "count": 29,
+            "percentage": 0
+          },
+          {
+            "name": "Login/Access Issues",
+            "count": 17,
+            "percentage": 0
+          },
+          {
+            "name": "Address Change",
+            "count": 14,
+            "percentage": 0
+          },
+          {
+            "name": "Name Change",
+            "count": 4,
+            "percentage": 0
+          },
+          {
+            "name": "Account Balance Inquiry",
+            "count": 1,
             "percentage": 0
           }
         ]
@@ -3219,32 +3414,11 @@
         "avgConfidence": 0.7
       },
       {
-        "category": "Payment",
-        "subcategory": "Payment",
-        "count": 1382,
-        "percentage": 6,
-        "avgConfidence": 1
-      },
-      {
-        "category": "Insurance (HOI/Flood)",
-        "subcategory": "Insurance (HOI/Flood)",
-        "count": 925,
-        "percentage": 4,
-        "avgConfidence": 1
-      },
-      {
         "category": "Document Requests",
         "subcategory": "General Document Requests",
         "count": 826,
         "percentage": 4,
         "avgConfidence": 0.7
-      },
-      {
-        "category": "Netted Payoffs",
-        "subcategory": "Netted Payoffs",
-        "count": 789,
-        "percentage": 3,
-        "avgConfidence": 1
       },
       {
         "category": "Loan Transfer",
@@ -3254,6 +3428,13 @@
         "avgConfidence": 0.7
       },
       {
+        "category": "Netted Payoffs",
+        "subcategory": "General Payoff Inquiry",
+        "count": 730,
+        "percentage": 3,
+        "avgConfidence": 1
+      },
+      {
         "category": "Duplicate",
         "subcategory": "Duplicate",
         "count": 688,
@@ -3261,17 +3442,17 @@
         "avgConfidence": 1
       },
       {
-        "category": "Documents",
-        "subcategory": "Documents",
-        "count": 593,
-        "percentage": 3,
+        "category": "Payment",
+        "subcategory": "Payment Method Questions",
+        "count": 447,
+        "percentage": 2,
         "avgConfidence": 1
       },
       {
-        "category": "Payoffs/Satisfactions/Lien Release",
-        "subcategory": "Payoffs/Satisfactions/Lien Release",
-        "count": 588,
-        "percentage": 3,
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "General Insurance Inquiry",
+        "count": 446,
+        "percentage": 2,
         "avgConfidence": 1
       },
       {
@@ -3289,10 +3470,17 @@
         "avgConfidence": 1
       },
       {
-        "category": "Service Transfer",
-        "subcategory": "Service Transfer",
-        "count": 422,
+        "category": "Payoffs/Satisfactions/Lien Release",
+        "subcategory": "Payoff Quote Request",
+        "count": 400,
         "percentage": 2,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Service Transfer",
+        "subcategory": "Transfer Inquiry",
+        "count": 332,
+        "percentage": 1,
         "avgConfidence": 1
       },
       {
@@ -3303,9 +3491,9 @@
         "avgConfidence": 0.7
       },
       {
-        "category": "General Account Inquiry",
-        "subcategory": "General Account Inquiry",
-        "count": 291,
+        "category": "Documents",
+        "subcategory": "General Document Request",
+        "count": 299,
         "percentage": 1,
         "avgConfidence": 1
       },
@@ -3317,6 +3505,27 @@
         "avgConfidence": 0.3
       },
       {
+        "category": "Documents",
+        "subcategory": "Statement Request",
+        "count": 235,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "Insurance Evidence Request",
+        "count": 223,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "First Payment Inquiry",
+        "count": 218,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
         "category": "Voice/Alert Requests",
         "subcategory": "General Voice/Alert Requests",
         "count": 199,
@@ -3324,9 +3533,9 @@
         "avgConfidence": 0.7
       },
       {
-        "category": "Escrow",
-        "subcategory": "Escrow",
-        "count": 183,
+        "category": "Payment",
+        "subcategory": "General Payment Inquiry",
+        "count": 198,
         "percentage": 1,
         "avgConfidence": 1
       },
@@ -3338,9 +3547,16 @@
         "avgConfidence": 0.7
       },
       {
-        "category": "Property Tax",
-        "subcategory": "Property Tax",
-        "count": 175,
+        "category": "Payoffs/Satisfactions/Lien Release",
+        "subcategory": "General Payoff Inquiry",
+        "count": 161,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Payment Confirmation",
+        "count": 156,
         "percentage": 1,
         "avgConfidence": 1
       },
@@ -3352,11 +3568,39 @@
         "avgConfidence": 1
       },
       {
+        "category": "Property Tax",
+        "subcategory": "General Tax Inquiry",
+        "count": 143,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
         "category": "Loan Information",
         "subcategory": "General Loan Information",
         "count": 142,
         "percentage": 1,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "Insurance Addition",
+        "count": 141,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Payment Failure",
+        "count": 134,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "General Account Inquiry",
+        "subcategory": "Contact Info Update",
+        "count": 132,
+        "percentage": 1,
+        "avgConfidence": 1
       },
       {
         "category": "Default",
@@ -3380,9 +3624,16 @@
         "avgConfidence": 0.7
       },
       {
-        "category": "Account Maintenance",
-        "subcategory": "Account Maintenance",
-        "count": 97,
+        "category": "General Account Inquiry",
+        "subcategory": "General Account Maintenance",
+        "count": 106,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "Insurance Lapse/Cancellation",
+        "count": 103,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3390,6 +3641,20 @@
         "category": "Loan Officer Refinance Doc Request",
         "subcategory": "Loan Officer Refinance Doc Request",
         "count": 90,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Service Transfer",
+        "subcategory": "Loan Sold/Transferred",
+        "count": 88,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Escrow",
+        "subcategory": "General Escrow Inquiry",
+        "count": 87,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3408,9 +3673,37 @@
         "avgConfidence": 1
       },
       {
+        "category": "Payment",
+        "subcategory": "Payment Refund Request",
+        "count": 78,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Recast",
         "subcategory": "Recast",
         "count": 76,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Missing Payment",
+        "count": 63,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Escrow",
+        "subcategory": "Escrow Shortage/Analysis",
+        "count": 60,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Netted Payoffs",
+        "subcategory": "Payoff Quote Request",
+        "count": 58,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3429,9 +3722,37 @@
         "avgConfidence": 0.7
       },
       {
+        "category": "Payment",
+        "subcategory": "Autopay Setup/Issues",
+        "count": 39,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Drafting",
         "subcategory": "Drafting",
         "count": 39,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Documents",
+        "subcategory": "Tax Form Request",
+        "count": 39,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "General Account Inquiry",
+        "subcategory": "Login/Access Issues",
+        "count": 33,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Contact Info Update",
+        "count": 32,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3443,9 +3764,23 @@
         "avgConfidence": 1
       },
       {
+        "category": "Property Tax",
+        "subcategory": "Delinquent Tax Issue",
+        "count": 30,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Credit Bureau Reporting",
         "subcategory": "Credit Bureau Reporting",
         "count": 30,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "General Account Maintenance",
+        "count": 29,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3457,9 +3792,86 @@
         "avgConfidence": 0.7
       },
       {
+        "category": "Escrow",
+        "subcategory": "Escrow Refund",
+        "count": 28,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Payment Amount Inquiry",
+        "count": 28,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payoffs/Satisfactions/Lien Release",
+        "subcategory": "Satisfaction/Lien Release",
+        "count": 27,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Spam",
         "subcategory": "Spam",
         "count": 22,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Duplicate Payment",
+        "count": 21,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Login/Access Issues",
+        "count": 17,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Documents",
+        "subcategory": "Authorization Form",
+        "count": 16,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Address Change",
+        "count": 14,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "Force-Placed Insurance",
+        "count": 12,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "General Account Inquiry",
+        "subcategory": "Address Change",
+        "count": 9,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Escrow",
+        "subcategory": "Escrow Waiver Request",
+        "count": 8,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "General Account Inquiry",
+        "subcategory": "Account Balance Inquiry",
+        "count": 6,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3471,9 +3883,30 @@
         "avgConfidence": 1
       },
       {
+        "category": "General Account Inquiry",
+        "subcategory": "Name Change",
+        "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Partial Release",
         "subcategory": "Partial Release",
         "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Name Change",
+        "count": 4,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Documents",
+        "subcategory": "Payoff Statement",
+        "count": 4,
         "percentage": 0,
         "avgConfidence": 1
       },
@@ -3506,6 +3939,20 @@
         "avgConfidence": 1
       },
       {
+        "category": "Service Transfer",
+        "subcategory": "Loan Assumption",
+        "count": 2,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Netted Payoffs",
+        "subcategory": "Satisfaction/Lien Release",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Executive Complaints",
         "subcategory": "Executive Complaints",
         "count": 1,
@@ -3513,8 +3960,29 @@
         "avgConfidence": 1
       },
       {
+        "category": "Property Tax",
+        "subcategory": "Duplicate Tax Payment",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Account Balance Inquiry",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Investor Reporting",
         "subcategory": "Investor Reporting",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Property Tax",
+        "subcategory": "Tax Certification",
         "count": 1,
         "percentage": 0,
         "avgConfidence": 1
@@ -3546,15 +4014,6 @@
           "trend": "stable"
         },
         {
-          "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 52,
-          "recent": 88,
-          "change": 36,
-          "percentChange": 69,
-          "trend": "increasing"
-        },
-        {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
           "baseline": 41,
@@ -3564,13 +4023,13 @@
           "trend": "increasing"
         },
         {
-          "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 48,
-          "recent": 26,
-          "change": -22,
-          "percentChange": -46,
-          "trend": "decreasing"
+          "category": "Payment",
+          "subcategory": "Payment Method Questions",
+          "baseline": 11,
+          "recent": 32,
+          "change": 21,
+          "percentChange": 191,
+          "trend": "increasing"
         },
         {
           "category": "Default",
@@ -3591,6 +4050,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 9,
+          "recent": 22,
+          "change": 13,
+          "percentChange": 144,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 21,
+          "recent": 10,
+          "change": -11,
+          "percentChange": -52,
+          "trend": "decreasing"
+        },
+        {
           "category": "Other",
           "subcategory": "Uncategorized",
           "baseline": 22,
@@ -3607,6 +4084,15 @@
           "change": 7,
           "percentChange": 100,
           "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 9,
+          "recent": 2,
+          "change": -7,
+          "percentChange": -78,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Modifications",
@@ -3636,12 +4122,21 @@
           "trend": "decreasing"
         },
         {
-          "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 12,
-          "recent": 8,
+          "category": "Service Transfer",
+          "subcategory": "Transfer Inquiry",
+          "baseline": 9,
+          "recent": 13,
+          "change": 4,
+          "percentChange": 44,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 8,
+          "recent": 4,
           "change": -4,
-          "percentChange": -33,
+          "percentChange": -50,
           "trend": "decreasing"
         },
         {
@@ -3652,24 +4147,6 @@
           "change": -4,
           "percentChange": -100,
           "trend": "decreasing"
-        },
-        {
-          "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 4,
-          "recent": 0,
-          "change": -4,
-          "percentChange": -100,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 10,
-          "recent": 13,
-          "change": 3,
-          "percentChange": 30,
-          "trend": "increasing"
         },
         {
           "category": "Escalation",
@@ -3690,12 +4167,57 @@
           "trend": "increasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 8,
+          "recent": 11,
+          "change": 3,
+          "percentChange": 38,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 4,
+          "recent": 7,
+          "change": 3,
+          "percentChange": 75,
+          "trend": "increasing"
+        },
+        {
           "category": "Internal Inquiry (General Questions)",
           "subcategory": "Internal Inquiry (General Questions)",
           "baseline": 4,
           "recent": 7,
           "change": 3,
           "percentChange": 75,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 6,
+          "recent": 3,
+          "change": -3,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 7,
+          "recent": 10,
+          "change": 3,
+          "percentChange": 43,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 2,
+          "recent": 5,
+          "change": 3,
+          "percentChange": 150,
           "trend": "increasing"
         },
         {
@@ -3706,6 +4228,24 @@
           "change": 3,
           "percentChange": 300,
           "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
         },
         {
           "category": "Voice/Alert Requests",
@@ -3727,12 +4267,12 @@
         },
         {
           "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 14,
-          "recent": 12,
+          "subcategory": "General Document Request",
+          "baseline": 10,
+          "recent": 8,
           "change": -2,
-          "percentChange": -14,
-          "trend": "stable"
+          "percentChange": -20,
+          "trend": "decreasing"
         },
         {
           "category": "Duplicate",
@@ -3744,13 +4284,22 @@
           "trend": "stable"
         },
         {
-          "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 14,
-          "recent": 16,
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 8,
+          "recent": 6,
+          "change": -2,
+          "percentChange": -25,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 8,
+          "recent": 10,
           "change": 2,
-          "percentChange": 14,
-          "trend": "stable"
+          "percentChange": 25,
+          "trend": "increasing"
         },
         {
           "category": "PMI/MIP",
@@ -3760,6 +4309,15 @@
           "change": 2,
           "percentChange": 200,
           "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 5,
+          "recent": 3,
+          "change": -2,
+          "percentChange": -40,
+          "trend": "decreasing"
         },
         {
           "category": "Statement and Billing (Customer Only)",
@@ -3780,6 +4338,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 0,
+          "recent": 2,
+          "change": 2,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 3,
+          "recent": 1,
+          "change": -2,
+          "percentChange": -67,
+          "trend": "decreasing"
+        },
+        {
           "category": "Spam",
           "subcategory": "Spam",
           "baseline": 1,
@@ -3789,12 +4365,102 @@
           "trend": "increasing"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 20,
-          "recent": 19,
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 3,
+          "recent": 1,
+          "change": -2,
+          "percentChange": -67,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 2,
+          "recent": 0,
+          "change": -2,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 2,
+          "recent": 0,
+          "change": -2,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Missing Payment",
+          "baseline": 2,
+          "recent": 3,
+          "change": 1,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 6,
+          "recent": 5,
           "change": -1,
-          "percentChange": -5,
+          "percentChange": -17,
+          "trend": "stable"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 5,
+          "recent": 4,
+          "change": -1,
+          "percentChange": -20,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 6,
+          "recent": 7,
+          "change": 1,
+          "percentChange": 17,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 4,
+          "recent": 5,
+          "change": 1,
+          "percentChange": 25,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 11,
+          "recent": 10,
+          "change": -1,
+          "percentChange": -9,
           "trend": "stable"
         },
         {
@@ -3807,8 +4473,53 @@
           "trend": "stable"
         },
         {
+          "category": "Property Tax",
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 3,
+          "recent": 2,
+          "change": -1,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
           "category": "Partial Release",
           "subcategory": "Partial Release",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
           "baseline": 1,
           "recent": 0,
           "change": -1,
@@ -3825,19 +4536,19 @@
           "trend": "decreasing"
         },
         {
-          "category": "Credit Bureau Reporting",
-          "subcategory": "Credit Bureau Reporting",
-          "baseline": 5,
-          "recent": 5,
+          "category": "Documents",
+          "subcategory": "Statement Request",
+          "baseline": 4,
+          "recent": 4,
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 12,
-          "recent": 12,
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 5,
+          "recent": 5,
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
@@ -3852,10 +4563,10 @@
           "trend": "stable"
         },
         {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 2,
-          "recent": 2,
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 1,
+          "recent": 1,
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
@@ -3868,12 +4579,21 @@
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 10,
-        "decreasing": 14,
-        "stable": 13
+        "increasing": 22,
+        "decreasing": 29,
+        "stable": 14
       }
     },
     "14": {
@@ -3910,29 +4630,11 @@
         },
         {
           "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 41,
-          "recent": 4,
-          "change": -37,
-          "percentChange": -90,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 60,
-          "recent": 26,
-          "change": -34,
-          "percentChange": -57,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 105,
-          "recent": 74,
-          "change": -31,
-          "percentChange": -30,
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 39,
+          "recent": 3,
+          "change": -36,
+          "percentChange": -92,
           "trend": "decreasing"
         },
         {
@@ -3946,11 +4648,11 @@
         },
         {
           "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 56,
-          "recent": 30,
-          "change": -26,
-          "percentChange": -46,
+          "subcategory": "Transfer Inquiry",
+          "baseline": 46,
+          "recent": 22,
+          "change": -24,
+          "percentChange": -52,
           "trend": "decreasing"
         },
         {
@@ -3963,30 +4665,21 @@
           "trend": "decreasing"
         },
         {
-          "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 162,
-          "recent": 140,
-          "change": -22,
-          "percentChange": -14,
-          "trend": "stable"
-        },
-        {
-          "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 40,
-          "recent": 20,
+          "category": "Documents",
+          "subcategory": "Statement Request",
+          "baseline": 28,
+          "recent": 8,
           "change": -20,
-          "percentChange": -50,
+          "percentChange": -71,
           "trend": "decreasing"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 58,
-          "recent": 39,
-          "change": -19,
-          "percentChange": -33,
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 34,
+          "recent": 14,
+          "change": -20,
+          "percentChange": -59,
           "trend": "decreasing"
         },
         {
@@ -4008,6 +4701,24 @@
           "trend": "increasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 45,
+          "recent": 31,
+          "change": -14,
+          "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 26,
+          "recent": 12,
+          "change": -14,
+          "percentChange": -54,
+          "trend": "decreasing"
+        },
+        {
           "category": "Other",
           "subcategory": "Uncategorized",
           "baseline": 47,
@@ -4024,6 +4735,24 @@
           "change": 11,
           "percentChange": 44,
           "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 20,
+          "recent": 31,
+          "change": 11,
+          "percentChange": 55,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 24,
+          "recent": 13,
+          "change": -11,
+          "percentChange": -46,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Officer Refinance Doc Request",
@@ -4053,6 +4782,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 19,
+          "recent": 11,
+          "change": -8,
+          "percentChange": -42,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "General Document Request",
+          "baseline": 25,
+          "recent": 18,
+          "change": -7,
+          "percentChange": -28,
+          "trend": "decreasing"
+        },
+        {
           "category": "Credit Bureau Reporting",
           "subcategory": "Credit Bureau Reporting",
           "baseline": 3,
@@ -4062,12 +4809,30 @@
           "trend": "increasing"
         },
         {
-          "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 29,
-          "recent": 23,
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 11,
+          "recent": 18,
+          "change": 7,
+          "percentChange": 64,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 15,
+          "recent": 9,
           "change": -6,
-          "percentChange": -21,
+          "percentChange": -40,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 25,
+          "recent": 19,
+          "change": -6,
+          "percentChange": -24,
           "trend": "decreasing"
         },
         {
@@ -4080,12 +4845,48 @@
           "trend": "decreasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 23,
+          "recent": 17,
+          "change": -6,
+          "percentChange": -26,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 8,
+          "recent": 2,
+          "change": -6,
+          "percentChange": -75,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 16,
+          "recent": 11,
+          "change": -5,
+          "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
           "category": "Internal Inquiry (General Questions)",
           "subcategory": "Internal Inquiry (General Questions)",
           "baseline": 16,
           "recent": 11,
           "change": -5,
           "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 8,
+          "recent": 3,
+          "change": -5,
+          "percentChange": -62,
           "trend": "decreasing"
         },
         {
@@ -4107,13 +4908,13 @@
           "trend": "stable"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 28,
-          "recent": 24,
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 13,
+          "recent": 9,
           "change": -4,
-          "percentChange": -14,
-          "trend": "stable"
+          "percentChange": -31,
+          "trend": "decreasing"
         },
         {
           "category": "Statement and Billing (Customer Only)",
@@ -4122,6 +4923,42 @@
           "recent": 6,
           "change": -4,
           "percentChange": -40,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 11,
+          "recent": 7,
+          "change": -4,
+          "percentChange": -36,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Authorization Form",
+          "baseline": 4,
+          "recent": 0,
+          "change": -4,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Missing Payment",
+          "baseline": 8,
+          "recent": 5,
+          "change": -3,
+          "percentChange": -37,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 12,
+          "recent": 9,
+          "change": -3,
+          "percentChange": -25,
           "trend": "decreasing"
         },
         {
@@ -4143,6 +4980,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 1,
+          "recent": 4,
+          "change": 3,
+          "percentChange": 300,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Tax Form Request",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
           "baseline": 100,
@@ -4152,12 +5007,39 @@
           "trend": "stable"
         },
         {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 6,
-          "recent": 4,
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 3,
+          "recent": 1,
           "change": -2,
-          "percentChange": -33,
+          "percentChange": -67,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 19,
+          "recent": 21,
+          "change": 2,
+          "percentChange": 11,
+          "trend": "stable"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 10,
+          "recent": 8,
+          "change": -2,
+          "percentChange": -20,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 3,
+          "recent": 1,
+          "change": -2,
+          "percentChange": -67,
           "trend": "decreasing"
         },
         {
@@ -4177,6 +5059,24 @@
           "change": 2,
           "percentChange": 67,
           "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 3,
+          "recent": 1,
+          "change": -2,
+          "percentChange": -67,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 4,
+          "recent": 2,
+          "change": -2,
+          "percentChange": -50,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Transfer",
@@ -4206,6 +5106,69 @@
           "trend": "stable"
         },
         {
+          "category": "Payment",
+          "subcategory": "Payment Method Questions",
+          "baseline": 44,
+          "recent": 43,
+          "change": -1,
+          "percentChange": -2,
+          "trend": "stable"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 10,
+          "recent": 11,
+          "change": 1,
+          "percentChange": 10,
+          "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 3,
+          "recent": 2,
+          "change": -1,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 6,
+          "recent": 5,
+          "change": -1,
+          "percentChange": -17,
+          "trend": "stable"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 2,
+          "recent": 1,
+          "change": -1,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
           "category": "Check Request",
           "subcategory": "Check Request",
           "baseline": 2,
@@ -4233,6 +5196,42 @@
           "trend": "decreasing"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Name Change",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Login/Access Issues",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Name Change",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Address Change",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
           "category": "Legal Department",
           "subcategory": "Legal Department",
           "baseline": 1,
@@ -4242,6 +5241,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 2,
+          "recent": 2,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 4,
+          "recent": 4,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
           "category": "Partial Release",
           "subcategory": "Partial Release",
           "baseline": 1,
@@ -4249,12 +5266,21 @@
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 3,
+          "recent": 3,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 7,
-        "decreasing": 24,
-        "stable": 9
+        "increasing": 12,
+        "decreasing": 48,
+        "stable": 14
       }
     },
     "21": {
@@ -4273,11 +5299,11 @@
       "trends": [
         {
           "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 139,
-          "recent": 20,
-          "change": -119,
-          "percentChange": -86,
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 129,
+          "recent": 17,
+          "change": -112,
+          "percentChange": -87,
           "trend": "decreasing"
         },
         {
@@ -4291,20 +5317,11 @@
         },
         {
           "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 210,
-          "recent": 143,
-          "change": -67,
-          "percentChange": -32,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 112,
-          "recent": 53,
-          "change": -59,
-          "percentChange": -53,
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 100,
+          "recent": 28,
+          "change": -72,
+          "percentChange": -72,
           "trend": "decreasing"
         },
         {
@@ -4317,12 +5334,12 @@
           "trend": "decreasing"
         },
         {
-          "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 83,
-          "recent": 52,
-          "change": -31,
-          "percentChange": -37,
+          "category": "Documents",
+          "subcategory": "General Document Request",
+          "baseline": 60,
+          "recent": 30,
+          "change": -30,
+          "percentChange": -50,
           "trend": "decreasing"
         },
         {
@@ -4335,6 +5352,15 @@
           "trend": "increasing"
         },
         {
+          "category": "Documents",
+          "subcategory": "Statement Request",
+          "baseline": 46,
+          "recent": 19,
+          "change": -27,
+          "percentChange": -59,
+          "trend": "decreasing"
+        },
+        {
           "category": "Escrow",
           "subcategory": "General Escrow",
           "baseline": 49,
@@ -4344,12 +5370,12 @@
           "trend": "increasing"
         },
         {
-          "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 61,
-          "recent": 40,
-          "change": -21,
-          "percentChange": -34,
+          "category": "Service Transfer",
+          "subcategory": "Transfer Inquiry",
+          "baseline": 63,
+          "recent": 41,
+          "change": -22,
+          "percentChange": -35,
           "trend": "decreasing"
         },
         {
@@ -4362,6 +5388,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 37,
+          "recent": 17,
+          "change": -20,
+          "percentChange": -54,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 28,
+          "recent": 45,
+          "change": 17,
+          "percentChange": 61,
+          "trend": "increasing"
+        },
+        {
           "category": "ACH Forms",
           "subcategory": "ACH Forms",
           "baseline": 22,
@@ -4371,13 +5415,13 @@
           "trend": "increasing"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 25,
-          "recent": 41,
-          "change": 16,
-          "percentChange": 64,
-          "trend": "increasing"
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 32,
+          "recent": 16,
+          "change": -16,
+          "percentChange": -50,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Modifications",
@@ -4398,15 +5442,6 @@
           "trend": "stable"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 63,
-          "recent": 77,
-          "change": 14,
-          "percentChange": 22,
-          "trend": "increasing"
-        },
-        {
           "category": "Loan Information",
           "subcategory": "General Loan Information",
           "baseline": 27,
@@ -4416,12 +5451,30 @@
           "trend": "increasing"
         },
         {
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 42,
+          "recent": 31,
+          "change": -11,
+          "percentChange": -26,
+          "trend": "decreasing"
+        },
+        {
           "category": "Recast",
           "subcategory": "Recast",
           "baseline": 13,
           "recent": 24,
           "change": 11,
           "percentChange": 85,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 23,
+          "recent": 33,
+          "change": 10,
+          "percentChange": 43,
           "trend": "increasing"
         },
         {
@@ -4443,6 +5496,24 @@
           "trend": "decreasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 41,
+          "recent": 32,
+          "change": -9,
+          "percentChange": -22,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 2,
+          "recent": 11,
+          "change": 9,
+          "percentChange": 450,
+          "trend": "increasing"
+        },
+        {
           "category": "Default",
           "subcategory": "Default",
           "baseline": 33,
@@ -4450,6 +5521,15 @@
           "change": 8,
           "percentChange": 24,
           "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 19,
+          "recent": 11,
+          "change": -8,
+          "percentChange": -42,
+          "trend": "decreasing"
         },
         {
           "category": "Voice/Alert Requests",
@@ -4470,6 +5550,42 @@
           "trend": "increasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 9,
+          "recent": 16,
+          "change": 7,
+          "percentChange": 78,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 25,
+          "recent": 32,
+          "change": 7,
+          "percentChange": 28,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 29,
+          "recent": 22,
+          "change": -7,
+          "percentChange": -24,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 10,
+          "recent": 3,
+          "change": -7,
+          "percentChange": -70,
+          "trend": "decreasing"
+        },
+        {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
           "baseline": 170,
@@ -4479,21 +5595,21 @@
           "trend": "stable"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 21,
+          "recent": 27,
+          "change": 6,
+          "percentChange": 29,
+          "trend": "increasing"
+        },
+        {
           "category": "Internal Inquiry (General Questions)",
           "subcategory": "Internal Inquiry (General Questions)",
           "baseline": 26,
           "recent": 20,
           "change": -6,
           "percentChange": -23,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 13,
-          "recent": 7,
-          "change": -6,
-          "percentChange": -46,
           "trend": "decreasing"
         },
         {
@@ -4506,12 +5622,39 @@
           "trend": "increasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 0,
+          "recent": 5,
+          "change": 5,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
           "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 234,
-          "recent": 231,
-          "change": -3,
-          "percentChange": -1,
+          "subcategory": "Missing Payment",
+          "baseline": 15,
+          "recent": 11,
+          "change": -4,
+          "percentChange": -27,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 57,
+          "recent": 61,
+          "change": 4,
+          "percentChange": 7,
+          "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Method Questions",
+          "baseline": 65,
+          "recent": 68,
+          "change": 3,
+          "percentChange": 5,
           "trend": "stable"
         },
         {
@@ -4533,6 +5676,33 @@
           "trend": "increasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 10,
+          "recent": 13,
+          "change": 3,
+          "percentChange": 30,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 1,
+          "recent": 4,
+          "change": 3,
+          "percentChange": 300,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 1,
+          "recent": 4,
+          "change": 3,
+          "percentChange": 300,
+          "trend": "increasing"
+        },
+        {
           "category": "Spam",
           "subcategory": "Spam",
           "baseline": 2,
@@ -4542,13 +5712,49 @@
           "trend": "increasing"
         },
         {
-          "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 45,
-          "recent": 43,
+          "category": "Account Maintenance",
+          "subcategory": "Login/Access Issues",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Name Change",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Address Change",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 5,
+          "recent": 3,
           "change": -2,
-          "percentChange": -4,
-          "trend": "stable"
+          "percentChange": -40,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 7,
+          "recent": 5,
+          "change": -2,
+          "percentChange": -29,
+          "trend": "decreasing"
         },
         {
           "category": "Drafting",
@@ -4558,6 +5764,24 @@
           "change": 2,
           "percentChange": 50,
           "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 3,
+          "recent": 5,
+          "change": 2,
+          "percentChange": 67,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Tax Form Request",
+          "baseline": 3,
+          "recent": 1,
+          "change": -2,
+          "percentChange": -67,
+          "trend": "decreasing"
         },
         {
           "category": "Legal Department",
@@ -4578,6 +5802,24 @@
           "trend": "stable"
         },
         {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 19,
+          "recent": 20,
+          "change": 1,
+          "percentChange": 5,
+          "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 15,
+          "recent": 14,
+          "change": -1,
+          "percentChange": -7,
+          "trend": "stable"
+        },
+        {
           "category": "Communication",
           "subcategory": "General Communication",
           "baseline": 7,
@@ -4585,6 +5827,51 @@
           "change": -1,
           "percentChange": -14,
           "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 6,
+          "recent": 7,
+          "change": 1,
+          "percentChange": 17,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 6,
+          "recent": 7,
+          "change": 1,
+          "percentChange": 17,
+          "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 2,
+          "recent": 3,
+          "change": 1,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 4,
+          "recent": 5,
+          "change": 1,
+          "percentChange": 25,
+          "trend": "increasing"
         },
         {
           "category": "Assumptions",
@@ -4596,12 +5883,30 @@
           "trend": "stable"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 3,
+          "recent": 2,
+          "change": -1,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
           "category": "Check Request",
           "subcategory": "Check Request",
           "baseline": 1,
           "recent": 2,
           "change": 1,
           "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Authorization Form",
+          "baseline": 2,
+          "recent": 3,
+          "change": 1,
+          "percentChange": 50,
           "trend": "increasing"
         },
         {
@@ -4614,10 +5919,64 @@
           "trend": "increasing"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Name Change",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Payoff Statement",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Assumption",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Duplicate Tax Payment",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 30,
+          "recent": 30,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
           "category": "Partial Release",
           "subcategory": "Partial Release",
           "baseline": 1,
           "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 3,
+          "recent": 3,
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
@@ -4633,9 +5992,9 @@
         }
       ],
       "summary": {
-        "increasing": 16,
-        "decreasing": 14,
-        "stable": 10
+        "increasing": 30,
+        "decreasing": 31,
+        "stable": 16
       }
     },
     "30": {
@@ -4663,29 +6022,11 @@
         },
         {
           "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 287,
-          "recent": 86,
-          "change": -201,
-          "percentChange": -70,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 338,
-          "recent": 199,
-          "change": -139,
-          "percentChange": -41,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 155,
-          "recent": 60,
-          "change": -95,
-          "percentChange": -61,
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 265,
+          "recent": 73,
+          "change": -192,
+          "percentChange": -72,
           "trend": "decreasing"
         },
         {
@@ -4698,6 +6039,15 @@
           "trend": "decreasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 121,
+          "recent": 42,
+          "change": -79,
+          "percentChange": -65,
+          "trend": "decreasing"
+        },
+        {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
           "baseline": 193,
@@ -4707,22 +6057,22 @@
           "trend": "increasing"
         },
         {
-          "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 180,
-          "recent": 107,
-          "change": -73,
-          "percentChange": -41,
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 100,
+          "recent": 25,
+          "change": -75,
+          "percentChange": -75,
           "trend": "decreasing"
         },
         {
-          "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 289,
-          "recent": 353,
-          "change": 64,
-          "percentChange": 22,
-          "trend": "increasing"
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 136,
+          "recent": 86,
+          "change": -50,
+          "percentChange": -37,
+          "trend": "decreasing"
         },
         {
           "category": "Voicemail - on content",
@@ -4734,12 +6084,21 @@
           "trend": "decreasing"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 71,
-          "recent": 103,
+          "category": "Documents",
+          "subcategory": "General Document Request",
+          "baseline": 88,
+          "recent": 55,
+          "change": -33,
+          "percentChange": -37,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 31,
+          "recent": 63,
           "change": 32,
-          "percentChange": 45,
+          "percentChange": 103,
           "trend": "increasing"
         },
         {
@@ -4788,6 +6147,15 @@
           "trend": "decreasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 54,
+          "recent": 32,
+          "change": -22,
+          "percentChange": -41,
+          "trend": "decreasing"
+        },
+        {
           "category": "Loan Modifications",
           "subcategory": "General Loan Modifications",
           "baseline": 6,
@@ -4795,6 +6163,33 @@
           "change": 21,
           "percentChange": 350,
           "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Tax Form Request",
+          "baseline": 22,
+          "recent": 3,
+          "change": -19,
+          "percentChange": -86,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 49,
+          "recent": 31,
+          "change": -18,
+          "percentChange": -37,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Statement Request",
+          "baseline": 63,
+          "recent": 45,
+          "change": -18,
+          "percentChange": -29,
+          "trend": "decreasing"
         },
         {
           "category": "Escalation",
@@ -4806,13 +6201,31 @@
           "trend": "increasing"
         },
         {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 29,
-          "recent": 12,
+          "category": "Payment",
+          "subcategory": "Payment Method Questions",
+          "baseline": 79,
+          "recent": 96,
+          "change": 17,
+          "percentChange": 22,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 48,
+          "recent": 31,
           "change": -17,
-          "percentChange": -59,
+          "percentChange": -35,
           "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 29,
+          "recent": 45,
+          "change": 16,
+          "percentChange": 55,
+          "trend": "increasing"
         },
         {
           "category": "Escrow",
@@ -4842,6 +6255,42 @@
           "trend": "increasing"
         },
         {
+          "category": "Service Transfer",
+          "subcategory": "Transfer Inquiry",
+          "baseline": 96,
+          "recent": 85,
+          "change": -11,
+          "percentChange": -11,
+          "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 30,
+          "recent": 41,
+          "change": 11,
+          "percentChange": 37,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 31,
+          "recent": 41,
+          "change": 10,
+          "percentChange": 32,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 15,
+          "recent": 25,
+          "change": 10,
+          "percentChange": 67,
+          "trend": "increasing"
+        },
+        {
           "category": "ACH Forms",
           "subcategory": "ACH Forms",
           "baseline": 61,
@@ -4849,6 +6298,24 @@
           "change": -10,
           "percentChange": -16,
           "trend": "stable"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 22,
+          "recent": 13,
+          "change": -9,
+          "percentChange": -41,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Missing Payment",
+          "baseline": 11,
+          "recent": 19,
+          "change": 8,
+          "percentChange": 73,
+          "trend": "increasing"
         },
         {
           "category": "Internal Inquiry (General Questions)",
@@ -4860,22 +6327,22 @@
           "trend": "increasing"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 45,
-          "recent": 53,
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 3,
+          "recent": 11,
           "change": 8,
-          "percentChange": 18,
-          "trend": "stable"
+          "percentChange": 267,
+          "trend": "increasing"
         },
         {
-          "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 117,
-          "recent": 110,
-          "change": -7,
-          "percentChange": -6,
-          "trend": "stable"
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 11,
+          "recent": 19,
+          "change": 8,
+          "percentChange": 73,
+          "trend": "increasing"
         },
         {
           "category": "Recast",
@@ -4905,13 +6372,85 @@
           "trend": "decreasing"
         },
         {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 11,
+          "recent": 5,
+          "change": -6,
+          "percentChange": -55,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 20,
+          "recent": 25,
+          "change": 5,
+          "percentChange": 25,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 1,
+          "recent": 5,
+          "change": 4,
+          "percentChange": 400,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 7,
+          "recent": 11,
+          "change": 4,
+          "percentChange": 57,
+          "trend": "increasing"
+        },
+        {
           "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 60,
-          "recent": 63,
-          "change": 3,
-          "percentChange": 5,
-          "trend": "stable"
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 7,
+          "recent": 11,
+          "change": 4,
+          "percentChange": 57,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 10,
+          "recent": 6,
+          "change": -4,
+          "percentChange": -40,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 3,
+          "recent": 7,
+          "change": 4,
+          "percentChange": 133,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Login/Access Issues",
+          "baseline": 5,
+          "recent": 1,
+          "change": -4,
+          "percentChange": -80,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Address Change",
+          "baseline": 5,
+          "recent": 1,
+          "change": -4,
+          "percentChange": -80,
+          "trend": "decreasing"
         },
         {
           "category": "Credit Bureau Reporting",
@@ -4923,6 +6462,15 @@
           "trend": "increasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 30,
+          "recent": 33,
+          "change": 3,
+          "percentChange": 10,
+          "trend": "stable"
+        },
+        {
           "category": "Communication",
           "subcategory": "General Communication",
           "baseline": 7,
@@ -4932,12 +6480,39 @@
           "trend": "increasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 11,
+          "recent": 8,
+          "change": -3,
+          "percentChange": -27,
+          "trend": "decreasing"
+        },
+        {
           "category": "Spam",
           "subcategory": "Spam",
           "baseline": 3,
           "recent": 6,
           "change": 3,
           "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 2,
+          "recent": 5,
+          "change": 3,
+          "percentChange": 150,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 1,
+          "recent": 4,
+          "change": 3,
+          "percentChange": 300,
           "trend": "increasing"
         },
         {
@@ -4950,10 +6525,37 @@
           "trend": "increasing"
         },
         {
+          "category": "Documents",
+          "subcategory": "Payoff Statement",
+          "baseline": 3,
+          "recent": 0,
+          "change": -3,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
           "category": "Account Access",
           "subcategory": "General Account Access",
           "baseline": 53,
           "recent": 51,
+          "change": -2,
+          "percentChange": -4,
+          "trend": "stable"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 6,
+          "recent": 4,
+          "change": -2,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 54,
+          "recent": 52,
           "change": -2,
           "percentChange": -4,
           "trend": "stable"
@@ -4968,6 +6570,24 @@
           "trend": "stable"
         },
         {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 6,
+          "recent": 4,
+          "change": -2,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 52,
+          "recent": 51,
+          "change": -1,
+          "percentChange": -2,
+          "trend": "stable"
+        },
+        {
           "category": "Drafting",
           "subcategory": "Drafting",
           "baseline": 8,
@@ -4977,10 +6597,28 @@
           "trend": "stable"
         },
         {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 3,
+          "recent": 4,
+          "change": 1,
+          "percentChange": 33,
+          "trend": "increasing"
+        },
+        {
           "category": "Partial Release",
           "subcategory": "Partial Release",
           "baseline": 1,
           "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 0,
+          "recent": 1,
           "change": 1,
           "percentChange": 100,
           "trend": "increasing"
@@ -5001,6 +6639,33 @@
           "recent": 1,
           "change": -1,
           "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Name Change",
+          "baseline": 2,
+          "recent": 1,
+          "change": -1,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Assumption",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Duplicate Tax Payment",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
           "trend": "decreasing"
         },
         {
@@ -5031,6 +6696,33 @@
           "trend": "decreasing"
         },
         {
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 21,
+          "recent": 21,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Authorization Form",
+          "baseline": 4,
+          "recent": 4,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Name Change",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
           "category": "Legal Department",
           "subcategory": "Legal Department",
           "baseline": 1,
@@ -5041,9 +6733,9 @@
         }
       ],
       "summary": {
-        "increasing": 17,
-        "decreasing": 15,
-        "stable": 11
+        "increasing": 33,
+        "decreasing": 32,
+        "stable": 15
       }
     },
     "60": {
@@ -5107,30 +6799,30 @@
         },
         {
           "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 373,
-          "recent": 215,
-          "change": -158,
-          "percentChange": -42,
+          "subcategory": "Payoff Quote Request",
+          "baseline": 275,
+          "recent": 125,
+          "change": -150,
+          "percentChange": -55,
           "trend": "decreasing"
         },
         {
           "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 388,
-          "recent": 537,
-          "change": 149,
-          "percentChange": 38,
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 60,
+          "recent": 163,
+          "change": 103,
+          "percentChange": 172,
           "trend": "increasing"
         },
         {
           "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 740,
-          "recent": 642,
-          "change": -98,
-          "percentChange": -13,
-          "trend": "stable"
+          "subcategory": "Payment Method Questions",
+          "baseline": 272,
+          "recent": 175,
+          "change": -97,
+          "percentChange": -36,
+          "trend": "decreasing"
         },
         {
           "category": "Other",
@@ -5139,15 +6831,6 @@
           "recent": 188,
           "change": 89,
           "percentChange": 90,
-          "trend": "increasing"
-        },
-        {
-          "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 52,
-          "recent": 123,
-          "change": 71,
-          "percentChange": 137,
           "trend": "increasing"
         },
         {
@@ -5169,13 +6852,22 @@
           "trend": "increasing"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 117,
-          "recent": 174,
-          "change": 57,
-          "percentChange": 49,
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 40,
+          "recent": 103,
+          "change": 63,
+          "percentChange": 158,
           "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 392,
+          "recent": 338,
+          "change": -54,
+          "percentChange": -14,
+          "trend": "stable"
         },
         {
           "category": "Loan Officer Refinance Doc Request",
@@ -5196,22 +6888,22 @@
           "trend": "increasing"
         },
         {
-          "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 416,
-          "recent": 373,
-          "change": -43,
-          "percentChange": -10,
-          "trend": "stable"
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 34,
+          "recent": 72,
+          "change": 38,
+          "percentChange": 112,
+          "trend": "increasing"
         },
         {
-          "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 195,
-          "recent": 227,
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 62,
+          "recent": 94,
           "change": 32,
-          "percentChange": 16,
-          "trend": "stable"
+          "percentChange": 52,
+          "trend": "increasing"
         },
         {
           "category": "Voice/Alert Requests",
@@ -5232,6 +6924,15 @@
           "trend": "decreasing"
         },
         {
+          "category": "Service Transfer",
+          "subcategory": "Transfer Inquiry",
+          "baseline": 151,
+          "recent": 181,
+          "change": 30,
+          "percentChange": 20,
+          "trend": "increasing"
+        },
+        {
           "category": "Loan Modifications",
           "subcategory": "General Loan Modifications",
           "baseline": 6,
@@ -5250,6 +6951,15 @@
           "trend": "increasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 112,
+          "recent": 86,
+          "change": -26,
+          "percentChange": -23,
+          "trend": "decreasing"
+        },
+        {
           "category": "Recast",
           "subcategory": "Recast",
           "baseline": 25,
@@ -5259,13 +6969,31 @@
           "trend": "increasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 40,
+          "recent": 63,
+          "change": 23,
+          "percentChange": 57,
+          "trend": "increasing"
+        },
+        {
           "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 306,
-          "recent": 287,
+          "subcategory": "Statement Request",
+          "baseline": 127,
+          "recent": 108,
           "change": -19,
-          "percentChange": -6,
+          "percentChange": -15,
           "trend": "stable"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 62,
+          "recent": 79,
+          "change": 17,
+          "percentChange": 27,
+          "trend": "increasing"
         },
         {
           "category": "Credit Bureau Reporting",
@@ -5277,15 +7005,6 @@
           "trend": "increasing"
         },
         {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 56,
-          "recent": 41,
-          "change": -15,
-          "percentChange": -27,
-          "trend": "decreasing"
-        },
-        {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
           "baseline": 406,
@@ -5295,12 +7014,21 @@
           "trend": "stable"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 85,
-          "recent": 98,
-          "change": 13,
-          "percentChange": 15,
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 60,
+          "recent": 74,
+          "change": 14,
+          "percentChange": 23,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "General Document Request",
+          "baseline": 156,
+          "recent": 143,
+          "change": -13,
+          "percentChange": -8,
           "trend": "stable"
         },
         {
@@ -5311,6 +7039,51 @@
           "change": 12,
           "percentChange": 60,
           "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 23,
+          "recent": 35,
+          "change": 12,
+          "percentChange": 52,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Tax Form Request",
+          "baseline": 14,
+          "recent": 25,
+          "change": 11,
+          "percentChange": 79,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 61,
+          "recent": 71,
+          "change": 10,
+          "percentChange": 16,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 9,
+          "recent": 19,
+          "change": 10,
+          "percentChange": 111,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 19,
+          "recent": 10,
+          "change": -9,
+          "percentChange": -47,
+          "trend": "decreasing"
         },
         {
           "category": "Drafting",
@@ -5331,6 +7104,15 @@
           "trend": "stable"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 2,
+          "recent": 10,
+          "change": 8,
+          "percentChange": 400,
+          "trend": "increasing"
+        },
+        {
           "category": "Escalation",
           "subcategory": "General Escalation",
           "baseline": 60,
@@ -5340,6 +7122,60 @@
           "trend": "stable"
         },
         {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 17,
+          "recent": 10,
+          "change": -7,
+          "percentChange": -41,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 14,
+          "recent": 7,
+          "change": -7,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 23,
+          "recent": 16,
+          "change": -7,
+          "percentChange": -30,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 112,
+          "recent": 106,
+          "change": -6,
+          "percentChange": -5,
+          "trend": "stable"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 12,
+          "recent": 18,
+          "change": 6,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 1,
+          "recent": 7,
+          "change": 6,
+          "percentChange": 600,
+          "trend": "increasing"
+        },
+        {
           "category": "Communication",
           "subcategory": "General Communication",
           "baseline": 12,
@@ -5347,6 +7183,15 @@
           "change": 5,
           "percentChange": 42,
           "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Login/Access Issues",
+          "baseline": 11,
+          "recent": 6,
+          "change": -5,
+          "percentChange": -45,
+          "trend": "decreasing"
         },
         {
           "category": "Internal Inquiry (General Questions)",
@@ -5367,6 +7212,33 @@
           "trend": "decreasing"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 1,
+          "recent": 5,
+          "change": 4,
+          "percentChange": 400,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Missing Payment",
+          "baseline": 33,
+          "recent": 30,
+          "change": -3,
+          "percentChange": -9,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 45,
+          "recent": 42,
+          "change": -3,
+          "percentChange": -7,
+          "trend": "stable"
+        },
+        {
           "category": "Technology Issue (Customer)",
           "subcategory": "Technology Issue (Customer)",
           "baseline": 73,
@@ -5374,6 +7246,24 @@
           "change": -3,
           "percentChange": -4,
           "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 3,
+          "recent": 6,
+          "change": 3,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 15,
+          "recent": 18,
+          "change": 3,
+          "percentChange": 20,
+          "trend": "increasing"
         },
         {
           "category": "Assumptions",
@@ -5385,6 +7275,33 @@
           "trend": "increasing"
         },
         {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 43,
+          "recent": 45,
+          "change": 2,
+          "percentChange": 5,
+          "trend": "stable"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 224,
+          "recent": 222,
+          "change": -2,
+          "percentChange": -1,
+          "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 38,
+          "recent": 40,
+          "change": 2,
+          "percentChange": 5,
+          "trend": "stable"
+        },
+        {
           "category": "Investor Purchasing",
           "subcategory": "Investor Purchasing",
           "baseline": 1,
@@ -5394,12 +7311,57 @@
           "trend": "increasing"
         },
         {
+          "category": "Account Maintenance",
+          "subcategory": "Name Change",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Address Change",
+          "baseline": 8,
+          "recent": 6,
+          "change": -2,
+          "percentChange": -25,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Payoff Statement",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 81,
+          "recent": 80,
+          "change": -1,
+          "percentChange": -1,
+          "trend": "stable"
+        },
+        {
           "category": "Partial Release",
           "subcategory": "Partial Release",
           "baseline": 2,
           "recent": 3,
           "change": 1,
           "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
           "trend": "increasing"
         },
         {
@@ -5412,10 +7374,28 @@
           "trend": "increasing"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Name Change",
+          "baseline": 3,
+          "recent": 2,
+          "change": -1,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
           "category": "Legal Department",
           "subcategory": "Legal Department",
           "baseline": 1,
           "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Duplicate Tax Payment",
+          "baseline": 0,
+          "recent": 1,
           "change": 1,
           "percentChange": 100,
           "trend": "increasing"
@@ -5430,6 +7410,15 @@
           "trend": "increasing"
         },
         {
+          "category": "Netted Payoffs",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
           "category": "Investor Reporting",
           "subcategory": "Investor Reporting",
           "baseline": 1,
@@ -5437,6 +7426,60 @@
           "change": -1,
           "percentChange": -100,
           "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 14,
+          "recent": 14,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 30,
+          "recent": 30,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 16,
+          "recent": 16,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Authorization Form",
+          "baseline": 8,
+          "recent": 8,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Assumption",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
         },
         {
           "category": "LoanServ",
@@ -5458,9 +7501,9 @@
         }
       ],
       "summary": {
-        "increasing": 24,
-        "decreasing": 8,
-        "stable": 12
+        "increasing": 42,
+        "decreasing": 18,
+        "stable": 23
       }
     },
     "90": {
@@ -5487,24 +7530,6 @@
           "trend": "increasing"
         },
         {
-          "category": "Payment",
-          "subcategory": "Payment",
-          "baseline": 164,
-          "recent": 1218,
-          "change": 1054,
-          "percentChange": 643,
-          "trend": "increasing"
-        },
-        {
-          "category": "Insurance (HOI/Flood)",
-          "subcategory": "Insurance (HOI/Flood)",
-          "baseline": 31,
-          "recent": 894,
-          "change": 863,
-          "percentChange": 2784,
-          "trend": "increasing"
-        },
-        {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
           "baseline": 44,
@@ -5515,11 +7540,11 @@
         },
         {
           "category": "Netted Payoffs",
-          "subcategory": "Netted Payoffs",
-          "baseline": 29,
-          "recent": 760,
-          "change": 731,
-          "percentChange": 2521,
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 27,
+          "recent": 703,
+          "change": 676,
+          "percentChange": 2504,
           "trend": "increasing"
         },
         {
@@ -5541,30 +7566,21 @@
           "trend": "increasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "General Insurance Inquiry",
+          "baseline": 17,
+          "recent": 429,
+          "change": 412,
+          "percentChange": 2424,
+          "trend": "increasing"
+        },
+        {
           "category": "Payoffs/Satisfactions/Lien Release",
-          "subcategory": "Payoffs/Satisfactions/Lien Release",
-          "baseline": 13,
-          "recent": 575,
-          "change": 562,
-          "percentChange": 4323,
-          "trend": "increasing"
-        },
-        {
-          "category": "Documents",
-          "subcategory": "Documents",
-          "baseline": 34,
-          "recent": 559,
-          "change": 525,
-          "percentChange": 1544,
-          "trend": "increasing"
-        },
-        {
-          "category": "Service Transfer",
-          "subcategory": "Service Transfer",
-          "baseline": 24,
-          "recent": 398,
-          "change": 374,
-          "percentChange": 1558,
+          "subcategory": "Payoff Quote Request",
+          "baseline": 5,
+          "recent": 395,
+          "change": 390,
+          "percentChange": 7800,
           "trend": "increasing"
         },
         {
@@ -5586,12 +7602,12 @@
           "trend": "increasing"
         },
         {
-          "category": "General Account Inquiry",
-          "subcategory": "General Account Inquiry",
-          "baseline": 8,
-          "recent": 283,
-          "change": 275,
-          "percentChange": 3438,
+          "category": "Service Transfer",
+          "subcategory": "Transfer Inquiry",
+          "baseline": 21,
+          "recent": 311,
+          "change": 290,
+          "percentChange": 1381,
           "trend": "increasing"
         },
         {
@@ -5604,21 +7620,48 @@
           "trend": "increasing"
         },
         {
-          "category": "Escrow",
-          "subcategory": "Escrow",
-          "baseline": 5,
-          "recent": 178,
-          "change": 173,
-          "percentChange": 3460,
+          "category": "Payment",
+          "subcategory": "Payment Method Questions",
+          "baseline": 93,
+          "recent": 354,
+          "change": 261,
+          "percentChange": 281,
           "trend": "increasing"
         },
         {
-          "category": "Property Tax",
-          "subcategory": "Property Tax",
-          "baseline": 3,
-          "recent": 172,
-          "change": 169,
-          "percentChange": 5633,
+          "category": "Documents",
+          "subcategory": "General Document Request",
+          "baseline": 25,
+          "recent": 274,
+          "change": 249,
+          "percentChange": 996,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Statement Request",
+          "baseline": 5,
+          "recent": 230,
+          "change": 225,
+          "percentChange": 4500,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Evidence Request",
+          "baseline": 1,
+          "recent": 222,
+          "change": 221,
+          "percentChange": 22100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "First Payment Inquiry",
+          "baseline": 6,
+          "recent": 212,
+          "change": 206,
+          "percentChange": 3433,
           "trend": "increasing"
         },
         {
@@ -5640,12 +7683,48 @@
           "trend": "increasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "General Payment Inquiry",
+          "baseline": 25,
+          "recent": 173,
+          "change": 148,
+          "percentChange": 592,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "General Payoff Inquiry",
+          "baseline": 7,
+          "recent": 154,
+          "change": 147,
+          "percentChange": 2100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "General Tax Inquiry",
+          "baseline": 3,
+          "recent": 140,
+          "change": 137,
+          "percentChange": 4567,
+          "trend": "increasing"
+        },
+        {
           "category": "Loan Information",
           "subcategory": "General Loan Information",
           "baseline": 4,
           "recent": 138,
           "change": 134,
           "percentChange": 3350,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Confirmation",
+          "baseline": 12,
+          "recent": 144,
+          "change": 132,
+          "percentChange": 1100,
           "trend": "increasing"
         },
         {
@@ -5667,12 +7746,30 @@
           "trend": "increasing"
         },
         {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Addition",
+          "baseline": 8,
+          "recent": 133,
+          "change": 125,
+          "percentChange": 1563,
+          "trend": "increasing"
+        },
+        {
           "category": "Internal Inquiry (General Questions)",
           "subcategory": "Internal Inquiry (General Questions)",
           "baseline": 2,
           "recent": 126,
           "change": 124,
           "percentChange": 6200,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Contact Info Update",
+          "baseline": 6,
+          "recent": 126,
+          "change": 120,
+          "percentChange": 2000,
           "trend": "increasing"
         },
         {
@@ -5685,12 +7782,39 @@
           "trend": "increasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "Payment Failure",
+          "baseline": 9,
+          "recent": 125,
+          "change": 116,
+          "percentChange": 1289,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Maintenance",
+          "baseline": 1,
+          "recent": 105,
+          "change": 104,
+          "percentChange": 10400,
+          "trend": "increasing"
+        },
+        {
           "category": "Technology Issue (Customer)",
           "subcategory": "Technology Issue (Customer)",
           "baseline": 23,
           "recent": 120,
           "change": 97,
           "percentChange": 422,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance Lapse/Cancellation",
+          "baseline": 4,
+          "recent": 99,
+          "change": 95,
+          "percentChange": 2375,
           "trend": "increasing"
         },
         {
@@ -5703,12 +7827,21 @@
           "trend": "increasing"
         },
         {
-          "category": "Account Maintenance",
-          "subcategory": "Account Maintenance",
-          "baseline": 9,
-          "recent": 88,
-          "change": 79,
-          "percentChange": 878,
+          "category": "Escrow",
+          "subcategory": "General Escrow Inquiry",
+          "baseline": 1,
+          "recent": 86,
+          "change": 85,
+          "percentChange": 8500,
+          "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Sold/Transferred",
+          "baseline": 3,
+          "recent": 85,
+          "change": 82,
+          "percentChange": 2733,
           "trend": "increasing"
         },
         {
@@ -5730,12 +7863,48 @@
           "trend": "increasing"
         },
         {
+          "category": "Payment",
+          "subcategory": "Payment Refund Request",
+          "baseline": 4,
+          "recent": 74,
+          "change": 70,
+          "percentChange": 1750,
+          "trend": "increasing"
+        },
+        {
           "category": "Recast",
           "subcategory": "Recast",
           "baseline": 3,
           "recent": 73,
           "change": 70,
           "percentChange": 2333,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Missing Payment",
+          "baseline": 3,
+          "recent": 60,
+          "change": 57,
+          "percentChange": 1900,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Shortage/Analysis",
+          "baseline": 3,
+          "recent": 57,
+          "change": 54,
+          "percentChange": 1800,
+          "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Payoff Quote Request",
+          "baseline": 2,
+          "recent": 56,
+          "change": 54,
+          "percentChange": 2700,
           "trend": "increasing"
         },
         {
@@ -5757,6 +7926,24 @@
           "trend": "increasing"
         },
         {
+          "category": "Documents",
+          "subcategory": "Tax Form Request",
+          "baseline": 3,
+          "recent": 36,
+          "change": 33,
+          "percentChange": 1100,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Login/Access Issues",
+          "baseline": 1,
+          "recent": 32,
+          "change": 31,
+          "percentChange": 3100,
+          "trend": "increasing"
+        },
+        {
           "category": "Assumptions",
           "subcategory": "Assumptions",
           "baseline": 0,
@@ -5775,12 +7962,66 @@
           "trend": "increasing"
         },
         {
+          "category": "Property Tax",
+          "subcategory": "Delinquent Tax Issue",
+          "baseline": 0,
+          "recent": 30,
+          "change": 30,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Contact Info Update",
+          "baseline": 2,
+          "recent": 30,
+          "change": 28,
+          "percentChange": 1400,
+          "trend": "increasing"
+        },
+        {
           "category": "Communication",
           "subcategory": "General Communication",
           "baseline": 1,
           "recent": 28,
           "change": 27,
           "percentChange": 2700,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment Amount Inquiry",
+          "baseline": 1,
+          "recent": 27,
+          "change": 26,
+          "percentChange": 2600,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Refund",
+          "baseline": 1,
+          "recent": 27,
+          "change": 26,
+          "percentChange": 2600,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 1,
+          "recent": 26,
+          "change": 25,
+          "percentChange": 2500,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "General Account Maintenance",
+          "baseline": 3,
+          "recent": 26,
+          "change": 23,
+          "percentChange": 767,
           "trend": "increasing"
         },
         {
@@ -5798,6 +8039,87 @@
           "baseline": 0,
           "recent": 22,
           "change": 22,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Duplicate Payment",
+          "baseline": 1,
+          "recent": 20,
+          "change": 19,
+          "percentChange": 1900,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Autopay Setup/Issues",
+          "baseline": 10,
+          "recent": 29,
+          "change": 19,
+          "percentChange": 190,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Authorization Form",
+          "baseline": 0,
+          "recent": 16,
+          "change": 16,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Address Change",
+          "baseline": 1,
+          "recent": 13,
+          "change": 12,
+          "percentChange": 1200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Login/Access Issues",
+          "baseline": 3,
+          "recent": 14,
+          "change": 11,
+          "percentChange": 367,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Force-Placed Insurance",
+          "baseline": 1,
+          "recent": 11,
+          "change": 10,
+          "percentChange": 1000,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Address Change",
+          "baseline": 0,
+          "recent": 9,
+          "change": 9,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow Waiver Request",
+          "baseline": 0,
+          "recent": 8,
+          "change": 8,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "Account Balance Inquiry",
+          "baseline": 0,
+          "recent": 6,
+          "change": 6,
           "percentChange": 100,
           "trend": "increasing"
         },
@@ -5820,11 +8142,47 @@
           "trend": "increasing"
         },
         {
+          "category": "General Account Inquiry",
+          "subcategory": "Name Change",
+          "baseline": 0,
+          "recent": 5,
+          "change": 5,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
           "category": "Investor Purchasing",
           "subcategory": "Investor Purchasing",
           "baseline": 0,
           "recent": 4,
           "change": 4,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Name Change",
+          "baseline": 0,
+          "recent": 4,
+          "change": 4,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Payoff Statement",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Loan Assumption",
+          "baseline": 0,
+          "recent": 2,
+          "change": 2,
           "percentChange": 100,
           "trend": "increasing"
         },
@@ -5847,10 +8205,28 @@
           "trend": "increasing"
         },
         {
+          "category": "Property Tax",
+          "subcategory": "Tax Certification",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
           "category": "Legal Department",
           "subcategory": "Legal Department",
           "baseline": 1,
           "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Duplicate Tax Payment",
+          "baseline": 0,
+          "recent": 1,
           "change": 1,
           "percentChange": 100,
           "trend": "increasing"
@@ -5865,8 +8241,26 @@
           "trend": "increasing"
         },
         {
+          "category": "Netted Payoffs",
+          "subcategory": "Satisfaction/Lien Release",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
           "category": "Investor Reporting",
           "subcategory": "Investor Reporting",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Balance Inquiry",
           "baseline": 0,
           "recent": 1,
           "change": 1,
@@ -5875,11 +8269,11 @@
         }
       ],
       "summary": {
-        "increasing": 44,
+        "increasing": 83,
         "decreasing": 0,
         "stable": 0
       }
     }
   },
-  "processedAt": "2025-12-09T03:46:25.984Z"
+  "processedAt": "2025-12-09T03:53:46.952Z"
 }
