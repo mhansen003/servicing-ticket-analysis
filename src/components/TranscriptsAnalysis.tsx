@@ -23,6 +23,7 @@ import {
   TrendingUp,
   TrendingDown,
   Users,
+  User,
   MessageSquare,
   ThumbsUp,
   ThumbsDown,
