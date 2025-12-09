@@ -430,27 +430,59 @@ export default function TranscriptsAnalysis() {
           </div>
         </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-          <div className="flex items-center gap-2 text-gray-400 mb-2">
-            <ThumbsUp className="h-4 w-4 text-green-400" />
-            <span className="text-sm">Positive Calls</span>
-          </div>
-          <div className="text-2xl font-bold text-green-400">{positiveRate}%</div>
-          <div className="text-xs text-gray-500 mt-1">
-            {stats.sentimentDistribution.positive.toLocaleString()} calls
-          </div>
-        </div>
+        {deepAnalysis ? (
+          <>
+            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 rounded-xl p-4 border border-blue-500/30">
+              <div className="flex items-center gap-2 text-blue-400 mb-2">
+                <User className="h-4 w-4" />
+                <span className="text-sm">Agent Performance</span>
+              </div>
+              <div className="text-2xl font-bold text-blue-400">
+                {(deepAnalysis.summary.avgAgentScore * 100).toFixed(1)}%
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed
+              </div>
+            </div>
 
-        <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-          <div className="flex items-center gap-2 text-gray-400 mb-2">
-            <Clock className="h-4 w-4" />
-            <span className="text-sm">Avg Duration</span>
-          </div>
-          <div className="text-2xl font-bold text-white">{formatDuration(stats.avgDuration)}</div>
-          <div className="text-xs text-gray-500 mt-1">
-            Avg hold: {formatDuration(stats.avgHoldTime)}
-          </div>
-        </div>
+            <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 rounded-xl p-4 border border-purple-500/30">
+              <div className="flex items-center gap-2 text-purple-400 mb-2">
+                <Users className="h-4 w-4" />
+                <span className="text-sm">Customer Satisfaction</span>
+              </div>
+              <div className="text-2xl font-bold text-purple-400">
+                {(deepAnalysis.summary.avgCustomerScore * 100).toFixed(1)}%
+              </div>
+              <div className="text-xs text-gray-500 mt-1">
+                Average sentiment score
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+              <div className="flex items-center gap-2 text-gray-400 mb-2">
+                <ThumbsUp className="h-4 w-4 text-green-400" />
+                <span className="text-sm">Positive Calls</span>
+              </div>
+              <div className="text-2xl font-bold text-green-400">{positiveRate}%</div>
+              <div className="text-xs text-gray-500 mt-1">
+                {stats.sentimentDistribution.positive.toLocaleString()} calls
+              </div>
+            </div>
+
+            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
+              <div className="flex items-center gap-2 text-gray-400 mb-2">
+                <Clock className="h-4 w-4" />
+                <span className="text-sm">Avg Duration</span>
+              </div>
+              <div className="text-2xl font-bold text-white">{formatDuration(stats.avgDuration)}</div>
+              <div className="text-xs text-gray-500 mt-1">
+                Avg hold: {formatDuration(stats.avgHoldTime)}
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
           <div className="flex items-center gap-2 text-gray-400 mb-2">
@@ -707,131 +739,148 @@ export default function TranscriptsAnalysis() {
         )}
       </div>
 
-      {/* Sentiment Overview */}
-      <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
-        <button
-          onClick={() => toggleSection('overview')}
-          className="w-full flex items-center justify-between p-4 hover:bg-white/[0.02] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-gradient-to-br from-green-500/20 to-blue-500/20">
-              <TrendingUp className="h-5 w-5 text-green-400" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white">Sentiment Overview</h3>
-              <p className="text-sm text-gray-500">Call sentiment distribution and trends</p>
-            </div>
-          </div>
-          {expandedSections.has('overview') ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
-          )}
-        </button>
-
-        {expandedSections.has('overview') && (
-          <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Sentiment Distribution Pie */}
-            <div className="bg-gray-800/30 rounded-xl p-4">
-              <h4 className="text-sm font-medium text-gray-400 mb-4 flex items-center gap-2">
-                Sentiment Distribution
-                <span className="text-xs text-blue-400 flex items-center gap-1">
-                  <MousePointerClick className="h-3 w-3" /> Click to view
-                </span>
-              </h4>
-              <ResponsiveContainer width="100%" height={250}>
-                <PieChart>
-                  <Pie
-                    data={sentimentPieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    dataKey="value"
-                    nameKey="name"
-                    label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
-                    labelLine={false}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    {sentimentPieData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={entry.color}
-                        className="hover:opacity-80 transition-opacity cursor-pointer"
-                        onClick={() => handleSentimentClick(entry.name)}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#1f2937',
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                    }}
-                    formatter={(value: number) => [value.toLocaleString(), 'Calls']}
-                  />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
-
-            {/* Daily Sentiment Trend */}
-            <div className="bg-gray-800/30 rounded-xl p-4">
-              <h4 className="text-sm font-medium text-gray-400 mb-4">Daily Sentiment Trend</h4>
-              <ResponsiveContainer width="100%" height={250}>
-                <AreaChart data={stats.dailyTrends.slice(-14)}>
-                  <defs>
-                    <linearGradient id="colorPositive" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#22c55e" stopOpacity={0} />
-                    </linearGradient>
-                    <linearGradient id="colorNegative" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#ef4444" stopOpacity={0.3} />
-                      <stop offset="95%" stopColor="#ef4444" stopOpacity={0} />
-                    </linearGradient>
-                  </defs>
-                  <XAxis
-                    dataKey="date"
-                    tickFormatter={formatDate}
-                    stroke="#6b7280"
-                    fontSize={11}
-                  />
-                  <YAxis stroke="#6b7280" fontSize={11} />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: '#1f2937',
-                      border: '1px solid #374151',
-                      borderRadius: '8px',
-                    }}
-                    labelFormatter={formatDate}
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="positive"
-                    stroke="#22c55e"
-                    fill="url(#colorPositive)"
-                    stackId="1"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="neutral"
-                    stroke="#6b7280"
-                    fill="rgba(107, 114, 128, 0.2)"
-                    stackId="1"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="negative"
-                    stroke="#ef4444"
-                    fill="url(#colorNegative)"
-                    stackId="1"
-                  />
-                  <Legend />
-                </AreaChart>
-              </ResponsiveContainer>
+      {/* Agent vs Customer Sentiment (Deep Analysis) */}
+      {deepAnalysis && (
+        <div className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl border border-blue-500/30 overflow-hidden">
+          <div className="p-4 bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+                <Users className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  Agent vs Customer Sentiment
+                  <span className="px-2 py-0.5 text-xs bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30">
+                    Deep Analysis
+                  </span>
+                </h3>
+                <p className="text-sm text-gray-400">
+                  Comparing agent performance with customer satisfaction • {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets
+                </p>
+              </div>
             </div>
           </div>
-        )}
-      </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Agent Sentiment */}
+              <div className="bg-[#131a29] rounded-xl p-4 border border-white/[0.08]">
+                <h4 className="text-sm font-medium text-gray-400 mb-4 flex items-center gap-2">
+                  <User className="h-4 w-4 text-blue-400" />
+                  Agent Performance Sentiment
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                    <div className="flex items-center gap-2">
+                      <ThumbsUp className="h-4 w-4 text-green-400" />
+                      <span className="text-white text-sm">Positive</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-green-400">
+                        {((deepAnalysis.summary.agentSentiment.positive / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.agentSentiment.positive.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30">
+                    <div className="flex items-center gap-2">
+                      <Minus className="h-4 w-4 text-gray-400" />
+                      <span className="text-white text-sm">Neutral</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-gray-400">
+                        {((deepAnalysis.summary.agentSentiment.neutral / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.agentSentiment.neutral.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <div className="flex items-center gap-2">
+                      <ThumbsDown className="h-4 w-4 text-red-400" />
+                      <span className="text-white text-sm">Negative</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-red-400">
+                        {((deepAnalysis.summary.agentSentiment.negative / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.agentSentiment.negative.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-blue-500/5 rounded-lg border border-blue-500/20">
+                  <div className="text-xs text-gray-500">Average Agent Score</div>
+                  <div className="text-2xl font-bold text-blue-400">
+                    {(deepAnalysis.summary.avgAgentScore * 100).toFixed(1)}%
+                  </div>
+                </div>
+              </div>
+
+              {/* Customer Sentiment */}
+              <div className="bg-[#131a29] rounded-xl p-4 border border-white/[0.08]">
+                <h4 className="text-sm font-medium text-gray-400 mb-4 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-purple-400" />
+                  Customer Satisfaction Sentiment
+                </h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                    <div className="flex items-center gap-2">
+                      <ThumbsUp className="h-4 w-4 text-green-400" />
+                      <span className="text-white text-sm">Positive</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-green-400">
+                        {((deepAnalysis.summary.customerSentiment.positive / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.customerSentiment.positive.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30">
+                    <div className="flex items-center gap-2">
+                      <Minus className="h-4 w-4 text-gray-400" />
+                      <span className="text-white text-sm">Neutral</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-gray-400">
+                        {((deepAnalysis.summary.customerSentiment.neutral / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.customerSentiment.neutral.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                    <div className="flex items-center gap-2">
+                      <ThumbsDown className="h-4 w-4 text-red-400" />
+                      <span className="text-white text-sm">Negative</span>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-lg font-bold text-red-400">
+                        {((deepAnalysis.summary.customerSentiment.negative / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        {deepAnalysis.summary.customerSentiment.negative.toLocaleString()} calls
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-purple-500/5 rounded-lg border border-purple-500/20">
+                  <div className="text-xs text-gray-500">Average Customer Score</div>
+                  <div className="text-2xl font-bold text-purple-400">
+                    {(deepAnalysis.summary.avgCustomerScore * 100).toFixed(1)}%
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Topics Analysis */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
