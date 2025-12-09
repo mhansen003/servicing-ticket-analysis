@@ -68,7 +68,7 @@ export default function CategoriesAnalysis() {
       acc[stat.category] = [];
     }
     acc[stat.category].push(stat);
-    return {};
+    return acc;
   }, {} as { [key: string]: CategoryStat[] });
 
   // Get top-level category totals
