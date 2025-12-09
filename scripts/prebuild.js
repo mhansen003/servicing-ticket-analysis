@@ -568,11 +568,36 @@ function categorizeTicket(title, description) {
 
 // Categorize all servicing tickets
 const categorizedTickets = tickets.map(t => {
-  const result = categorizeTicket(t.ticket_title || '', t.ticket_description || '');
+  // Try to use the actual custom_fields.Category first
+  let category = 'Other';
+  let subcategory = 'Uncategorized';
+  let confidence = 0.3;
+
+  try {
+    if (t.custom_fields) {
+      const customFields = JSON.parse(t.custom_fields);
+      if (customFields.Category) {
+        category = customFields.Category;
+        subcategory = customFields.Category; // Use same for subcategory
+        confidence = 1.0; // High confidence since it's from the actual data
+      }
+    }
+  } catch (e) {
+    // If custom_fields parsing fails, fall back to keyword categorization
+  }
+
+  // Fall back to keyword-based categorization if no custom field
+  if (category === 'Other') {
+    const result = categorizeTicket(t.ticket_title || '', t.ticket_description || '');
+    category = result.category;
+    subcategory = result.subcategory;
+    confidence = result.confidence;
+  }
+
   return {
-    category: result.category,
-    subcategory: result.subcategory,
-    categorization_confidence: result.confidence,
+    category,
+    subcategory,
+    categorization_confidence: confidence,
     ticket_created_at_utc: t.ticket_created_at_utc,
   };
 });

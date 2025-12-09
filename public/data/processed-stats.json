@@ -2640,150 +2640,571 @@
   "categorizedAnalytics": {
     "summary": {
       "totalCategorized": 23167,
-      "totalCategories": 11,
-      "totalSubcategories": 11,
-      "avgConfidence": 0.69
+      "totalCategories": 43,
+      "totalSubcategories": 44,
+      "avgConfidence": 0.798
     },
     "categories": [
       {
         "category": "Payment Issues",
-        "count": 18616,
-        "percentage": 80,
+        "count": 12336,
+        "percentage": 53,
         "avgConfidence": 0.7,
         "subcategories": [
           {
             "name": "General Payment Issues",
-            "count": 18616,
-            "percentage": 80
+            "count": 12336,
+            "percentage": 53
           }
         ]
       },
       {
-        "category": "Document Requests",
-        "count": 1346,
+        "category": "Payment",
+        "count": 1382,
         "percentage": 6,
-        "avgConfidence": 0.7,
+        "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "General Document Requests",
-            "count": 1346,
+            "name": "Payment",
+            "count": 1382,
             "percentage": 6
           }
         ]
       },
       {
-        "category": "Loan Transfer",
-        "count": 1076,
-        "percentage": 5,
-        "avgConfidence": 0.7,
+        "category": "Insurance (HOI/Flood)",
+        "count": 925,
+        "percentage": 4,
+        "avgConfidence": 1,
         "subcategories": [
           {
-            "name": "General Loan Transfer",
-            "count": 1076,
-            "percentage": 5
+            "name": "Insurance (HOI/Flood)",
+            "count": 925,
+            "percentage": 4
           }
         ]
       },
       {
-        "category": "Other",
-        "count": 579,
-        "percentage": 2,
-        "avgConfidence": 0.3,
+        "category": "Document Requests",
+        "count": 826,
+        "percentage": 4,
+        "avgConfidence": 0.7,
         "subcategories": [
           {
-            "name": "Uncategorized",
-            "count": 579,
-            "percentage": 2
+            "name": "General Document Requests",
+            "count": 826,
+            "percentage": 4
+          }
+        ]
+      },
+      {
+        "category": "Netted Payoffs",
+        "count": 789,
+        "percentage": 3,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Netted Payoffs",
+            "count": 789,
+            "percentage": 3
+          }
+        ]
+      },
+      {
+        "category": "Loan Transfer",
+        "count": 740,
+        "percentage": 3,
+        "avgConfidence": 0.7,
+        "subcategories": [
+          {
+            "name": "General Loan Transfer",
+            "count": 740,
+            "percentage": 3
+          }
+        ]
+      },
+      {
+        "category": "Duplicate",
+        "count": 688,
+        "percentage": 3,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Duplicate",
+            "count": 688,
+            "percentage": 3
+          }
+        ]
+      },
+      {
+        "category": "Documents",
+        "count": 593,
+        "percentage": 3,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Documents",
+            "count": 593,
+            "percentage": 3
+          }
+        ]
+      },
+      {
+        "category": "Payoffs/Satisfactions/Lien Release",
+        "count": 588,
+        "percentage": 3,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Payoffs/Satisfactions/Lien Release",
+            "count": 588,
+            "percentage": 3
           }
         ]
       },
       {
         "category": "Escrow",
-        "count": 436,
+        "count": 490,
         "percentage": 2,
-        "avgConfidence": 0.7,
+        "avgConfidence": 0.812,
         "subcategories": [
           {
             "name": "General Escrow",
-            "count": 436,
+            "count": 307,
+            "percentage": 1
+          },
+          {
+            "name": "Escrow",
+            "count": 183,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "ACH Forms",
+        "count": 445,
+        "percentage": 2,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "ACH Forms",
+            "count": 445,
             "percentage": 2
+          }
+        ]
+      },
+      {
+        "category": "Voicemail - on content",
+        "count": 444,
+        "percentage": 2,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Voicemail - on content",
+            "count": 444,
+            "percentage": 2
+          }
+        ]
+      },
+      {
+        "category": "Service Transfer",
+        "count": 422,
+        "percentage": 2,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Service Transfer",
+            "count": 422,
+            "percentage": 2
+          }
+        ]
+      },
+      {
+        "category": "General Account Inquiry",
+        "count": 291,
+        "percentage": 1,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "General Account Inquiry",
+            "count": 291,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Other",
+        "count": 287,
+        "percentage": 1,
+        "avgConfidence": 0.3,
+        "subcategories": [
+          {
+            "name": "Uncategorized",
+            "count": 287,
+            "percentage": 1
           }
         ]
       },
       {
         "category": "Voice/Alert Requests",
-        "count": 401,
-        "percentage": 2,
+        "count": 199,
+        "percentage": 1,
         "avgConfidence": 0.7,
         "subcategories": [
           {
             "name": "General Voice/Alert Requests",
-            "count": 401,
-            "percentage": 2
+            "count": 199,
+            "percentage": 1
           }
         ]
       },
       {
         "category": "Account Access",
-        "count": 272,
+        "count": 182,
         "percentage": 1,
         "avgConfidence": 0.7,
         "subcategories": [
           {
             "name": "General Account Access",
-            "count": 272,
+            "count": 182,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Property Tax",
+        "count": 175,
+        "percentage": 1,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Property Tax",
+            "count": 175,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Technology Issue (Customer)",
+        "count": 143,
+        "percentage": 1,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Technology Issue (Customer)",
+            "count": 143,
             "percentage": 1
           }
         ]
       },
       {
         "category": "Loan Information",
-        "count": 179,
-        "percentage": 1,
-        "avgConfidence": 0.7,
-        "subcategories": [
-          {
-            "name": "General Loan Information",
-            "count": 179,
-            "percentage": 1
-          }
-        ]
-      },
-      {
-        "category": "Escalation",
         "count": 142,
         "percentage": 1,
         "avgConfidence": 0.7,
         "subcategories": [
           {
-            "name": "General Escalation",
+            "name": "General Loan Information",
             "count": 142,
             "percentage": 1
           }
         ]
       },
       {
+        "category": "Default",
+        "count": 130,
+        "percentage": 1,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Default",
+            "count": 130,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Internal Inquiry (General Questions)",
+        "count": 128,
+        "percentage": 1,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Internal Inquiry (General Questions)",
+            "count": 128,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Escalation",
+        "count": 127,
+        "percentage": 1,
+        "avgConfidence": 0.7,
+        "subcategories": [
+          {
+            "name": "General Escalation",
+            "count": 127,
+            "percentage": 1
+          }
+        ]
+      },
+      {
+        "category": "Account Maintenance",
+        "count": 97,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Account Maintenance",
+            "count": 97,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Loan Officer Refinance Doc Request",
+        "count": 90,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Loan Officer Refinance Doc Request",
+            "count": 90,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Statement and Billing (Customer Only)",
+        "count": 84,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Statement and Billing (Customer Only)",
+            "count": 84,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Tax Forms",
+        "count": 83,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Tax Forms",
+            "count": 83,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Recast",
+        "count": 76,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Recast",
+            "count": 76,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "PMI/MIP",
+        "count": 52,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "PMI/MIP",
+            "count": 52,
+            "percentage": 0
+          }
+        ]
+      },
+      {
         "category": "Loan Modifications",
-        "count": 85,
+        "count": 39,
         "percentage": 0,
         "avgConfidence": 0.7,
         "subcategories": [
           {
             "name": "General Loan Modifications",
-            "count": 85,
+            "count": 39,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Drafting",
+        "count": 39,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Drafting",
+            "count": 39,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Assumptions",
+        "count": 31,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Assumptions",
+            "count": 31,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Credit Bureau Reporting",
+        "count": 30,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Credit Bureau Reporting",
+            "count": 30,
             "percentage": 0
           }
         ]
       },
       {
         "category": "Communication",
-        "count": 35,
+        "count": 29,
         "percentage": 0,
         "avgConfidence": 0.7,
         "subcategories": [
           {
             "name": "General Communication",
-            "count": 35,
+            "count": 29,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Spam",
+        "count": 22,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Spam",
+            "count": 22,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Check Request",
+        "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Check Request",
+            "count": 5,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Partial Release",
+        "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Partial Release",
+            "count": 5,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Investor Purchasing",
+        "count": 4,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Investor Purchasing",
+            "count": 4,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Legal Department",
+        "count": 3,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Legal Department",
+            "count": 3,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "LoanServ",
+        "count": 2,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "LoanServ",
+            "count": 2,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Buydown",
+        "count": 2,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Buydown",
+            "count": 2,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Executive Complaints",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Executive Complaints",
+            "count": 1,
+            "percentage": 0
+          }
+        ]
+      },
+      {
+        "category": "Investor Reporting",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1,
+        "subcategories": [
+          {
+            "name": "Investor Reporting",
+            "count": 1,
             "percentage": 0
           }
         ]
@@ -2793,79 +3214,310 @@
       {
         "category": "Payment Issues",
         "subcategory": "General Payment Issues",
-        "count": 18616,
-        "percentage": 80,
+        "count": 12336,
+        "percentage": 53,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Payment",
+        "subcategory": "Payment",
+        "count": 1382,
+        "percentage": 6,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Insurance (HOI/Flood)",
+        "subcategory": "Insurance (HOI/Flood)",
+        "count": 925,
+        "percentage": 4,
+        "avgConfidence": 1
       },
       {
         "category": "Document Requests",
         "subcategory": "General Document Requests",
-        "count": 1346,
-        "percentage": 6,
+        "count": 826,
+        "percentage": 4,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Netted Payoffs",
+        "subcategory": "Netted Payoffs",
+        "count": 789,
+        "percentage": 3,
+        "avgConfidence": 1
       },
       {
         "category": "Loan Transfer",
         "subcategory": "General Loan Transfer",
-        "count": 1076,
-        "percentage": 5,
+        "count": 740,
+        "percentage": 3,
         "avgConfidence": 0.7
       },
       {
-        "category": "Other",
-        "subcategory": "Uncategorized",
-        "count": 579,
+        "category": "Duplicate",
+        "subcategory": "Duplicate",
+        "count": 688,
+        "percentage": 3,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Documents",
+        "subcategory": "Documents",
+        "count": 593,
+        "percentage": 3,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Payoffs/Satisfactions/Lien Release",
+        "subcategory": "Payoffs/Satisfactions/Lien Release",
+        "count": 588,
+        "percentage": 3,
+        "avgConfidence": 1
+      },
+      {
+        "category": "ACH Forms",
+        "subcategory": "ACH Forms",
+        "count": 445,
         "percentage": 2,
-        "avgConfidence": 0.3
+        "avgConfidence": 1
+      },
+      {
+        "category": "Voicemail - on content",
+        "subcategory": "Voicemail - on content",
+        "count": 444,
+        "percentage": 2,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Service Transfer",
+        "subcategory": "Service Transfer",
+        "count": 422,
+        "percentage": 2,
+        "avgConfidence": 1
       },
       {
         "category": "Escrow",
         "subcategory": "General Escrow",
-        "count": 436,
-        "percentage": 2,
+        "count": 307,
+        "percentage": 1,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "General Account Inquiry",
+        "subcategory": "General Account Inquiry",
+        "count": 291,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Other",
+        "subcategory": "Uncategorized",
+        "count": 287,
+        "percentage": 1,
+        "avgConfidence": 0.3
       },
       {
         "category": "Voice/Alert Requests",
         "subcategory": "General Voice/Alert Requests",
-        "count": 401,
-        "percentage": 2,
+        "count": 199,
+        "percentage": 1,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Escrow",
+        "subcategory": "Escrow",
+        "count": 183,
+        "percentage": 1,
+        "avgConfidence": 1
       },
       {
         "category": "Account Access",
         "subcategory": "General Account Access",
-        "count": 272,
+        "count": 182,
         "percentage": 1,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Property Tax",
+        "subcategory": "Property Tax",
+        "count": 175,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Technology Issue (Customer)",
+        "subcategory": "Technology Issue (Customer)",
+        "count": 143,
+        "percentage": 1,
+        "avgConfidence": 1
       },
       {
         "category": "Loan Information",
         "subcategory": "General Loan Information",
-        "count": 179,
-        "percentage": 1,
-        "avgConfidence": 0.7
-      },
-      {
-        "category": "Escalation",
-        "subcategory": "General Escalation",
         "count": 142,
         "percentage": 1,
         "avgConfidence": 0.7
       },
       {
+        "category": "Default",
+        "subcategory": "Default",
+        "count": 130,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Internal Inquiry (General Questions)",
+        "subcategory": "Internal Inquiry (General Questions)",
+        "count": 128,
+        "percentage": 1,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Escalation",
+        "subcategory": "General Escalation",
+        "count": 127,
+        "percentage": 1,
+        "avgConfidence": 0.7
+      },
+      {
+        "category": "Account Maintenance",
+        "subcategory": "Account Maintenance",
+        "count": 97,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Loan Officer Refinance Doc Request",
+        "subcategory": "Loan Officer Refinance Doc Request",
+        "count": 90,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Statement and Billing (Customer Only)",
+        "subcategory": "Statement and Billing (Customer Only)",
+        "count": 84,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Tax Forms",
+        "subcategory": "Tax Forms",
+        "count": 83,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Recast",
+        "subcategory": "Recast",
+        "count": 76,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "PMI/MIP",
+        "subcategory": "PMI/MIP",
+        "count": 52,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Loan Modifications",
         "subcategory": "General Loan Modifications",
-        "count": 85,
+        "count": 39,
         "percentage": 0,
         "avgConfidence": 0.7
       },
       {
+        "category": "Drafting",
+        "subcategory": "Drafting",
+        "count": 39,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Assumptions",
+        "subcategory": "Assumptions",
+        "count": 31,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Credit Bureau Reporting",
+        "subcategory": "Credit Bureau Reporting",
+        "count": 30,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
         "category": "Communication",
         "subcategory": "General Communication",
-        "count": 35,
+        "count": 29,
         "percentage": 0,
         "avgConfidence": 0.7
+      },
+      {
+        "category": "Spam",
+        "subcategory": "Spam",
+        "count": 22,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Check Request",
+        "subcategory": "Check Request",
+        "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Partial Release",
+        "subcategory": "Partial Release",
+        "count": 5,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Investor Purchasing",
+        "subcategory": "Investor Purchasing",
+        "count": 4,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Legal Department",
+        "subcategory": "Legal Department",
+        "count": 3,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "LoanServ",
+        "subcategory": "LoanServ",
+        "count": 2,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Buydown",
+        "subcategory": "Buydown",
+        "count": 2,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Executive Complaints",
+        "subcategory": "Executive Complaints",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
+      },
+      {
+        "category": "Investor Reporting",
+        "subcategory": "Investor Reporting",
+        "count": 1,
+        "percentage": 0,
+        "avgConfidence": 1
       }
     ]
   },
@@ -2887,91 +3539,325 @@
         {
           "category": "Payment Issues",
           "subcategory": "General Payment Issues",
-          "baseline": 1245,
-          "recent": 1132,
-          "change": -113,
-          "percentChange": -9,
+          "baseline": 1038,
+          "recent": 903,
+          "change": -135,
+          "percentChange": -13,
           "trend": "stable"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment",
+          "baseline": 52,
+          "recent": 88,
+          "change": 36,
+          "percentChange": 69,
+          "trend": "increasing"
         },
         {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
-          "baseline": 56,
-          "recent": 86,
-          "change": 30,
-          "percentChange": 54,
+          "baseline": 41,
+          "recent": 69,
+          "change": 28,
+          "percentChange": 68,
           "trend": "increasing"
         },
         {
-          "category": "Loan Modifications",
-          "subcategory": "General Loan Modifications",
-          "baseline": 26,
-          "recent": 3,
-          "change": -23,
-          "percentChange": -88,
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 48,
+          "recent": 26,
+          "change": -22,
+          "percentChange": -46,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 19,
+          "recent": 4,
+          "change": -15,
+          "percentChange": -79,
           "trend": "decreasing"
         },
         {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
-          "baseline": 73,
-          "recent": 52,
-          "change": -21,
-          "percentChange": -29,
+          "baseline": 56,
+          "recent": 42,
+          "change": -14,
+          "percentChange": -25,
           "trend": "decreasing"
-        },
-        {
-          "category": "Escrow",
-          "subcategory": "General Escrow",
-          "baseline": 36,
-          "recent": 29,
-          "change": -7,
-          "percentChange": -19,
-          "trend": "stable"
         },
         {
           "category": "Other",
           "subcategory": "Uncategorized",
-          "baseline": 26,
-          "recent": 20,
+          "baseline": 22,
+          "recent": 13,
+          "change": -9,
+          "percentChange": -41,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 0,
+          "recent": 7,
+          "change": 7,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Modifications",
+          "subcategory": "General Loan Modifications",
+          "baseline": 9,
+          "recent": 3,
           "change": -6,
-          "percentChange": -23,
+          "percentChange": -67,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 5,
+          "recent": 0,
+          "change": -5,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Loan Information",
+          "subcategory": "General Loan Information",
+          "baseline": 13,
+          "recent": 9,
+          "change": -4,
+          "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 12,
+          "recent": 8,
+          "change": -4,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 4,
+          "recent": 0,
+          "change": -4,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 4,
+          "recent": 0,
+          "change": -4,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 10,
+          "recent": 13,
+          "change": 3,
+          "percentChange": 30,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escalation",
+          "subcategory": "General Escalation",
+          "baseline": 10,
+          "recent": 7,
+          "change": -3,
+          "percentChange": -30,
           "trend": "decreasing"
         },
         {
           "category": "Account Access",
           "subcategory": "General Account Access",
           "baseline": 9,
-          "recent": 14,
-          "change": 5,
-          "percentChange": 56,
+          "recent": 12,
+          "change": 3,
+          "percentChange": 33,
           "trend": "increasing"
         },
         {
-          "category": "Loan Information",
-          "subcategory": "General Loan Information",
-          "baseline": 16,
-          "recent": 12,
-          "change": -4,
-          "percentChange": -25,
-          "trend": "decreasing"
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 4,
+          "recent": 7,
+          "change": 3,
+          "percentChange": 75,
+          "trend": "increasing"
         },
         {
-          "category": "Escalation",
-          "subcategory": "General Escalation",
-          "baseline": 10,
-          "recent": 8,
-          "change": -2,
-          "percentChange": -20,
-          "trend": "decreasing"
+          "category": "Drafting",
+          "subcategory": "Drafting",
+          "baseline": 1,
+          "recent": 4,
+          "change": 3,
+          "percentChange": 300,
+          "trend": "increasing"
         },
         {
           "category": "Voice/Alert Requests",
           "subcategory": "General Voice/Alert Requests",
-          "baseline": 21,
-          "recent": 22,
-          "change": 1,
-          "percentChange": 5,
+          "baseline": 17,
+          "recent": 19,
+          "change": 2,
+          "percentChange": 12,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "General Escrow",
+          "baseline": 28,
+          "recent": 26,
+          "change": -2,
+          "percentChange": -7,
+          "trend": "stable"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 14,
+          "recent": 12,
+          "change": -2,
+          "percentChange": -14,
+          "trend": "stable"
+        },
+        {
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 18,
+          "recent": 20,
+          "change": 2,
+          "percentChange": 11,
+          "trend": "stable"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 14,
+          "recent": 16,
+          "change": 2,
+          "percentChange": 14,
+          "trend": "stable"
+        },
+        {
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 2,
+          "recent": 4,
+          "change": 2,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 4,
+          "recent": 2,
+          "change": -2,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 20,
+          "recent": 19,
+          "change": -1,
+          "percentChange": -5,
+          "trend": "stable"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 19,
+          "recent": 18,
+          "change": -1,
+          "percentChange": -5,
+          "trend": "stable"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 5,
+          "recent": 5,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 12,
+          "recent": 12,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 2,
+          "recent": 2,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 2,
+          "recent": 2,
+          "change": 0,
+          "percentChange": 0,
           "trend": "stable"
         },
         {
@@ -2985,9 +3871,9 @@
         }
       ],
       "summary": {
-        "increasing": 2,
-        "decreasing": 5,
-        "stable": 4
+        "increasing": 10,
+        "decreasing": 14,
+        "stable": 13
       }
     },
     "14": {
@@ -3007,107 +3893,368 @@
         {
           "category": "Payment Issues",
           "subcategory": "General Payment Issues",
-          "baseline": 3181,
-          "recent": 2377,
-          "change": -804,
-          "percentChange": -25,
+          "baseline": 2529,
+          "recent": 1941,
+          "change": -588,
+          "percentChange": -23,
           "trend": "decreasing"
         },
         {
-          "category": "Other",
-          "subcategory": "Uncategorized",
-          "baseline": 76,
-          "recent": 46,
-          "change": -30,
-          "percentChange": -39,
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 81,
+          "recent": 38,
+          "change": -43,
+          "percentChange": -53,
           "trend": "decreasing"
         },
         {
-          "category": "Document Requests",
-          "subcategory": "General Document Requests",
-          "baseline": 152,
-          "recent": 125,
-          "change": -27,
-          "percentChange": -18,
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 41,
+          "recent": 4,
+          "change": -37,
+          "percentChange": -90,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 60,
+          "recent": 26,
+          "change": -34,
+          "percentChange": -57,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 105,
+          "recent": 74,
+          "change": -31,
+          "percentChange": -30,
+          "trend": "decreasing"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 10,
+          "recent": 37,
+          "change": 27,
+          "percentChange": 270,
+          "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 56,
+          "recent": 30,
+          "change": -26,
+          "percentChange": -46,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 28,
+          "recent": 4,
+          "change": -24,
+          "percentChange": -86,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment",
+          "baseline": 162,
+          "recent": 140,
+          "change": -22,
+          "percentChange": -14,
           "trend": "stable"
         },
         {
-          "category": "Account Access",
-          "subcategory": "General Account Access",
-          "baseline": 36,
-          "recent": 23,
-          "change": -13,
-          "percentChange": -36,
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 40,
+          "recent": 20,
+          "change": -20,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 58,
+          "recent": 39,
+          "change": -19,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 23,
+          "recent": 6,
+          "change": -17,
+          "percentChange": -74,
           "trend": "decreasing"
         },
         {
           "category": "Escrow",
           "subcategory": "General Escrow",
-          "baseline": 56,
-          "recent": 65,
-          "change": 9,
-          "percentChange": 16,
+          "baseline": 38,
+          "recent": 54,
+          "change": 16,
+          "percentChange": 42,
+          "trend": "increasing"
+        },
+        {
+          "category": "Other",
+          "subcategory": "Uncategorized",
+          "baseline": 47,
+          "recent": 35,
+          "change": -12,
+          "percentChange": -26,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Voice/Alert Requests",
+          "subcategory": "General Voice/Alert Requests",
+          "baseline": 25,
+          "recent": 36,
+          "change": 11,
+          "percentChange": 44,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 15,
+          "recent": 4,
+          "change": -11,
+          "percentChange": -73,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 16,
+          "recent": 7,
+          "change": -9,
+          "percentChange": -56,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 31,
+          "recent": 23,
+          "change": -8,
+          "percentChange": -26,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 3,
+          "recent": 10,
+          "change": 7,
+          "percentChange": 233,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 29,
+          "recent": 23,
+          "change": -6,
+          "percentChange": -21,
+          "trend": "decreasing"
+        },
+        {
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 10,
+          "recent": 4,
+          "change": -6,
+          "percentChange": -60,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 16,
+          "recent": 11,
+          "change": -5,
+          "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Loan Information",
+          "subcategory": "General Loan Information",
+          "baseline": 26,
+          "recent": 22,
+          "change": -4,
+          "percentChange": -15,
+          "trend": "stable"
+        },
+        {
+          "category": "Account Access",
+          "subcategory": "General Account Access",
+          "baseline": 25,
+          "recent": 21,
+          "change": -4,
+          "percentChange": -16,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 28,
+          "recent": 24,
+          "change": -4,
+          "percentChange": -14,
+          "trend": "stable"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 10,
+          "recent": 6,
+          "change": -4,
+          "percentChange": -40,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Drafting",
+          "subcategory": "Drafting",
+          "baseline": 2,
+          "recent": 5,
+          "change": 3,
+          "percentChange": 150,
+          "trend": "increasing"
+        },
+        {
+          "category": "Communication",
+          "subcategory": "General Communication",
+          "baseline": 5,
+          "recent": 2,
+          "change": -3,
+          "percentChange": -60,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Document Requests",
+          "subcategory": "General Document Requests",
+          "baseline": 100,
+          "recent": 98,
+          "change": -2,
+          "percentChange": -2,
+          "trend": "stable"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 6,
+          "recent": 4,
+          "change": -2,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 2,
+          "recent": 4,
+          "change": 2,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 3,
+          "recent": 5,
+          "change": 2,
+          "percentChange": 67,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Transfer",
+          "subcategory": "General Loan Transfer",
+          "baseline": 109,
+          "recent": 110,
+          "change": 1,
+          "percentChange": 1,
+          "trend": "stable"
+        },
+        {
+          "category": "Loan Modifications",
+          "subcategory": "General Loan Modifications",
+          "baseline": 13,
+          "recent": 12,
+          "change": -1,
+          "percentChange": -8,
           "trend": "stable"
         },
         {
           "category": "Escalation",
           "subcategory": "General Escalation",
-          "baseline": 24,
-          "recent": 18,
-          "change": -6,
-          "percentChange": -25,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Loan Transfer",
-          "subcategory": "General Loan Transfer",
-          "baseline": 147,
-          "recent": 142,
-          "change": -5,
-          "percentChange": -3,
-          "trend": "stable"
-        },
-        {
-          "category": "Communication",
-          "subcategory": "General Communication",
-          "baseline": 6,
-          "recent": 2,
-          "change": -4,
-          "percentChange": -67,
-          "trend": "decreasing"
-        },
-        {
-          "category": "Loan Modifications",
-          "subcategory": "General Loan Modifications",
-          "baseline": 26,
-          "recent": 29,
-          "change": 3,
-          "percentChange": 12,
-          "trend": "stable"
-        },
-        {
-          "category": "Loan Information",
-          "subcategory": "General Loan Information",
-          "baseline": 29,
-          "recent": 28,
+          "baseline": 18,
+          "recent": 17,
           "change": -1,
-          "percentChange": -3,
+          "percentChange": -6,
           "trend": "stable"
         },
         {
-          "category": "Voice/Alert Requests",
-          "subcategory": "General Voice/Alert Requests",
-          "baseline": 43,
-          "recent": 43,
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 2,
+          "recent": 1,
+          "change": -1,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Investor Purchasing",
+          "subcategory": "Investor Purchasing",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Tax Forms",
+          "subcategory": "Tax Forms",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Legal Department",
+          "subcategory": "Legal Department",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 1,
+          "recent": 1,
           "change": 0,
           "percentChange": 0,
           "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 0,
-        "decreasing": 5,
-        "stable": 6
+        "increasing": 7,
+        "decreasing": 24,
+        "stable": 9
       }
     },
     "21": {
@@ -3125,109 +4272,370 @@
       },
       "trends": [
         {
-          "category": "Payment Issues",
-          "subcategory": "General Payment Issues",
-          "baseline": 4364,
-          "recent": 4063,
-          "change": -301,
-          "percentChange": -7,
-          "trend": "stable"
-        },
-        {
-          "category": "Other",
-          "subcategory": "Uncategorized",
-          "baseline": 172,
-          "recent": 83,
-          "change": -89,
-          "percentChange": -52,
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 139,
+          "recent": 20,
+          "change": -119,
+          "percentChange": -86,
           "trend": "decreasing"
         },
         {
-          "category": "Loan Modifications",
-          "subcategory": "General Loan Modifications",
-          "baseline": 16,
-          "recent": 51,
-          "change": 35,
-          "percentChange": 219,
-          "trend": "increasing"
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 179,
+          "recent": 91,
+          "change": -88,
+          "percentChange": -49,
+          "trend": "decreasing"
         },
         {
-          "category": "Account Access",
-          "subcategory": "General Account Access",
-          "baseline": 64,
-          "recent": 40,
-          "change": -24,
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 210,
+          "recent": 143,
+          "change": -67,
+          "percentChange": -32,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 112,
+          "recent": 53,
+          "change": -59,
+          "percentChange": -53,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 62,
+          "recent": 18,
+          "change": -44,
+          "percentChange": -71,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 83,
+          "recent": 52,
+          "change": -31,
           "percentChange": -37,
           "trend": "decreasing"
         },
         {
+          "category": "Document Requests",
+          "subcategory": "General Document Requests",
+          "baseline": 116,
+          "recent": 143,
+          "change": 27,
+          "percentChange": 23,
+          "trend": "increasing"
+        },
+        {
           "category": "Escrow",
           "subcategory": "General Escrow",
-          "baseline": 74,
-          "recent": 94,
-          "change": 20,
-          "percentChange": 27,
+          "baseline": 49,
+          "recent": 75,
+          "change": 26,
+          "percentChange": 53,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 61,
+          "recent": 40,
+          "change": -21,
+          "percentChange": -34,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 37,
+          "recent": 16,
+          "change": -21,
+          "percentChange": -57,
+          "trend": "decreasing"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 22,
+          "recent": 39,
+          "change": 17,
+          "percentChange": 77,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 25,
+          "recent": 41,
+          "change": 16,
+          "percentChange": 64,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Modifications",
+          "subcategory": "General Loan Modifications",
+          "baseline": 8,
+          "recent": 23,
+          "change": 15,
+          "percentChange": 188,
+          "trend": "increasing"
+        },
+        {
+          "category": "Other",
+          "subcategory": "Uncategorized",
+          "baseline": 76,
+          "recent": 62,
+          "change": -14,
+          "percentChange": -18,
+          "trend": "stable"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 63,
+          "recent": 77,
+          "change": 14,
+          "percentChange": 22,
           "trend": "increasing"
         },
         {
           "category": "Loan Information",
           "subcategory": "General Loan Information",
-          "baseline": 33,
-          "recent": 47,
-          "change": 14,
-          "percentChange": 42,
+          "baseline": 27,
+          "recent": 38,
+          "change": 11,
+          "percentChange": 41,
           "trend": "increasing"
         },
         {
-          "category": "Document Requests",
-          "subcategory": "General Document Requests",
-          "baseline": 186,
-          "recent": 196,
-          "change": 10,
-          "percentChange": 5,
-          "trend": "stable"
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 13,
+          "recent": 24,
+          "change": 11,
+          "percentChange": 85,
+          "trend": "increasing"
         },
         {
-          "category": "Escalation",
-          "subcategory": "General Escalation",
-          "baseline": 26,
-          "recent": 36,
-          "change": 10,
-          "percentChange": 38,
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 22,
+          "recent": 12,
+          "change": -10,
+          "percentChange": -45,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Access",
+          "subcategory": "General Account Access",
+          "baseline": 44,
+          "recent": 35,
+          "change": -9,
+          "percentChange": -20,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 33,
+          "recent": 41,
+          "change": 8,
+          "percentChange": 24,
           "trend": "increasing"
         },
         {
           "category": "Voice/Alert Requests",
           "subcategory": "General Voice/Alert Requests",
-          "baseline": 63,
-          "recent": 65,
-          "change": 2,
-          "percentChange": 3,
+          "baseline": 41,
+          "recent": 48,
+          "change": 7,
+          "percentChange": 17,
           "trend": "stable"
+        },
+        {
+          "category": "Escalation",
+          "subcategory": "General Escalation",
+          "baseline": 22,
+          "recent": 29,
+          "change": 7,
+          "percentChange": 32,
+          "trend": "increasing"
         },
         {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
+          "baseline": 170,
+          "recent": 176,
+          "change": 6,
+          "percentChange": 4,
+          "trend": "stable"
+        },
+        {
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 26,
+          "recent": 20,
+          "change": -6,
+          "percentChange": -23,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 13,
+          "recent": 7,
+          "change": -6,
+          "percentChange": -46,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 7,
+          "recent": 12,
+          "change": 5,
+          "percentChange": 71,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment",
           "baseline": 234,
-          "recent": 232,
-          "change": -2,
+          "recent": 231,
+          "change": -3,
           "percentChange": -1,
+          "trend": "stable"
+        },
+        {
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 12,
+          "recent": 9,
+          "change": -3,
+          "percentChange": -25,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 12,
+          "recent": 15,
+          "change": 3,
+          "percentChange": 25,
+          "trend": "increasing"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 2,
+          "recent": 5,
+          "change": 3,
+          "percentChange": 150,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 45,
+          "recent": 43,
+          "change": -2,
+          "percentChange": -4,
+          "trend": "stable"
+        },
+        {
+          "category": "Drafting",
+          "subcategory": "Drafting",
+          "baseline": 4,
+          "recent": 6,
+          "change": 2,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Legal Department",
+          "subcategory": "Legal Department",
+          "baseline": 2,
+          "recent": 0,
+          "change": -2,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payment Issues",
+          "subcategory": "General Payment Issues",
+          "baseline": 3253,
+          "recent": 3252,
+          "change": -1,
+          "percentChange": 0,
           "trend": "stable"
         },
         {
           "category": "Communication",
           "subcategory": "General Communication",
-          "baseline": 8,
-          "recent": 7,
+          "baseline": 7,
+          "recent": 6,
           "change": -1,
-          "percentChange": -12,
+          "percentChange": -14,
+          "trend": "stable"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 6,
+          "recent": 7,
+          "change": 1,
+          "percentChange": 17,
+          "trend": "stable"
+        },
+        {
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Investor Purchasing",
+          "subcategory": "Investor Purchasing",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Tax Forms",
+          "subcategory": "Tax Forms",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
           "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 4,
-        "decreasing": 2,
-        "stable": 5
+        "increasing": 16,
+        "decreasing": 14,
+        "stable": 10
       }
     },
     "30": {
@@ -3247,107 +4655,395 @@
         {
           "category": "Payment Issues",
           "subcategory": "General Payment Issues",
-          "baseline": 5248,
-          "recent": 6388,
-          "change": 1140,
-          "percentChange": 22,
+          "baseline": 3520,
+          "recent": 5093,
+          "change": 1573,
+          "percentChange": 45,
           "trend": "increasing"
         },
         {
-          "category": "Document Requests",
-          "subcategory": "General Document Requests",
-          "baseline": 362,
-          "recent": 304,
-          "change": -58,
-          "percentChange": -16,
-          "trend": "stable"
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 287,
+          "recent": 86,
+          "change": -201,
+          "percentChange": -70,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 338,
+          "recent": 199,
+          "change": -139,
+          "percentChange": -41,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 155,
+          "recent": 60,
+          "change": -95,
+          "percentChange": -61,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 259,
+          "recent": 172,
+          "change": -87,
+          "percentChange": -34,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
-          "baseline": 299,
-          "recent": 355,
-          "change": 56,
-          "percentChange": 19,
-          "trend": "stable"
+          "baseline": 193,
+          "recent": 269,
+          "change": 76,
+          "percentChange": 39,
+          "trend": "increasing"
         },
         {
-          "category": "Other",
-          "subcategory": "Uncategorized",
-          "baseline": 211,
-          "recent": 162,
-          "change": -49,
-          "percentChange": -23,
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 180,
+          "recent": 107,
+          "change": -73,
+          "percentChange": -41,
           "trend": "decreasing"
         },
         {
-          "category": "Loan Modifications",
-          "subcategory": "General Loan Modifications",
-          "baseline": 15,
-          "recent": 59,
-          "change": 44,
-          "percentChange": 293,
+          "category": "Payment",
+          "subcategory": "Payment",
+          "baseline": 289,
+          "recent": 353,
+          "change": 64,
+          "percentChange": 22,
+          "trend": "increasing"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 78,
+          "recent": 39,
+          "change": -39,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 71,
+          "recent": 103,
+          "change": 32,
+          "percentChange": 45,
           "trend": "increasing"
         },
         {
           "category": "Voice/Alert Requests",
           "subcategory": "General Voice/Alert Requests",
-          "baseline": 74,
-          "recent": 101,
-          "change": 27,
-          "percentChange": 36,
+          "baseline": 43,
+          "recent": 72,
+          "change": 29,
+          "percentChange": 67,
+          "trend": "increasing"
+        },
+        {
+          "category": "Other",
+          "subcategory": "Uncategorized",
+          "baseline": 80,
+          "recent": 108,
+          "change": 28,
+          "percentChange": 35,
+          "trend": "increasing"
+        },
+        {
+          "category": "Tax Forms",
+          "subcategory": "Tax Forms",
+          "baseline": 25,
+          "recent": 1,
+          "change": -24,
+          "percentChange": -96,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 37,
+          "recent": 60,
+          "change": 23,
+          "percentChange": 62,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 47,
+          "recent": 24,
+          "change": -23,
+          "percentChange": -49,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Loan Modifications",
+          "subcategory": "General Loan Modifications",
+          "baseline": 6,
+          "recent": 27,
+          "change": 21,
+          "percentChange": 350,
           "trend": "increasing"
         },
         {
           "category": "Escalation",
           "subcategory": "General Escalation",
-          "baseline": 28,
+          "baseline": 25,
+          "recent": 42,
+          "change": 17,
+          "percentChange": 68,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 29,
+          "recent": 12,
+          "change": -17,
+          "percentChange": -59,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "General Escrow",
+          "baseline": 86,
+          "recent": 100,
+          "change": 14,
+          "percentChange": 16,
+          "trend": "stable"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 42,
+          "recent": 28,
+          "change": -14,
+          "percentChange": -33,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Loan Information",
+          "subcategory": "General Loan Information",
+          "baseline": 42,
+          "recent": 53,
+          "change": 11,
+          "percentChange": 26,
+          "trend": "increasing"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 61,
           "recent": 51,
-          "change": 23,
-          "percentChange": 82,
+          "change": -10,
+          "percentChange": -16,
+          "trend": "stable"
+        },
+        {
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 27,
+          "recent": 35,
+          "change": 8,
+          "percentChange": 30,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 45,
+          "recent": 53,
+          "change": 8,
+          "percentChange": 18,
+          "trend": "stable"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 117,
+          "recent": 110,
+          "change": -7,
+          "percentChange": -6,
+          "trend": "stable"
+        },
+        {
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 22,
+          "recent": 29,
+          "change": 7,
+          "percentChange": 32,
+          "trend": "increasing"
+        },
+        {
+          "category": "Document Requests",
+          "subcategory": "General Document Requests",
+          "baseline": 207,
+          "recent": 213,
+          "change": 6,
+          "percentChange": 3,
+          "trend": "stable"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 22,
+          "recent": 16,
+          "change": -6,
+          "percentChange": -27,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 60,
+          "recent": 63,
+          "change": 3,
+          "percentChange": 5,
+          "trend": "stable"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 10,
+          "recent": 13,
+          "change": 3,
+          "percentChange": 30,
+          "trend": "increasing"
+        },
+        {
+          "category": "Communication",
+          "subcategory": "General Communication",
+          "baseline": 7,
+          "recent": 10,
+          "change": 3,
+          "percentChange": 43,
+          "trend": "increasing"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 3,
+          "recent": 6,
+          "change": 3,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 0,
+          "recent": 3,
+          "change": 3,
+          "percentChange": 100,
           "trend": "increasing"
         },
         {
           "category": "Account Access",
           "subcategory": "General Account Access",
-          "baseline": 83,
-          "recent": 67,
-          "change": -16,
-          "percentChange": -19,
+          "baseline": 53,
+          "recent": 51,
+          "change": -2,
+          "percentChange": -4,
           "trend": "stable"
         },
         {
-          "category": "Escrow",
-          "subcategory": "General Escrow",
-          "baseline": 121,
-          "recent": 133,
-          "change": 12,
-          "percentChange": 10,
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 17,
+          "recent": 15,
+          "change": -2,
+          "percentChange": -12,
           "trend": "stable"
         },
         {
-          "category": "Loan Information",
-          "subcategory": "General Loan Information",
-          "baseline": 57,
-          "recent": 64,
-          "change": 7,
-          "percentChange": 12,
-          "trend": "stable"
-        },
-        {
-          "category": "Communication",
-          "subcategory": "General Communication",
+          "category": "Drafting",
+          "subcategory": "Drafting",
           "baseline": 8,
-          "recent": 12,
-          "change": 4,
-          "percentChange": 50,
+          "recent": 7,
+          "change": -1,
+          "percentChange": -12,
+          "trend": "stable"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
           "trend": "increasing"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 8,
+          "recent": 9,
+          "change": 1,
+          "percentChange": 13,
+          "trend": "stable"
+        },
+        {
+          "category": "Investor Purchasing",
+          "subcategory": "Investor Purchasing",
+          "baseline": 2,
+          "recent": 1,
+          "change": -1,
+          "percentChange": -50,
+          "trend": "decreasing"
+        },
+        {
+          "category": "LoanServ",
+          "subcategory": "LoanServ",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Buydown",
+          "subcategory": "Buydown",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Executive Complaints",
+          "subcategory": "Executive Complaints",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Legal Department",
+          "subcategory": "Legal Department",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 5,
-        "decreasing": 1,
-        "stable": 5
+        "increasing": 17,
+        "decreasing": 15,
+        "stable": 11
       }
     },
     "60": {
@@ -3367,107 +5063,404 @@
         {
           "category": "Payment Issues",
           "subcategory": "General Payment Issues",
-          "baseline": 6980,
-          "recent": 11636,
-          "change": 4656,
-          "percentChange": 67,
+          "baseline": 3723,
+          "recent": 8613,
+          "change": 4890,
+          "percentChange": 131,
           "trend": "increasing"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 333,
+          "recent": 112,
+          "change": -221,
+          "percentChange": -66,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 327,
+          "recent": 117,
+          "change": -210,
+          "percentChange": -64,
+          "trend": "decreasing"
         },
         {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
-          "baseline": 422,
-          "recent": 654,
-          "change": 232,
-          "percentChange": 55,
+          "baseline": 278,
+          "recent": 462,
+          "change": 184,
+          "percentChange": 66,
           "trend": "increasing"
+        },
+        {
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 257,
+          "recent": 431,
+          "change": 174,
+          "percentChange": 68,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 373,
+          "recent": 215,
+          "change": -158,
+          "percentChange": -42,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 388,
+          "recent": 537,
+          "change": 149,
+          "percentChange": 38,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment",
+          "baseline": 740,
+          "recent": 642,
+          "change": -98,
+          "percentChange": -13,
+          "trend": "stable"
         },
         {
           "category": "Other",
           "subcategory": "Uncategorized",
-          "baseline": 206,
-          "recent": 373,
-          "change": 167,
-          "percentChange": 81,
+          "baseline": 99,
+          "recent": 188,
+          "change": 89,
+          "percentChange": 90,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 52,
+          "recent": 123,
+          "change": 71,
+          "percentChange": 137,
           "trend": "increasing"
         },
         {
           "category": "Escrow",
           "subcategory": "General Escrow",
-          "baseline": 182,
-          "recent": 254,
-          "change": 72,
-          "percentChange": 40,
+          "baseline": 121,
+          "recent": 186,
+          "change": 65,
+          "percentChange": 54,
           "trend": "increasing"
         },
         {
-          "category": "Loan Modifications",
-          "subcategory": "General Loan Modifications",
-          "baseline": 11,
-          "recent": 74,
-          "change": 63,
-          "percentChange": 573,
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 33,
+          "recent": 97,
+          "change": 64,
+          "percentChange": 194,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 117,
+          "recent": 174,
+          "change": 57,
+          "percentChange": 49,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 19,
+          "recent": 71,
+          "change": 52,
+          "percentChange": 274,
           "trend": "increasing"
         },
         {
           "category": "Loan Information",
           "subcategory": "General Loan Information",
-          "baseline": 58,
-          "recent": 121,
-          "change": 63,
-          "percentChange": 109,
+          "baseline": 47,
+          "recent": 95,
+          "change": 48,
+          "percentChange": 102,
           "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 416,
+          "recent": 373,
+          "change": -43,
+          "percentChange": -10,
+          "trend": "stable"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 195,
+          "recent": 227,
+          "change": 32,
+          "percentChange": 16,
+          "trend": "stable"
         },
         {
           "category": "Voice/Alert Requests",
           "subcategory": "General Voice/Alert Requests",
-          "baseline": 226,
-          "recent": 175,
-          "change": -51,
-          "percentChange": -23,
+          "baseline": 84,
+          "recent": 115,
+          "change": 31,
+          "percentChange": 37,
+          "trend": "increasing"
+        },
+        {
+          "category": "Tax Forms",
+          "subcategory": "Tax Forms",
+          "baseline": 57,
+          "recent": 26,
+          "change": -31,
+          "percentChange": -54,
           "trend": "decreasing"
+        },
+        {
+          "category": "Loan Modifications",
+          "subcategory": "General Loan Modifications",
+          "baseline": 6,
+          "recent": 33,
+          "change": 27,
+          "percentChange": 450,
+          "trend": "increasing"
         },
         {
           "category": "Account Access",
           "subcategory": "General Account Access",
-          "baseline": 122,
-          "recent": 150,
-          "change": 28,
-          "percentChange": 23,
+          "baseline": 78,
+          "recent": 104,
+          "change": 26,
+          "percentChange": 33,
           "trend": "increasing"
         },
         {
-          "category": "Escalation",
-          "subcategory": "General Escalation",
-          "baseline": 63,
-          "recent": 79,
-          "change": 16,
-          "percentChange": 25,
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 25,
+          "recent": 51,
+          "change": 26,
+          "percentChange": 104,
           "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 306,
+          "recent": 287,
+          "change": -19,
+          "percentChange": -6,
+          "trend": "stable"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 7,
+          "recent": 23,
+          "change": 16,
+          "percentChange": 229,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 56,
+          "recent": 41,
+          "change": -15,
+          "percentChange": -27,
+          "trend": "decreasing"
         },
         {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
-          "baseline": 680,
-          "recent": 666,
-          "change": -14,
-          "percentChange": -2,
+          "baseline": 406,
+          "recent": 420,
+          "change": 14,
+          "percentChange": 3,
+          "trend": "stable"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 85,
+          "recent": 98,
+          "change": 13,
+          "percentChange": 15,
+          "trend": "stable"
+        },
+        {
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 20,
+          "recent": 32,
+          "change": 12,
+          "percentChange": 60,
+          "trend": "increasing"
+        },
+        {
+          "category": "Drafting",
+          "subcategory": "Drafting",
+          "baseline": 24,
+          "recent": 15,
+          "change": -9,
+          "percentChange": -37,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 46,
+          "recent": 38,
+          "change": -8,
+          "percentChange": -17,
+          "trend": "stable"
+        },
+        {
+          "category": "Escalation",
+          "subcategory": "General Escalation",
+          "baseline": 60,
+          "recent": 67,
+          "change": 7,
+          "percentChange": 12,
           "trend": "stable"
         },
         {
           "category": "Communication",
           "subcategory": "General Communication",
-          "baseline": 15,
-          "recent": 20,
+          "baseline": 12,
+          "recent": 17,
           "change": 5,
-          "percentChange": 33,
+          "percentChange": 42,
           "trend": "increasing"
+        },
+        {
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 66,
+          "recent": 62,
+          "change": -4,
+          "percentChange": -6,
+          "trend": "stable"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 13,
+          "recent": 9,
+          "change": -4,
+          "percentChange": -31,
+          "trend": "decreasing"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 73,
+          "recent": 70,
+          "change": -3,
+          "percentChange": -4,
+          "trend": "stable"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 14,
+          "recent": 17,
+          "change": 3,
+          "percentChange": 21,
+          "trend": "increasing"
+        },
+        {
+          "category": "Investor Purchasing",
+          "subcategory": "Investor Purchasing",
+          "baseline": 1,
+          "recent": 3,
+          "change": 2,
+          "percentChange": 200,
+          "trend": "increasing"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 2,
+          "recent": 3,
+          "change": 1,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 2,
+          "recent": 3,
+          "change": 1,
+          "percentChange": 50,
+          "trend": "increasing"
+        },
+        {
+          "category": "Legal Department",
+          "subcategory": "Legal Department",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Executive Complaints",
+          "subcategory": "Executive Complaints",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Investor Reporting",
+          "subcategory": "Investor Reporting",
+          "baseline": 1,
+          "recent": 0,
+          "change": -1,
+          "percentChange": -100,
+          "trend": "decreasing"
+        },
+        {
+          "category": "LoanServ",
+          "subcategory": "LoanServ",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
+        },
+        {
+          "category": "Buydown",
+          "subcategory": "Buydown",
+          "baseline": 1,
+          "recent": 1,
+          "change": 0,
+          "percentChange": 0,
+          "trend": "stable"
         }
       ],
       "summary": {
-        "increasing": 9,
-        "decreasing": 1,
-        "stable": 1
+        "increasing": 24,
+        "decreasing": 8,
+        "stable": 12
       }
     },
     "90": {
@@ -3487,109 +5480,406 @@
         {
           "category": "Payment Issues",
           "subcategory": "General Payment Issues",
-          "baseline": 1024,
-          "recent": 17592,
-          "change": 16568,
-          "percentChange": 1618,
+          "baseline": 476,
+          "recent": 11860,
+          "change": 11384,
+          "percentChange": 2392,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payment",
+          "subcategory": "Payment",
+          "baseline": 164,
+          "recent": 1218,
+          "change": 1054,
+          "percentChange": 643,
+          "trend": "increasing"
+        },
+        {
+          "category": "Insurance (HOI/Flood)",
+          "subcategory": "Insurance (HOI/Flood)",
+          "baseline": 31,
+          "recent": 894,
+          "change": 863,
+          "percentChange": 2784,
           "trend": "increasing"
         },
         {
           "category": "Document Requests",
           "subcategory": "General Document Requests",
-          "baseline": 52,
-          "recent": 1294,
-          "change": 1242,
-          "percentChange": 2388,
+          "baseline": 44,
+          "recent": 782,
+          "change": 738,
+          "percentChange": 1677,
+          "trend": "increasing"
+        },
+        {
+          "category": "Netted Payoffs",
+          "subcategory": "Netted Payoffs",
+          "baseline": 29,
+          "recent": 760,
+          "change": 731,
+          "percentChange": 2521,
           "trend": "increasing"
         },
         {
           "category": "Loan Transfer",
           "subcategory": "General Loan Transfer",
-          "baseline": 43,
-          "recent": 1033,
-          "change": 990,
-          "percentChange": 2302,
+          "baseline": 33,
+          "recent": 707,
+          "change": 674,
+          "percentChange": 2042,
           "trend": "increasing"
         },
         {
-          "category": "Other",
-          "subcategory": "Uncategorized",
-          "baseline": 15,
-          "recent": 564,
-          "change": 549,
-          "percentChange": 3660,
+          "category": "Duplicate",
+          "subcategory": "Duplicate",
+          "baseline": 35,
+          "recent": 653,
+          "change": 618,
+          "percentChange": 1766,
+          "trend": "increasing"
+        },
+        {
+          "category": "Payoffs/Satisfactions/Lien Release",
+          "subcategory": "Payoffs/Satisfactions/Lien Release",
+          "baseline": 13,
+          "recent": 575,
+          "change": 562,
+          "percentChange": 4323,
+          "trend": "increasing"
+        },
+        {
+          "category": "Documents",
+          "subcategory": "Documents",
+          "baseline": 34,
+          "recent": 559,
+          "change": 525,
+          "percentChange": 1544,
+          "trend": "increasing"
+        },
+        {
+          "category": "Service Transfer",
+          "subcategory": "Service Transfer",
+          "baseline": 24,
+          "recent": 398,
+          "change": 374,
+          "percentChange": 1558,
+          "trend": "increasing"
+        },
+        {
+          "category": "ACH Forms",
+          "subcategory": "ACH Forms",
+          "baseline": 63,
+          "recent": 382,
+          "change": 319,
+          "percentChange": 506,
           "trend": "increasing"
         },
         {
           "category": "Escrow",
           "subcategory": "General Escrow",
+          "baseline": 8,
+          "recent": 299,
+          "change": 291,
+          "percentChange": 3638,
+          "trend": "increasing"
+        },
+        {
+          "category": "General Account Inquiry",
+          "subcategory": "General Account Inquiry",
+          "baseline": 8,
+          "recent": 283,
+          "change": 275,
+          "percentChange": 3438,
+          "trend": "increasing"
+        },
+        {
+          "category": "Other",
+          "subcategory": "Uncategorized",
           "baseline": 11,
-          "recent": 425,
-          "change": 414,
-          "percentChange": 3764,
+          "recent": 276,
+          "change": 265,
+          "percentChange": 2409,
+          "trend": "increasing"
+        },
+        {
+          "category": "Escrow",
+          "subcategory": "Escrow",
+          "baseline": 5,
+          "recent": 178,
+          "change": 173,
+          "percentChange": 3460,
+          "trend": "increasing"
+        },
+        {
+          "category": "Property Tax",
+          "subcategory": "Property Tax",
+          "baseline": 3,
+          "recent": 172,
+          "change": 169,
+          "percentChange": 5633,
           "trend": "increasing"
         },
         {
           "category": "Voice/Alert Requests",
           "subcategory": "General Voice/Alert Requests",
-          "baseline": 62,
-          "recent": 339,
-          "change": 277,
-          "percentChange": 447,
+          "baseline": 18,
+          "recent": 181,
+          "change": 163,
+          "percentChange": 906,
           "trend": "increasing"
         },
         {
           "category": "Account Access",
           "subcategory": "General Account Access",
-          "baseline": 21,
-          "recent": 251,
-          "change": 230,
-          "percentChange": 1095,
+          "baseline": 14,
+          "recent": 168,
+          "change": 154,
+          "percentChange": 1100,
           "trend": "increasing"
         },
         {
           "category": "Loan Information",
           "subcategory": "General Loan Information",
-          "baseline": 5,
-          "recent": 174,
-          "change": 169,
-          "percentChange": 3380,
+          "baseline": 4,
+          "recent": 138,
+          "change": 134,
+          "percentChange": 3350,
+          "trend": "increasing"
+        },
+        {
+          "category": "Default",
+          "subcategory": "Default",
+          "baseline": 2,
+          "recent": 128,
+          "change": 126,
+          "percentChange": 6300,
+          "trend": "increasing"
+        },
+        {
+          "category": "Voicemail - on content",
+          "subcategory": "Voicemail - on content",
+          "baseline": 159,
+          "recent": 285,
+          "change": 126,
+          "percentChange": 79,
+          "trend": "increasing"
+        },
+        {
+          "category": "Internal Inquiry (General Questions)",
+          "subcategory": "Internal Inquiry (General Questions)",
+          "baseline": 2,
+          "recent": 126,
+          "change": 124,
+          "percentChange": 6200,
           "trend": "increasing"
         },
         {
           "category": "Escalation",
           "subcategory": "General Escalation",
           "baseline": 5,
-          "recent": 137,
-          "change": 132,
-          "percentChange": 2640,
+          "recent": 122,
+          "change": 117,
+          "percentChange": 2340,
+          "trend": "increasing"
+        },
+        {
+          "category": "Technology Issue (Customer)",
+          "subcategory": "Technology Issue (Customer)",
+          "baseline": 23,
+          "recent": 120,
+          "change": 97,
+          "percentChange": 422,
+          "trend": "increasing"
+        },
+        {
+          "category": "Loan Officer Refinance Doc Request",
+          "subcategory": "Loan Officer Refinance Doc Request",
+          "baseline": 0,
+          "recent": 90,
+          "change": 90,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Account Maintenance",
+          "subcategory": "Account Maintenance",
+          "baseline": 9,
+          "recent": 88,
+          "change": 79,
+          "percentChange": 878,
+          "trend": "increasing"
+        },
+        {
+          "category": "Statement and Billing (Customer Only)",
+          "subcategory": "Statement and Billing (Customer Only)",
+          "baseline": 3,
+          "recent": 81,
+          "change": 78,
+          "percentChange": 2600,
+          "trend": "increasing"
+        },
+        {
+          "category": "Tax Forms",
+          "subcategory": "Tax Forms",
+          "baseline": 4,
+          "recent": 79,
+          "change": 75,
+          "percentChange": 1875,
+          "trend": "increasing"
+        },
+        {
+          "category": "Recast",
+          "subcategory": "Recast",
+          "baseline": 3,
+          "recent": 73,
+          "change": 70,
+          "percentChange": 2333,
+          "trend": "increasing"
+        },
+        {
+          "category": "PMI/MIP",
+          "subcategory": "PMI/MIP",
+          "baseline": 4,
+          "recent": 48,
+          "change": 44,
+          "percentChange": 1100,
           "trend": "increasing"
         },
         {
           "category": "Loan Modifications",
           "subcategory": "General Loan Modifications",
-          "baseline": 1,
-          "recent": 84,
-          "change": 83,
-          "percentChange": 8300,
+          "baseline": 0,
+          "recent": 39,
+          "change": 39,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Assumptions",
+          "subcategory": "Assumptions",
+          "baseline": 0,
+          "recent": 31,
+          "change": 31,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Credit Bureau Reporting",
+          "subcategory": "Credit Bureau Reporting",
+          "baseline": 0,
+          "recent": 30,
+          "change": 30,
+          "percentChange": 100,
           "trend": "increasing"
         },
         {
           "category": "Communication",
           "subcategory": "General Communication",
-          "baseline": 2,
-          "recent": 33,
-          "change": 31,
-          "percentChange": 1550,
+          "baseline": 1,
+          "recent": 28,
+          "change": 27,
+          "percentChange": 2700,
+          "trend": "increasing"
+        },
+        {
+          "category": "Drafting",
+          "subcategory": "Drafting",
+          "baseline": 8,
+          "recent": 31,
+          "change": 23,
+          "percentChange": 288,
+          "trend": "increasing"
+        },
+        {
+          "category": "Spam",
+          "subcategory": "Spam",
+          "baseline": 0,
+          "recent": 22,
+          "change": 22,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Partial Release",
+          "subcategory": "Partial Release",
+          "baseline": 0,
+          "recent": 5,
+          "change": 5,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Check Request",
+          "subcategory": "Check Request",
+          "baseline": 0,
+          "recent": 5,
+          "change": 5,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Investor Purchasing",
+          "subcategory": "Investor Purchasing",
+          "baseline": 0,
+          "recent": 4,
+          "change": 4,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "LoanServ",
+          "subcategory": "LoanServ",
+          "baseline": 0,
+          "recent": 2,
+          "change": 2,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Buydown",
+          "subcategory": "Buydown",
+          "baseline": 0,
+          "recent": 2,
+          "change": 2,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Legal Department",
+          "subcategory": "Legal Department",
+          "baseline": 1,
+          "recent": 2,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Executive Complaints",
+          "subcategory": "Executive Complaints",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
+          "trend": "increasing"
+        },
+        {
+          "category": "Investor Reporting",
+          "subcategory": "Investor Reporting",
+          "baseline": 0,
+          "recent": 1,
+          "change": 1,
+          "percentChange": 100,
           "trend": "increasing"
         }
       ],
       "summary": {
-        "increasing": 11,
+        "increasing": 44,
         "decreasing": 0,
         "stable": 0
       }
     }
   },
-  "processedAt": "2025-12-09T03:17:08.061Z"
+  "processedAt": "2025-12-09T03:46:25.984Z"
 }
