@@ -120,9 +120,44 @@ const TOPIC_LABELS: Record<string, string> = {
   other: 'Other',
 };
 
+interface DeepAnalysisData {
+  metadata: {
+    totalTickets: number;
+    analyzedTickets: number;
+    totalCost: number;
+    analysisDate: string;
+  };
+  summary: {
+    agentSentiment: {
+      positive: number;
+      neutral: number;
+      negative: number;
+    };
+    customerSentiment: {
+      positive: number;
+      neutral: number;
+      negative: number;
+    };
+    avgAgentScore: number;
+    avgCustomerScore: number;
+  };
+  topics: {
+    mainTopics: Array<{ name: string; count: number; avgConfidence: number }>;
+    subcategories: Array<{ name: string; count: number; parentTopic: string }>;
+  };
+  tickets: Array<{
+    ticketKey: string;
+    aiDiscoveredTopic: string;
+    aiDiscoveredSubcategory: string;
+    agentSentiment: string;
+    customerSentiment: string;
+  }>;
+}
+
 export default function TranscriptsAnalysis() {
   const [stats, setStats] = useState<TranscriptStats | null>(null);
   const [transcripts, setTranscripts] = useState<TranscriptRecord[]>([]);
+  const [deepAnalysis, setDeepAnalysis] = useState<DeepAnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -161,6 +196,18 @@ export default function TranscriptsAnalysis() {
         if (!transcriptsRes.ok) throw new Error('Failed to load transcript data');
         const transcriptsData = await transcriptsRes.json();
         setTranscripts(transcriptsData);
+
+        // Load deep analysis data if available
+        try {
+          const deepRes = await fetch('/data/deep-analysis.json');
+          if (deepRes.ok) {
+            const deepData = await deepRes.json();
+            setDeepAnalysis(deepData);
+            console.log('✨ Deep analysis loaded:', deepData.metadata);
+          }
+        } catch (deepErr) {
+          console.log('Deep analysis not yet available');
+        }
 
         setLoading(false);
       } catch (err) {
@@ -847,6 +894,75 @@ export default function TranscriptsAnalysis() {
           </div>
         )}
       </div>
+
+      {/* AI-Discovered Topics (Deep Analysis) */}
+      {deepAnalysis && deepAnalysis.topics.mainTopics.length > 0 && (
+        <div className="bg-gradient-to-br from-purple-500/10 via-blue-500/10 to-purple-500/10 rounded-2xl border border-purple-500/30 overflow-hidden">
+          <div className="p-4 bg-gradient-to-r from-purple-500/5 to-blue-500/5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600">
+                <MessageSquare className="h-5 w-5 text-white" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                  ✨ AI-Discovered Topics
+                  <span className="px-2 py-0.5 text-xs bg-purple-500/20 text-purple-300 rounded-full border border-purple-500/30">
+                    Deep Analysis
+                  </span>
+                </h3>
+                <p className="text-sm text-gray-400">
+                  {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • {deepAnalysis.topics.mainTopics.length} unique topics found
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {deepAnalysis.topics.mainTopics.slice(0, 20).map((topic, index) => (
+                <div
+                  key={topic.name}
+                  className="flex items-center gap-3 p-3 bg-[#131a29] rounded-xl border border-white/[0.08] hover:border-purple-500/30 transition-colors"
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: TOPIC_COLORS[index % TOPIC_COLORS.length] }}
+                      />
+                      <p className="text-sm font-medium text-white truncate">{topic.name}</p>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                      <span>{topic.count.toLocaleString()} tickets</span>
+                      <span>•</span>
+                      <span>{(topic.avgConfidence * 100).toFixed(0)}% confidence</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-lg font-bold text-purple-400">{topic.count}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {deepAnalysis.topics.subcategories.length > 0 && (
+              <div className="mt-6">
+                <h4 className="text-sm font-medium text-gray-400 mb-3">Subcategories ({deepAnalysis.topics.subcategories.length} total)</h4>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                  {deepAnalysis.topics.subcategories.slice(0, 20).map((sub) => (
+                    <div
+                      key={sub.name}
+                      className="px-3 py-2 bg-[#0a0e17] rounded-lg border border-white/[0.06] text-xs"
+                    >
+                      <div className="text-white font-medium truncate">{sub.name}</div>
+                      <div className="text-gray-500">{sub.count} tickets</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Time Analysis */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">

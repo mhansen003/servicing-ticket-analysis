@@ -68,8 +68,30 @@ interface AgentRankings {
   };
 }
 
+interface DeepAnalysisData {
+  metadata: {
+    analyzedTickets: number;
+  };
+  summary: {
+    agentSentiment: {
+      positive: number;
+      neutral: number;
+      negative: number;
+    };
+    avgAgentScore: number;
+  };
+  tickets: Array<{
+    assignedAgent: string;
+    agentSentiment: string;
+    agentSentimentScore: number;
+    customerSentiment: string;
+    customerSentimentScore: number;
+  }>;
+}
+
 export default function AgentsAnalysis() {
   const [rankings, setRankings] = useState<AgentRankings | null>(null);
+  const [deepAnalysis, setDeepAnalysis] = useState<DeepAnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedAgent, setSelectedAgent] = useState<AgentStats | null>(null);
   const [agentProfile, setAgentProfile] = useState<AgentProfile | null>(null);
@@ -92,6 +114,18 @@ export default function AgentsAnalysis() {
         if (response.ok) {
           const data = await response.json();
           setRankings(data);
+        }
+
+        // Load deep analysis data if available
+        try {
+          const deepRes = await fetch('/data/deep-analysis.json');
+          if (deepRes.ok) {
+            const deepData = await deepRes.json();
+            setDeepAnalysis(deepData);
+            console.log('✨ Deep analysis loaded for agents:', deepData.metadata);
+          }
+        } catch (deepErr) {
+          console.log('Deep analysis not yet available for agents');
         }
       } catch (error) {
         console.error('Failed to load rankings:', error);
@@ -216,6 +250,57 @@ export default function AgentsAnalysis() {
           How Are Agents Graded?
         </button>
       </div>
+
+      {/* Deep Analysis Agent Sentiment Stats */}
+      {deepAnalysis && (
+        <div className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-xl border border-blue-500/30 p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+              <Users className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                ✨ Agent Performance Analysis
+                <span className="px-2 py-0.5 text-xs bg-blue-500/20 text-blue-300 rounded-full border border-blue-500/30">
+                  Deep Analysis
+                </span>
+              </h3>
+              <p className="text-sm text-gray-400">
+                {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • Avg agent score: {(deepAnalysis.summary.avgAgentScore * 100).toFixed(1)}%
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 gap-4">
+            <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
+              <div className="text-2xl font-bold text-green-400">
+                {deepAnalysis.summary.agentSentiment.positive.toLocaleString()}
+              </div>
+              <div className="text-sm text-green-300">Positive Agent Performance</div>
+              <div className="text-xs text-gray-500 mt-1">
+                {((deepAnalysis.summary.agentSentiment.positive / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+              </div>
+            </div>
+            <div className="p-4 bg-gray-500/10 rounded-lg border border-gray-500/30">
+              <div className="text-2xl font-bold text-gray-400">
+                {deepAnalysis.summary.agentSentiment.neutral.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-300">Neutral Agent Performance</div>
+              <div className="text-xs text-gray-500 mt-1">
+                {((deepAnalysis.summary.agentSentiment.neutral / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+              </div>
+            </div>
+            <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/30">
+              <div className="text-2xl font-bold text-red-400">
+                {deepAnalysis.summary.agentSentiment.negative.toLocaleString()}
+              </div>
+              <div className="text-sm text-red-300">Negative Agent Performance</div>
+              <div className="text-xs text-gray-500 mt-1">
+                {((deepAnalysis.summary.agentSentiment.negative / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Performance Distribution - Only ranked agents (20+ calls) */}
       {rankings && !selectedAgent && displayedAgents.length > 0 && (

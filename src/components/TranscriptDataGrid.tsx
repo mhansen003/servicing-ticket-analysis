@@ -45,6 +45,11 @@ interface TranscriptRecord {
     keyIssue?: string;
     escalationRisk?: string;
   } | null;
+  // Deep analysis fields
+  aiDiscoveredTopic?: string;
+  aiDiscoveredSubcategory?: string;
+  agentSentiment?: string;
+  customerSentiment?: string;
 }
 
 type SortField = 'callStart' | 'durationSeconds' | 'agentName' | 'department' | 'basicSentiment';
@@ -383,12 +388,18 @@ export default function TranscriptDataGrid() {
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-20">
                 Messages
               </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                AI Topic
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">
+                Dual Sentiment
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-white/[0.04]">
             {filteredTranscripts.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-12 text-center text-gray-500">
+                <td colSpan={9} className="px-4 py-12 text-center text-gray-500">
                   No transcripts found matching your filters
                 </td>
               </tr>
@@ -423,6 +434,54 @@ export default function TranscriptDataGrid() {
                   </td>
                   <td className="px-4 py-3 text-sm text-gray-500 text-center">
                     {transcript.messageCount}
+                  </td>
+                  <td className="px-4 py-3">
+                    {transcript.aiDiscoveredTopic ? (
+                      <div>
+                        <div className="text-sm text-purple-400 font-medium">
+                          {transcript.aiDiscoveredTopic}
+                        </div>
+                        {transcript.aiDiscoveredSubcategory && (
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {transcript.aiDiscoveredSubcategory}
+                          </div>
+                        )}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-gray-600">-</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {transcript.agentSentiment && transcript.customerSentiment ? (
+                      <div className="flex gap-1">
+                        <span
+                          className={`px-2 py-0.5 text-xs rounded border ${
+                            transcript.agentSentiment === 'positive'
+                              ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                              : transcript.agentSentiment === 'negative'
+                              ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                          }`}
+                          title="Agent Sentiment"
+                        >
+                          A:{transcript.agentSentiment[0].toUpperCase()}
+                        </span>
+                        <span
+                          className={`px-2 py-0.5 text-xs rounded border ${
+                            transcript.customerSentiment === 'positive'
+                              ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                              : transcript.customerSentiment === 'negative'
+                              ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                          }`}
+                          title="Customer Sentiment"
+                        >
+                          C:{transcript.customerSentiment[0].toUpperCase()}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-gray-600">-</span>
+                    )}
                   </td>
                 </tr>
               ))
