@@ -463,8 +463,8 @@ export default function TranscriptsAnalysis() {
           <>
             <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
               <div className="flex items-center gap-2 text-gray-400 mb-2">
-                <ThumbsUp className="h-4 w-4 text-green-400" />
-                <span className="text-sm">Positive Calls</span>
+                <TrendingUp className="h-4 w-4 text-green-400" />
+                <span className="text-sm">High Sentiment</span>
               </div>
               <div className="text-2xl font-bold text-green-400">{positiveRate}%</div>
               <div className="text-xs text-gray-500 mt-1">
@@ -555,15 +555,15 @@ export default function TranscriptsAnalysis() {
             <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
               <div className="flex items-center gap-1">
                 <div className="w-8 h-0.5 bg-emerald-500"></div>
-                <span>Positive %</span>
+                <span>High Sentiment</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-8 h-0.5 bg-gray-500"></div>
-                <span>Neutral %</span>
+                <span>Mid Sentiment</span>
               </div>
               <div className="flex items-center gap-1">
                 <div className="w-8 h-0.5 bg-red-500"></div>
-                <span>Negative %</span>
+                <span>Low Sentiment</span>
               </div>
               <span className="text-gray-600">|</span>
               <span>Mini charts show ±3 day trends</span>
@@ -707,9 +707,9 @@ export default function TranscriptsAnalysis() {
                           <div className="font-medium text-white mb-1">{formatDate(dateStr)}</div>
                           <div className="text-gray-400">{total} total calls</div>
                           <div className="flex flex-col gap-0.5 mt-1">
-                            <span className="text-emerald-400">● {dayData.positive} positive ({positivePercent.toFixed(0)}%)</span>
-                            <span className="text-gray-400">● {dayData.neutral} neutral ({neutralPercent.toFixed(0)}%)</span>
-                            <span className="text-red-400">● {dayData.negative} negative ({negativePercent.toFixed(0)}%)</span>
+                            <span className="text-emerald-400">● {dayData.positive} high sentiment ({positivePercent.toFixed(0)}%)</span>
+                            <span className="text-gray-400">● {dayData.neutral} mid sentiment ({neutralPercent.toFixed(0)}%)</span>
+                            <span className="text-red-400">● {dayData.negative} low sentiment ({negativePercent.toFixed(0)}%)</span>
                           </div>
                         </div>
                       </button>
@@ -1117,8 +1117,8 @@ export default function TranscriptsAnalysis() {
                   <tr className="text-gray-400 text-xs border-b border-gray-700">
                     <th className="text-left py-3 px-4">Department</th>
                     <th className="text-right py-3 px-4">Calls</th>
-                    <th className="text-right py-3 px-4">Positive %</th>
-                    <th className="text-right py-3 px-4">Negative</th>
+                    <th className="text-right py-3 px-4">High Sentiment %</th>
+                    <th className="text-right py-3 px-4">Low Sentiment</th>
                     <th className="text-left py-3 px-4 w-40">Distribution</th>
                   </tr>
                 </thead>
