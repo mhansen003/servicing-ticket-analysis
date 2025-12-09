@@ -22,7 +22,7 @@ type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState<TabType>('categories');
+  const [activeTab, setActiveTab] = useState<TabType>('transcripts');
 
   if (loading) {
     return (
@@ -50,9 +50,9 @@ export default function Dashboard() {
   }
 
   const tabs = [
-    // Ticket Data (Green) - 23,167 helpdesk tickets from CSV
-    { id: 'categories' as TabType, label: 'Categories', icon: Tag, group: 'tickets', color: 'green', dataSource: 'Tickets' },
-    { id: 'trends' as TabType, label: 'Trends', icon: TrendingUp, group: 'tickets', color: 'green', dataSource: 'Tickets' },
+    // Ticket Data (Green) - Hidden for now
+    // { id: 'categories' as TabType, label: 'Categories', icon: Tag, group: 'tickets', color: 'green', dataSource: 'Tickets' },
+    // { id: 'trends' as TabType, label: 'Trends', icon: TrendingUp, group: 'tickets', color: 'green', dataSource: 'Tickets' },
 
     // Transcript Data (Purple) - Call recordings with AI analysis
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
@@ -118,16 +118,6 @@ export default function Dashboard() {
                 <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <span className="text-xs text-gray-400">Live</span>
               </div>
-              <div className="flex items-center gap-4 text-xs">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-green-500" />
-                  <span className="text-gray-500">Tickets (23K)</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2 h-2 rounded-full bg-purple-500" />
-                  <span className="text-gray-500">Transcripts</span>
-                </div>
-              </div>
             </div>
           </div>
 
@@ -162,17 +152,6 @@ export default function Dashboard() {
                   </button>
                 );
               })}
-            </div>
-            {/* Mobile Legend */}
-            <div className="flex items-center justify-center gap-4 text-xs text-gray-500">
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-green-500" />
-                <span>Tickets</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-purple-500" />
-                <span>Transcripts</span>
-              </div>
             </div>
           </div>
         </div>
