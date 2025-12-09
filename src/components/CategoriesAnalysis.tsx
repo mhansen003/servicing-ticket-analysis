@@ -14,6 +14,7 @@ import {
   Legend,
 } from 'recharts';
 import { TrendingUp, TrendingDown, Minus, Tag, AlertCircle, CheckCircle2 } from 'lucide-react';
+import CategoryHeatmap from './CategoryHeatmap';
 
 interface CategoryStat {
   category: string;
@@ -150,6 +151,9 @@ export default function CategoriesAnalysis() {
           </div>
         </div>
       </div>
+
+      {/* Category Heatmap */}
+      <CategoryHeatmap />
 
       {/* Main Category Distribution */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
