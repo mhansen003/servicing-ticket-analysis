@@ -830,5 +830,11 @@ fs.writeFileSync(outputPath, JSON.stringify(output, null, 2));
 
 const fileSizeKB = Math.round(fs.statSync(outputPath).size / 1024);
 console.log(`✅ Generated processed-stats.json (${fileSizeKB} KB)`);
+
+// Copy to public folder for web access
+const publicOutputPath = path.join(__dirname, '..', 'public', 'data', 'processed-stats.json');
+fs.copyFileSync(outputPath, publicOutputPath);
+console.log(`✅ Copied to public/data/processed-stats.json`);
+
 console.log(`📊 Detected ${issues.length} issues/alerts`);
 console.log('📦 Data ready for deployment!');
