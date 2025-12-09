@@ -62,6 +62,7 @@ interface AgentProfileCardProps {
   agent: AgentStats;
   profile?: AgentProfile | null;
   loadingProfile?: boolean;
+  profileError?: string | null;
   onViewTranscripts?: (agentName: string) => void;
   compact?: boolean;
 }
@@ -127,6 +128,7 @@ export function AgentProfileCard({
   agent,
   profile,
   loadingProfile,
+  profileError,
   onViewTranscripts,
   compact = false,
 }: AgentProfileCardProps) {
@@ -327,6 +329,17 @@ export function AgentProfileCard({
             <div className="animate-spin rounded-full h-5 w-5 border-2 border-blue-500/20 border-t-blue-500" />
             <span className="text-gray-400">Generating AI coaching insights...</span>
           </div>
+        </div>
+      ) : profileError ? (
+        <div className="p-6 bg-amber-500/10 rounded-xl border border-amber-500/20">
+          <div className="flex items-center gap-3 mb-3">
+            <AlertTriangle className="h-5 w-5 text-amber-400" />
+            <h4 className="text-sm font-medium text-amber-400">Unable to Load AI Insights</h4>
+          </div>
+          <p className="text-gray-300 text-sm mb-3">{profileError}</p>
+          <p className="text-gray-400 text-xs">
+            The basic performance metrics are still available above. AI coaching insights require an OpenRouter API connection.
+          </p>
         </div>
       ) : profile ? (
         <div className="space-y-4">

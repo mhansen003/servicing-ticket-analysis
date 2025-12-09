@@ -74,6 +74,7 @@ export default function AgentsAnalysis() {
   const [selectedAgent, setSelectedAgent] = useState<AgentStats | null>(null);
   const [agentProfile, setAgentProfile] = useState<AgentProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(false);
+  const [profileError, setProfileError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'performance' | 'calls'>('performance'); // Default to top performers
 
@@ -106,6 +107,7 @@ export default function AgentsAnalysis() {
   const loadAgentProfile = useCallback(async (agent: AgentStats) => {
     setLoadingProfile(true);
     setAgentProfile(null);
+    setProfileError(null);
 
     try {
       const response = await fetch('/api/agent-profile', {
@@ -117,9 +119,13 @@ export default function AgentsAnalysis() {
       if (response.ok) {
         const { profile } = await response.json();
         setAgentProfile(profile);
+      } else {
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        setProfileError(errorData.error || 'Failed to load AI coaching insights');
       }
     } catch (error) {
       console.error('Failed to load profile:', error);
+      setProfileError('Unable to connect to AI coaching service');
     } finally {
       setLoadingProfile(false);
     }
@@ -327,6 +333,7 @@ export default function AgentsAnalysis() {
                 agent={selectedAgent}
                 profile={agentProfile}
                 loadingProfile={loadingProfile}
+                profileError={profileError}
                 onViewTranscripts={handleViewTranscripts}
               />
             </div>

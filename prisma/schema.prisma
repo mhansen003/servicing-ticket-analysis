@@ -61,6 +61,15 @@ model Ticket {
   ticketTags                            String?   @map("ticket_tags")
   customFields                          String?   @map("custom_fields")
 
+  // Categorization (PHASE 1: Enhanced Categorization)
+  category                              String?   @map("category")
+  subcategory                           String?   @map("subcategory")
+  allIssues                             String?   @map("all_issues") // Pipe-separated multi-issue tags
+  categorizationConfidence              Float?    @map("categorization_confidence") // 0.0 - 1.0
+  manuallyReviewed                      Boolean   @default(false) @map("manually_reviewed")
+  manualCategory                        String?   @map("manual_category")
+  manualSubcategory                     String?   @map("manual_subcategory")
+
   // Timestamps
   ticketCreatedAtUtc                    DateTime  @map("ticket_created_at_utc")
   ticketUpdatedAtUtc                    DateTime? @map("ticket_updated_at_utc")
@@ -72,6 +81,104 @@ model Ticket {
   @@index([ticketCreatedAtUtc])
   @@index([isTicketComplete])
   @@index([ticketPriority])
+  @@index([category])
+  @@index([subcategory])
 
   @@map("tickets")
+}
+
+// PHASE 1: Transcript Model for Call/Chat Analysis
+model Transcript {
+  id                      Int       @id @default(autoincrement())
+  vendorCallKey           String    @unique @map("vendor_call_key")
+
+  // Call metadata
+  callDate                DateTime? @map("call_date")
+  callStart               DateTime? @map("call_start")
+  callEnd                 DateTime? @map("call_end")
+  durationSeconds         Int?      @map("duration_seconds")
+
+  // Agent information
+  agentName               String?   @map("agent_name")
+  agentId                 String?   @map("agent_id")
+  agentEmail              String?   @map("agent_email")
+  agentRole               String?   @map("agent_role")
+  department              String?   @map("department")
+
+  // Customer information
+  customerId              String?   @map("customer_id")
+  customerName            String?   @map("customer_name")
+
+  // Transcript content
+  transcriptText          String    @map("transcript_text") @db.Text
+  conversation            Json?     @map("conversation") // Structured conversation array
+
+  // Call metrics
+  numberOfHolds           Int?      @default(0) @map("number_of_holds")
+  holdDuration            Int?      @default(0) @map("hold_duration")
+  messageCount            Int?      @map("message_count")
+  customerMessages        Int?      @map("customer_messages")
+  agentMessages           Int?      @map("agent_messages")
+  agentTurns              Int?      @map("agent_turns")
+  customerTurns           Int?      @map("customer_turns")
+
+  // Categorization (same as Ticket)
+  category                String?   @map("category")
+  subcategory             String?   @map("subcategory")
+  allIssues               String?   @map("all_issues")
+  categorizationConfidence Float?   @map("categorization_confidence")
+  manuallyReviewed        Boolean   @default(false) @map("manually_reviewed")
+  manualCategory          String?   @map("manual_category")
+  manualSubcategory       String?   @map("manual_subcategory")
+
+  // Sentiment analysis
+  sentiment               String?   @map("sentiment") // positive, negative, neutral, mixed
+  sentimentScore          Float?    @map("sentiment_score") // -1.0 to 1.0
+  customerSentiment       String?   @map("customer_sentiment")
+  customerSentimentScore  Float?    @map("customer_sentiment_score")
+  agentSentiment          String?   @map("agent_sentiment")
+  agentSentimentScore     Float?    @map("agent_sentiment_score")
+
+  // Resolution tracking
+  resolutionStatus        String?   @map("resolution_status") // Resolved, Escalated, Follow-up Required, Unknown
+  wasResolved             Boolean?  @map("was_resolved")
+  wasEscalated            Boolean   @default(false) @map("was_escalated")
+  escalationReason        String?   @map("escalation_reason")
+  requiresFollowup        Boolean   @default(false) @map("requires_followup")
+
+  // Intent & Topic detection
+  customerIntent          String?   @map("customer_intent")
+  detectedTopics          String?   @map("detected_topics") // JSON array
+  primaryTopic            String?   @map("primary_topic")
+
+  // Quality metrics
+  callQualityScore        Float?    @map("call_quality_score") // 0-100
+  transcriptQuality       String?   @map("transcript_quality") // high, medium, low
+
+  // Status
+  status                  String?   @map("status")
+  disposition             String?   @map("disposition")
+
+  // Metadata
+  csatScore               Int?      @map("csat_score") // Customer satisfaction 1-5
+  queue                   String?   @map("queue")
+  callReason              String?   @map("call_reason")
+  resolutionCode          String?   @map("resolution_code")
+
+  // Timestamps
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
+
+  // Indexes for performance
+  @@index([agentName])
+  @@index([callDate])
+  @@index([department])
+  @@index([category])
+  @@index([subcategory])
+  @@index([sentiment])
+  @@index([resolutionStatus])
+  @@index([customerId])
+  @@index([wasEscalated])
+
+  @@map("transcripts")
 }

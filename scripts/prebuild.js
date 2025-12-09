@@ -533,6 +533,236 @@ const servicingAnalysis = {
 console.log(`📊 Servicing Analysis: ${servicingTickets.length.toLocaleString()} tickets in ${topCategories.length} top categories`);
 
 // ========================================
+// CATEGORIZED TICKET ANALYSIS (NEW)
+// Categorize tickets directly from the parsed ticket data
+// ========================================
+console.log('📊 Categorizing tickets...');
+
+// Simple categorization function (inline)
+function categorizeTicket(title, description) {
+  const combined = `${title} ${description}`.toLowerCase();
+
+  const categoryKeywords = {
+    'Payment Issues': ['payment', 'pay', 'autopay', 'ach', 'draft', 'first payment', 'where do i send'],
+    'Account Access': ['login', 'password', 'access', 'locked out', 'reset', 'portal'],
+    'Loan Transfer': ['transfer', 'sold', 'servicer', 'boarding', 'cenlar', 'lakeview'],
+    'Document Requests': ['statement', 'payoff', '1098', 'letter', 'document', 'release'],
+    'Escrow': ['escrow', 'tax', 'insurance', 'impound', 'shortage', 'surplus'],
+    'Escalation': ['complaint', 'escalat', 'urgent', 'supervisor', 'legal'],
+    'Voice/Alert Requests': ['voice', 'alert', 'voicemail'],
+    'Loan Information': ['balance', 'rate', 'loan number', 'loan info'],
+    'Loan Modifications': ['modification', 'forbearance', 'hardship', 'recast'],
+    'Communication': ['fw:', 'fwd:', 're:', 'follow up']
+  };
+
+  for (const [category, keywords] of Object.entries(categoryKeywords)) {
+    for (const keyword of keywords) {
+      if (combined.includes(keyword)) {
+        return { category, subcategory: `General ${category}`, confidence: 0.7 };
+      }
+    }
+  }
+
+  return { category: 'Other', subcategory: 'Uncategorized', confidence: 0.3 };
+}
+
+// Categorize all servicing tickets
+const categorizedTickets = tickets.map(t => {
+  const result = categorizeTicket(t.ticket_title || '', t.ticket_description || '');
+  return {
+    category: result.category,
+    subcategory: result.subcategory,
+    categorization_confidence: result.confidence,
+    ticket_created_at_utc: t.ticket_created_at_utc,
+  };
+});
+
+console.log(`✅ Categorized ${categorizedTickets.length.toLocaleString()} tickets`);
+
+// Category statistics
+let categorizedAnalytics = null;
+let baselineAnalytics = null;
+
+const categoryStats = {};
+const subcategoryStats = {};
+let totalConfidence = 0;
+let confidenceCount = 0;
+
+categorizedTickets.forEach(t => {
+    const category = t.category || 'Other';
+    const subcategory = t.subcategory || 'Uncategorized';
+    const confidence = parseFloat(t.categorization_confidence) || 0;
+
+    // Category totals
+    if (!categoryStats[category]) {
+      categoryStats[category] = { count: 0, confidenceSum: 0, confidenceCount: 0, subcategories: {} };
+    }
+    categoryStats[category].count++;
+    if (confidence > 0) {
+      categoryStats[category].confidenceSum += confidence;
+      categoryStats[category].confidenceCount++;
+      totalConfidence += confidence;
+      confidenceCount++;
+    }
+
+    // Subcategory totals
+    const key = `${category}::${subcategory}`;
+    if (!subcategoryStats[key]) {
+      subcategoryStats[key] = { category, subcategory, count: 0, confidenceSum: 0, confidenceCount: 0 };
+    }
+    subcategoryStats[key].count++;
+    if (confidence > 0) {
+      subcategoryStats[key].confidenceSum += confidence;
+      subcategoryStats[key].confidenceCount++;
+    }
+
+    // Subcategories within category
+    if (!categoryStats[category].subcategories[subcategory]) {
+      categoryStats[category].subcategories[subcategory] = 0;
+    }
+    categoryStats[category].subcategories[subcategory]++;
+  });
+
+  // Format category statistics
+  const categories = Object.entries(categoryStats).map(([name, data]) => ({
+    category: name,
+    count: data.count,
+    percentage: Math.round((data.count / categorizedTickets.length) * 100),
+    avgConfidence: data.confidenceCount > 0
+      ? parseFloat((data.confidenceSum / data.confidenceCount).toFixed(3))
+      : 0,
+    subcategories: Object.entries(data.subcategories).map(([subName, count]) => ({
+      name: subName,
+      count,
+      percentage: Math.round((count / categorizedTickets.length) * 100),
+    })).sort((a, b) => b.count - a.count),
+  })).sort((a, b) => b.count - a.count);
+
+  // Format all subcategories
+  const subcategories = Object.values(subcategoryStats).map(data => ({
+    category: data.category,
+    subcategory: data.subcategory,
+    count: data.count,
+    percentage: Math.round((data.count / categorizedTickets.length) * 100),
+    avgConfidence: data.confidenceCount > 0
+      ? parseFloat((data.confidenceSum / data.confidenceCount).toFixed(3))
+      : 0,
+  })).sort((a, b) => b.count - a.count);
+
+  categorizedAnalytics = {
+    summary: {
+      totalCategorized: categorizedTickets.length,
+      totalCategories: Object.keys(categoryStats).length,
+      totalSubcategories: Object.keys(subcategoryStats).length,
+      avgConfidence: confidenceCount > 0
+        ? parseFloat((totalConfidence / confidenceCount).toFixed(3))
+        : 0,
+    },
+    categories,
+    subcategories,
+  };
+
+  console.log(`📊 Categorization: ${categories.length} categories, ${subcategories.length} subcategories`);
+
+  // Baseline vs Recent Analysis (for Trends tab)
+  const ticketsWithDates = categorizedTickets.filter(t => {
+    const date = t.ticket_created_at_utc || t.created_date || t.callDate || t.call_date;
+    return date && date.trim() !== '';
+  }).map(t => ({
+    ...t,
+    parsedDate: new Date(t.ticket_created_at_utc || t.created_date || t.callDate || t.call_date),
+  })).filter(t => !isNaN(t.parsedDate.getTime()));
+
+  if (ticketsWithDates.length > 0) {
+    // Sort by date descending
+    ticketsWithDates.sort((a, b) => b.parsedDate - a.parsedDate);
+
+    // Generate baseline comparisons for multiple time windows
+    const timeWindows = [7, 14, 21, 30, 60, 90];
+    const baselineComparisons = {};
+
+    timeWindows.forEach(daysRecent => {
+      const daysBaseline = daysRecent; // Same window size for baseline
+      const now = ticketsWithDates[0].parsedDate; // Use most recent ticket date
+
+      const recentStart = new Date(now.getTime() - daysRecent * 24 * 60 * 60 * 1000);
+      const baselineStart = new Date(recentStart.getTime() - daysBaseline * 24 * 60 * 60 * 1000);
+      const baselineEnd = recentStart;
+
+      const recentTickets = ticketsWithDates.filter(t => t.parsedDate >= recentStart);
+      const baselineTickets = ticketsWithDates.filter(t =>
+        t.parsedDate >= baselineStart && t.parsedDate < baselineEnd
+      );
+
+      // Count by category+subcategory
+      const recentCounts = {};
+      const baselineCounts = {};
+
+      recentTickets.forEach(t => {
+        const key = `${t.category}::${t.subcategory}`;
+        recentCounts[key] = (recentCounts[key] || 0) + 1;
+      });
+
+      baselineTickets.forEach(t => {
+        const key = `${t.category}::${t.subcategory}`;
+        baselineCounts[key] = (baselineCounts[key] || 0) + 1;
+      });
+
+      // Combine all keys
+      const allKeys = new Set([...Object.keys(recentCounts), ...Object.keys(baselineCounts)]);
+
+      const trends = Array.from(allKeys).map(key => {
+        const [category, subcategory] = key.split('::');
+        const baseline = baselineCounts[key] || 0;
+        const recent = recentCounts[key] || 0;
+        const change = recent - baseline;
+        const percentChange = baseline > 0
+          ? Math.round((change / baseline) * 100)
+          : recent > 0 ? 100 : 0;
+
+        let trend = 'stable';
+        if (Math.abs(percentChange) >= 20) {
+          trend = percentChange > 0 ? 'increasing' : 'decreasing';
+        }
+
+        return {
+          category,
+          subcategory,
+          baseline,
+          recent,
+          change,
+          percentChange,
+          trend,
+        };
+      }).sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+
+      baselineComparisons[daysRecent] = {
+        daysRecent,
+        daysBaseline,
+        recentPeriod: {
+          start: recentStart.toISOString().split('T')[0],
+          end: now.toISOString().split('T')[0],
+          total: recentTickets.length,
+        },
+        baselinePeriod: {
+          start: baselineStart.toISOString().split('T')[0],
+          end: baselineEnd.toISOString().split('T')[0],
+          total: baselineTickets.length,
+        },
+        trends,
+        summary: {
+          increasing: trends.filter(t => t.trend === 'increasing').length,
+          decreasing: trends.filter(t => t.trend === 'decreasing').length,
+          stable: trends.filter(t => t.trend === 'stable').length,
+        },
+      };
+    });
+
+  baselineAnalytics = baselineComparisons;
+  console.log(`📊 Generated baseline comparisons for ${Object.keys(baselineComparisons).length} time windows`);
+}
+
+// ========================================
 // ALL TICKETS FOR RAW DATA TABLE
 // ========================================
 // Write to public/data for static file serving in Next.js
@@ -590,6 +820,9 @@ const output = {
   },
   issues,
   trends,
+  // Enhanced categorization analytics
+  categorizedAnalytics,
+  baselineAnalytics,
   processedAt: new Date().toISOString(),
 };
 

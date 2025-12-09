@@ -8,13 +8,17 @@ import {
   Brain,
   Phone,
   Users,
+  Tag,
+  TrendingUp,
 } from 'lucide-react';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import TranscriptsAnalysis from '@/components/TranscriptsAnalysis';
 import TranscriptDataGrid from '@/components/TranscriptDataGrid';
 import AgentsAnalysis from '@/components/AgentsAnalysis';
+import CategoriesAnalysis from '@/components/CategoriesAnalysis';
+import TrendsAnalysis from '@/components/TrendsAnalysis';
 
-type TabType = 'data' | 'transcripts' | 'agents' | 'ai';
+type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
@@ -48,8 +52,10 @@ export default function Dashboard() {
 
   const tabs = [
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone },
-    { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
+    { id: 'categories' as TabType, label: 'Categories', icon: Tag },
+    { id: 'trends' as TabType, label: 'Trends', icon: TrendingUp },
     { id: 'agents' as TabType, label: 'Agents', icon: Users },
+    { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Activity },
   ];
 
@@ -116,6 +122,10 @@ export default function Dashboard() {
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Tab Content */}
         {activeTab === 'transcripts' && <TranscriptsAnalysis />}
+
+        {activeTab === 'categories' && <CategoriesAnalysis />}
+
+        {activeTab === 'trends' && <TrendsAnalysis />}
 
         {activeTab === 'data' && <TranscriptDataGrid />}
 
