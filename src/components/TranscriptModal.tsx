@@ -320,7 +320,6 @@ export function TranscriptModal({
 
         const apiData = await apiResponse.json();
         if (apiData.success && apiData.data) {
-          console.log('✨ Loaded transcripts from API:', apiData.data.length);
           setTranscripts(apiData.data);
         } else {
           console.error('API returned unexpected format:', apiData);
@@ -607,12 +606,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               const callDate = new Date(t.callStart);
               const hour = callDate.getUTCHours();
               const hourStr = `${hour.toString().padStart(2, '0')}:00`;
-              const matches = hourStr === filterValue;
-              // Debug logging (first 5 matches only)
-              if (matches && Math.random() < 0.01) {
-                console.log(`Hour match: ${t.callStart} -> UTC ${hourStr} === ${filterValue}`);
-              }
-              return matches;
+              return hourStr === filterValue;
             } catch {
               return false;
             }
@@ -623,12 +617,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               const callDate = new Date(t.callStart);
               const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
               const dayOfWeek = dayNames[callDate.getUTCDay()];
-              const matches = dayOfWeek === filterValue;
-              // Debug logging (first 5 matches only)
-              if (matches && Math.random() < 0.01) {
-                console.log(`Day match: ${t.callStart} -> ${dayOfWeek} === ${filterValue}`);
-              }
-              return matches;
+              return dayOfWeek === filterValue;
             } catch {
               return false;
             }
