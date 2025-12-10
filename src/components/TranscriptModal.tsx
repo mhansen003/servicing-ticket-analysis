@@ -600,14 +600,18 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
             // Check both old and new topic fields
             // Old format: detectedTopics array and aiAnalysis.topics array
             // New format: analysis.aiDiscoveredTopic string (e.g., "Insurance", "Payment Processing")
+            //             analysis.aiDiscoveredSubcategory string (e.g., "Payment Processing" under "Billing")
             const oldTopicMatch = (
               (t.detectedTopics || []).includes(filterValue) ||
               (t.aiAnalysis?.topics || []).includes(filterValue)
             );
             // New topics are exact matches or case-insensitive partial matches
+            // Check both main topic AND subcategory fields
             const newTopicMatch = (
               t.analysis?.aiDiscoveredTopic === filterValue ||
-              t.analysis?.aiDiscoveredTopic?.toLowerCase() === filterValue.toLowerCase()
+              t.analysis?.aiDiscoveredTopic?.toLowerCase() === filterValue.toLowerCase() ||
+              t.analysis?.aiDiscoveredSubcategory === filterValue ||
+              t.analysis?.aiDiscoveredSubcategory?.toLowerCase() === filterValue.toLowerCase()
             );
             return oldTopicMatch || newTopicMatch;
           case 'department':
