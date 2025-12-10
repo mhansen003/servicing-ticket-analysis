@@ -597,10 +597,19 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
           case 'sentiment':
             return (t.aiAnalysis?.sentiment || t.basicSentiment) === filterValue;
           case 'topic':
-            return (
+            // Check both old and new topic fields
+            // Old format: detectedTopics array and aiAnalysis.topics array
+            // New format: analysis.aiDiscoveredTopic string (e.g., "Insurance", "Payment Processing")
+            const oldTopicMatch = (
               (t.detectedTopics || []).includes(filterValue) ||
               (t.aiAnalysis?.topics || []).includes(filterValue)
             );
+            // New topics are exact matches or case-insensitive partial matches
+            const newTopicMatch = (
+              t.analysis?.aiDiscoveredTopic === filterValue ||
+              t.analysis?.aiDiscoveredTopic?.toLowerCase() === filterValue.toLowerCase()
+            );
+            return oldTopicMatch || newTopicMatch;
           case 'department':
             return t.department === filterValue;
           case 'agent':
