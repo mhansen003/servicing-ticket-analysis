@@ -1207,64 +1207,72 @@ export default function TranscriptsAnalysis() {
                     return (
                       <div key={topic.name} className="space-y-2">
                         {/* Main Topic Bar */}
-                        <div className="space-y-0">
+                        <div className="space-y-1 bg-white/[0.02] rounded-lg p-3">
+                          {/* Topic Name Row (Full Width) */}
+                          <div className="flex items-center gap-2 mb-2">
+                            {topicSubcategories.length > 0 && (
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setCollapsedTopics(prev => {
+                                    const newSet = new Set(prev);
+                                    if (newSet.has(topic.name)) {
+                                      newSet.delete(topic.name);
+                                    } else {
+                                      newSet.add(topic.name);
+                                    }
+                                    return newSet;
+                                  });
+                                }}
+                                className="hover:bg-purple-500/20 rounded p-1 transition-all border border-purple-500/30 flex-shrink-0"
+                                title={isExpanded ? "Collapse subcategories" : "Expand subcategories"}
+                              >
+                                {isExpanded ? (
+                                  <ChevronUp className="h-4 w-4 text-purple-400" />
+                                ) : (
+                                  <ChevronDown className="h-4 w-4 text-purple-400" />
+                                )}
+                              </button>
+                            )}
+                            {topicSubcategories.length === 0 && (
+                              <div className="w-6 flex-shrink-0" />
+                            )}
+                            <span
+                              className="text-sm text-white font-medium group-hover:text-purple-300 transition-colors flex-1"
+                              title={topic.name}
+                            >
+                              {topic.name}
+                            </span>
+                            {topicSubcategories.length > 0 && (
+                              <span className="text-[10px] text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20 flex-shrink-0 whitespace-nowrap">
+                                {topicSubcategories.length} subcategories
+                              </span>
+                            )}
+                            {(() => {
+                              const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
+                                (u: any) => u.parentTopic === topic.name
+                              );
+                              if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
+                                return (
+                                  <span className="text-[10px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20 flex-shrink-0 whitespace-nowrap">
+                                    +{uncategorizedForTopic.count} uncategorized
+                                  </span>
+                                );
+                              }
+                              return null;
+                            })()}
+                          </div>
+                          {/* Chart Bar Row */}
                           <div
                             className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-2 group"
                             onClick={() => {
-                              // Always open drill-down for main topic
                               openDrillDown('topic', topic.name, `${topic.name} Calls`);
                             }}
                           >
-                            <div className="w-40 min-w-[10rem] flex items-center gap-2">
-                              {topicSubcategories.length > 0 && (
-                                <button
-                                  onClick={(e) => {
-                                    e.stopPropagation(); // Prevent opening drill-down
-                                    // Toggle collapsed state for this topic
-                                    setCollapsedTopics(prev => {
-                                      const newSet = new Set(prev);
-                                      if (newSet.has(topic.name)) {
-                                        newSet.delete(topic.name);
-                                      } else {
-                                        newSet.add(topic.name);
-                                      }
-                                      return newSet;
-                                    });
-                                  }}
-                                  className="hover:bg-purple-500/20 rounded p-1 transition-all border border-purple-500/30"
-                                  title={isExpanded ? "Collapse subcategories" : "Expand subcategories"}
-                                >
-                                  {isExpanded ? (
-                                    <ChevronUp className="h-4 w-4 text-purple-400 flex-shrink-0" />
-                                  ) : (
-                                    <ChevronDown className="h-4 w-4 text-purple-400 flex-shrink-0" />
-                                  )}
-                                </button>
-                              )}
-                              {topicSubcategories.length === 0 && (
-                                <div className="w-6" />
-                              )}
-                              <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
-                                {topic.name}
+                            <div className="w-12 text-left flex-shrink-0">
+                              <span className="text-xs text-gray-400">
+                                #{index + 1}
                               </span>
-                              {topicSubcategories.length > 0 && (
-                                <span className="text-[10px] text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">
-                                  {topicSubcategories.length} subcategories
-                                </span>
-                              )}
-                              {(() => {
-                                const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
-                                  (u: any) => u.parentTopic === topic.name
-                                );
-                                if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
-                                  return (
-                                    <span className="text-[10px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20">
-                                      +{uncategorizedForTopic.count} uncategorized
-                                    </span>
-                                  );
-                                }
-                                return null;
-                              })()}
                             </div>
                           <div className="flex-1 relative">
                             <div className="h-8 bg-gray-800/50 rounded-lg overflow-hidden">
@@ -1313,43 +1321,49 @@ export default function TranscriptsAnalysis() {
                                 return (
                                   <div
                                     key={sub.name}
-                                    className="flex items-center gap-3 cursor-pointer hover:bg-purple-500/10 transition-colors rounded-lg p-2 group border border-transparent hover:border-purple-500/30"
+                                    className="cursor-pointer hover:bg-purple-500/10 transition-colors rounded-lg p-2 group border border-transparent hover:border-purple-500/30"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       openDrillDown('topic', sub.name, `${sub.name} Calls`);
                                     }}
                                   >
-                                    <div className="w-32 min-w-[8rem] flex items-center gap-1.5">
-                                      <span className="text-purple-400 text-[10px]">→</span>
-                                      <span className="text-xs text-gray-300 font-medium truncate group-hover:text-purple-200 transition-colors">
+                                    {/* Subcategory name (full width) */}
+                                    <div className="flex items-center gap-1.5 mb-1.5">
+                                      <span className="text-purple-400 text-[10px] flex-shrink-0">→</span>
+                                      <span
+                                        className="text-xs text-gray-300 font-medium group-hover:text-purple-200 transition-colors flex-1"
+                                        title={sub.name}
+                                      >
                                         {sub.name}
                                       </span>
                                     </div>
-                                    <div className="flex-1 relative">
-                                      <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden">
-                                        <div
-                                          className="h-full rounded-md transition-all duration-300 hover:opacity-80 relative"
-                                          style={{
-                                            width: `${subPercentage}%`,
-                                            backgroundColor: TOPIC_COLORS[(index + subIndex + 1) % TOPIC_COLORS.length],
-                                            opacity: 0.8,
-                                          }}
-                                        >
-                                          {/* Show count inside bar if there's enough space */}
-                                          {subPercentage > 20 && (
-                                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white">
-                                              {sub.count.toLocaleString()}
-                                            </span>
-                                          )}
+                                    {/* Bar chart */}
+                                    <div className="flex items-center gap-3">
+                                      <div className="flex-1 relative">
+                                        <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden">
+                                          <div
+                                            className="h-full rounded-md transition-all duration-300 hover:opacity-80 relative"
+                                            style={{
+                                              width: `${subPercentage}%`,
+                                              backgroundColor: TOPIC_COLORS[(index + subIndex + 1) % TOPIC_COLORS.length],
+                                              opacity: 0.8,
+                                            }}
+                                          >
+                                            {subPercentage > 20 && (
+                                              <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white">
+                                                {sub.count.toLocaleString()}
+                                              </span>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
-                                    <div className="w-16 text-right">
-                                      {subPercentage <= 20 && (
-                                        <span className="text-xs font-semibold text-purple-300">
-                                          {sub.count.toLocaleString()}
-                                        </span>
-                                      )}
+                                      <div className="w-16 text-right flex-shrink-0">
+                                        {subPercentage <= 20 && (
+                                          <span className="text-xs font-semibold text-purple-300">
+                                            {sub.count.toLocaleString()}
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
                                 );
