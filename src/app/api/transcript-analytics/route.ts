@@ -439,11 +439,19 @@ export async function GET(request: NextRequest) {
           const rawConversation = Array.isArray(messages) ? messages : [];
 
           // Transform conversation messages: map 'speaker' field to 'role' and normalize values
-          const conversation = rawConversation.map((m: any) => ({
-            role: m.speaker ? m.speaker.toLowerCase() : m.role?.toLowerCase() || 'unknown',
-            text: m.text || '',
-            timestamp: m.timestamp || null,
-          }));
+          const conversation = rawConversation
+            .map((m: any) => ({
+              role: m.speaker ? m.speaker.toLowerCase() : m.role?.toLowerCase() || 'unknown',
+              text: m.text || '',
+              timestamp: m.timestamp || null,
+            }))
+            .sort((a: any, b: any) => {
+              // Sort by timestamp if available, otherwise maintain original order
+              if (a.timestamp && b.timestamp) {
+                return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
+              }
+              return 0;
+            });
 
           // Calculate message counts using the 'speaker' field from raw data
           const messageCount = rawConversation.length;
