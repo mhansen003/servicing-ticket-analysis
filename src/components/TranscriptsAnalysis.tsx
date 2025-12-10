@@ -449,11 +449,11 @@ export default function TranscriptsAnalysis() {
         const data = await res.json();
         if (data.success) {
           setLiveAnalysis(data);
-          setDeepAnalysis(prev => ({
+          setDeepAnalysis(prev => prev ? ({
             ...prev,
             byHour: data.byHour || {},
             byDayOfWeek: data.byDayOfWeek || {},
-          }));
+          }) : null);
         }
       }
     } catch (err) {
