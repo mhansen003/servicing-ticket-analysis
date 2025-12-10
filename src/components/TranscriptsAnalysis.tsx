@@ -663,9 +663,16 @@ export default function TranscriptsAnalysis() {
 
                   if (dayData) {
                     const total = dayData.total || 0;
-                    const positive = dayData.positive || 0;
-                    const neutral = dayData.neutral || 0;
-                    const negative = dayData.negative || 0;
+                    // Use correct field names based on data source
+                    const positive = useLiveData
+                      ? ((dayData.agentPositive || 0) + (dayData.customerPositive || 0))
+                      : (dayData.positive || 0);
+                    const neutral = useLiveData
+                      ? ((dayData.agentNeutral || 0) + (dayData.customerNeutral || 0))
+                      : (dayData.neutral || 0);
+                    const negative = useLiveData
+                      ? ((dayData.agentNegative || 0) + (dayData.customerNegative || 0))
+                      : (dayData.negative || 0);
                     const positivePercent = total > 0 ? (positive / total) * 100 : 0;
                     const neutralPercent = total > 0 ? (neutral / total) * 100 : 0;
                     const negativePercent = total > 0 ? (negative / total) * 100 : 0;

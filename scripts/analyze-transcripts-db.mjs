@@ -46,7 +46,7 @@ const CONFIG = {
   MODEL: 'mistralai/ministral-3b-2512', // Free model to test if 403 is model-specific
 
   // Batch Processing
-  BATCH_SIZE: 30,         // Process 30 at a time (minimal batches)
+  BATCH_SIZE: 20,         // Process 20 at a time
   MAX_CONCURRENT: 3,      // 3 parallel API calls (very conservative to avoid 403)
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 2000,
