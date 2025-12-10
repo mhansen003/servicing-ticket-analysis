@@ -247,12 +247,25 @@ export async function GET(request: NextRequest) {
         data: filtered.map(t => {
           const analysis = t.TranscriptAnalysis[0] || null;
           const messages = t.messages as any;
-          const conversation = Array.isArray(messages) ? messages : [];
+          const rawConversation = Array.isArray(messages) ? messages : [];
 
-          // Calculate message counts
-          const messageCount = conversation.length;
-          const customerMessages = conversation.filter((m: any) => m.role === 'customer').length;
-          const agentMessages = conversation.filter((m: any) => m.role === 'agent').length;
+          // Transform conversation messages: map 'speaker' field to 'role' and normalize values
+          const conversation = rawConversation.map((m: any) => ({
+            role: m.speaker ? m.speaker.toLowerCase() : m.role?.toLowerCase() || 'unknown',
+            text: m.text || '',
+            timestamp: m.timestamp || null,
+          }));
+
+          // Calculate message counts using the 'speaker' field from raw data
+          const messageCount = rawConversation.length;
+          const customerMessages = rawConversation.filter((m: any) =>
+            (m.speaker && m.speaker.toLowerCase() === 'customer') ||
+            (m.role && m.role.toLowerCase() === 'customer')
+          ).length;
+          const agentMessages = rawConversation.filter((m: any) =>
+            (m.speaker && m.speaker.toLowerCase() === 'agent') ||
+            (m.role && m.role.toLowerCase() === 'agent')
+          ).length;
 
           return {
             id: t.id,
