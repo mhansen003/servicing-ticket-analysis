@@ -820,7 +820,10 @@ export default function TranscriptsAnalysis() {
                   Agent Performance Sentiment
                 </h4>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30 cursor-pointer hover:bg-green-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'positive', 'Positive Agent Performance Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <ThumbsUp className="h-4 w-4 text-green-400" />
                       <span className="text-white text-sm">Positive</span>
@@ -834,7 +837,10 @@ export default function TranscriptsAnalysis() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30 cursor-pointer hover:bg-gray-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'neutral', 'Neutral Agent Performance Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <Minus className="h-4 w-4 text-gray-400" />
                       <span className="text-white text-sm">Neutral</span>
@@ -848,7 +854,10 @@ export default function TranscriptsAnalysis() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30 cursor-pointer hover:bg-red-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'negative', 'Negative Agent Performance Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <ThumbsDown className="h-4 w-4 text-red-400" />
                       <span className="text-white text-sm">Negative</span>
@@ -878,7 +887,10 @@ export default function TranscriptsAnalysis() {
                   Customer Satisfaction Sentiment
                 </h4>
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30 cursor-pointer hover:bg-green-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'positive', 'Positive Customer Sentiment Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <ThumbsUp className="h-4 w-4 text-green-400" />
                       <span className="text-white text-sm">Positive</span>
@@ -892,7 +904,10 @@ export default function TranscriptsAnalysis() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30 cursor-pointer hover:bg-gray-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'neutral', 'Neutral Customer Sentiment Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <Minus className="h-4 w-4 text-gray-400" />
                       <span className="text-white text-sm">Neutral</span>
@@ -906,7 +921,10 @@ export default function TranscriptsAnalysis() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30">
+                  <div
+                    className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30 cursor-pointer hover:bg-red-500/20 transition-colors"
+                    onClick={() => openDrillDown('sentiment', 'negative', 'Negative Customer Sentiment Calls')}
+                  >
                     <div className="flex items-center gap-2">
                       <ThumbsDown className="h-4 w-4 text-red-400" />
                       <span className="text-white text-sm">Negative</span>
@@ -1011,100 +1029,145 @@ export default function TranscriptsAnalysis() {
                   </span>
                 </h3>
                 <p className="text-sm text-gray-400">
-                  {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • {deepAnalysis.topics.mainTopics.length} unique topics found • <span className="text-purple-400">Click to drill down</span>
+                  {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • {deepAnalysis.topics.mainTopics.length} unique topics found • <span className="text-purple-400">Click bars to drill down</span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="p-6 space-y-3">
-            {deepAnalysis.topics.mainTopics.slice(0, 20).map((topic, index) => {
-              const topicSubcategories = deepAnalysis.topics.subcategories.filter(
-                (sub) => sub.parentTopic === topic.name
-              );
-              const isExpanded = expandedSections.has(`topic-${topic.name}`);
+          <div className="p-6 space-y-6">
+            {/* Main Topics Bar Chart */}
+            <div className="bg-[#131a29] rounded-xl border border-white/[0.08] p-4">
+              <h4 className="text-sm font-medium text-gray-400 mb-4">Main Topics by Volume</h4>
+              <div className="space-y-2">
+                {deepAnalysis.topics.mainTopics
+                  .slice()
+                  .sort((a, b) => b.count - a.count)
+                  .slice(0, 20)
+                  .map((topic, index) => {
+                    const maxCount = Math.max(...deepAnalysis.topics.mainTopics.map(t => t.count));
+                    const percentage = (topic.count / maxCount) * 100;
+                    const topicSubcategories = deepAnalysis.topics.subcategories.filter(
+                      (sub) => sub.parentTopic === topic.name
+                    );
+                    const isExpanded = expandedSections.has(`topic-${topic.name}`);
 
-              return (
-                <div
-                  key={topic.name}
-                  className="bg-[#131a29] rounded-xl border border-white/[0.08] overflow-hidden"
-                >
-                  {/* Main Topic Bar */}
-                  <div
-                    className="flex items-center gap-3 p-3 cursor-pointer hover:bg-white/[0.02] transition-colors group"
-                    onClick={() => {
-                      // If has subcategories, toggle expansion
-                      if (topicSubcategories.length > 0) {
-                        toggleSection(`topic-${topic.name}`);
-                      } else {
-                        // Otherwise, open modal directly
-                        openDrillDown('topic', topic.name, `${topic.name} Calls`);
-                      }
-                    }}
-                  >
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
+                    return (
+                      <div key={topic.name} className="space-y-2">
+                        {/* Main Topic Bar */}
                         <div
-                          className="w-3 h-3 rounded-full"
-                          style={{ backgroundColor: TOPIC_COLORS[index % TOPIC_COLORS.length] }}
-                        />
-                        <p className="text-sm font-medium text-white group-hover:text-purple-300 transition-colors">
-                          {topic.name}
-                        </p>
-                        {topicSubcategories.length > 0 && (
-                          <span className="text-xs text-gray-500">
-                            ({topicSubcategories.length} subcategories)
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2 text-xs text-gray-500">
-                        <span>{topic.count.toLocaleString()} tickets</span>
-                        <span>•</span>
-                        <span>{(topic.avgConfidence * 100).toFixed(0)}% confidence</span>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="text-lg font-bold text-purple-400">{topic.count}</div>
-                      {topicSubcategories.length > 0 && (
-                        isExpanded ? (
-                          <ChevronUp className="h-4 w-4 text-gray-400" />
-                        ) : (
-                          <ChevronDown className="h-4 w-4 text-gray-400" />
-                        )
-                      )}
-                      {topicSubcategories.length === 0 && (
-                        <MousePointerClick className="h-4 w-4 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Subcategories (collapsible) */}
-                  {isExpanded && topicSubcategories.length > 0 && (
-                    <div className="px-3 pb-3 space-y-1 bg-[#0a0e17]/50">
-                      {topicSubcategories.map((sub) => (
-                        <div
-                          key={sub.name}
-                          className="flex items-center gap-2 p-2 pl-8 bg-[#0a0e17] rounded-lg border border-white/[0.04] hover:border-purple-500/30 cursor-pointer transition-colors group"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            openDrillDown('topic', sub.name, `${sub.name} Calls`);
+                          className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-2 group"
+                          onClick={() => {
+                            // If has subcategories, toggle expansion
+                            if (topicSubcategories.length > 0) {
+                              toggleSection(`topic-${topic.name}`);
+                            } else {
+                              // Otherwise, open modal directly
+                              openDrillDown('topic', topic.name, `${topic.name} Calls`);
+                            }
                           }}
                         >
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-medium text-gray-300 group-hover:text-purple-300 transition-colors truncate">
-                              {sub.name}
-                            </p>
+                          <div className="w-40 min-w-[10rem] flex items-center gap-2">
+                            <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
+                              {topic.name}
+                            </span>
+                            {topicSubcategories.length > 0 && (
+                              isExpanded ? (
+                                <ChevronUp className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                              ) : (
+                                <ChevronDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                              )
+                            )}
                           </div>
-                          <div className="flex items-center gap-2">
-                            <span className="text-xs text-gray-500">{sub.count} tickets</span>
-                            <MousePointerClick className="h-3 w-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <div className="flex-1 relative">
+                            <div className="h-8 bg-gray-800/50 rounded-lg overflow-hidden">
+                              <div
+                                className="h-full rounded-lg transition-all duration-300 hover:opacity-80 relative"
+                                style={{
+                                  width: `${percentage}%`,
+                                  backgroundColor: TOPIC_COLORS[index % TOPIC_COLORS.length],
+                                }}
+                              >
+                                {/* Show count inside bar if there's enough space */}
+                                {percentage > 15 && (
+                                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-white">
+                                    {topic.count.toLocaleString()}
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="w-20 text-right flex flex-col items-end">
+                            {percentage <= 15 && (
+                              <span className="text-sm font-bold text-purple-400">
+                                {topic.count.toLocaleString()}
+                              </span>
+                            )}
+                            <span className="text-xs text-gray-500">
+                              {(topic.avgConfidence * 100).toFixed(0)}% conf
+                            </span>
                           </div>
                         </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+
+                        {/* Subcategories Bar Chart (collapsible) */}
+                        {isExpanded && topicSubcategories.length > 0 && (
+                          <div className="pl-6 space-y-1.5 bg-[#0a0e17]/30 rounded-lg p-3 ml-2">
+                            {topicSubcategories
+                              .slice()
+                              .sort((a, b) => b.count - a.count)
+                              .map((sub, subIndex) => {
+                                const maxSubCount = Math.max(...topicSubcategories.map(s => s.count));
+                                const subPercentage = (sub.count / maxSubCount) * 100;
+
+                                return (
+                                  <div
+                                    key={sub.name}
+                                    className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-1.5 group"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openDrillDown('topic', sub.name, `${sub.name} Calls`);
+                                    }}
+                                  >
+                                    <div className="w-32 min-w-[8rem]">
+                                      <span className="text-xs text-gray-300 font-medium truncate group-hover:text-purple-300 transition-colors">
+                                        {sub.name}
+                                      </span>
+                                    </div>
+                                    <div className="flex-1 relative">
+                                      <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden">
+                                        <div
+                                          className="h-full rounded-md transition-all duration-300 hover:opacity-80 relative"
+                                          style={{
+                                            width: `${subPercentage}%`,
+                                            backgroundColor: TOPIC_COLORS[(index + subIndex + 1) % TOPIC_COLORS.length],
+                                            opacity: 0.8,
+                                          }}
+                                        >
+                                          {/* Show count inside bar if there's enough space */}
+                                          {subPercentage > 20 && (
+                                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white">
+                                              {sub.count.toLocaleString()}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="w-16 text-right">
+                                      {subPercentage <= 20 && (
+                                        <span className="text-xs font-semibold text-purple-300">
+                                          {sub.count.toLocaleString()}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -1135,7 +1198,7 @@ export default function TranscriptsAnalysis() {
           <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Hourly Distribution */}
             <div className="bg-gray-800/30 rounded-xl p-4">
-              <h4 className="text-sm font-medium text-gray-400 mb-4">Calls by Hour (UTC)</h4>
+              <h4 className="text-sm font-medium text-gray-400 mb-4">Calls by Hour (UTC) <span className="text-blue-400">Click bars to drill down</span></h4>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={hourlyData}>
                   <XAxis dataKey="hour" stroke="#6b7280" fontSize={10} />
@@ -1147,14 +1210,23 @@ export default function TranscriptsAnalysis() {
                       borderRadius: '8px',
                     }}
                   />
-                  <Bar dataKey="count" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="count"
+                    fill="#8b5cf6"
+                    radius={[4, 4, 0, 0]}
+                    onClick={(data) => {
+                      const hour = data.hour.split(':')[0];
+                      openDrillDown('all', '', `Calls at ${data.hour}`);
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
             {/* Day of Week */}
             <div className="bg-gray-800/30 rounded-xl p-4">
-              <h4 className="text-sm font-medium text-gray-400 mb-4">Calls by Day of Week</h4>
+              <h4 className="text-sm font-medium text-gray-400 mb-4">Calls by Day of Week <span className="text-blue-400">Click bars to drill down</span></h4>
               <div className="space-y-3">
                 {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => {
                   const count = stats.byDayOfWeek[day] || 0;
@@ -1162,7 +1234,11 @@ export default function TranscriptsAnalysis() {
                   const percentage = (count / maxCount) * 100;
 
                   return (
-                    <div key={day} className="flex items-center gap-3">
+                    <div
+                      key={day}
+                      className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] rounded-lg p-1 transition-colors"
+                      onClick={() => openDrillDown('all', '', `Calls on ${day}`)}
+                    >
                       <span className="w-8 text-xs text-gray-400">{day}</span>
                       <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">
                         <div

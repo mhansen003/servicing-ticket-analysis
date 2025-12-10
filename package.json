@@ -13,6 +13,7 @@
   "dependencies": {
     "@neondatabase/serverless": "^1.0.2",
     "@prisma/adapter-neon": "^7.1.0",
+    "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
     "@tanstack/react-table": "^8.21.3",
     "@vercel/postgres": "^0.10.0",

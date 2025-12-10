@@ -13,10 +13,12 @@
  */
 
 import dotenv from 'dotenv';
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 const { Pool } = pg;
 
-// Load environment variables FIRST
+// Load .env.local explicitly (dotenv/config only loads .env by default)
 dotenv.config({ path: '.env.local' });
 
 // Verify DATABASE_URL is loaded
@@ -26,25 +28,29 @@ if (!process.env.DATABASE_URL) {
   process.exit(1);
 }
 
-// For database access, we'll use pg Pool directly
+// Create PostgreSQL pool and adapter for Prisma v7 (using pg driver for Node.js environment)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false }
 });
+const adapter = new PrismaPg(pool);
+
+// Initialize Prisma Client with adapter
+const prisma = new PrismaClient({ adapter });
 
 // Configuration
 const CONFIG = {
   // API Configuration
   API_URL: 'https://openrouter.ai/api/v1/chat/completions',
   API_KEY: process.env.OPENROUTER_API_KEY,
-  MODEL: 'anthropic/claude-3.5-sonnet',
+  MODEL: 'mistralai/ministral-3b-2512', // Free model to test if 403 is model-specific
 
   // Batch Processing
-  BATCH_SIZE: 100,        // Process 100 at a time
-  MAX_CONCURRENT: 20,     // 20 parallel API calls for speed!
+  BATCH_SIZE: 30,         // Process 30 at a time (minimal batches)
+  MAX_CONCURRENT: 3,      // 3 parallel API calls (very conservative to avoid 403)
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 2000,
-  TEST_LIMIT: 1000,       // Only process first 1000 for testing
+  TEST_LIMIT: null,       // Set to null to process ALL transcripts
 
   // Analysis Parameters
   LAST_N_CHARS: 1500, // Analyze last 1500 chars for sentiment
