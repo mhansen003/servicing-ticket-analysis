@@ -287,7 +287,7 @@ export default function TranscriptsAnalysis() {
         .map((t: any) => ({
           name: t.name,
           value: t.count,
-          topic: t.name.toLowerCase().replace(/\s+/g, '_'), // Convert to snake_case for filtering
+          topic: t.name, // Keep original case for filtering (e.g., "Insurance" not "insurance")
         }));
     }
 
