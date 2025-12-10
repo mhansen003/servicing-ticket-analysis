@@ -359,9 +359,15 @@ Return ONLY the JSON object, no other text.`;
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content || '{}';
 
-    // Parse the JSON response
+    // Parse the JSON response with robust error handling
     try {
       let jsonStr = content.trim();
+
+      // Remove any preamble text before JSON
+      const jsonStart = jsonStr.indexOf('{');
+      if (jsonStart > 0) {
+        jsonStr = jsonStr.substring(jsonStart);
+      }
 
       // Remove markdown code blocks if present
       if (jsonStr.startsWith('```json')) {
@@ -374,7 +380,13 @@ Return ONLY the JSON object, no other text.`;
         jsonStr = jsonStr.slice(0, -3);
       }
 
-      // Extract JSON object from response
+      // Remove any trailing text after JSON
+      const jsonEnd = jsonStr.lastIndexOf('}');
+      if (jsonEnd > 0 && jsonEnd < jsonStr.length - 1) {
+        jsonStr = jsonStr.substring(0, jsonEnd + 1);
+      }
+
+      // Extract JSON object from response (find outermost braces)
       const objectMatch = jsonStr.match(/\{[\s\S]*\}/);
       if (objectMatch) {
         jsonStr = objectMatch[0];
@@ -382,13 +394,21 @@ Return ONLY the JSON object, no other text.`;
 
       jsonStr = jsonStr.trim();
 
+      // Attempt to parse
       const analysis = JSON.parse(jsonStr) as CallAnalysis;
+
+      // Validate that we have the required structure
+      if (!analysis.overallScores || !analysis.executiveSummary) {
+        throw new Error('Invalid analysis structure');
+      }
+
       return NextResponse.json({ analysis });
     } catch (parseError) {
-      console.error('Failed to parse call analysis response:', content);
+      console.error('Failed to parse call analysis response. Error:', parseError);
+      console.error('Raw content:', content.substring(0, 500)); // Log first 500 chars
       return NextResponse.json({
-        error: 'Failed to parse analysis',
-        rawContent: content
+        error: 'Failed to parse analysis - AI returned invalid format. Please try again.',
+        details: parseError instanceof Error ? parseError.message : 'Unknown error'
       }, { status: 500 });
     }
   } catch (error) {
