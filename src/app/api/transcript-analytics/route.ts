@@ -401,10 +401,13 @@ export async function GET(request: NextRequest) {
       } else if (fromDate || toDate) {
         transcriptWhere.call_start = {};
         if (fromDate) {
-          transcriptWhere.call_start.gte = new Date(fromDate + 'T00:00:00');
+          transcriptWhere.call_start.gte = new Date(fromDate);
         }
         if (toDate) {
-          transcriptWhere.call_start.lte = new Date(toDate + 'T23:59:59');
+          // Use lt with next day to ensure we catch all records up to midnight
+          const endDate = new Date(toDate);
+          endDate.setDate(endDate.getDate() + 1);
+          transcriptWhere.call_start.lt = endDate;
         }
       }
 
@@ -454,21 +457,99 @@ export async function GET(request: NextRequest) {
       if (search && search.trim()) {
         const searchTerm = search.trim().toLowerCase();
 
-        // Use raw SQL to search within messages JSON and regular fields
-        const rawTranscripts = await prisma.$queryRaw<any[]>`
-          SELECT t.*
-          FROM transcripts t
-          WHERE (
-            LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
-            OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
-            OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
-            OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
-            OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
-          )
-          ORDER BY t.call_start DESC NULLS LAST
-          LIMIT ${limit}
-          OFFSET ${offset}
-        `;
+        // Build date filter for search query
+        let rawTranscripts;
+        if (date) {
+          const startDate = new Date(date);
+          const endDate = new Date(date);
+          endDate.setDate(endDate.getDate() + 1);
+          rawTranscripts = await prisma.$queryRaw<any[]>`
+            SELECT t.*
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+            AND t.call_start < ${endDate}::timestamp
+            ORDER BY t.call_start DESC NULLS LAST
+            LIMIT ${limit}
+            OFFSET ${offset}
+          `;
+        } else if (fromDate && toDate) {
+          const startDate = new Date(fromDate);
+          const endDate = new Date(toDate);
+          endDate.setDate(endDate.getDate() + 1);
+          rawTranscripts = await prisma.$queryRaw<any[]>`
+            SELECT t.*
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+            AND t.call_start < ${endDate}::timestamp
+            ORDER BY t.call_start DESC NULLS LAST
+            LIMIT ${limit}
+            OFFSET ${offset}
+          `;
+        } else if (fromDate) {
+          const startDate = new Date(fromDate);
+          rawTranscripts = await prisma.$queryRaw<any[]>`
+            SELECT t.*
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+            ORDER BY t.call_start DESC NULLS LAST
+            LIMIT ${limit}
+            OFFSET ${offset}
+          `;
+        } else if (toDate) {
+          const endDate = new Date(toDate);
+          endDate.setDate(endDate.getDate() + 1);
+          rawTranscripts = await prisma.$queryRaw<any[]>`
+            SELECT t.*
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start < ${endDate}::timestamp
+            ORDER BY t.call_start DESC NULLS LAST
+            LIMIT ${limit}
+            OFFSET ${offset}
+          `;
+        } else {
+          rawTranscripts = await prisma.$queryRaw<any[]>`
+            SELECT t.*
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            ORDER BY t.call_start DESC NULLS LAST
+            LIMIT ${limit}
+            OFFSET ${offset}
+          `;
+        }
 
         // Fetch TranscriptAnalysis for these transcripts
         const vendorCallKeys = rawTranscripts.map(t => t.vendor_call_key);
@@ -497,6 +578,99 @@ export async function GET(request: NextRequest) {
           include: {
             TranscriptAnalysis: true,
           },
+        });
+      }
+
+      // Get total count for pagination (using same filters)
+      let totalCount: number;
+      if (search && search.trim()) {
+        // For search queries, we need to count matching records
+        const searchTerm = search.trim().toLowerCase();
+        if (date) {
+          const startDate = new Date(date);
+          const endDate = new Date(date);
+          endDate.setDate(endDate.getDate() + 1);
+          const result = await prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) as count
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+            AND t.call_start < ${endDate}::timestamp
+          `;
+          totalCount = Number(result[0].count);
+        } else if (fromDate && toDate) {
+          const startDate = new Date(fromDate);
+          const endDate = new Date(toDate);
+          endDate.setDate(endDate.getDate() + 1);
+          const result = await prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) as count
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+            AND t.call_start < ${endDate}::timestamp
+          `;
+          totalCount = Number(result[0].count);
+        } else if (fromDate) {
+          const startDate = new Date(fromDate);
+          const result = await prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) as count
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start >= ${startDate}::timestamp
+          `;
+          totalCount = Number(result[0].count);
+        } else if (toDate) {
+          const endDate = new Date(toDate);
+          endDate.setDate(endDate.getDate() + 1);
+          const result = await prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) as count
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+            AND t.call_start < ${endDate}::timestamp
+          `;
+          totalCount = Number(result[0].count);
+        } else {
+          const result = await prisma.$queryRaw<[{ count: bigint }]>`
+            SELECT COUNT(*) as count
+            FROM transcripts t
+            WHERE (
+              LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+              OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+            )
+          `;
+          totalCount = Number(result[0].count);
+        }
+      } else {
+        // For regular queries, use Prisma count with same filters
+        totalCount = await prisma.transcripts.count({
+          where: transcriptWhere,
         });
       }
 
@@ -576,10 +750,10 @@ export async function GET(request: NextRequest) {
           };
         }),
         pagination: {
-          total: filtered.length,
+          total: totalCount,
           limit,
           offset,
-          hasMore: filtered.length === limit,
+          hasMore: offset + filtered.length < totalCount,
         },
       });
     }

@@ -242,6 +242,7 @@ export function TranscriptModal({
 }: TranscriptModalProps) {
   const [transcripts, setTranscripts] = useState<TranscriptRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTranscript, setSelectedTranscript] = useState<TranscriptRecord | null>(null);
   const [visibleCount, setVisibleCount] = useState(50);
@@ -263,6 +264,7 @@ export function TranscriptModal({
 
     async function loadTranscripts() {
       setLoading(true);
+      setLoadError(null); // Clear any previous errors
       try {
         // Try to load from new API endpoint first
         // Use reasonable limit to avoid exceeding database response size (67MB limit)
@@ -309,18 +311,24 @@ export function TranscriptModal({
         }
 
         const apiResponse = await fetch(`/api/transcript-analytics?type=transcripts&${apiParams}`);
-        if (apiResponse.ok) {
-          const apiData = await apiResponse.json();
-          if (apiData.success && apiData.data) {
-            console.log('✨ Loaded transcripts from API:', apiData.data.length);
-            setTranscripts(apiData.data);
-            setLoading(false);
-            return;
-          }
+        if (!apiResponse.ok) {
+          const errorText = await apiResponse.text();
+          console.error('API returned error:', apiResponse.status, errorText);
+          setLoadError(`Failed to load transcripts: ${apiResponse.status} ${apiResponse.statusText}`);
+          return;
         }
-        console.error('Failed to load transcripts from API');
+
+        const apiData = await apiResponse.json();
+        if (apiData.success && apiData.data) {
+          console.log('✨ Loaded transcripts from API:', apiData.data.length);
+          setTranscripts(apiData.data);
+        } else {
+          console.error('API returned unexpected format:', apiData);
+          setLoadError('Failed to load transcripts: Invalid response format');
+        }
       } catch (error) {
         console.error('Failed to load transcripts:', error);
+        setLoadError(`Failed to load transcripts: ${error instanceof Error ? error.message : 'Unknown error'}`);
       } finally {
         setLoading(false);
       }
@@ -771,7 +779,19 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
             onScroll={handleScroll}
             className={`${selectedTranscript ? 'w-1/3 border-r border-white/[0.08]' : 'w-full'} overflow-y-auto`}
           >
-            {loading ? (
+            {loadError ? (
+              <div className="flex flex-col items-center justify-center h-48 text-red-400">
+                <X className="h-8 w-8 mb-2" />
+                <p className="font-semibold">Error Loading Transcripts</p>
+                <p className="text-sm text-gray-400 mt-1">{loadError}</p>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-sm text-white transition-colors"
+                >
+                  Reload Page
+                </button>
+              </div>
+            ) : loading ? (
               <div className="flex items-center justify-center h-48">
                 <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-500" />
               </div>
