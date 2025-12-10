@@ -394,7 +394,7 @@ export default function TranscriptsAnalysis() {
   };
 
   // Drill-down handlers
-  const openDrillDown = (filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek', filterValue: string, title: string) => {
+  const openDrillDown = (filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek', filterValue: string, title: string) => {
     setModalFilterType(filterType);
     setModalFilterValue(filterValue);
     setModalTitle(title);
