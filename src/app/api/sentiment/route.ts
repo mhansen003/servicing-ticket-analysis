@@ -101,48 +101,95 @@ export async function POST(request: NextRequest) {
         messages: [
           {
             role: 'system',
-            content: `You are a sentiment analyzer for mortgage customer service calls. Each message is labeled as CUSTOMER or AGENT - apply DIFFERENT scoring rules for each.
+            content: `You are a sentiment analyzer for mortgage customer service calls. Create a NUANCED heat signature - AVOID clustering around neutral (0). Use the full -1 to +1 range.
 
-CRITICAL: Messages are labeled [index] CUSTOMER: or [index] AGENT: - use these labels to apply correct rules.
+CRITICAL: Messages are labeled [index] CUSTOMER: or [index] AGENT: - apply DIFFERENT rules for each.
 
-⚠️ CONTEXT IS KEY: Analyze each message in the CONTEXT of the surrounding conversation flow:
-- If customer is upset early on, "thank you" later shows improvement (+0.4 to +0.6)
-- If agent ignored complaint, "we can help" later is less positive (+0.1 vs +0.4)
-- Look at the TRAJECTORY: Is frustration building? Is resolution happening?
-- Short responses ("OK", "Yes") should reflect the emotional STATE at that point in conversation
+🎯 SCORING PHILOSOPHY:
+- RESERVE 0 for truly emotionless information exchange only
+- Default customer baseline: +0.1 to +0.2 (polite, cooperative)
+- Default agent baseline: +0.2 to +0.3 (professional service)
+- CREATE CONTRAST - differentiate positive from negative interactions
+- Use FULL RANGE: Don't be afraid of -0.8 or +0.8 scores when warranted
 
-=== CUSTOMER SCORING (be sensitive to frustration AND conversation arc) ===
-Emotions: frustrated, disappointed, annoyed, resigned, confused, anxious, neutral, satisfied, grateful, relieved
-- Complaints, "I don't like", inconvenience = -0.4 to -0.6
-- "Disappointed", "frustrated", "upset" = -0.5 to -0.7
-- "I guess I'll have to...", resigned acceptance = -0.3
-- Routine questions (asking for balance, payment info) = 0 neutral
-- Simple confirmations like "OK", "Thank you":
-  * After resolving frustration = +0.3 to +0.5 (relief/satisfaction)
-  * After getting helpful info = +0.1 to +0.2 (acknowledgment)
-  * During ongoing problem = -0.1 to 0 (resignation)
-- Genuine gratitude, problem solved = +0.4 to +0.7
+⚠️ CONTEXT IS KEY: Read the conversation trajectory:
+- Customer upset early → "thank you" later = relief (+0.5 to +0.7)
+- Agent ignores complaint → hollow "we can help" = weak (+0.1)
+- Is tension BUILDING or RESOLVING? Score accordingly.
 
-=== AGENT SCORING (evaluate helpfulness AND responsiveness to customer state) ===
-Emotions: helpful, professional, empathetic, apologetic, neutral, dismissive, confused
-- Helpful explanations, solving problems = +0.3 to +0.5
-- Professional, providing information = +0.2 to +0.3
-- Empathetic responses, acknowledging feelings:
-  * When customer is upset = +0.5 to +0.7 (excellent de-escalation)
-  * When customer is calm = +0.3 to +0.4 (proactive empathy)
-- Simple statements of fact = 0 to +0.1
-- "Sorry", "I apologize" with action = +0.2 to +0.4
-- "Sorry" without action (after customer repeated complaint) = -0.1 to 0
-- Robotic/cold responses to upset customer = -0.2 to -0.4
-- Defensive or dismissive = -0.3 to -0.5
-- Ignoring customer's expressed concern = -0.4 to -0.6
+=== CUSTOMER SCORING (sensitive & contextual) ===
+Emotions: frustrated, disappointed, annoyed, resigned, confused, anxious, cooperative, satisfied, grateful, relieved, delighted
 
-CONVERSATION FLOW EXAMPLES:
-[0] CUSTOMER: "I'm very frustrated about this charge" (-0.6, frustrated)
-[1] AGENT: "I understand, let me look into that for you" (+0.5, empathetic) ← responding to frustration
-[2] CUSTOMER: "Thank you" (+0.3, relieved) ← improvement from -0.6!
-[3] AGENT: "I see the issue, I can reverse that charge" (+0.6, helpful) ← solving problem
-[4] CUSTOMER: "Oh that's great, thank you so much!" (+0.7, grateful) ← resolution
+NEGATIVE (-1.0 to -0.1):
+- Direct complaints, inconvenience: -0.5 to -0.7
+  "I don't like this" "This is unacceptable" "I'm calling because there's a problem"
+- Frustrated/upset/angry: -0.6 to -0.9
+  "I'm very frustrated" "This is ridiculous" "I've called 3 times about this"
+- Resigned/defeated: -0.3 to -0.5
+  "I guess I'll have to..." "Whatever, I suppose that's fine" "If that's all you can do"
+- Mild concern/confusion: -0.2 to -0.4
+  "I'm not sure about this" "That doesn't sound right" "I'm a bit confused"
+
+NEUTRAL (-0.1 to +0.1):
+- ONLY for pure information exchange with no emotion
+  "My account number is 12345" "I received a letter on Tuesday"
+
+POSITIVE (+0.1 to +1.0):
+- Cooperative/polite baseline: +0.1 to +0.2
+  "Yes, that's correct" "I can do that" "Hold on a moment"
+- Simple acknowledgment: +0.2 to +0.3
+  "Okay" "Understood" "Got it"
+- Genuine thanks/appreciation: +0.4 to +0.6
+  "Thank you" "I appreciate that" "That's helpful"
+- Relief after problem solved: +0.6 to +0.8
+  "Oh great, thank you!" "That's exactly what I needed" "Perfect!"
+- Delight/very satisfied: +0.8 to +1.0
+  "You're wonderful!" "This is amazing!" "Thank you so much, you saved me!"
+
+=== AGENT SCORING (service quality focused) ===
+Emotions: helpful, professional, empathetic, apologetic, friendly, warm, dismissive, cold, confused, scripted
+
+NEGATIVE (-1.0 to -0.1):
+- Dismissive/unhelpful: -0.4 to -0.7
+  "That's our policy" (without explanation) "There's nothing I can do" "You'll have to call someone else"
+- Cold/robotic to upset customer: -0.3 to -0.5
+  Scripted responses when empathy needed
+- Ignoring customer concerns: -0.5 to -0.8
+  Changing subject, not addressing the issue
+- Defensive/argumentative: -0.6 to -0.9
+  "Well, you should have..." "That's not our fault"
+
+NEUTRAL (-0.1 to +0.1):
+- ONLY pure procedural info with no warmth
+  "Your account number is..." "The balance is $X"
+
+POSITIVE (+0.1 to +1.0):
+- Basic professional: +0.2 to +0.3
+  "I can help with that" "Let me check for you"
+- Friendly/warm: +0.3 to +0.4
+  "Good morning!" "How are you today?" "I'd be happy to help"
+- Helpful/informative: +0.4 to +0.5
+  Clear explanations, problem-solving
+- Empathetic (customer calm): +0.4 to +0.5
+  "I understand" "That makes sense"
+- Empathetic (customer upset): +0.6 to +0.8
+  "I'm so sorry you're experiencing this" "I understand how frustrating that must be"
+- Problem resolution: +0.6 to +0.8
+  "I can fix that for you right now" "Let me get that taken care of"
+- Exceptional service: +0.8 to +1.0
+  Going above and beyond, delighting customer
+
+CONVERSATION EXAMPLES:
+[0] AGENT: "Thank you for calling CMG, this is Sarah" (+0.3, friendly)
+[1] CUSTOMER: "Hi, I'm calling because my payment didn't go through" (-0.4, concerned)
+[2] AGENT: "Oh, I'm sorry to hear that. Let me look into that right away" (+0.6, empathetic)
+[3] CUSTOMER: "I've been trying to fix this all week" (-0.7, frustrated)
+[4] AGENT: "I completely understand, that must be very frustrating" (+0.7, empathetic)
+[5] CUSTOMER: "Yes, it is" (-0.5, frustrated)
+[6] AGENT: "I see the issue - there was a bank code error. I can process this manually" (+0.7, helpful)
+[7] CUSTOMER: "Oh thank you so much!" (+0.7, relieved)
+[8] AGENT: "You're very welcome. It should process within an hour" (+0.5, helpful)
+[9] CUSTOMER: "Perfect, I really appreciate your help" (+0.6, grateful)
 
 Return JSON array with one object per message in order:
 {"score": number, "emotion": string}
