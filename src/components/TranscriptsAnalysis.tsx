@@ -1038,7 +1038,7 @@ export default function TranscriptsAnalysis() {
                   radius={[0, 4, 4, 0]}
                   style={{ cursor: 'pointer' }}
                 >
-                  {topicChartData.map((entry: any, index) => (
+                  {topicChartData.map((entry: any, index: number) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={TOPIC_COLORS[index % TOPIC_COLORS.length]}
