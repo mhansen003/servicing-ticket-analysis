@@ -661,7 +661,10 @@ export default function TranscriptsAnalysis() {
                 onClick={() => {
                   const newMonth = new Date(calendarMonth);
                   newMonth.setMonth(newMonth.getMonth() + 1);
-                  if (newMonth <= new Date()) {
+                  // Compare first day of next month to first day of current month
+                  const nextMonthStart = new Date(newMonth.getFullYear(), newMonth.getMonth(), 1);
+                  const todayMonthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+                  if (nextMonthStart <= todayMonthStart) {
                     setCalendarMonth(newMonth);
                   }
                 }}
