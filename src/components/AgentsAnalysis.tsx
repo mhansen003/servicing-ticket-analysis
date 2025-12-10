@@ -118,6 +118,8 @@ export default function AgentsAnalysis() {
   // Modal state
   const [transcriptModalOpen, setTranscriptModalOpen] = useState(false);
   const [transcriptFilterAgent, setTranscriptFilterAgent] = useState('');
+  const [transcriptFilterType, setTranscriptFilterType] = useState<'agent' | 'agentSentiment'>('agent');
+  const [transcriptFilterValue, setTranscriptFilterValue] = useState('');
   const [gradingModalOpen, setGradingModalOpen] = useState(false);
 
   // Load rankings data
@@ -206,7 +208,8 @@ export default function AgentsAnalysis() {
 
   // Handle viewing agent's transcripts
   const handleViewTranscripts = (agentName: string) => {
-    setTranscriptFilterAgent(agentName);
+    setTranscriptFilterType('agent');
+    setTranscriptFilterValue(agentName);
     setTranscriptModalOpen(true);
   };
 
@@ -310,9 +313,9 @@ export default function AgentsAnalysis() {
           <div className="grid grid-cols-3 gap-4">
             <button
               onClick={() => {
-                setTranscriptFilterAgent('');
+                setTranscriptFilterType('agentSentiment');
+                setTranscriptFilterValue('positive');
                 setTranscriptModalOpen(true);
-                // Will need to add sentiment filter to modal
               }}
               className="p-4 bg-green-500/10 rounded-lg border border-green-500/30 hover:bg-green-500/20 transition-all cursor-pointer text-left group"
             >
@@ -327,9 +330,9 @@ export default function AgentsAnalysis() {
             </button>
             <button
               onClick={() => {
-                setTranscriptFilterAgent('');
+                setTranscriptFilterType('agentSentiment');
+                setTranscriptFilterValue('neutral');
                 setTranscriptModalOpen(true);
-                // Will need to add sentiment filter to modal
               }}
               className="p-4 bg-gray-500/10 rounded-lg border border-gray-500/30 hover:bg-gray-500/20 transition-all cursor-pointer text-left group"
             >
@@ -344,9 +347,9 @@ export default function AgentsAnalysis() {
             </button>
             <button
               onClick={() => {
-                setTranscriptFilterAgent('');
+                setTranscriptFilterType('agentSentiment');
+                setTranscriptFilterValue('negative');
                 setTranscriptModalOpen(true);
-                // Will need to add sentiment filter to modal
               }}
               className="p-4 bg-red-500/10 rounded-lg border border-red-500/30 hover:bg-red-500/20 transition-all cursor-pointer text-left group"
             >
@@ -491,13 +494,17 @@ export default function AgentsAnalysis() {
         )}
       </div>
 
-      {/* Transcript Modal for viewing agent's calls */}
+      {/* Transcript Modal for viewing filtered calls */}
       <TranscriptModal
         isOpen={transcriptModalOpen}
         onClose={() => setTranscriptModalOpen(false)}
-        title={`${transcriptFilterAgent}'s Calls`}
-        filterType="agent"
-        filterValue={transcriptFilterAgent}
+        title={
+          transcriptFilterType === 'agentSentiment'
+            ? `${transcriptFilterValue.charAt(0).toUpperCase() + transcriptFilterValue.slice(1)} Agent Performance Calls`
+            : `${transcriptFilterValue}'s Calls`
+        }
+        filterType={transcriptFilterType}
+        filterValue={transcriptFilterValue}
       />
 
       {/* Agent Grading Explanation Modal */}
