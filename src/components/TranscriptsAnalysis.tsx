@@ -1292,29 +1292,29 @@ export default function TranscriptsAnalysis() {
 
                                 return (
                                   <div
-                                    className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-1.5 group"
+                                    className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.05] transition-colors rounded-lg p-1.5 group border border-orange-500/30 bg-orange-500/5"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       openDrillDown('topicNoSubcategory', topic.name, `${topic.name} - No Subcategory`);
                                     }}
                                   >
                                     <div className="w-32 min-w-[8rem]">
-                                      <span className="text-xs text-gray-400 italic font-medium truncate group-hover:text-purple-300 transition-colors">
-                                        No Subcategory
+                                      <span className="text-xs text-orange-400 font-semibold truncate group-hover:text-orange-300 transition-colors">
+                                        ⚠ No Subcategory
                                       </span>
                                     </div>
                                     <div className="flex-1 relative">
-                                      <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden">
+                                      <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden border border-orange-500/20">
                                         <div
-                                          className="h-full rounded-md transition-all duration-300 hover:opacity-80 relative"
+                                          className="h-full rounded-md transition-all duration-300 hover:opacity-90 relative"
                                           style={{
                                             width: `${uncatPercentage}%`,
-                                            backgroundColor: '#6b7280',
-                                            opacity: 0.6,
+                                            background: 'linear-gradient(90deg, #f97316 0%, #fb923c 100%)',
+                                            opacity: 0.85,
                                           }}
                                         >
                                           {uncatPercentage > 20 && (
-                                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white">
+                                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-white drop-shadow-md">
                                               {uncategorizedForTopic.count.toLocaleString()}
                                             </span>
                                           )}
@@ -1323,7 +1323,7 @@ export default function TranscriptsAnalysis() {
                                     </div>
                                     <div className="w-16 text-right">
                                       {uncatPercentage <= 20 && (
-                                        <span className="text-xs font-semibold text-gray-400">
+                                        <span className="text-xs font-bold text-orange-400">
                                           {uncategorizedForTopic.count.toLocaleString()}
                                         </span>
                                       )}
