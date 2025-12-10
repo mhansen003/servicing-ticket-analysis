@@ -730,7 +730,19 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
 
   const formatDate = (dateStr: string) => {
     try {
-      return new Date(dateStr).toLocaleString();
+      const date = new Date(dateStr);
+      // Format in UTC to match server sorting
+      const utcStr = date.toLocaleString('en-US', {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      return `${utcStr} UTC`;
     } catch {
       return dateStr;
     }
