@@ -241,8 +241,6 @@ export function TranscriptModal({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTranscript, setSelectedTranscript] = useState<TranscriptRecord | null>(null);
   const [visibleCount, setVisibleCount] = useState(50);
-  const [conversationCache, setConversationCache] = useState<Record<string, ConversationMessage[]>>({});
-  const [loadingConversation, setLoadingConversation] = useState(false);
   const [messageSentiments, setMessageSentiments] = useState<MessageSentiment[]>([]);
   const [analyzingSentiment, setAnalyzingSentiment] = useState(false);
   const [sentimentCache, setSentimentCache] = useState<Record<string, MessageSentiment[]>>({});
@@ -300,27 +298,17 @@ export function TranscriptModal({
           }
         }
 
-        try {
-          const apiResponse = await fetch(`/api/transcript-analytics?type=transcripts&${apiParams}`);
-          if (apiResponse.ok) {
-            const apiData = await apiResponse.json();
-            if (apiData.success && apiData.data) {
-              console.log('✨ Loaded transcripts from API:', apiData.data.length);
-              setTranscripts(apiData.data);
-              setLoading(false);
-              return;
-            }
+        const apiResponse = await fetch(`/api/transcript-analytics?type=transcripts&${apiParams}`);
+        if (apiResponse.ok) {
+          const apiData = await apiResponse.json();
+          if (apiData.success && apiData.data) {
+            console.log('✨ Loaded transcripts from API:', apiData.data.length);
+            setTranscripts(apiData.data);
+            setLoading(false);
+            return;
           }
-        } catch (apiErr) {
-          console.log('API not available, falling back to JSON file');
         }
-
-        // Fallback to old JSON file
-        const response = await fetch('/data/transcript-analysis.json');
-        if (response.ok) {
-          const data = await response.json();
-          setTranscripts(data);
-        }
+        console.error('Failed to load transcripts from API');
       } catch (error) {
         console.error('Failed to load transcripts:', error);
       } finally {
@@ -331,57 +319,8 @@ export function TranscriptModal({
     loadTranscripts();
   }, [isOpen, filterType, filterValue]);
 
-  // Load conversation on-demand when a transcript is selected
-  useEffect(() => {
-    if (!selectedTranscript || selectedTranscript.conversation?.length > 0) return;
-
-    // Check if already cached
-    if (conversationCache[selectedTranscript.id]) {
-      setSelectedTranscript({
-        ...selectedTranscript,
-        conversation: conversationCache[selectedTranscript.id],
-      });
-      return;
-    }
-
-    async function loadConversation() {
-      setLoadingConversation(true);
-      try {
-        // Load conversation index to find which chunk contains this ID
-        const indexRes = await fetch('/data/transcript-conversations-index.json');
-        if (!indexRes.ok) return;
-        const index = await indexRes.json();
-
-        // Load all chunks and search for the conversation
-        for (let i = 0; i < index.numChunks; i++) {
-          const chunkRes = await fetch(`/data/transcript-conversations-${i}.json`);
-          if (!chunkRes.ok) continue;
-          const chunkData = await chunkRes.json();
-
-          const transcriptId = selectedTranscript?.id;
-          if (transcriptId && chunkData[transcriptId]) {
-            const conversation = chunkData[transcriptId];
-            // Cache for future use
-            setConversationCache(prev => ({
-              ...prev,
-              [transcriptId]: conversation,
-            }));
-            setSelectedTranscript(prev => prev ? {
-              ...prev,
-              conversation,
-            } : null);
-            break;
-          }
-        }
-      } catch (error) {
-        console.error('Failed to load conversation:', error);
-      } finally {
-        setLoadingConversation(false);
-      }
-    }
-
-    loadConversation();
-  }, [selectedTranscript, conversationCache]);
+  // Conversations are now loaded directly from the API with the transcript data
+  // No need for separate conversation loading
 
   // Analyze sentiment when conversation is loaded
   useEffect(() => {
@@ -844,10 +783,11 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                     <button
                       key={transcript.id}
                       onClick={() => {
-                        // Clear old transcript conversation immediately while new one loads
+                        // Use the conversation from API if available, otherwise set empty to trigger loading
                         setSelectedTranscript({
                           ...transcript,
-                          conversation: [], // Clear conversation to show loading state
+                          // Keep conversation if it already exists in the transcript data from API
+                          conversation: transcript.conversation || [],
                         });
                         setMessageSentiments([]);
                         setCallAnalysis(null);
@@ -1106,12 +1046,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                     </div>
                   </div>
                   <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3">
-                    {loadingConversation ? (
-                      <div className="flex items-center justify-center h-48">
-                        <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-500" />
-                        <span className="ml-3 text-gray-400">Loading conversation...</span>
-                      </div>
-                    ) : !selectedTranscript.conversation || selectedTranscript.conversation.length === 0 ? (
+                    {!selectedTranscript.conversation || selectedTranscript.conversation.length === 0 ? (
                       <div className="text-center text-gray-500 py-8">
                         No conversation data available
                       </div>

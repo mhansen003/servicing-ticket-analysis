@@ -468,17 +468,17 @@ export async function GET(request: NextRequest) {
             id: t.id,
             vendorCallKey: t.vendor_call_key,
             callStart: t.call_start?.toISOString() || '',
-            callEnd: '', // Not available in database
+            callEnd: t.call_end?.toISOString() || '', // NOW AVAILABLE!
             durationSeconds: t.duration_seconds || 0,
             disposition: t.disposition || '',
-            numberOfHolds: 0, // Not available in database
-            holdDuration: 0, // Not available in database
+            numberOfHolds: t.number_of_holds || 0, // NOW AVAILABLE!
+            holdDuration: t.hold_duration || 0, // NOW AVAILABLE!
             department: t.department || '',
-            status: '', // Not available in database
+            status: t.status || '', // NOW AVAILABLE!
             agentName: analysis?.agentName || t.agent_name || '',
-            agentRole: '', // Not available in database
-            agentProfile: '', // Not available in database
-            agentEmail: '', // Not available in database
+            agentRole: t.agent_role || '', // NOW AVAILABLE!
+            agentProfile: t.agent_profile || '', // NOW AVAILABLE!
+            agentEmail: t.agent_email || '', // NOW AVAILABLE!
             messageCount,
             customerMessages,
             agentMessages,

@@ -10,14 +10,21 @@ datasource db {
 
 // Existing transcripts table (read-only)
 model transcripts {
-  id              String   @id @default(cuid())
-  vendor_call_key String   @unique
-  call_start      DateTime?
+  id               String   @id @default(cuid())
+  vendor_call_key  String   @unique
+  call_start       DateTime?
+  call_end         DateTime?  // NEW: Call end time
   duration_seconds Int?
-  disposition     String?
-  department      String?
-  agent_name      String?
-  messages        Json?
+  disposition      String?
+  number_of_holds  Int?      // NEW: Number of times customer was put on hold
+  hold_duration    Int?      // NEW: Total hold duration in seconds
+  department       String?
+  status           String?   // NEW: Voice call status
+  agent_name       String?
+  agent_role       String?   // NEW: User role name
+  agent_profile    String?   // NEW: Profile name
+  agent_email      String?   // NEW: Agent email
+  messages         Json?
 
   // Relation to analysis
   TranscriptAnalysis TranscriptAnalysis[]
