@@ -401,10 +401,6 @@ export default function TranscriptsAnalysis() {
     setModalOpen(true);
   };
 
-  const handleSentimentClick = (sentiment: string) => {
-    openDrillDown('sentiment', sentiment.toLowerCase(), `${sentiment} Calls`);
-  };
-
   const handleTopicClick = (topic: string, label: string) => {
     openDrillDown('topic', topic, `${label} Calls`);
   };
