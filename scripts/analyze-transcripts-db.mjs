@@ -43,11 +43,11 @@ const CONFIG = {
   // API Configuration
   API_URL: 'https://openrouter.ai/api/v1/chat/completions',
   API_KEY: process.env.OPENROUTER_API_KEY,
-  MODEL: 'mistralai/ministral-3b-2512', // Free model to test if 403 is model-specific
+  MODEL: 'anthropic/claude-3.5-sonnet', // High-quality model with excellent JSON compliance
 
   // Batch Processing
   BATCH_SIZE: 20,         // Process 20 at a time
-  MAX_CONCURRENT: 3,      // 3 parallel API calls (very conservative to avoid 403)
+  MAX_CONCURRENT: 20,     // 20 parallel API calls for faster processing
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 2000,
   TEST_LIMIT: null,       // Set to null to process ALL transcripts

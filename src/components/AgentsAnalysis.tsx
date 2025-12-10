@@ -18,10 +18,25 @@ interface AgentStats {
   department?: string;
   callCount: number;
   avgDuration: number;
+
+  // Agent Performance Metrics (PRIMARY)
+  agentPositiveRate?: number;
+  agentNegativeRate?: number;
+  agentNeutralRate?: number;
+  agentSentimentScore?: number;
+
+  // Customer Sentiment Metrics (SECONDARY)
+  customerPositiveRate?: number;
+  customerNegativeRate?: number;
+  customerNeutralRate?: number;
+  customerSentimentScore?: number;
+
+  // Backwards compatibility
   positiveRate: number;
   negativeRate: number;
   neutralRate: number;
   sentimentScore: number;
+
   performanceTier: 'top' | 'good' | 'average' | 'needs-improvement' | 'critical';
   recentCalls: Array<{
     id: string;
@@ -110,22 +125,40 @@ export default function AgentsAnalysis() {
     async function loadRankings() {
       setLoading(true);
       try {
-        const response = await fetch('/data/agent-rankings.json');
+        // Load agent rankings from database API
+        const response = await fetch('/api/transcript-analytics?type=agents');
         if (response.ok) {
-          const data = await response.json();
-          setRankings(data);
+          const result = await response.json();
+          if (result.success) {
+            setRankings(result.data);
+            console.log('✨ Agent rankings loaded from database:', {
+              totalAgents: result.data.totalAgents,
+              totalCalls: result.data.totalCalls,
+            });
+          }
         }
 
-        // Load deep analysis data if available
+        // Load deep analysis (summary with agent sentiment stats)
         try {
-          const deepRes = await fetch('/data/deep-analysis.json');
+          const deepRes = await fetch('/api/transcript-analytics?type=summary');
           if (deepRes.ok) {
-            const deepData = await deepRes.json();
-            setDeepAnalysis(deepData);
-            console.log('✨ Deep analysis loaded for agents:', deepData.metadata);
+            const result = await deepRes.json();
+            if (result.success) {
+              setDeepAnalysis({
+                metadata: {
+                  analyzedTickets: result.metadata.analyzedTranscripts,
+                },
+                summary: {
+                  agentSentiment: result.summary.agentSentiment,
+                  avgAgentScore: result.summary.avgAgentScore,
+                },
+                tickets: [],
+              });
+              console.log('✨ Deep analysis loaded from database:', result.metadata);
+            }
           }
         } catch (deepErr) {
-          console.log('Deep analysis not yet available for agents');
+          console.log('Deep analysis not yet available:', deepErr);
         }
       } catch (error) {
         console.error('Failed to load rankings:', error);

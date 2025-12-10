@@ -41,7 +41,7 @@ function parseCallLogs(filePath) {
   const headers = lines[0].split('\t');
   const vendorCallKeyIdx = headers.indexOf('VendorCallKey');
   const conversationIdx = headers.indexOf('Conversation');
-  const agentNameIdx = headers.indexOf('AgentName');
+  const agentNameIdx = headers.indexOf('Name'); // Column 17 in TSV file
   const departmentIdx = headers.indexOf('Department');
   const dispositionIdx = headers.indexOf('Disposition');
   const durationIdx = headers.indexOf('DurationInSeconds');

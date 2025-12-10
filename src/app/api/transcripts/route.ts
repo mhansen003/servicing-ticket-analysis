@@ -15,6 +15,7 @@ import prisma from '@/lib/db';
  * - dateFrom: Filter by date range start
  * - dateTo: Filter by date range end
  * - escalated: Filter escalated calls (true/false)
+ * - search: Search text in messages, agent name, department, vendor call key
  */
 
 export async function GET(request: NextRequest) {
@@ -30,9 +31,45 @@ export async function GET(request: NextRequest) {
     const dateFrom = searchParams.get('dateFrom');
     const dateTo = searchParams.get('dateTo');
     const escalated = searchParams.get('escalated');
+    const search = searchParams.get('search');
 
     // Build where clause
     const where: any = {};
+
+    // Handle search across multiple fields including JSON messages
+    if (search && search.trim()) {
+      const searchTerm = search.trim();
+      where.OR = [
+        // Search in agent_name
+        {
+          agent_name: {
+            contains: searchTerm,
+            mode: 'insensitive',
+          },
+        },
+        // Search in department
+        {
+          department: {
+            contains: searchTerm,
+            mode: 'insensitive',
+          },
+        },
+        // Search in vendor_call_key
+        {
+          vendor_call_key: {
+            contains: searchTerm,
+            mode: 'insensitive',
+          },
+        },
+        // Search in disposition
+        {
+          disposition: {
+            contains: searchTerm,
+            mode: 'insensitive',
+          },
+        },
+      ];
+    }
 
     if (category) {
       where.category = category;
@@ -43,19 +80,19 @@ export async function GET(request: NextRequest) {
     }
 
     if (agent) {
-      where.agentName = {
+      where.agent_name = {
         contains: agent,
         mode: 'insensitive',
       };
     }
 
     if (dateFrom || dateTo) {
-      where.callDate = {};
+      where.call_start = {};
       if (dateFrom) {
-        where.callDate.gte = new Date(dateFrom);
+        where.call_start.gte = new Date(dateFrom);
       }
       if (dateTo) {
-        where.callDate.lte = new Date(dateTo);
+        where.call_start.lte = new Date(dateTo);
       }
     }
 
@@ -65,18 +102,57 @@ export async function GET(request: NextRequest) {
       where.wasEscalated = false;
     }
 
-    // Fetch transcripts
-    const [transcripts, total] = await Promise.all([
-      prisma.transcripts.findMany({
-        where,
-        take: limit,
-        skip: offset,
-        orderBy: {
-          call_start: 'desc',
-        },
-      }),
-      prisma.transcripts.count({ where }),
-    ]);
+    // For text search within messages JSON, we need to use raw SQL
+    let transcripts;
+    let total;
+
+    if (search && search.trim()) {
+      const searchTerm = search.trim().toLowerCase();
+
+      // Use raw SQL to search within JSON messages
+      const rawResults = await prisma.$queryRaw<any[]>`
+        SELECT *
+        FROM transcripts
+        WHERE (
+          LOWER(agent_name) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(department) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(disposition) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(messages::text) LIKE ${'%' + searchTerm + '%'}
+        )
+        ORDER BY call_start DESC NULLS LAST
+        LIMIT ${limit}
+        OFFSET ${offset}
+      `;
+
+      const countResult = await prisma.$queryRaw<any[]>`
+        SELECT COUNT(*)::int as count
+        FROM transcripts
+        WHERE (
+          LOWER(agent_name) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(department) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(disposition) LIKE ${'%' + searchTerm + '%'}
+          OR LOWER(messages::text) LIKE ${'%' + searchTerm + '%'}
+        )
+      `;
+
+      transcripts = rawResults;
+      total = countResult[0]?.count || 0;
+    } else {
+      // Use standard Prisma query for non-search requests
+      [transcripts, total] = await Promise.all([
+        prisma.transcripts.findMany({
+          where,
+          take: limit,
+          skip: offset,
+          orderBy: {
+            call_start: 'desc',
+          },
+        }),
+        prisma.transcripts.count({ where }),
+      ]);
+    }
 
     return NextResponse.json({
       success: true,

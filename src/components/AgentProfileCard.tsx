@@ -24,10 +24,25 @@ interface AgentStats {
   department?: string;
   callCount: number;
   avgDuration: number;
+
+  // Agent Performance Metrics (PRIMARY)
+  agentPositiveRate?: number;
+  agentNegativeRate?: number;
+  agentNeutralRate?: number;
+  agentSentimentScore?: number;
+
+  // Customer Sentiment Metrics (SECONDARY)
+  customerPositiveRate?: number;
+  customerNegativeRate?: number;
+  customerNeutralRate?: number;
+  customerSentimentScore?: number;
+
+  // Backwards compatibility
   positiveRate: number;
   negativeRate: number;
   neutralRate: number;
   sentimentScore: number;
+
   performanceTier: 'top' | 'good' | 'average' | 'needs-improvement' | 'critical';
   recentCalls: Array<{
     id: string;
@@ -135,6 +150,19 @@ export function AgentProfileCard({
   const tier = tierConfig[agent.performanceTier];
   const TierIcon = tier.icon;
 
+  // Use new fields if available, fall back to legacy fields
+  const agentPos = agent.agentPositiveRate ?? agent.positiveRate;
+  const agentNeut = agent.agentNeutralRate ?? agent.neutralRate;
+  const agentNeg = agent.agentNegativeRate ?? agent.negativeRate;
+  const agentScore = agent.agentSentimentScore ?? agent.sentimentScore;
+
+  const custPos = agent.customerPositiveRate ?? 0;
+  const custNeut = agent.customerNeutralRate ?? 0;
+  const custNeg = agent.customerNegativeRate ?? 0;
+  const custScore = agent.customerSentimentScore ?? 0;
+
+  const hasCustomerData = agent.customerPositiveRate !== undefined;
+
   if (compact) {
     // Rich tile card for rankings grid
     return (
@@ -162,57 +190,73 @@ export function AgentProfileCard({
         {/* Score + Key Metrics Row */}
         <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="text-center p-2 bg-[#0f1420] rounded-lg">
-            <p className={`text-xl font-bold ${agent.sentimentScore >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-              {agent.sentimentScore > 0 ? '+' : ''}{agent.sentimentScore}
+            <p className={`text-lg font-bold ${tier.textColor}`}>
+              {(agentScore * 100).toFixed(0)}
             </p>
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Score</p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Agent</p>
           </div>
           <div className="text-center p-2 bg-[#0f1420] rounded-lg">
-            <p className="text-xl font-bold text-white">{agent.callCount}</p>
+            <p className="text-lg font-bold text-white">{agent.callCount}</p>
             <p className="text-[10px] text-gray-500 uppercase tracking-wider">Calls</p>
           </div>
           <div className="text-center p-2 bg-[#0f1420] rounded-lg">
-            <p className="text-xl font-bold text-white">{formatDuration(agent.avgDuration).replace(' ', '')}</p>
-            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Avg</p>
+            <p className="text-lg font-bold text-blue-400">{hasCustomerData ? (custScore * 100).toFixed(0) : '-'}</p>
+            <p className="text-[10px] text-gray-500 uppercase tracking-wider">Customer</p>
           </div>
         </div>
 
-        {/* Sentiment Bar */}
+        {/* Agent Performance Bar */}
         <div className="mb-2">
+          <div className="text-[9px] text-gray-500 mb-1 uppercase tracking-wider">Agent Performance</div>
           <div className="flex items-center h-2 rounded-full overflow-hidden bg-[#0f1420]">
             <div
               className="h-full bg-emerald-500 transition-all"
-              style={{ width: `${agent.positiveRate}%` }}
+              style={{ width: `${agentPos}%` }}
             />
             <div
               className="h-full bg-gray-600"
-              style={{ width: `${agent.neutralRate}%` }}
+              style={{ width: `${agentNeut}%` }}
             />
             <div
               className="h-full bg-red-500 transition-all"
-              style={{ width: `${agent.negativeRate}%` }}
+              style={{ width: `${agentNeg}%` }}
             />
+          </div>
+          <div className="flex justify-between text-[9px] mt-1">
+            <span className="text-emerald-400">{agentPos.toFixed(0)}%</span>
+            <span className="text-gray-500">{agentNeut.toFixed(0)}%</span>
+            <span className="text-red-400">{agentNeg.toFixed(0)}%</span>
           </div>
         </div>
 
-        {/* Sentiment Labels */}
-        <div className="flex justify-between text-[10px]">
-          <span className="flex items-center gap-1 text-emerald-400">
-            <ThumbsUp className="h-2.5 w-2.5" />
-            {agent.positiveRate}%
-          </span>
-          <span className="flex items-center gap-1 text-gray-500">
-            <Minus className="h-2.5 w-2.5" />
-            {agent.neutralRate}%
-          </span>
-          <span className="flex items-center gap-1 text-red-400">
-            <ThumbsDown className="h-2.5 w-2.5" />
-            {agent.negativeRate}%
-          </span>
-        </div>
+        {/* Customer Sentiment Bar */}
+        {hasCustomerData && (
+          <div className="mb-2">
+            <div className="text-[9px] text-gray-500 mb-1 uppercase tracking-wider">Customer Sentiment</div>
+            <div className="flex items-center h-2 rounded-full overflow-hidden bg-[#0f1420]">
+              <div
+                className="h-full bg-emerald-500/70 transition-all"
+                style={{ width: `${custPos}%` }}
+              />
+              <div
+                className="h-full bg-gray-600/70"
+                style={{ width: `${custNeut}%` }}
+              />
+              <div
+                className="h-full bg-red-500/70 transition-all"
+                style={{ width: `${custNeg}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-[9px] mt-1">
+              <span className="text-emerald-400/70">{custPos.toFixed(0)}%</span>
+              <span className="text-gray-500/70">{custNeut.toFixed(0)}%</span>
+              <span className="text-red-400/70">{custNeg.toFixed(0)}%</span>
+            </div>
+          </div>
+        )}
 
         {/* Click hint */}
-        <div className="mt-3 pt-2 border-t border-white/[0.06] flex items-center justify-center gap-1 text-[10px] text-gray-600 group-hover:text-blue-400 transition-colors">
+        <div className="mt-2 pt-2 border-t border-white/[0.06] flex items-center justify-center gap-1 text-[10px] text-gray-600 group-hover:text-blue-400 transition-colors">
           <span>Click for full profile</span>
           <ChevronRight className="h-3 w-3" />
         </div>
@@ -273,52 +317,98 @@ export function AgentProfileCard({
         </div>
         <div className="p-3 bg-[#1a1f2e] rounded-xl border border-white/[0.08]">
           <div className="flex items-center gap-2 mb-1">
-            <TrendingUp className="h-4 w-4 text-emerald-400" />
-            <span className="text-xs text-gray-400">Positive Rate</span>
+            <Award className={`h-4 w-4 ${tier.iconColor}`} />
+            <span className="text-xs text-gray-400">Agent Score</span>
           </div>
-          <p className="text-xl font-semibold text-emerald-400">{agent.positiveRate}%</p>
+          <p className={`text-xl font-semibold ${tier.textColor}`}>
+            {(agentScore * 100).toFixed(0)}%
+          </p>
         </div>
         <div className="p-3 bg-[#1a1f2e] rounded-xl border border-white/[0.08]">
           <div className="flex items-center gap-2 mb-1">
-            <Award className="h-4 w-4 text-amber-400" />
-            <span className="text-xs text-gray-400">Sentiment Score</span>
+            <TrendingUp className="h-4 w-4 text-blue-400" />
+            <span className="text-xs text-gray-400">Customer Score</span>
           </div>
-          <p className={`text-xl font-semibold ${agent.sentimentScore >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
-            {agent.sentimentScore > 0 ? '+' : ''}{agent.sentimentScore}
+          <p className="text-xl font-semibold text-blue-400">
+            {hasCustomerData ? (custScore * 100).toFixed(0) + '%' : 'N/A'}
           </p>
         </div>
       </div>
 
-      {/* Sentiment Breakdown */}
-      <div className="p-4 bg-[#1a1f2e] rounded-xl border border-white/[0.08]">
-        <h4 className="text-sm font-medium text-gray-400 mb-3">Call Sentiment Distribution</h4>
-        <div className="flex items-center gap-2 h-4 rounded-full overflow-hidden bg-[#0f1420]">
-          <div
-            className="h-full bg-emerald-500"
-            style={{ width: `${agent.positiveRate}%` }}
-          />
-          <div
-            className="h-full bg-gray-500"
-            style={{ width: `${agent.neutralRate}%` }}
-          />
-          <div
-            className="h-full bg-red-500"
-            style={{ width: `${agent.negativeRate}%` }}
-          />
+      {/* Sentiment Breakdown - Side by Side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Agent Performance */}
+        <div className="p-4 bg-[#1a1f2e] rounded-xl border border-white/[0.08]">
+          <h4 className="text-sm font-medium text-gray-400 mb-3">Agent Performance</h4>
+          <div className="flex items-center gap-2 h-4 rounded-full overflow-hidden bg-[#0f1420]">
+            <div
+              className="h-full bg-emerald-500"
+              style={{ width: `${agentPos}%` }}
+            />
+            <div
+              className="h-full bg-gray-500"
+              style={{ width: `${agentNeut}%` }}
+            />
+            <div
+              className="h-full bg-red-500"
+              style={{ width: `${agentNeg}%` }}
+            />
+          </div>
+          <div className="flex justify-between mt-2 text-xs">
+            <span className="flex items-center gap-1 text-emerald-400">
+              <ThumbsUp className="h-3 w-3" />
+              {agentPos.toFixed(1)}% Positive
+            </span>
+            <span className="flex items-center gap-1 text-gray-400">
+              <Minus className="h-3 w-3" />
+              {agentNeut.toFixed(1)}% Neutral
+            </span>
+            <span className="flex items-center gap-1 text-red-400">
+              <ThumbsDown className="h-3 w-3" />
+              {agentNeg.toFixed(1)}% Negative
+            </span>
+          </div>
         </div>
-        <div className="flex justify-between mt-2 text-xs">
-          <span className="flex items-center gap-1 text-emerald-400">
-            <ThumbsUp className="h-3 w-3" />
-            {agent.positiveRate}% Positive
-          </span>
-          <span className="flex items-center gap-1 text-gray-400">
-            <Minus className="h-3 w-3" />
-            {agent.neutralRate}% Neutral
-          </span>
-          <span className="flex items-center gap-1 text-red-400">
-            <ThumbsDown className="h-3 w-3" />
-            {agent.negativeRate}% Negative
-          </span>
+
+        {/* Customer Sentiment */}
+        <div className="p-4 bg-[#1a1f2e] rounded-xl border border-white/[0.08]">
+          <h4 className="text-sm font-medium text-gray-400 mb-3">Customer Sentiment</h4>
+          {hasCustomerData ? (
+            <>
+              <div className="flex items-center gap-2 h-4 rounded-full overflow-hidden bg-[#0f1420]">
+                <div
+                  className="h-full bg-emerald-500/70"
+                  style={{ width: `${custPos}%` }}
+                />
+                <div
+                  className="h-full bg-gray-500/70"
+                  style={{ width: `${custNeut}%` }}
+                />
+                <div
+                  className="h-full bg-red-500/70"
+                  style={{ width: `${custNeg}%` }}
+                />
+              </div>
+              <div className="flex justify-between mt-2 text-xs">
+                <span className="flex items-center gap-1 text-emerald-400/70">
+                  <ThumbsUp className="h-3 w-3" />
+                  {custPos.toFixed(1)}% Positive
+                </span>
+                <span className="flex items-center gap-1 text-gray-400/70">
+                  <Minus className="h-3 w-3" />
+                  {custNeut.toFixed(1)}% Neutral
+                </span>
+                <span className="flex items-center gap-1 text-red-400/70">
+                  <ThumbsDown className="h-3 w-3" />
+                  {custNeg.toFixed(1)}% Negative
+                </span>
+              </div>
+            </>
+          ) : (
+            <div className="flex items-center justify-center h-16 text-gray-500 text-sm">
+              Customer sentiment data not available
+            </div>
+          )}
         </div>
       </div>
 
