@@ -603,6 +603,7 @@ export async function GET(request: NextRequest) {
             WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
               AND t.call_start >= ${startDate}::timestamp
               AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+              AND t.duration_seconds > 60
             GROUP BY ta."agentName"
             HAVING COUNT(*) >= 1
             ORDER BY avg_agent_score DESC NULLS LAST
@@ -629,6 +630,7 @@ export async function GET(request: NextRequest) {
             FROM "TranscriptAnalysis" ta
             INNER JOIN transcripts t ON t.vendor_call_key = ta."vendorCallKey"
             WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
+              AND t.duration_seconds > 60
             GROUP BY ta."agentName"
             HAVING COUNT(*) >= 1
             ORDER BY avg_agent_score DESC NULLS LAST

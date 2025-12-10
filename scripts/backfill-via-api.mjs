@@ -10,7 +10,7 @@
 import fs from 'fs';
 
 const DATA_FILE_PATH = 'C:\\Users\\Mark Hansen\\Downloads\\Nov 1 to Date Call Logs.txt';
-const API_URL = process.env.API_URL || 'https://servicing-ticket-analysis-he32vss5h-cmgprojects.vercel.app/api/backfill';
+const API_URL = process.env.API_URL || 'https://servicing-ticket-analysis-kmkp0n1xf-cmgprojects.vercel.app/api/backfill';
 const DRY_RUN = process.argv.includes('--dry-run');
 const BATCH_SIZE = 200; // Send in batches of 200 (smaller to avoid payload limits)
 
