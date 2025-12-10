@@ -22,6 +22,24 @@ export async function GET(request: NextRequest) {
     const endDate = searchParams.get('endDate');
 
     if (type === 'summary') {
+      // Build date filter for transcript queries
+      const dateFilter = startDate && endDate ? {
+        call_start: {
+          gte: new Date(startDate),
+          lt: new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000), // Add 1 day to include end date
+        }
+      } : {};
+
+      // Build where clause for TranscriptAnalysis queries (joins with transcripts)
+      const analysisDateFilter = startDate && endDate ? {
+        transcript: {
+          call_start: {
+            gte: new Date(startDate),
+            lt: new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000),
+          }
+        }
+      } : {};
+
       // Get summary statistics
       const [
         totalTranscripts,
@@ -36,25 +54,31 @@ export async function GET(request: NextRequest) {
         dayOfWeekDataRaw,
         departmentDataRaw,
       ] = await Promise.all([
-        // Total transcripts
-        prisma.transcripts.count(),
+        // Total transcripts (filtered by date)
+        prisma.transcripts.count({
+          where: dateFilter,
+        }),
 
-        // Count of analyzed transcripts
-        prisma.transcriptAnalysis.count(),
+        // Count of analyzed transcripts (filtered by date via join)
+        prisma.transcriptAnalysis.count({
+          where: analysisDateFilter,
+        }),
 
-        // Agent sentiment distribution
+        // Agent sentiment distribution (filtered by date)
         prisma.transcriptAnalysis.groupBy({
           by: ['agentSentiment'],
           _count: true,
+          where: analysisDateFilter,
         }),
 
-        // Customer sentiment distribution
+        // Customer sentiment distribution (filtered by date)
         prisma.transcriptAnalysis.groupBy({
           by: ['customerSentiment'],
           _count: true,
+          where: analysisDateFilter,
         }),
 
-        // Top topics
+        // Top topics (filtered by date)
         prisma.transcriptAnalysis.groupBy({
           by: ['aiDiscoveredTopic'],
           _count: true,
@@ -73,10 +97,11 @@ export async function GET(request: NextRequest) {
             aiDiscoveredTopic: {
               not: null,
             },
+            ...analysisDateFilter,
           },
         }),
 
-        // Subcategories
+        // Subcategories (filtered by date)
         prisma.transcriptAnalysis.groupBy({
           by: ['aiDiscoveredSubcategory', 'aiDiscoveredTopic'],
           _count: true,
@@ -90,10 +115,11 @@ export async function GET(request: NextRequest) {
             aiDiscoveredSubcategory: {
               not: null,
             },
+            ...analysisDateFilter,
           },
         }),
 
-        // Uncategorized calls (calls with topic but no subcategory)
+        // Uncategorized calls (calls with topic but no subcategory) (filtered by date)
         prisma.transcriptAnalysis.groupBy({
           by: ['aiDiscoveredTopic'],
           _count: true,
@@ -114,27 +140,48 @@ export async function GET(request: NextRequest) {
               { aiDiscoveredSubcategory: null },
               { aiDiscoveredSubcategory: '' },
             ],
+            ...analysisDateFilter,
           },
         }),
 
-        // Daily trends with agent and customer sentiment breakdown
-        prisma.$queryRaw`
-          SELECT
-            DATE(t.call_start) as date,
-            COUNT(*) as total,
-            SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive,
-            SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral,
-            SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative,
-            SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive,
-            SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral,
-            SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative
-          FROM transcripts t
-          INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
-          WHERE t.call_start IS NOT NULL
-          GROUP BY DATE(t.call_start)
-          ORDER BY DATE(t.call_start) DESC
-          LIMIT 90
-        ` as Promise<any[]>,
+        // Daily trends with agent and customer sentiment breakdown (filtered by date)
+        (startDate && endDate
+          ? prisma.$queryRaw`
+              SELECT
+                DATE(t.call_start) as date,
+                COUNT(*) as total,
+                SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive,
+                SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral,
+                SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative,
+                SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive,
+                SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral,
+                SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative
+              FROM transcripts t
+              INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+              WHERE t.call_start IS NOT NULL
+                AND t.call_start >= ${startDate}::timestamp
+                AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+              GROUP BY DATE(t.call_start)
+              ORDER BY DATE(t.call_start) DESC
+              LIMIT 90
+            `
+          : prisma.$queryRaw`
+              SELECT
+                DATE(t.call_start) as date,
+                COUNT(*) as total,
+                SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive,
+                SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral,
+                SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative,
+                SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive,
+                SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral,
+                SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative
+              FROM transcripts t
+              INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+              WHERE t.call_start IS NOT NULL
+              GROUP BY DATE(t.call_start)
+              ORDER BY DATE(t.call_start) DESC
+              LIMIT 90
+            `) as Promise<any[]>,
 
         // Hourly distribution (in UTC to match client-side filtering)
         (startDate && endDate
@@ -184,27 +231,43 @@ export async function GET(request: NextRequest) {
               ORDER BY day_num
             `) as Promise<any[]>,
 
-        // Department distribution with sentiment
-        prisma.$queryRaw`
-          SELECT
-            t.department,
-            COUNT(*) as count,
-            SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as positive,
-            SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as negative
-          FROM transcripts t
-          INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
-          WHERE t.department IS NOT NULL AND t.department != ''
-          GROUP BY t.department
-          ORDER BY count DESC
-        ` as Promise<any[]>,
+        // Department distribution with sentiment (filtered by date)
+        (startDate && endDate
+          ? prisma.$queryRaw`
+              SELECT
+                t.department,
+                COUNT(*) as count,
+                SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as positive,
+                SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as negative
+              FROM transcripts t
+              INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+              WHERE t.department IS NOT NULL AND t.department != ''
+                AND t.call_start >= ${startDate}::timestamp
+                AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+              GROUP BY t.department
+              ORDER BY count DESC
+            `
+          : prisma.$queryRaw`
+              SELECT
+                t.department,
+                COUNT(*) as count,
+                SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as positive,
+                SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as negative
+              FROM transcripts t
+              INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+              WHERE t.department IS NOT NULL AND t.department != ''
+              GROUP BY t.department
+              ORDER BY count DESC
+            `) as Promise<any[]>,
       ]);
 
-      // Calculate averages
+      // Calculate averages (filtered by date)
       const avgAgentScore = await prisma.transcriptAnalysis.aggregate({
         _avg: {
           agentSentimentScore: true,
           customerSentimentScore: true,
         },
+        where: analysisDateFilter,
       });
 
       // Format daily trends
@@ -515,32 +578,61 @@ export async function GET(request: NextRequest) {
     if (type === 'agents') {
       // Get agent rankings based on AI analysis data
       // Group by agent name and calculate stats from BOTH agent and customer sentiment
-      const agentData = await prisma.$queryRaw<any[]>`
-        SELECT
-          ta."agentName" as agent_name,
-          COUNT(*) as call_count,
-          AVG(t.duration_seconds) as avg_duration,
+      const agentData = await (startDate && endDate
+        ? prisma.$queryRaw<any[]>`
+            SELECT
+              ta."agentName" as agent_name,
+              COUNT(*) as call_count,
+              AVG(t.duration_seconds) as avg_duration,
 
-          -- Agent Performance Metrics (used for scoring/ranking)
-          AVG(ta."agentSentimentScore") as avg_agent_score,
-          SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive_count,
-          SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral_count,
-          SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative_count,
+              -- Agent Performance Metrics (used for scoring/ranking)
+              AVG(ta."agentSentimentScore") as avg_agent_score,
+              SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive_count,
+              SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral_count,
+              SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative_count,
 
-          -- Customer Sentiment Metrics (for comparison)
-          AVG(ta."customerSentimentScore") as avg_customer_score,
-          SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive_count,
-          SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral_count,
-          SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative_count,
+              -- Customer Sentiment Metrics (for comparison)
+              AVG(ta."customerSentimentScore") as avg_customer_score,
+              SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive_count,
+              SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral_count,
+              SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative_count,
 
-          MAX(t.department) as department
-        FROM "TranscriptAnalysis" ta
-        INNER JOIN transcripts t ON t.vendor_call_key = ta."vendorCallKey"
-        WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
-        GROUP BY ta."agentName"
-        HAVING COUNT(*) >= 1
-        ORDER BY avg_agent_score DESC NULLS LAST
-      `;
+              MAX(t.department) as department
+            FROM "TranscriptAnalysis" ta
+            INNER JOIN transcripts t ON t.vendor_call_key = ta."vendorCallKey"
+            WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
+              AND t.call_start >= ${startDate}::timestamp
+              AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+            GROUP BY ta."agentName"
+            HAVING COUNT(*) >= 1
+            ORDER BY avg_agent_score DESC NULLS LAST
+          `
+        : prisma.$queryRaw<any[]>`
+            SELECT
+              ta."agentName" as agent_name,
+              COUNT(*) as call_count,
+              AVG(t.duration_seconds) as avg_duration,
+
+              -- Agent Performance Metrics (used for scoring/ranking)
+              AVG(ta."agentSentimentScore") as avg_agent_score,
+              SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive_count,
+              SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral_count,
+              SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative_count,
+
+              -- Customer Sentiment Metrics (for comparison)
+              AVG(ta."customerSentimentScore") as avg_customer_score,
+              SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive_count,
+              SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral_count,
+              SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative_count,
+
+              MAX(t.department) as department
+            FROM "TranscriptAnalysis" ta
+            INNER JOIN transcripts t ON t.vendor_call_key = ta."vendorCallKey"
+            WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
+            GROUP BY ta."agentName"
+            HAVING COUNT(*) >= 1
+            ORDER BY avg_agent_score DESC NULLS LAST
+          `);
 
       // Calculate performance tiers based on agent sentiment score
       // Adjusted thresholds to create more top/higher performers
