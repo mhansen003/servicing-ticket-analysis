@@ -65,11 +65,11 @@ export async function GET(request: NextRequest) {
           where: analysisDateFilter,
         }),
 
-        // Count of transcripts imported in the last 8 hours
+        // Count of transcripts from Dec 1, 2025 forward (our data baseline)
         prisma.transcripts.count({
           where: {
             call_start: {
-              gte: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 hours ago
+              gte: new Date('2025-12-01'), // Dec 1, 2025 - our sync starting point
             },
           },
         }),

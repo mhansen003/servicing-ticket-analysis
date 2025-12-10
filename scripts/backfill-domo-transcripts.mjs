@@ -50,7 +50,7 @@ for (let i = 0; i < args.length; i++) {
 
 // Default start date if not provided
 if (!options.startDate) {
-  options.startDate = '2024-12-03';
+  options.startDate = '2025-12-01';
   console.log(`ℹ️  No start date provided, using default: ${options.startDate}`);
 }
 

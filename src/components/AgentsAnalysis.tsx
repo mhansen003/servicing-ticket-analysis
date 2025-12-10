@@ -138,10 +138,17 @@ export default function AgentsAnalysis() {
     return new Date().toISOString().split('T')[0];
   };
 
+  const getAllTimeStartDate = () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 5);
+    return date.toISOString().split('T')[0];
+  };
+
   const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
   const [globalEndDate, setGlobalEndDate] = useState(getDefaultEndDate());
   const [appliedStartDate, setAppliedStartDate] = useState(getDefaultStartDate());
   const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
+  const [allTime, setAllTime] = useState(false);
   const [loadingFilteredData, setLoadingFilteredData] = useState(false);
 
   // Load rankings data
@@ -248,12 +255,17 @@ export default function AgentsAnalysis() {
 
   // Apply global date range filter
   const applyGlobalFilter = () => {
-    if (!globalStartDate || !globalEndDate) {
-      alert('Please select both start and end dates');
-      return;
+    if (allTime) {
+      setAppliedStartDate(getAllTimeStartDate());
+      setAppliedEndDate(getDefaultEndDate());
+    } else {
+      if (!globalStartDate || !globalEndDate) {
+        alert('Please select both start and end dates');
+        return;
+      }
+      setAppliedStartDate(globalStartDate);
+      setAppliedEndDate(globalEndDate);
     }
-    setAppliedStartDate(globalStartDate);
-    setAppliedEndDate(globalEndDate);
   };
 
   // Clear global date range filter
@@ -264,6 +276,19 @@ export default function AgentsAnalysis() {
     setGlobalEndDate(defaultEnd);
     setAppliedStartDate(defaultStart);
     setAppliedEndDate(defaultEnd);
+    setAllTime(false);
+  };
+
+  // Handle All Time checkbox toggle
+  const handleAllTimeToggle = (checked: boolean) => {
+    setAllTime(checked);
+    if (checked) {
+      setGlobalStartDate(getAllTimeStartDate());
+      setGlobalEndDate(getDefaultEndDate());
+    } else {
+      setGlobalStartDate(getDefaultStartDate());
+      setGlobalEndDate(getDefaultEndDate());
+    }
   };
 
   // Get all agents sorted by selected criteria, with search filter

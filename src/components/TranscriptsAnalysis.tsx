@@ -450,8 +450,8 @@ export default function TranscriptsAnalysis() {
                 <div className={`w-2 h-2 rounded-full ${recentImports > 0 ? 'bg-green-400 animate-pulse' : 'bg-amber-400'}`}></div>
                 <span className="text-xs font-medium">
                   {recentImports > 0
-                    ? `${recentImports.toLocaleString()} imports (last 8hrs)`
-                    : 'No recent imports'}
+                    ? `${recentImports.toLocaleString()} imports (since Dec 1)`
+                    : 'No imports since Dec 1'}
                 </span>
               </div>
             </div>

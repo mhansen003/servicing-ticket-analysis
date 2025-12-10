@@ -153,7 +153,7 @@ async function isAlreadyAnalyzed(vendorCallKey) {
  */
 async function syncTranscripts(options = {}) {
   const {
-    startDate,
+    startDate = '2025-12-01', // Default: always sync from Dec 1, 2025 to catch any missing records
     endDate,
     limit,
     dryRun = false
