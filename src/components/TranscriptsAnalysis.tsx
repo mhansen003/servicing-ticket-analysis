@@ -364,8 +364,8 @@ export default function TranscriptsAnalysis() {
   const departmentData = useMemo(() => {
     if (!stats) return [];
 
-    // Exclude specific departments: IRS Agent, Collection, BK, Disaster, Loss Mit
-    const excludedDepartments = ['IRS', 'COLLECTION', 'BK', 'DISASTER', 'LOSS MIT', 'LOSS MITIGATION'];
+    // Exclude specific departments: IRS Agent, Collection, BK, Bankruptcy, Disaster, Loss Mit
+    const excludedDepartments = ['IRS', 'COLLECTION', 'BK', 'BANKRUPTCY', 'DISASTER', 'LOSS MIT', 'LOSS MITIGATION'];
 
     return Object.entries(stats.byDepartment)
       .filter(([name]) => {
