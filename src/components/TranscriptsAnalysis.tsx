@@ -184,6 +184,31 @@ export default function TranscriptsAnalysis() {
   const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
   const [loadingFilteredData, setLoadingFilteredData] = useState(false);
 
+  // Load from localStorage on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedGlobalStart = localStorage.getItem('transcripts-analysis-global-start-date');
+      const savedGlobalEnd = localStorage.getItem('transcripts-analysis-global-end-date');
+      const savedAppliedStart = localStorage.getItem('transcripts-analysis-applied-start-date');
+      const savedAppliedEnd = localStorage.getItem('transcripts-analysis-applied-end-date');
+
+      if (savedGlobalStart) setGlobalStartDate(savedGlobalStart);
+      if (savedGlobalEnd) setGlobalEndDate(savedGlobalEnd);
+      if (savedAppliedStart) setAppliedStartDate(savedAppliedStart);
+      if (savedAppliedEnd) setAppliedEndDate(savedAppliedEnd);
+    }
+  }, []);
+
+  // Persist date filters to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('transcripts-analysis-global-start-date', globalStartDate);
+      localStorage.setItem('transcripts-analysis-global-end-date', globalEndDate);
+      localStorage.setItem('transcripts-analysis-applied-start-date', appliedStartDate);
+      localStorage.setItem('transcripts-analysis-applied-end-date', appliedEndDate);
+    }
+  }, [globalStartDate, globalEndDate, appliedStartDate, appliedEndDate]);
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -388,6 +413,10 @@ export default function TranscriptsAnalysis() {
     // Update applied dates - useEffect will automatically fetch new data
     setAppliedStartDate(globalStartDate);
     setAppliedEndDate(globalEndDate);
+
+    // Auto-navigate calendar to the start date month
+    const startDate = new Date(globalStartDate);
+    setCalendarMonth(startDate);
   };
 
   // Clear global date range filter
