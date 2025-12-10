@@ -1111,6 +1111,19 @@ export default function TranscriptsAnalysis() {
                             <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
                               {topic.name}
                             </span>
+                            {(() => {
+                              const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
+                                (u: any) => u.parentTopic === topic.name
+                              );
+                              if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
+                                return (
+                                  <span className="text-[10px] text-gray-500 italic">
+                                    (+{uncategorizedForTopic.count} no sub)
+                                  </span>
+                                );
+                              }
+                              return null;
+                            })()}
                             {topicSubcategories.length > 0 && (
                               <button
                                 onClick={(e) => {
