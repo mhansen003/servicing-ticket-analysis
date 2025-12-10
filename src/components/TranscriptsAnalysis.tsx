@@ -71,37 +71,6 @@ interface AIDailyTrend {
   customerNegative: number;
 }
 
-interface TranscriptRecord {
-  id: string;
-  vendorCallKey: string;
-  callStart: string;
-  callEnd: string;
-  durationSeconds: number;
-  disposition: string;
-  numberOfHolds: number;
-  holdDuration: number;
-  department: string;
-  status: string;
-  agentName: string;
-  agentRole: string;
-  messageCount: number;
-  customerMessages: number;
-  agentMessages: number;
-  detectedTopics: string[];
-  basicSentiment: string;
-  aiAnalysis: {
-    sentiment?: string;
-    customerEmotion?: string;
-    emotionIntensity?: number;
-    resolution?: string;
-    topics?: string[];
-    agentPerformance?: number;
-    summary?: string;
-    keyIssue?: string;
-    escalationRisk?: string;
-  } | null;
-}
-
 const COLORS = {
   positive: '#22c55e',
   negative: '#ef4444',
@@ -170,7 +139,6 @@ interface DeepAnalysisData {
 
 export default function TranscriptsAnalysis() {
   const [stats, setStats] = useState<TranscriptStats | null>(null);
-  const [transcripts, setTranscripts] = useState<TranscriptRecord[]>([]);
   const [deepAnalysis, setDeepAnalysis] = useState<DeepAnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -181,10 +149,13 @@ export default function TranscriptsAnalysis() {
   const [selectedSentiment, setSelectedSentiment] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Expanded sections - expand ALL by default
+  // Expanded sections - expand ALL by default (including individual topics)
   const [expandedSections, setExpandedSections] = useState<Set<string>>(
     new Set(['calendar', 'overview', 'topics', 'time', 'departments', 'agents'])
   );
+
+  // Collapsed topics - track which topics are explicitly collapsed (default: none, all expanded)
+  const [collapsedTopics, setCollapsedTopics] = useState<Set<string>>(new Set());
 
   // Calendar month navigation
   const [calendarMonth, setCalendarMonth] = useState<Date>(new Date());
@@ -195,41 +166,29 @@ export default function TranscriptsAnalysis() {
   const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
-  // Call Timing Patterns date range filter
-  const [timingStartDate, setTimingStartDate] = useState('');
-  const [timingEndDate, setTimingEndDate] = useState('');
-  const [appliedStartDate, setAppliedStartDate] = useState('');
-  const [appliedEndDate, setAppliedEndDate] = useState('');
-  const [loadingTimingData, setLoadingTimingData] = useState(false);
+  // Global date range filter (default: last 7 days)
+  const getDefaultStartDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    return date.toISOString().split('T')[0];
+  };
+
+  const getDefaultEndDate = () => {
+    return new Date().toISOString().split('T')[0];
+  };
+
+  const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
+  const [globalEndDate, setGlobalEndDate] = useState(getDefaultEndDate());
+  const [appliedStartDate, setAppliedStartDate] = useState(getDefaultStartDate());
+  const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
+  const [loadingFilteredData, setLoadingFilteredData] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
 
-        // Try to load stats from static files (optional)
-        try {
-          const statsRes = await fetch('/data/transcript-stats.json');
-          if (statsRes.ok) {
-            const statsData = await statsRes.json();
-            setStats(statsData);
-          }
-        } catch (err) {
-          console.log('Static transcript stats not available, will use API data');
-        }
-
-        // Try to load transcripts from static files (optional)
-        try {
-          const transcriptsRes = await fetch('/data/transcript-analysis.json');
-          if (transcriptsRes.ok) {
-            const transcriptsData = await transcriptsRes.json();
-            setTranscripts(transcriptsData);
-          }
-        } catch (err) {
-          console.log('Static transcript data not available, will use API data');
-        }
-
-        // Load live analysis data from database
+        // Load analysis data from database
         try {
           const params = new URLSearchParams({ type: 'summary' });
           if (appliedStartDate && appliedEndDate) {
@@ -284,18 +243,7 @@ export default function TranscriptsAnalysis() {
             }
           }
         } catch (liveErr) {
-          console.log('Live analysis API not available, falling back to JSON');
-          // Fallback to old JSON file
-          try {
-            const deepRes = await fetch('/data/deep-analysis.json');
-            if (deepRes.ok) {
-              const deepData = await deepRes.json();
-              setDeepAnalysis(deepData);
-              console.log('✨ Deep analysis loaded from file:', deepData.metadata);
-            }
-          } catch (deepErr) {
-            console.log('Deep analysis not yet available');
-          }
+          console.error('Failed to load analysis from API:', liveErr);
         }
 
         setLoading(false);
@@ -429,47 +377,79 @@ export default function TranscriptsAnalysis() {
     openDrillDown('agent', agentName, `Calls by ${agentName}`);
   };
 
-  // Apply timing filter
-  const applyTimingFilter = async () => {
-    if (!timingStartDate || !timingEndDate) {
+  // Apply global date range filter
+  const applyGlobalFilter = async () => {
+    if (!globalStartDate || !globalEndDate) {
       alert('Please select both start and end dates');
       return;
     }
-    setLoadingTimingData(true);
-    setAppliedStartDate(timingStartDate);
-    setAppliedEndDate(timingEndDate);
+    setLoadingFilteredData(true);
+    setAppliedStartDate(globalStartDate);
+    setAppliedEndDate(globalEndDate);
 
-    // Fetch timing data with date filter
+    // Fetch all data with date filter
     try {
       const params = new URLSearchParams({ type: 'summary' });
-      params.append('startDate', timingStartDate);
-      params.append('endDate', timingEndDate);
+      params.append('startDate', globalStartDate);
+      params.append('endDate', globalEndDate);
       const res = await fetch(`/api/transcript-analytics?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
           setLiveAnalysis(data);
-          setDeepAnalysis(prev => prev ? ({
-            ...prev,
-            byHour: data.byHour || {},
+          setDeepAnalysis({
+            metadata: {
+              totalTickets: data.metadata.totalTranscripts,
+              analyzedTickets: data.metadata.analyzedTranscripts,
+              totalCost: 0,
+              analysisDate: new Date().toISOString(),
+            },
+            summary: data.summary,
+            topics: data.topics,
+            tickets: [],
+          });
+
+          // Update stats with filtered data
+          setStats({
+            totalCalls: data.metadata.totalTranscripts || 0,
+            generatedAt: new Date().toISOString(),
+            sentimentDistribution: {
+              positive: data.summary?.customerSentiment?.positive || 0,
+              negative: data.summary?.customerSentiment?.negative || 0,
+              neutral: data.summary?.customerSentiment?.neutral || 0,
+            },
+            emotionDistribution: {},
+            resolutionDistribution: {},
+            topicDistribution: {},
+            escalationRiskDistribution: {},
+            byDepartment: data.byDepartment || {},
+            byAgent: {},
             byDayOfWeek: data.byDayOfWeek || {},
-          }) : null);
+            byHour: data.byHour || {},
+            avgDuration: 0,
+            avgHoldTime: 0,
+            avgMessagesPerCall: 24,
+            avgAgentPerformance: data.summary?.avgAgentScore || null,
+            dailyTrends: data.dailyTrends || [],
+          });
         }
       }
     } catch (err) {
-      console.error('Failed to apply timing filter:', err);
+      console.error('Failed to apply global filter:', err);
     } finally {
-      setLoadingTimingData(false);
+      setLoadingFilteredData(false);
     }
   };
 
-  // Clear timing filter
-  const clearTimingFilter = () => {
-    setTimingStartDate('');
-    setTimingEndDate('');
-    setAppliedStartDate('');
-    setAppliedEndDate('');
-    // Reload data without filter
+  // Clear global date range filter
+  const clearGlobalFilter = () => {
+    const defaultStart = getDefaultStartDate();
+    const defaultEnd = getDefaultEndDate();
+    setGlobalStartDate(defaultStart);
+    setGlobalEndDate(defaultEnd);
+    setAppliedStartDate(defaultStart);
+    setAppliedEndDate(defaultEnd);
+    // Reload data with default 7-day range
     window.location.reload();
   };
 
@@ -891,6 +871,75 @@ export default function TranscriptsAnalysis() {
         )}
       </div>
 
+      {/* Global Date Range Filter */}
+      <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20 sticky top-4 z-10 backdrop-blur-sm">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+            <Calendar className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-xl font-bold text-white">Global Date Range Filter</h2>
+            <p className="text-sm text-gray-400">Filter all data below by date range (Default: Last 7 days)</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">From:</label>
+            <input
+              type="date"
+              value={globalStartDate}
+              onChange={(e) => setGlobalStartDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">To:</label>
+            <input
+              type="date"
+              value={globalEndDate}
+              onChange={(e) => setGlobalEndDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <button
+            onClick={applyGlobalFilter}
+            disabled={!globalStartDate || !globalEndDate || loadingFilteredData}
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
+          >
+            {loadingFilteredData ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              <>
+                <Search className="h-4 w-4" />
+                Apply Filter
+              </>
+            )}
+          </button>
+          {(appliedStartDate !== getDefaultStartDate() || appliedEndDate !== getDefaultEndDate()) && (
+            <button
+              onClick={clearGlobalFilter}
+              className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
+            >
+              <X className="h-3 w-3" />
+              Reset to Default (7 days)
+            </button>
+          )}
+        </div>
+        {appliedStartDate && appliedEndDate && (
+          <div className="mt-3 text-sm">
+            <span className="text-green-400 font-medium">
+              ✓ Showing data from {appliedStartDate} to {appliedEndDate}
+            </span>
+            <span className="text-gray-500 ml-2">
+              ({Math.ceil((new Date(appliedEndDate).getTime() - new Date(appliedStartDate).getTime()) / (1000 * 60 * 60 * 24)) + 1} days)
+            </span>
+          </div>
+        )}
+      </div>
+
       {/* Agent vs Customer Sentiment (Deep Analysis) */}
       {deepAnalysis && (
         <div className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-2xl border border-blue-500/30 overflow-hidden">
@@ -1152,51 +1201,71 @@ export default function TranscriptsAnalysis() {
                     const topicSubcategories = deepAnalysis.topics.subcategories.filter(
                       (sub) => sub.parentTopic === topic.name
                     );
-                    const isExpanded = expandedSections.has(`topic-${topic.name}`);
+                    // Topics are expanded by default unless explicitly collapsed
+                    const isExpanded = !collapsedTopics.has(topic.name);
 
                     return (
                       <div key={topic.name} className="space-y-2">
                         {/* Main Topic Bar */}
-                        <div
-                          className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-2 group"
-                          onClick={() => {
-                            // Always open drill-down for main topic
-                            openDrillDown('topic', topic.name, `${topic.name} Calls`);
-                          }}
-                        >
-                          <div className="w-40 min-w-[10rem] flex items-center gap-2">
-                            <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
-                              {topic.name}
-                            </span>
-                            {(() => {
-                              const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
-                                (u: any) => u.parentTopic === topic.name
-                              );
-                              if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
-                                return (
-                                  <span className="text-[10px] text-gray-500 italic">
-                                    (+{uncategorizedForTopic.count} no sub)
-                                  </span>
+                        <div className="space-y-0">
+                          <div
+                            className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-2 group"
+                            onClick={() => {
+                              // Always open drill-down for main topic
+                              openDrillDown('topic', topic.name, `${topic.name} Calls`);
+                            }}
+                          >
+                            <div className="w-40 min-w-[10rem] flex items-center gap-2">
+                              {topicSubcategories.length > 0 && (
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation(); // Prevent opening drill-down
+                                    // Toggle collapsed state for this topic
+                                    setCollapsedTopics(prev => {
+                                      const newSet = new Set(prev);
+                                      if (newSet.has(topic.name)) {
+                                        newSet.delete(topic.name);
+                                      } else {
+                                        newSet.add(topic.name);
+                                      }
+                                      return newSet;
+                                    });
+                                  }}
+                                  className="hover:bg-purple-500/20 rounded p-1 transition-all border border-purple-500/30"
+                                  title={isExpanded ? "Collapse subcategories" : "Expand subcategories"}
+                                >
+                                  {isExpanded ? (
+                                    <ChevronUp className="h-4 w-4 text-purple-400 flex-shrink-0" />
+                                  ) : (
+                                    <ChevronDown className="h-4 w-4 text-purple-400 flex-shrink-0" />
+                                  )}
+                                </button>
+                              )}
+                              {topicSubcategories.length === 0 && (
+                                <div className="w-6" /> {/* Spacer for alignment */}
+                              )}
+                              <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
+                                {topic.name}
+                              </span>
+                              {topicSubcategories.length > 0 && (
+                                <span className="text-[10px] text-purple-400 bg-purple-500/10 px-1.5 py-0.5 rounded border border-purple-500/20">
+                                  {topicSubcategories.length} subcategories
+                                </span>
+                              )}
+                              {(() => {
+                                const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
+                                  (u: any) => u.parentTopic === topic.name
                                 );
-                              }
-                              return null;
-                            })()}
-                            {topicSubcategories.length > 0 && (
-                              <button
-                                onClick={(e) => {
-                                  e.stopPropagation(); // Prevent opening drill-down
-                                  toggleSection(`topic-${topic.name}`);
-                                }}
-                                className="hover:bg-white/[0.05] rounded p-0.5 transition-colors"
-                              >
-                                {isExpanded ? (
-                                  <ChevronUp className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                                ) : (
-                                  <ChevronDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                                )}
-                              </button>
-                            )}
-                          </div>
+                                if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
+                                  return (
+                                    <span className="text-[10px] text-orange-400 bg-orange-500/10 px-1.5 py-0.5 rounded border border-orange-500/20">
+                                      +{uncategorizedForTopic.count} uncategorized
+                                    </span>
+                                  );
+                                }
+                                return null;
+                              })()}
+                            </div>
                           <div className="flex-1 relative">
                             <div className="h-8 bg-gray-800/50 rounded-lg overflow-hidden">
                               <div
@@ -1225,11 +1294,15 @@ export default function TranscriptsAnalysis() {
                               {(topic.avgConfidence * 100).toFixed(0)}% conf
                             </span>
                           </div>
+                          </div>
                         </div>
 
                         {/* Subcategories Bar Chart (collapsible) */}
                         {isExpanded && topicSubcategories.length > 0 && (
-                          <div className="pl-6 space-y-1.5 bg-[#0a0e17]/30 rounded-lg p-3 ml-2">
+                          <div className="ml-8 pl-4 space-y-2 border-l-2 border-purple-500/20 bg-gradient-to-r from-purple-500/5 to-transparent rounded-r-lg p-3">
+                            <div className="text-[10px] text-purple-400 uppercase tracking-wider mb-2 font-semibold">
+                              ↳ Subcategories
+                            </div>
                             {topicSubcategories
                               .slice()
                               .sort((a, b) => b.count - a.count)
@@ -1240,14 +1313,15 @@ export default function TranscriptsAnalysis() {
                                 return (
                                   <div
                                     key={sub.name}
-                                    className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-1.5 group"
+                                    className="flex items-center gap-3 cursor-pointer hover:bg-purple-500/10 transition-colors rounded-lg p-2 group border border-transparent hover:border-purple-500/30"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       openDrillDown('topic', sub.name, `${sub.name} Calls`);
                                     }}
                                   >
-                                    <div className="w-32 min-w-[8rem]">
-                                      <span className="text-xs text-gray-300 font-medium truncate group-hover:text-purple-300 transition-colors">
+                                    <div className="w-32 min-w-[8rem] flex items-center gap-1.5">
+                                      <span className="text-purple-400 text-[10px]">→</span>
+                                      <span className="text-xs text-gray-300 font-medium truncate group-hover:text-purple-200 transition-colors">
                                         {sub.name}
                                       </span>
                                     </div>
@@ -1346,69 +1420,25 @@ export default function TranscriptsAnalysis() {
 
       {/* Time Analysis */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
-        <div className="p-4 border-b border-white/[0.08]">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-purple-500/20">
-                <Calendar className="h-5 w-5 text-purple-400" />
-              </div>
-              <div className="text-left">
-                <h3 className="text-lg font-semibold text-white">Call Timing Patterns</h3>
-                <p className="text-sm text-gray-500">When are calls happening?</p>
-              </div>
+        <button
+          onClick={() => toggleSection('time')}
+          className="w-full flex items-center justify-between p-4 hover:bg-white/[0.02] transition-colors"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-purple-500/20">
+              <Timer className="h-5 w-5 text-purple-400" />
             </div>
-            <button
-              onClick={() => toggleSection('time')}
-              className="hover:bg-white/[0.05] p-2 rounded-lg transition-colors"
-            >
-              {expandedSections.has('time') ? (
-                <ChevronUp className="h-5 w-5 text-gray-400" />
-              ) : (
-                <ChevronDown className="h-5 w-5 text-gray-400" />
-              )}
-            </button>
+            <div className="text-left">
+              <h3 className="text-lg font-semibold text-white">Call Timing Patterns</h3>
+              <p className="text-sm text-gray-500">When are calls happening?</p>
+            </div>
           </div>
-
-          {/* Date Range Filter */}
-          <div className="flex items-center gap-3 text-sm">
-            <label className="text-gray-400">Filter by date range:</label>
-            <input
-              type="date"
-              value={timingStartDate}
-              onChange={(e) => setTimingStartDate(e.target.value)}
-              className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
-              placeholder="Start date"
-            />
-            <span className="text-gray-400">to</span>
-            <input
-              type="date"
-              value={timingEndDate}
-              onChange={(e) => setTimingEndDate(e.target.value)}
-              className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
-              placeholder="End date"
-            />
-            <button
-              onClick={applyTimingFilter}
-              disabled={!timingStartDate || !timingEndDate || loadingTimingData}
-              className="px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded text-sm transition-colors"
-            >
-              {loadingTimingData ? 'Loading...' : 'Apply Filter'}
-            </button>
-            {(appliedStartDate || appliedEndDate) && (
-              <button
-                onClick={clearTimingFilter}
-                className="text-blue-400 hover:text-blue-300 text-xs underline"
-              >
-                Clear Filter
-              </button>
-            )}
-            {(appliedStartDate && appliedEndDate) && (
-              <span className="text-xs text-green-400">
-                Filtered: {appliedStartDate} to {appliedEndDate}
-              </span>
-            )}
-          </div>
-        </div>
+          {expandedSections.has('time') ? (
+            <ChevronUp className="h-5 w-5 text-gray-400" />
+          ) : (
+            <ChevronDown className="h-5 w-5 text-gray-400" />
+          )}
+        </button>
 
         {expandedSections.has('time') && (
           <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
