@@ -82,17 +82,17 @@ export class DomoAPI {
     const whereClauses = [];
 
     if (startDate) {
-      whereClauses.push(`\`call_start\` >= '${startDate}'`);
+      whereClauses.push(`\`CallStartDateTime\` >= '${startDate}'`);
     }
     if (endDate) {
-      whereClauses.push(`\`call_start\` <= '${endDate}'`);
+      whereClauses.push(`\`CallStartDateTime\` <= '${endDate}'`);
     }
 
     if (whereClauses.length > 0) {
       query += ` WHERE ${whereClauses.join(' AND ')}`;
     }
 
-    query += ` ORDER BY \`call_start\` DESC`;
+    query += ` ORDER BY \`CallStartDateTime\` DESC`;
     query += ` LIMIT ${limit} OFFSET ${offset}`;
 
     const url = `https://api.domo.com/v1/datasets/query/execute/${datasetId}`;

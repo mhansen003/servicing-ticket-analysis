@@ -68,14 +68,22 @@ const stats = {
  * Transform Domo record to match our transcripts schema
  */
 function transformDomoRecord(domoRecord) {
-  // Parse messages JSON if it's a string
-  let messages = domoRecord.messages;
-  if (typeof messages === 'string') {
+  // Parse Conversation JSON - this contains the messages
+  let messages = null;
+  const conversationStr = domoRecord.Conversation;
+  if (conversationStr) {
     try {
-      messages = JSON.parse(messages);
+      const conversation = typeof conversationStr === 'string' ? JSON.parse(conversationStr) : conversationStr;
+      // Extract messages from conversationEntries
+      if (conversation.conversationEntries && Array.isArray(conversation.conversationEntries)) {
+        messages = conversation.conversationEntries.map(entry => ({
+          speaker: entry.sender?.role === 'Agent' ? 'agent' : 'customer',
+          text: entry.messageText || '',
+          timestamp: entry.clientTimestamp || entry.serverReceivedTimestamp || null
+        }));
+      }
     } catch (e) {
-      console.warn(`⚠️  Failed to parse messages for ${domoRecord.vendor_call_key}`);
-      messages = null;
+      console.warn(`⚠️  Failed to parse conversation for ${domoRecord.VendorCallKey}`);
     }
   }
 
@@ -94,19 +102,19 @@ function transformDomoRecord(domoRecord) {
   };
 
   return {
-    vendor_call_key: domoRecord.vendor_call_key || domoRecord.VendorCallKey,
-    call_start: parseDate(domoRecord.call_start || domoRecord.CallStart),
-    call_end: parseDate(domoRecord.call_end || domoRecord.CallEnd),
-    duration_seconds: parseInt(domoRecord.duration_seconds || domoRecord.DurationSeconds),
-    disposition: domoRecord.disposition || domoRecord.Disposition || null,
-    number_of_holds: parseInt(domoRecord.number_of_holds || domoRecord.NumberOfHolds),
-    hold_duration: parseInt(domoRecord.hold_duration || domoRecord.HoldDuration),
-    department: domoRecord.department || domoRecord.Department || null,
-    status: domoRecord.status || domoRecord.Status || null,
-    agent_name: domoRecord.agent_name || domoRecord.AgentName || domoRecord.assigned_agent || null,
-    agent_role: domoRecord.agent_role || domoRecord.AgentRole || domoRecord.user_role_name || null,
-    agent_profile: domoRecord.agent_profile || domoRecord.AgentProfile || domoRecord.profile_name || null,
-    agent_email: domoRecord.agent_email || domoRecord.AgentEmail || domoRecord.agent_email_address || null,
+    vendor_call_key: domoRecord.VendorCallKey,
+    call_start: parseDate(domoRecord.CallStartDateTime),
+    call_end: parseDate(domoRecord.CallEndDateTime),
+    duration_seconds: parseInt(domoRecord.CallDurationInSeconds),
+    disposition: domoRecord.CallDispositionServicing || null,
+    number_of_holds: parseInt(domoRecord.NumberOfHolds),
+    hold_duration: parseInt(domoRecord.CustomerHoldDuration),
+    department: domoRecord.Department || null,
+    status: domoRecord.VoiceCallStatus || null,
+    agent_name: domoRecord.Name || null,
+    agent_role: domoRecord.UserRoleName || null,
+    agent_profile: domoRecord.ProfileName || null,
+    agent_email: domoRecord.Email || null,
     messages: messages
   };
 }
@@ -174,8 +182,8 @@ async function syncTranscripts(options = {}) {
     // Step 2: Import to database
     console.log('💾 Importing transcripts to database...');
     for (const domoRecord of domoRecords) {
-      if (!domoRecord.vendor_call_key && !domoRecord.VendorCallKey) {
-        console.warn('⚠️  Skipping record without vendor_call_key');
+      if (!domoRecord.VendorCallKey) {
+        console.warn('⚠️  Skipping record without VendorCallKey');
         stats.skipped++;
         continue;
       }
@@ -201,7 +209,7 @@ async function syncTranscripts(options = {}) {
       where: {
         vendor_call_key: {
           in: domoRecords
-            .map(r => r.vendor_call_key || r.VendorCallKey)
+            .map(r => r.VendorCallKey)
             .filter(Boolean)
         }
       }

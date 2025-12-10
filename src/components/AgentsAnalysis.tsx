@@ -118,6 +118,7 @@ export default function AgentsAnalysis() {
   const [profileError, setProfileError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'performance' | 'calls' | 'lowPerformance' | 'duration'>('performance'); // Default to top performers
+  const [tierFilter, setTierFilter] = useState<'all' | 'top' | 'good' | 'average' | 'needs-improvement' | 'critical'>('all');
 
   // Modal state
   const [transcriptModalOpen, setTranscriptModalOpen] = useState(false);
@@ -272,6 +273,11 @@ export default function AgentsAnalysis() {
 
     // Filter to only agents with 20+ calls
     let agents = [...rankings.allAgents].filter((a) => a.callCount >= 20);
+
+    // Apply tier filter
+    if (tierFilter !== 'all') {
+      agents = agents.filter((a) => a.performanceTier === tierFilter);
+    }
 
     // Apply search filter
     if (searchTerm) {
@@ -498,50 +504,91 @@ export default function AgentsAnalysis() {
       )}
 
       {/* Performance Distribution - Only ranked agents (20+ calls) */}
-      {rankings && !selectedAgent && displayedAgents.length > 0 && (
+      {rankings && !selectedAgent && (
         <div className="p-4 bg-[#131a29] rounded-xl border border-white/[0.08]">
-          <h3 className="text-sm font-medium text-gray-400 mb-3">Performance Distribution (Ranked Agents Only)</h3>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-medium text-gray-400">Performance Distribution (Ranked Agents Only)</h3>
+            {tierFilter !== 'all' && (
+              <button
+                onClick={() => setTierFilter('all')}
+                className="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
+              >
+                <X className="h-3 w-3" />
+                Clear Filter
+              </button>
+            )}
+          </div>
           <div className="flex items-center gap-2 h-8">
             {/* Top Performers */}
-            <div className="flex-1 flex flex-col">
-              <div className="h-8 bg-emerald-500 rounded-lg flex items-center justify-center relative">
+            <button
+              onClick={() => setTierFilter(tierFilter === 'top' ? 'all' : 'top')}
+              className={`flex-1 flex flex-col transition-all ${tierFilter === 'top' ? 'scale-105' : 'hover:scale-102'}`}
+            >
+              <div className={`h-8 bg-emerald-500 rounded-lg flex items-center justify-center relative cursor-pointer ${
+                tierFilter === 'top' ? 'ring-2 ring-emerald-300' : 'hover:bg-emerald-400'
+              }`}>
                 <span className="text-xs font-medium text-white">{rankedDistribution.top}</span>
               </div>
               <span className="text-[10px] text-emerald-400 mt-1 text-center">Top</span>
-            </div>
+            </button>
 
             {/* Good */}
-            <div className="flex-1 flex flex-col">
-              <div className="h-8 bg-blue-500 rounded-lg flex items-center justify-center relative">
+            <button
+              onClick={() => setTierFilter(tierFilter === 'good' ? 'all' : 'good')}
+              className={`flex-1 flex flex-col transition-all ${tierFilter === 'good' ? 'scale-105' : 'hover:scale-102'}`}
+            >
+              <div className={`h-8 bg-blue-500 rounded-lg flex items-center justify-center relative cursor-pointer ${
+                tierFilter === 'good' ? 'ring-2 ring-blue-300' : 'hover:bg-blue-400'
+              }`}>
                 <span className="text-xs font-medium text-white">{rankedDistribution.good}</span>
               </div>
               <span className="text-[10px] text-blue-400 mt-1 text-center">Good</span>
-            </div>
+            </button>
 
             {/* Average */}
-            <div className="flex-1 flex flex-col">
-              <div className="h-8 bg-gray-500 rounded-lg flex items-center justify-center relative">
+            <button
+              onClick={() => setTierFilter(tierFilter === 'average' ? 'all' : 'average')}
+              className={`flex-1 flex flex-col transition-all ${tierFilter === 'average' ? 'scale-105' : 'hover:scale-102'}`}
+            >
+              <div className={`h-8 bg-gray-500 rounded-lg flex items-center justify-center relative cursor-pointer ${
+                tierFilter === 'average' ? 'ring-2 ring-gray-300' : 'hover:bg-gray-400'
+              }`}>
                 <span className="text-xs font-medium text-white">{rankedDistribution.average}</span>
               </div>
               <span className="text-[10px] text-gray-400 mt-1 text-center">Average</span>
-            </div>
+            </button>
 
             {/* Needs Improvement */}
-            <div className="flex-1 flex flex-col">
-              <div className="h-8 bg-amber-500 rounded-lg flex items-center justify-center relative">
+            <button
+              onClick={() => setTierFilter(tierFilter === 'needs-improvement' ? 'all' : 'needs-improvement')}
+              className={`flex-1 flex flex-col transition-all ${tierFilter === 'needs-improvement' ? 'scale-105' : 'hover:scale-102'}`}
+            >
+              <div className={`h-8 bg-amber-500 rounded-lg flex items-center justify-center relative cursor-pointer ${
+                tierFilter === 'needs-improvement' ? 'ring-2 ring-amber-300' : 'hover:bg-amber-400'
+              }`}>
                 <span className="text-xs font-medium text-white">{rankedDistribution.needsImprovement}</span>
               </div>
               <span className="text-[10px] text-amber-400 mt-1 text-center">Needs Imp.</span>
-            </div>
+            </button>
 
             {/* Critical */}
-            <div className="flex-1 flex flex-col">
-              <div className="h-8 bg-red-500 rounded-lg flex items-center justify-center relative">
+            <button
+              onClick={() => setTierFilter(tierFilter === 'critical' ? 'all' : 'critical')}
+              className={`flex-1 flex flex-col transition-all ${tierFilter === 'critical' ? 'scale-105' : 'hover:scale-102'}`}
+            >
+              <div className={`h-8 bg-red-500 rounded-lg flex items-center justify-center relative cursor-pointer ${
+                tierFilter === 'critical' ? 'ring-2 ring-red-300' : 'hover:bg-red-400'
+              }`}>
                 <span className="text-xs font-medium text-white">{rankedDistribution.critical}</span>
               </div>
               <span className="text-[10px] text-red-400 mt-1 text-center">Critical</span>
-            </div>
+            </button>
           </div>
+          {tierFilter !== 'all' && (
+            <div className="mt-2 text-xs text-gray-400 text-center">
+              Showing <span className="text-white font-medium">{displayedAgents.length}</span> {tierFilter} {displayedAgents.length === 1 ? 'agent' : 'agents'}
+            </div>
+          )}
         </div>
       )}
 
