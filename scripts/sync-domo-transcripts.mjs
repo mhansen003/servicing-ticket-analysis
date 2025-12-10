@@ -11,17 +11,19 @@
  * Run hourly via cron to keep data current
  */
 
+// CRITICAL: Load environment variables FIRST, before any other imports
+// This ensures all modules can access env vars when they initialize
 import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
+
+// Now import other modules - they will see the loaded env vars
 import { PrismaClient } from '@prisma/client';
 import { PrismaPg } from '@prisma/adapter-pg';
 import pg from 'pg';
 import { DomoAPI } from './domo-api.mjs';
-import { analyzeTranscript } from './transcript-analyzer.mjs';
+import { analyzeTranscript, analyzeTranscriptBatch } from './transcript-analyzer.mjs';
 
 const { Pool } = pg;
-
-// Load environment variables
-dotenv.config({ path: '.env.local' });
 
 // Verify required environment variables
 const requiredEnvVars = [
@@ -236,28 +238,43 @@ async function syncTranscripts(options = {}) {
       }
     });
 
+    // Filter out already analyzed
+    const needsAnalysis = [];
     for (const transcript of transcriptsToAnalyze) {
-      // Skip if already analyzed
       if (await isAlreadyAnalyzed(transcript.vendor_call_key)) {
         stats.skipped++;
-        continue;
+      } else {
+        needsAnalysis.push(transcript);
       }
+    }
 
-      if (dryRun) {
-        console.log('   [DRY RUN] Would analyze:', transcript.vendor_call_key);
-        continue;
-      }
+    if (dryRun) {
+      console.log(`   [DRY RUN] Would analyze ${needsAnalysis.length} transcripts`);
+    } else if (needsAnalysis.length > 0) {
+      // Use batch processing for faster analysis (20 concurrent to avoid overloading OpenRouter)
+      const concurrency = 20;
+      console.log(`   Batch processing ${needsAnalysis.length} transcripts (${concurrency} concurrent)...`);
 
-      try {
-        await analyzeTranscript(transcript, prisma);
-        stats.analyzed++;
-
-        if (stats.analyzed % 10 === 0) {
-          console.log(`   Analyzed ${stats.analyzed} transcripts...`);
+      const { results, errors } = await analyzeTranscriptBatch(needsAnalysis, prisma, {
+        maxConcurrent: concurrency,
+        onProgress: (processed, total) => {
+          if (processed % 50 === 0 || processed === total) {
+            console.log(`   Analyzed ${processed}/${total} transcripts...`);
+          }
         }
-      } catch (error) {
-        console.error(`❌ Error analyzing ${transcript.vendor_call_key}:`, error.message);
-        stats.errors++;
+      });
+
+      stats.analyzed = results.length;
+      stats.errors += errors.length;
+
+      if (errors.length > 0) {
+        console.log(`\n⚠️  ${errors.length} transcripts failed analysis:`);
+        errors.slice(0, 5).forEach(e => {
+          console.log(`   - ${e.vendorCallKey}: ${e.error}`);
+        });
+        if (errors.length > 5) {
+          console.log(`   ... and ${errors.length - 5} more`);
+        }
       }
     }
 

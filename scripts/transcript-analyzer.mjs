@@ -8,9 +8,13 @@
 import fetch from 'node-fetch';
 
 // Configuration
+// NOTE: API_KEY is a getter function to ensure it reads from process.env at runtime,
+// not at module load time (when env vars might not be loaded yet)
 const CONFIG = {
   API_URL: 'https://openrouter.ai/api/v1/chat/completions',
-  API_KEY: process.env.OPENROUTER_API_KEY,
+  get API_KEY() {
+    return process.env.OPENROUTER_API_KEY;
+  },
   MODEL: 'anthropic/claude-3.5-sonnet',
   LAST_N_CHARS: 1500,
   RETRY_ATTEMPTS: 3,

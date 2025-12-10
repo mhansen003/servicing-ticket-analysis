@@ -163,7 +163,17 @@ export default function TranscriptDataGrid() {
         if (searchQuery.trim()) params.append('search', searchQuery);
 
         const response = await fetch(`/api/transcript-analytics?${params.toString()}`);
-        if (!response.ok) throw new Error('Failed to load transcript data');
+
+        if (!response.ok) {
+          // Try to get the error message from the response
+          try {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `API error: ${response.status} ${response.statusText}`);
+          } catch (e) {
+            throw new Error(`Failed to load transcript data: ${response.status} ${response.statusText}`);
+          }
+        }
+
         const result = await response.json();
 
         if (result.success && result.data) {

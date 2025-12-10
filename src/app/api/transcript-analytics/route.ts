@@ -438,10 +438,12 @@ export async function GET(request: NextRequest) {
       }
 
       if (topic) {
-        analysisWhere.aiDiscoveredTopic = {
-          contains: topic,
-          mode: 'insensitive',
-        };
+        // Exact match on either aiDiscoveredTopic OR aiDiscoveredSubcategory
+        // This prevents "Payment" from matching "Payment Processing", "Payment Inquiry", etc.
+        analysisWhere.OR = [
+          { aiDiscoveredTopic: topic },
+          { aiDiscoveredSubcategory: topic }
+        ];
       }
 
       // If we have analysis filters, we need to ensure we only get transcripts that have matching analysis
