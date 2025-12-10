@@ -87,13 +87,26 @@ export default function TranscriptDataGrid() {
   const [sortField, setSortField] = useState<SortField>('callStart');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  // Load transcripts from database API
+  // Load transcripts from database API with filters
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        // Load latest 1000 transcripts from database
-        const response = await fetch('/api/transcript-analytics?type=transcripts&limit=1000');
+
+        // Build query params
+        const params = new URLSearchParams({
+          type: 'transcripts',
+          limit: '10000', // Load more records to show full dataset
+        });
+
+        // Add filters to API request
+        if (fromDate) params.append('fromDate', fromDate);
+        if (toDate) params.append('toDate', toDate);
+        if (sentimentFilter && sentimentFilter !== 'all') params.append('sentiment', sentimentFilter);
+        if (departmentFilter && departmentFilter !== 'all') params.append('department', departmentFilter);
+        if (searchQuery.trim()) params.append('search', searchQuery);
+
+        const response = await fetch(`/api/transcript-analytics?${params.toString()}`);
         if (!response.ok) throw new Error('Failed to load transcript data');
         const result = await response.json();
 
@@ -110,7 +123,7 @@ export default function TranscriptDataGrid() {
     };
 
     loadData();
-  }, []);
+  }, [fromDate, toDate, sentimentFilter, departmentFilter, searchQuery]); // Re-fetch when filters change
 
   // Get unique departments
   const departments = useMemo(() => {
@@ -118,44 +131,12 @@ export default function TranscriptDataGrid() {
     return Array.from(depts).sort();
   }, [transcripts]);
 
-  // Filter and sort transcripts
+  // Sort transcripts (filtering is now done server-side)
   const filteredTranscripts = useMemo(() => {
-    let filtered = transcripts;
-
-    // Apply date range filter
-    if (fromDate) {
-      const fromDateTime = new Date(fromDate + 'T00:00:00');
-      filtered = filtered.filter(t => new Date(t.callStart) >= fromDateTime);
-    }
-    if (toDate) {
-      const toDateTime = new Date(toDate + 'T23:59:59');
-      filtered = filtered.filter(t => new Date(t.callStart) <= toDateTime);
-    }
-
-    // Apply search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(t =>
-        (t.vendorCallKey || '').toLowerCase().includes(query) ||
-        (t.agentName || '').toLowerCase().includes(query) ||
-        (t.department || '').toLowerCase().includes(query) ||
-        (t.detectedTopics || []).some(topic => (topic || '').toLowerCase().includes(query)) ||
-        (t.aiAnalysis?.summary || '').toLowerCase().includes(query)
-      );
-    }
-
-    // Apply sentiment filter
-    if (sentimentFilter !== 'all') {
-      filtered = filtered.filter(t => t.basicSentiment === sentimentFilter);
-    }
-
-    // Apply department filter
-    if (departmentFilter !== 'all') {
-      filtered = filtered.filter(t => t.department === departmentFilter);
-    }
+    const sorted = [...transcripts];
 
     // Sort
-    filtered.sort((a, b) => {
+    sorted.sort((a, b) => {
       let aVal: any = a[sortField];
       let bVal: any = b[sortField];
 
@@ -171,8 +152,8 @@ export default function TranscriptDataGrid() {
       }
     });
 
-    return filtered;
-  }, [transcripts, fromDate, toDate, searchQuery, sentimentFilter, departmentFilter, sortField, sortOrder]);
+    return sorted;
+  }, [transcripts, sortField, sortOrder]);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {

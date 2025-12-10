@@ -261,6 +261,8 @@ export async function GET(request: NextRequest) {
       const limit = parseInt(searchParams.get('limit') || '100');
       const offset = parseInt(searchParams.get('offset') || '0');
       const date = searchParams.get('date');
+      const fromDate = searchParams.get('fromDate');
+      const toDate = searchParams.get('toDate');
       const sentiment = searchParams.get('sentiment');
       const agentSentiment = searchParams.get('agentSentiment');
       const customerSentiment = searchParams.get('customerSentiment');
@@ -273,6 +275,7 @@ export async function GET(request: NextRequest) {
       const transcriptWhere: any = {};
       const analysisWhere: any = {};
 
+      // Handle date filtering - support both single date and date range
       if (date) {
         const startDate = new Date(date);
         const endDate = new Date(date);
@@ -282,6 +285,14 @@ export async function GET(request: NextRequest) {
           gte: startDate,
           lt: endDate,
         };
+      } else if (fromDate || toDate) {
+        transcriptWhere.call_start = {};
+        if (fromDate) {
+          transcriptWhere.call_start.gte = new Date(fromDate + 'T00:00:00');
+        }
+        if (toDate) {
+          transcriptWhere.call_start.lte = new Date(toDate + 'T23:59:59');
+        }
       }
 
       if (department) {
