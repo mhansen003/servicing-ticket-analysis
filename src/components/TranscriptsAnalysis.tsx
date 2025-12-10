@@ -1242,7 +1242,7 @@ export default function TranscriptsAnalysis() {
                                 </button>
                               )}
                               {topicSubcategories.length === 0 && (
-                                <div className="w-6" /> {/* Spacer for alignment */}
+                                <div className="w-6" />
                               )}
                               <span className="text-sm text-white font-medium truncate group-hover:text-purple-300 transition-colors">
                                 {topic.name}
