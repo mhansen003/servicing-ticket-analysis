@@ -67,6 +67,22 @@ const stats = {
 };
 
 /**
+ * Decode HTML entities in text
+ */
+function decodeHtmlEntities(text) {
+  if (!text) return text;
+  return text
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&#x27;/g, "'")
+    .replace(/&#x2F;/g, '/')
+    .replace(/&nbsp;/g, ' ');
+}
+
+/**
  * Transform Domo record to match our transcripts schema
  */
 function transformDomoRecord(domoRecord) {
@@ -80,7 +96,7 @@ function transformDomoRecord(domoRecord) {
       if (conversation.conversationEntries && Array.isArray(conversation.conversationEntries)) {
         messages = conversation.conversationEntries.map(entry => ({
           speaker: entry.sender?.role === 'Agent' ? 'agent' : 'customer',
-          text: entry.messageText || '',
+          text: decodeHtmlEntities(entry.messageText || ''),
           timestamp: entry.clientTimestamp || entry.serverReceivedTimestamp || null
         }));
       }
