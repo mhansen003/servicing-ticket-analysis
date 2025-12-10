@@ -104,7 +104,7 @@ export async function GET(request: NextRequest) {
           GROUP BY DATE(t.call_start)
           ORDER BY DATE(t.call_start) DESC
           LIMIT 90
-        ` as any[],
+        ` as Promise<any[]>,
       ]);
 
       // Calculate averages

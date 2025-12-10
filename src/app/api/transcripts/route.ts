@@ -67,15 +67,15 @@ export async function GET(request: NextRequest) {
 
     // Fetch transcripts
     const [transcripts, total] = await Promise.all([
-      prisma.transcript.findMany({
+      prisma.transcripts.findMany({
         where,
         take: limit,
         skip: offset,
         orderBy: {
-          callDate: 'desc',
+          call_start: 'desc',
         },
       }),
-      prisma.transcript.count({ where }),
+      prisma.transcripts.count({ where }),
     ]);
 
     return NextResponse.json({

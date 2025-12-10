@@ -1,0 +1,219 @@
+[
+  {
+    "ticketKey": "SH-112429",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "No direct agent interaction visible in ticket",
+    "customerSentiment": "negative",
+    "customerSentimentScore": 0.7,
+    "customerSentimentReason": "Customer expressing concern about unauthorized credit inquiry",
+    "aiDiscoveredTopic": "Credit Report Dispute",
+    "aiDiscoveredSubcategory": "Unauthorized Hard Credit Inquiry",
+    "topicConfidence": 0.95,
+    "keyIssues": [
+      "Unauthorized hard credit inquiry",
+      "Customer has no loan relationship with CMG",
+      "Request for removal from three credit bureaus"
+    ],
+    "resolution": "Request marked as complete",
+    "tags": [
+      "credit inquiry",
+      "dispute",
+      "credit bureau",
+      "unauthorized activity",
+      "account verification"
+    ]
+  },
+  {
+    "ticketKey": "SH-98977",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "Standard business communication without emotional indicators",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.5,
+    "customerSentimentReason": "Direct inquiry about payment status without emotional content",
+    "aiDiscoveredTopic": "Mortgage Payment Verification",
+    "aiDiscoveredSubcategory": "Payment Status Check",
+    "topicConfidence": 0.9,
+    "keyIssues": [
+      "Payment verification request",
+      "September 1st payment status"
+    ],
+    "resolution": "Pending confirmation of payment receipt",
+    "tags": [
+      "mortgage",
+      "payment verification",
+      "customer inquiry",
+      "statement review"
+    ]
+  },
+  {
+    "ticketKey": "SH-96607",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "Agent provided minimal factual response",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.5,
+    "customerSentimentReason": "No clear sentiment expressed in document request",
+    "aiDiscoveredTopic": "Document Processing",
+    "aiDiscoveredSubcategory": "Tax Form Request",
+    "topicConfidence": 0.9,
+    "keyIssues": [
+      "Tax document request",
+      "Form delivery"
+    ],
+    "resolution": "Request fulfilled",
+    "tags": [
+      "tax_forms",
+      "document_request",
+      "completed"
+    ]
+  },
+  {
+    "ticketKey": "SH-106364",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "Professional, standard communication with no emotional indicators",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.4,
+    "customerSentimentReason": "Following up on request, slight urgency indicated by 'High' importance",
+    "aiDiscoveredTopic": "Loan Servicing",
+    "aiDiscoveredSubcategory": "Payment Processing Follow-up",
+    "topicConfidence": 0.85,
+    "keyIssues": [
+      "Missing payment information",
+      "Follow-up on previous request",
+      "Multiple customer accounts requiring attention"
+    ],
+    "resolution": "Service Transfer completed",
+    "tags": [
+      "correspondent lending",
+      "payment processing",
+      "follow-up",
+      "multiple accounts",
+      "high priority"
+    ]
+  },
+  {
+    "ticketKey": "SH-112153",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "No direct agent interaction visible in the ticket",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.5,
+    "customerSentimentReason": "Professional, standard request tone from law office",
+    "aiDiscoveredTopic": "Mortgage Services",
+    "aiDiscoveredSubcategory": "Payoff Quote Request",
+    "topicConfidence": 0.95,
+    "keyIssues": [
+      "Payoff quote needed for property sale",
+      "Specific delivery methods requested",
+      "Time-sensitive document (good through 11/21/2025)"
+    ],
+    "resolution": "Request Complete",
+    "tags": [
+      "payoff_request",
+      "real_estate",
+      "legal_office",
+      "document_request",
+      "property_sale"
+    ]
+  },
+  {
+    "ticketKey": "SO-8450",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "Agent uses neutral professional language in forwarding the request for review",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.5,
+    "customerSentimentReason": "No clear customer sentiment expressed in the visible interaction",
+    "aiDiscoveredTopic": "Invoice Management",
+    "aiDiscoveredSubcategory": "External Invoice Review",
+    "topicConfidence": 0.85,
+    "keyIssues": [
+      "Invoice review request",
+      "External communication handling",
+      "Cross-department coordination"
+    ],
+    "resolution": "Pending review",
+    "tags": [
+      "invoice",
+      "external_communication",
+      "loan_servicing",
+      "concur",
+      "security_alert"
+    ]
+  },
+  {
+    "ticketKey": "SH-116513",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "automated notification message, no emotional content",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.5,
+    "customerSentimentReason": "no customer interaction visible in content",
+    "aiDiscoveredTopic": "mortgage",
+    "aiDiscoveredSubcategory": "payoff request",
+    "topicConfidence": 0.9,
+    "keyIssues": [
+      "secure message delivery",
+      "payoff information request"
+    ],
+    "resolution": "request completed",
+    "tags": [
+      "payoff",
+      "secure message",
+      "microsoft encryption",
+      "automated notification"
+    ]
+  },
+  {
+    "ticketKey": "SH-117105",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "No clear agent interaction visible in the text",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.6,
+    "customerSentimentReason": "Customer (loan officer) making a routine inquiry about tax payment status",
+    "aiDiscoveredTopic": "Property Tax Verification",
+    "aiDiscoveredSubcategory": "Escrow Payment Confirmation",
+    "topicConfidence": 0.9,
+    "keyIssues": [
+      "Tax bill verification request",
+      "Escrow payment confirmation needed",
+      "Property ownership transition"
+    ],
+    "resolution": "Request marked as complete",
+    "tags": [
+      "property_tax",
+      "escrow",
+      "tax_bill",
+      "loan_officer",
+      "verification_request"
+    ]
+  },
+  {
+    "ticketKey": "SH-109938",
+    "agentSentiment": "neutral",
+    "agentSentimentScore": 0.5,
+    "agentSentimentReason": "No direct agent response visible in the ticket",
+    "customerSentiment": "neutral",
+    "customerSentimentScore": 0.6,
+    "customerSentimentReason": "Professional inquiry without emotional indicators",
+    "aiDiscoveredTopic": "Loan Servicing",
+    "aiDiscoveredSubcategory": "Transfer Documentation Request",
+    "topicConfidence": 0.9,
+    "keyIssues": [
+      "Request for loan servicing transfer status",
+      "Need for transfer letter documentation"
+    ],
+    "resolution": "Request Complete",
+    "tags": [
+      "document_request",
+      "loan_servicing",
+      "transfer_status",
+      "mortgage",
+      "compliance"
+    ]
+  }
+]

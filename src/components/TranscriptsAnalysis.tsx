@@ -284,7 +284,7 @@ export default function TranscriptsAnalysis() {
     if (liveAnalysis?.topics?.mainTopics && liveAnalysis.topics.mainTopics.length > 0) {
       return liveAnalysis.topics.mainTopics
         .slice(0, 10)
-        .map(t => ({
+        .map((t: any) => ({
           name: t.name,
           value: t.count,
           topic: t.name.toLowerCase().replace(/\s+/g, '_'), // Convert to snake_case for filtering
@@ -1038,7 +1038,7 @@ export default function TranscriptsAnalysis() {
                   radius={[0, 4, 4, 0]}
                   style={{ cursor: 'pointer' }}
                 >
-                  {topicChartData.map((entry, index) => (
+                  {topicChartData.map((entry: any, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={TOPIC_COLORS[index % TOPIC_COLORS.length]}
