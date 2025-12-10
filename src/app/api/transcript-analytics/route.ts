@@ -96,10 +96,18 @@ export async function GET(request: NextRequest) {
           by: ['aiDiscoveredTopic'],
           _count: true,
           where: {
-            aiDiscoveredTopic: {
-              not: null,
-              not: '',
-            },
+            AND: [
+              {
+                aiDiscoveredTopic: {
+                  not: null,
+                },
+              },
+              {
+                aiDiscoveredTopic: {
+                  not: '',
+                },
+              },
+            ],
             OR: [
               { aiDiscoveredSubcategory: null },
               { aiDiscoveredSubcategory: '' },
