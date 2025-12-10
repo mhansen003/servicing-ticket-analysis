@@ -167,13 +167,18 @@ export default function TranscriptsAnalysis() {
   const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
-  // Global date range filter (default: Dec 1, 2025 forward - our data baseline)
+  // Global date range filter (default: last 7 days, rounded to start of day)
   const getDefaultStartDate = () => {
-    return '2025-12-01'; // Fixed baseline - all data starts from Dec 1, 2025
+    const date = new Date();
+    date.setDate(date.getDate() - 7);
+    date.setHours(0, 0, 0, 0); // Round to start of day (midnight)
+    return date.toISOString().split('T')[0];
   };
 
   const getDefaultEndDate = () => {
-    return new Date().toISOString().split('T')[0];
+    const date = new Date();
+    date.setHours(23, 59, 59, 999); // End of today
+    return date.toISOString().split('T')[0];
   };
 
   const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
@@ -527,7 +532,7 @@ export default function TranscriptsAnalysis() {
               className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
             >
               <X className="h-3 w-3" />
-              Reset to Default (Since Dec 1)
+              Reset to Default (Last 7 Days)
             </button>
           )}
         </div>

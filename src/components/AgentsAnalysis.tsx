@@ -127,15 +127,18 @@ export default function AgentsAnalysis() {
   const [transcriptFilterValue, setTranscriptFilterValue] = useState('');
   const [gradingModalOpen, setGradingModalOpen] = useState(false);
 
-  // Global date range filter (default: last 30 days)
+  // Global date range filter (default: last 30 days, rounded to start of day)
   const getDefaultStartDate = () => {
     const date = new Date();
     date.setDate(date.getDate() - 30);
+    date.setHours(0, 0, 0, 0); // Round to start of day (midnight)
     return date.toISOString().split('T')[0];
   };
 
   const getDefaultEndDate = () => {
-    return new Date().toISOString().split('T')[0];
+    const date = new Date();
+    date.setHours(23, 59, 59, 999); // End of today
+    return date.toISOString().split('T')[0];
   };
 
   const getAllTimeStartDate = () => {
