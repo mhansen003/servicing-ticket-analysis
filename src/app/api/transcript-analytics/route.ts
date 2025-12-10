@@ -18,6 +18,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const type = searchParams.get('type') || 'summary';
+    const startDate = searchParams.get('startDate'); // Optional date range filter (YYYY-MM-DD)
+    const endDate = searchParams.get('endDate');
 
     if (type === 'summary') {
       // Get summary statistics
@@ -135,27 +137,52 @@ export async function GET(request: NextRequest) {
         ` as Promise<any[]>,
 
         // Hourly distribution (in UTC to match client-side filtering)
-        prisma.$queryRaw`
-          SELECT
-            EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC') as hour,
-            COUNT(*) as count
-          FROM transcripts t
-          WHERE t.call_start IS NOT NULL
-          GROUP BY EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC')
-          ORDER BY hour
-        ` as Promise<any[]>,
+        (startDate && endDate
+          ? prisma.$queryRaw`
+              SELECT
+                EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC') as hour,
+                COUNT(*) as count
+              FROM transcripts t
+              WHERE t.call_start IS NOT NULL
+                AND t.call_start >= ${startDate}::timestamp
+                AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+              GROUP BY EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC')
+              ORDER BY hour
+            `
+          : prisma.$queryRaw`
+              SELECT
+                EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC') as hour,
+                COUNT(*) as count
+              FROM transcripts t
+              WHERE t.call_start IS NOT NULL
+              GROUP BY EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC')
+              ORDER BY hour
+            `) as Promise<any[]>,
 
         // Day of week distribution (in UTC to match client-side filtering)
-        prisma.$queryRaw`
-          SELECT
-            TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day') as day,
-            EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC') as day_num,
-            COUNT(*) as count
-          FROM transcripts t
-          WHERE t.call_start IS NOT NULL
-          GROUP BY TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day'), EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC')
-          ORDER BY day_num
-        ` as Promise<any[]>,
+        (startDate && endDate
+          ? prisma.$queryRaw`
+              SELECT
+                TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day') as day,
+                EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC') as day_num,
+                COUNT(*) as count
+              FROM transcripts t
+              WHERE t.call_start IS NOT NULL
+                AND t.call_start >= ${startDate}::timestamp
+                AND t.call_start < (${endDate}::timestamp + INTERVAL '1 day')
+              GROUP BY TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day'), EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC')
+              ORDER BY day_num
+            `
+          : prisma.$queryRaw`
+              SELECT
+                TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day') as day,
+                EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC') as day_num,
+                COUNT(*) as count
+              FROM transcripts t
+              WHERE t.call_start IS NOT NULL
+              GROUP BY TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day'), EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC')
+              ORDER BY day_num
+            `) as Promise<any[]>,
 
         // Department distribution with sentiment
         prisma.$queryRaw`

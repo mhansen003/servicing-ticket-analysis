@@ -195,6 +195,10 @@ export default function TranscriptsAnalysis() {
   const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
+  // Call Timing Patterns date range filter
+  const [timingStartDate, setTimingStartDate] = useState('');
+  const [timingEndDate, setTimingEndDate] = useState('');
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -224,7 +228,12 @@ export default function TranscriptsAnalysis() {
 
         // Load live analysis data from database
         try {
-          const liveRes = await fetch('/api/transcript-analytics?type=summary');
+          const params = new URLSearchParams({ type: 'summary' });
+          if (timingStartDate && timingEndDate) {
+            params.append('startDate', timingStartDate);
+            params.append('endDate', timingEndDate);
+          }
+          const liveRes = await fetch(`/api/transcript-analytics?${params.toString()}`);
           if (liveRes.ok) {
             const liveData = await liveRes.json();
             if (liveData.success) {
@@ -294,7 +303,7 @@ export default function TranscriptsAnalysis() {
     };
 
     loadData();
-  }, []);
+  }, [timingStartDate, timingEndDate]);
 
   // Format duration from seconds
   const formatDuration = (seconds: number) => {
@@ -1289,25 +1298,60 @@ export default function TranscriptsAnalysis() {
 
       {/* Time Analysis */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
-        <button
-          onClick={() => toggleSection('time')}
-          className="w-full flex items-center justify-between p-4 hover:bg-white/[0.02] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-purple-500/20">
-              <Calendar className="h-5 w-5 text-purple-400" />
+        <div className="p-4 border-b border-white/[0.08]">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-purple-500/20">
+                <Calendar className="h-5 w-5 text-purple-400" />
+              </div>
+              <div className="text-left">
+                <h3 className="text-lg font-semibold text-white">Call Timing Patterns</h3>
+                <p className="text-sm text-gray-500">When are calls happening?</p>
+              </div>
             </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white">Call Timing Patterns</h3>
-              <p className="text-sm text-gray-500">When are calls happening?</p>
-            </div>
+            <button
+              onClick={() => toggleSection('time')}
+              className="hover:bg-white/[0.05] p-2 rounded-lg transition-colors"
+            >
+              {expandedSections.has('time') ? (
+                <ChevronUp className="h-5 w-5 text-gray-400" />
+              ) : (
+                <ChevronDown className="h-5 w-5 text-gray-400" />
+              )}
+            </button>
           </div>
-          {expandedSections.has('time') ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
-          )}
-        </button>
+
+          {/* Date Range Filter */}
+          <div className="flex items-center gap-3 text-sm">
+            <label className="text-gray-400">Filter by date range:</label>
+            <input
+              type="date"
+              value={timingStartDate}
+              onChange={(e) => setTimingStartDate(e.target.value)}
+              className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
+              placeholder="Start date"
+            />
+            <span className="text-gray-400">to</span>
+            <input
+              type="date"
+              value={timingEndDate}
+              onChange={(e) => setTimingEndDate(e.target.value)}
+              className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
+              placeholder="End date"
+            />
+            {(timingStartDate || timingEndDate) && (
+              <button
+                onClick={() => {
+                  setTimingStartDate('');
+                  setTimingEndDate('');
+                }}
+                className="text-blue-400 hover:text-blue-300 text-xs underline"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
 
         {expandedSections.has('time') && (
           <div className="p-6 pt-0 grid grid-cols-1 lg:grid-cols-2 gap-6">
