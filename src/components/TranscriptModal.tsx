@@ -266,7 +266,7 @@ export function TranscriptModal({
         let apiParams = `limit=100000&offset=0`;
 
         // Add filter params based on filterType
-        // Note: 'hour', 'dayOfWeek', and 'all' filters are not supported by the API
+        // Note: 'hour', 'dayOfWeek' filters are not supported by the API
         // and will be handled by client-side filtering in the filteredTranscripts useMemo
         if (filterValue) {
           switch (filterType) {
@@ -280,16 +280,21 @@ export function TranscriptModal({
               apiParams += `&agent=${encodeURIComponent(filterValue)}`;
               break;
             case 'agentSentiment':
+              apiParams += `&agentSentiment=${filterValue}`;
+              break;
             case 'customerSentiment':
-              // These filters will be applied client-side after loading all transcripts
+              apiParams += `&customerSentiment=${filterValue}`;
               break;
             case 'topic':
               apiParams += `&topic=${encodeURIComponent(filterValue)}`;
               break;
             case 'hour':
             case 'dayOfWeek':
-            case 'all':
               // These filters will be applied client-side after loading all transcripts
+              break;
+            case 'all':
+              // Text search - pass to API
+              apiParams += `&search=${encodeURIComponent(filterValue)}`;
               break;
           }
         }

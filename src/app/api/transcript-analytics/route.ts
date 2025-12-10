@@ -245,9 +245,12 @@ export async function GET(request: NextRequest) {
       const offset = parseInt(searchParams.get('offset') || '0');
       const date = searchParams.get('date');
       const sentiment = searchParams.get('sentiment');
+      const agentSentiment = searchParams.get('agentSentiment');
+      const customerSentiment = searchParams.get('customerSentiment');
       const topic = searchParams.get('topic');
       const department = searchParams.get('department');
       const agent = searchParams.get('agent');
+      const search = searchParams.get('search');
 
       // Build where clauses
       const transcriptWhere: any = {};
@@ -285,6 +288,14 @@ export async function GET(request: NextRequest) {
         ];
       }
 
+      if (agentSentiment) {
+        analysisWhere.agentSentiment = agentSentiment;
+      }
+
+      if (customerSentiment) {
+        analysisWhere.customerSentiment = customerSentiment;
+      }
+
       if (topic) {
         analysisWhere.aiDiscoveredTopic = {
           contains: topic,
@@ -299,18 +310,56 @@ export async function GET(request: NextRequest) {
         };
       }
 
-      // Fetch transcripts with analysis
-      const transcripts = await prisma.transcripts.findMany({
-        where: transcriptWhere,
-        take: limit,
-        skip: offset,
-        orderBy: {
-          call_start: 'desc',
-        },
-        include: {
-          TranscriptAnalysis: true,
-        },
-      });
+      // Handle text search separately with raw SQL
+      let transcripts;
+      if (search && search.trim()) {
+        const searchTerm = search.trim().toLowerCase();
+
+        // Use raw SQL to search within messages JSON and regular fields
+        const rawTranscripts = await prisma.$queryRaw<any[]>`
+          SELECT t.*
+          FROM transcripts t
+          WHERE (
+            LOWER(t.agent_name) LIKE ${'%' + searchTerm + '%'}
+            OR LOWER(t.department) LIKE ${'%' + searchTerm + '%'}
+            OR LOWER(t.vendor_call_key) LIKE ${'%' + searchTerm + '%'}
+            OR LOWER(t.disposition) LIKE ${'%' + searchTerm + '%'}
+            OR LOWER(t.messages::text) LIKE ${'%' + searchTerm + '%'}
+          )
+          ORDER BY t.call_start DESC NULLS LAST
+          LIMIT ${limit}
+          OFFSET ${offset}
+        `;
+
+        // Fetch TranscriptAnalysis for these transcripts
+        const vendorCallKeys = rawTranscripts.map(t => t.vendor_call_key);
+        const analyses = await prisma.transcriptAnalysis.findMany({
+          where: {
+            vendorCallKey: {
+              in: vendorCallKeys,
+            },
+          },
+        });
+
+        // Attach TranscriptAnalysis to transcripts
+        transcripts = rawTranscripts.map(t => ({
+          ...t,
+          TranscriptAnalysis: analyses.filter(a => a.vendorCallKey === t.vendor_call_key),
+        }));
+      } else {
+        // Use standard Prisma query for non-search requests
+        transcripts = await prisma.transcripts.findMany({
+          where: transcriptWhere,
+          take: limit,
+          skip: offset,
+          orderBy: {
+            call_start: 'desc',
+          },
+          include: {
+            TranscriptAnalysis: true,
+          },
+        });
+      }
 
       // All transcripts should have analysis if we filtered correctly
       const filtered = transcripts;
@@ -388,10 +437,120 @@ export async function GET(request: NextRequest) {
       });
     }
 
+    if (type === 'agents') {
+      // Get agent rankings based on AI analysis data
+      // Group by agent name and calculate stats from BOTH agent and customer sentiment
+      const agentData = await prisma.$queryRaw<any[]>`
+        SELECT
+          ta."agentName" as agent_name,
+          COUNT(*) as call_count,
+          AVG(t.duration_seconds) as avg_duration,
+
+          -- Agent Performance Metrics (used for scoring/ranking)
+          AVG(ta."agentSentimentScore") as avg_agent_score,
+          SUM(CASE WHEN ta."agentSentiment" = 'positive' THEN 1 ELSE 0 END) as agent_positive_count,
+          SUM(CASE WHEN ta."agentSentiment" = 'neutral' THEN 1 ELSE 0 END) as agent_neutral_count,
+          SUM(CASE WHEN ta."agentSentiment" = 'negative' THEN 1 ELSE 0 END) as agent_negative_count,
+
+          -- Customer Sentiment Metrics (for comparison)
+          AVG(ta."customerSentimentScore") as avg_customer_score,
+          SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as customer_positive_count,
+          SUM(CASE WHEN ta."customerSentiment" = 'neutral' THEN 1 ELSE 0 END) as customer_neutral_count,
+          SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as customer_negative_count,
+
+          MAX(t.department) as department
+        FROM "TranscriptAnalysis" ta
+        INNER JOIN transcripts t ON t.vendor_call_key = ta."vendorCallKey"
+        WHERE ta."agentName" IS NOT NULL AND ta."agentName" != 'Unknown'
+        GROUP BY ta."agentName"
+        HAVING COUNT(*) >= 1
+        ORDER BY avg_agent_score DESC NULLS LAST
+      `;
+
+      // Calculate performance tiers based on agent sentiment score
+      const calculatePerformanceTier = (score: number): string => {
+        if (score >= 0.8) return 'top';
+        if (score >= 0.6) return 'good';
+        if (score >= 0.4) return 'average';
+        if (score >= 0.2) return 'needs-improvement';
+        return 'critical';
+      };
+
+      // Transform data into agent stats with BOTH agent and customer sentiment
+      const allAgents = agentData.map((row: any) => {
+        const callCount = Number(row.call_count);
+
+        // Agent Performance Metrics (used for scoring)
+        const agentPositiveCount = Number(row.agent_positive_count);
+        const agentNeutralCount = Number(row.agent_neutral_count);
+        const agentNegativeCount = Number(row.agent_negative_count);
+        const avgAgentScore = Number(row.avg_agent_score) || 0;
+
+        // Customer Sentiment Metrics (for comparison)
+        const customerPositiveCount = Number(row.customer_positive_count);
+        const customerNeutralCount = Number(row.customer_neutral_count);
+        const customerNegativeCount = Number(row.customer_negative_count);
+        const avgCustomerScore = Number(row.avg_customer_score) || 0;
+
+        return {
+          name: row.agent_name,
+          department: row.department || 'Unknown',
+          callCount,
+          avgDuration: Number(row.avg_duration) || 0,
+
+          // Agent Performance (PRIMARY - used for ranking)
+          agentPositiveRate: (agentPositiveCount / callCount) * 100,
+          agentNegativeRate: (agentNegativeCount / callCount) * 100,
+          agentNeutralRate: (agentNeutralCount / callCount) * 100,
+          agentSentimentScore: avgAgentScore,
+
+          // Customer Sentiment (SECONDARY - for comparison)
+          customerPositiveRate: (customerPositiveCount / callCount) * 100,
+          customerNegativeRate: (customerNegativeCount / callCount) * 100,
+          customerNeutralRate: (customerNeutralCount / callCount) * 100,
+          customerSentimentScore: avgCustomerScore,
+
+          // Overall Performance Tier (based on agent score ONLY)
+          performanceTier: calculatePerformanceTier(avgAgentScore),
+          recentCalls: [], // Would need additional query for recent calls
+
+          // DEPRECATED: Keep for backwards compatibility
+          positiveRate: (agentPositiveCount / callCount) * 100,
+          negativeRate: (agentNegativeCount / callCount) * 100,
+          neutralRate: (agentNeutralCount / callCount) * 100,
+          sentimentScore: avgAgentScore,
+        };
+      });
+
+      // Calculate distribution
+      const distribution = allAgents.reduce(
+        (acc, agent) => {
+          acc[agent.performanceTier]++;
+          return acc;
+        },
+        { top: 0, good: 0, average: 0, needsImprovement: 0, critical: 0 } as Record<string, number>
+      );
+
+      const totalCalls = allAgents.reduce((sum, agent) => sum + agent.callCount, 0);
+
+      return NextResponse.json({
+        success: true,
+        data: {
+          totalAgents: allAgents.length,
+          totalCalls,
+          topPerformers: allAgents.filter(a => a.performanceTier === 'top').slice(0, 10),
+          needsImprovement: allAgents.filter(a => a.performanceTier === 'needs-improvement' || a.performanceTier === 'critical').slice(0, 10),
+          highestVolume: [...allAgents].sort((a, b) => b.callCount - a.callCount).slice(0, 10),
+          allAgents,
+          distribution,
+        },
+      });
+    }
+
     return NextResponse.json(
       {
         success: false,
-        message: 'Invalid type parameter. Use "summary" or "transcripts"',
+        message: 'Invalid type parameter. Use "summary", "transcripts", or "agents"',
       },
       { status: 400 }
     );
