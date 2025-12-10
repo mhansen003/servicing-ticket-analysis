@@ -230,6 +230,8 @@ export default function TranscriptsAnalysis() {
             if (liveData.success) {
               setLiveAnalysis(liveData);
               // Convert to deepAnalysis format for compatibility
+              console.log('📊 Topics data from API:', liveData.topics);
+              console.log('📊 Uncategorized data:', liveData.topics?.uncategorized);
               setDeepAnalysis({
                 metadata: {
                   totalTickets: liveData.metadata.totalTranscripts,
