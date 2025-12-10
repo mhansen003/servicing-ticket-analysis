@@ -223,9 +223,9 @@ export function AgentProfileCard({
             />
           </div>
           <div className="flex justify-between text-[9px] mt-1">
-            <span className="text-emerald-400">{agentPos.toFixed(0)}%</span>
-            <span className="text-gray-500">{agentNeut.toFixed(0)}%</span>
-            <span className="text-red-400">{agentNeg.toFixed(0)}%</span>
+            <span className="text-emerald-400">{Math.round(agentPos)}%</span>
+            <span className="text-gray-500">{Math.round(agentNeut)}%</span>
+            <span className="text-red-400">{Math.round(agentNeg)}%</span>
           </div>
         </div>
 
@@ -248,9 +248,9 @@ export function AgentProfileCard({
               />
             </div>
             <div className="flex justify-between text-[9px] mt-1">
-              <span className="text-emerald-400/70">{custPos.toFixed(0)}%</span>
-              <span className="text-gray-500/70">{custNeut.toFixed(0)}%</span>
-              <span className="text-red-400/70">{custNeg.toFixed(0)}%</span>
+              <span className="text-emerald-400/70">{Math.round(custPos)}%</span>
+              <span className="text-gray-500/70">{Math.round(custNeut)}%</span>
+              <span className="text-red-400/70">{Math.round(custNeg)}%</span>
             </div>
           </div>
         )}

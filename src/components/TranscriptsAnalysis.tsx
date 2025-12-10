@@ -157,6 +157,7 @@ interface DeepAnalysisData {
   topics: {
     mainTopics: Array<{ name: string; count: number; avgConfidence: number }>;
     subcategories: Array<{ name: string; count: number; parentTopic: string }>;
+    uncategorized?: Array<{ parentTopic: string; count: number }>;
   };
   tickets: Array<{
     ticketKey: string;
@@ -191,7 +192,7 @@ export default function TranscriptsAnalysis() {
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
+  const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
   useEffect(() => {
@@ -394,7 +395,7 @@ export default function TranscriptsAnalysis() {
   };
 
   // Drill-down handlers
-  const openDrillDown = (filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek', filterValue: string, title: string) => {
+  const openDrillDown = (filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek', filterValue: string, title: string) => {
     setModalFilterType(filterType);
     setModalFilterValue(filterValue);
     setModalTitle(title);
@@ -1207,6 +1208,59 @@ export default function TranscriptsAnalysis() {
                                   </div>
                                 );
                               })}
+
+                            {/* No Subcategory Bar - Show calls without subcategories */}
+                            {(() => {
+                              const uncategorizedForTopic = deepAnalysis.topics.uncategorized?.find(
+                                (u: any) => u.parentTopic === topic.name
+                              );
+                              if (uncategorizedForTopic && uncategorizedForTopic.count > 0) {
+                                const maxSubCount = Math.max(...topicSubcategories.map(s => s.count));
+                                const uncatPercentage = (uncategorizedForTopic.count / maxSubCount) * 100;
+
+                                return (
+                                  <div
+                                    className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-1.5 group"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      openDrillDown('topicNoSubcategory', topic.name, `${topic.name} - No Subcategory`);
+                                    }}
+                                  >
+                                    <div className="w-32 min-w-[8rem]">
+                                      <span className="text-xs text-gray-400 italic font-medium truncate group-hover:text-purple-300 transition-colors">
+                                        No Subcategory
+                                      </span>
+                                    </div>
+                                    <div className="flex-1 relative">
+                                      <div className="h-6 bg-gray-800/50 rounded-md overflow-hidden">
+                                        <div
+                                          className="h-full rounded-md transition-all duration-300 hover:opacity-80 relative"
+                                          style={{
+                                            width: `${uncatPercentage}%`,
+                                            backgroundColor: '#6b7280',
+                                            opacity: 0.6,
+                                          }}
+                                        >
+                                          {uncatPercentage > 20 && (
+                                            <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-medium text-white">
+                                              {uncategorizedForTopic.count.toLocaleString()}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div className="w-16 text-right">
+                                      {uncatPercentage <= 20 && (
+                                        <span className="text-xs font-semibold text-gray-400">
+                                          {uncategorizedForTopic.count.toLocaleString()}
+                                        </span>
+                                      )}
+                                    </div>
+                                  </div>
+                                );
+                              }
+                              return null;
+                            })()}
                           </div>
                         )}
                       </div>

@@ -28,6 +28,7 @@ export async function GET(request: NextRequest) {
         customerSentiment,
         topicsData,
         subcategoriesData,
+        uncategorizedData,
         dailyTrendsRaw,
         hourlyDataRaw,
         dayOfWeekDataRaw,
@@ -87,6 +88,18 @@ export async function GET(request: NextRequest) {
             aiDiscoveredSubcategory: {
               not: null,
             },
+          },
+        }),
+
+        // Uncategorized calls (calls with topic but no subcategory)
+        prisma.transcriptAnalysis.groupBy({
+          by: ['aiDiscoveredTopic'],
+          _count: true,
+          where: {
+            aiDiscoveredTopic: {
+              not: null,
+            },
+            aiDiscoveredSubcategory: null,
           },
         }),
 
@@ -230,6 +243,10 @@ export async function GET(request: NextRequest) {
             name: s.aiDiscoveredSubcategory || 'Unknown',
             count: s._count,
             parentTopic: s.aiDiscoveredTopic || 'Unknown',
+          })),
+          uncategorized: uncategorizedData.map(u => ({
+            parentTopic: u.aiDiscoveredTopic || 'Unknown',
+            count: u._count,
           })),
         },
         dailyTrends,

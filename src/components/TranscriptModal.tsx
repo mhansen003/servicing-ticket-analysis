@@ -153,7 +153,7 @@ interface TranscriptModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
+  filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
   filterValue: string;
 }
 
@@ -622,6 +622,12 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               t.analysis?.aiDiscoveredSubcategory?.toLowerCase() === filterValue.toLowerCase()
             );
             return oldTopicMatch || newTopicMatch;
+          case 'topicNoSubcategory':
+            // Filter for calls with this topic but NO subcategory
+            return (
+              t.analysis?.aiDiscoveredTopic === filterValue &&
+              (t.analysis?.aiDiscoveredSubcategory === null || t.analysis?.aiDiscoveredSubcategory === '')
+            );
           case 'department':
             return t.department === filterValue;
           case 'agent':
