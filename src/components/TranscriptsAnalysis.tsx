@@ -1011,55 +1011,100 @@ export default function TranscriptsAnalysis() {
                   </span>
                 </h3>
                 <p className="text-sm text-gray-400">
-                  {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • {deepAnalysis.topics.mainTopics.length} unique topics found
+                  {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed • {deepAnalysis.topics.mainTopics.length} unique topics found • <span className="text-purple-400">Click to drill down</span>
                 </p>
               </div>
             </div>
           </div>
-          <div className="p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {deepAnalysis.topics.mainTopics.slice(0, 20).map((topic, index) => (
+          <div className="p-6 space-y-3">
+            {deepAnalysis.topics.mainTopics.slice(0, 20).map((topic, index) => {
+              const topicSubcategories = deepAnalysis.topics.subcategories.filter(
+                (sub) => sub.parentTopic === topic.name
+              );
+              const isExpanded = expandedSections.has(`topic-${topic.name}`);
+
+              return (
                 <div
                   key={topic.name}
-                  className="flex items-center gap-3 p-3 bg-[#131a29] rounded-xl border border-white/[0.08] hover:border-purple-500/30 transition-colors"
+                  className="bg-[#131a29] rounded-xl border border-white/[0.08] overflow-hidden"
                 >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: TOPIC_COLORS[index % TOPIC_COLORS.length] }}
-                      />
-                      <p className="text-sm font-medium text-white truncate">{topic.name}</p>
+                  {/* Main Topic Bar */}
+                  <div
+                    className="flex items-center gap-3 p-3 cursor-pointer hover:bg-white/[0.02] transition-colors group"
+                    onClick={() => {
+                      // If has subcategories, toggle expansion
+                      if (topicSubcategories.length > 0) {
+                        toggleSection(`topic-${topic.name}`);
+                      } else {
+                        // Otherwise, open modal directly
+                        openDrillDown('topic', topic.name, `${topic.name} Calls`);
+                      }
+                    }}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div
+                          className="w-3 h-3 rounded-full"
+                          style={{ backgroundColor: TOPIC_COLORS[index % TOPIC_COLORS.length] }}
+                        />
+                        <p className="text-sm font-medium text-white group-hover:text-purple-300 transition-colors">
+                          {topic.name}
+                        </p>
+                        {topicSubcategories.length > 0 && (
+                          <span className="text-xs text-gray-500">
+                            ({topicSubcategories.length} subcategories)
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2 text-xs text-gray-500">
+                        <span>{topic.count.toLocaleString()} tickets</span>
+                        <span>•</span>
+                        <span>{(topic.avgConfidence * 100).toFixed(0)}% confidence</span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
-                      <span>{topic.count.toLocaleString()} tickets</span>
-                      <span>•</span>
-                      <span>{(topic.avgConfidence * 100).toFixed(0)}% confidence</span>
+                    <div className="flex items-center gap-2">
+                      <div className="text-lg font-bold text-purple-400">{topic.count}</div>
+                      {topicSubcategories.length > 0 && (
+                        isExpanded ? (
+                          <ChevronUp className="h-4 w-4 text-gray-400" />
+                        ) : (
+                          <ChevronDown className="h-4 w-4 text-gray-400" />
+                        )
+                      )}
+                      {topicSubcategories.length === 0 && (
+                        <MousePointerClick className="h-4 w-4 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      )}
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-lg font-bold text-purple-400">{topic.count}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
 
-            {deepAnalysis.topics.subcategories.length > 0 && (
-              <div className="mt-6">
-                <h4 className="text-sm font-medium text-gray-400 mb-3">Subcategories ({deepAnalysis.topics.subcategories.length} total)</h4>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-                  {deepAnalysis.topics.subcategories.slice(0, 20).map((sub) => (
-                    <div
-                      key={sub.name}
-                      className="px-3 py-2 bg-[#0a0e17] rounded-lg border border-white/[0.06] text-xs"
-                    >
-                      <div className="text-white font-medium truncate">{sub.name}</div>
-                      <div className="text-gray-500">{sub.count} tickets</div>
+                  {/* Subcategories (collapsible) */}
+                  {isExpanded && topicSubcategories.length > 0 && (
+                    <div className="px-3 pb-3 space-y-1 bg-[#0a0e17]/50">
+                      {topicSubcategories.map((sub) => (
+                        <div
+                          key={sub.name}
+                          className="flex items-center gap-2 p-2 pl-8 bg-[#0a0e17] rounded-lg border border-white/[0.04] hover:border-purple-500/30 cursor-pointer transition-colors group"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openDrillDown('topic', sub.name, `${sub.name} Calls`);
+                          }}
+                        >
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-medium text-gray-300 group-hover:text-purple-300 transition-colors truncate">
+                              {sub.name}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs text-gray-500">{sub.count} tickets</span>
+                            <MousePointerClick className="h-3 w-3 text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
+                  )}
                 </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
       )}
