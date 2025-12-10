@@ -502,6 +502,75 @@ export default function TranscriptsAnalysis() {
         </div>
       </div>
 
+      {/* Global Date Range Filter */}
+      <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20 sticky top-4 z-10 backdrop-blur-sm">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+            <Calendar className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-xl font-bold text-white">Global Date Range Filter</h2>
+            <p className="text-sm text-gray-400">Filter all data below by date range (Default: Last 7 days)</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">From:</label>
+            <input
+              type="date"
+              value={globalStartDate}
+              onChange={(e) => setGlobalStartDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">To:</label>
+            <input
+              type="date"
+              value={globalEndDate}
+              onChange={(e) => setGlobalEndDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <button
+            onClick={applyGlobalFilter}
+            disabled={!globalStartDate || !globalEndDate || loadingFilteredData}
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
+          >
+            {loadingFilteredData ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              <>
+                <Search className="h-4 w-4" />
+                Apply Filter
+              </>
+            )}
+          </button>
+          {(appliedStartDate !== getDefaultStartDate() || appliedEndDate !== getDefaultEndDate()) && (
+            <button
+              onClick={clearGlobalFilter}
+              className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
+            >
+              <X className="h-3 w-3" />
+              Reset to Default (7 days)
+            </button>
+          )}
+        </div>
+        {appliedStartDate && appliedEndDate && (
+          <div className="mt-3 text-sm">
+            <span className="text-green-400 font-medium">
+              ✓ Showing data from {appliedStartDate} to {appliedEndDate}
+            </span>
+            <span className="text-gray-500 ml-2">
+              ({Math.ceil((new Date(appliedEndDate).getTime() - new Date(appliedStartDate).getTime()) / (1000 * 60 * 60 * 24)) + 1} days)
+            </span>
+          </div>
+        )}
+      </div>
+
       {/* Calendar Sentiment View */}
       <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
         <button
@@ -813,75 +882,6 @@ export default function TranscriptsAnalysis() {
                 return cells;
               })()}
             </div>
-          </div>
-        )}
-      </div>
-
-      {/* Global Date Range Filter */}
-      <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20 sticky top-4 z-10 backdrop-blur-sm">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
-            <Calendar className="h-6 w-6 text-white" />
-          </div>
-          <div className="flex-1">
-            <h2 className="text-xl font-bold text-white">Global Date Range Filter</h2>
-            <p className="text-sm text-gray-400">Filter all data below by date range (Default: Last 7 days)</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-300 font-medium">From:</label>
-            <input
-              type="date"
-              value={globalStartDate}
-              onChange={(e) => setGlobalStartDate(e.target.value)}
-              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-sm text-gray-300 font-medium">To:</label>
-            <input
-              type="date"
-              value={globalEndDate}
-              onChange={(e) => setGlobalEndDate(e.target.value)}
-              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
-            />
-          </div>
-          <button
-            onClick={applyGlobalFilter}
-            disabled={!globalStartDate || !globalEndDate || loadingFilteredData}
-            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
-          >
-            {loadingFilteredData ? (
-              <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Loading...
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4" />
-                Apply Filter
-              </>
-            )}
-          </button>
-          {(appliedStartDate !== getDefaultStartDate() || appliedEndDate !== getDefaultEndDate()) && (
-            <button
-              onClick={clearGlobalFilter}
-              className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
-            >
-              <X className="h-3 w-3" />
-              Reset to Default (7 days)
-            </button>
-          )}
-        </div>
-        {appliedStartDate && appliedEndDate && (
-          <div className="mt-3 text-sm">
-            <span className="text-green-400 font-medium">
-              ✓ Showing data from {appliedStartDate} to {appliedEndDate}
-            </span>
-            <span className="text-gray-500 ml-2">
-              ({Math.ceil((new Date(appliedEndDate).getTime() - new Date(appliedStartDate).getTime()) / (1000 * 60 * 60 * 24)) + 1} days)
-            </span>
           </div>
         )}
       </div>
