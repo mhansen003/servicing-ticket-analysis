@@ -198,6 +198,9 @@ export default function TranscriptsAnalysis() {
   // Call Timing Patterns date range filter
   const [timingStartDate, setTimingStartDate] = useState('');
   const [timingEndDate, setTimingEndDate] = useState('');
+  const [appliedStartDate, setAppliedStartDate] = useState('');
+  const [appliedEndDate, setAppliedEndDate] = useState('');
+  const [loadingTimingData, setLoadingTimingData] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -229,9 +232,9 @@ export default function TranscriptsAnalysis() {
         // Load live analysis data from database
         try {
           const params = new URLSearchParams({ type: 'summary' });
-          if (timingStartDate && timingEndDate) {
-            params.append('startDate', timingStartDate);
-            params.append('endDate', timingEndDate);
+          if (appliedStartDate && appliedEndDate) {
+            params.append('startDate', appliedStartDate);
+            params.append('endDate', appliedEndDate);
           }
           const liveRes = await fetch(`/api/transcript-analytics?${params.toString()}`);
           if (liveRes.ok) {
@@ -303,7 +306,7 @@ export default function TranscriptsAnalysis() {
     };
 
     loadData();
-  }, [timingStartDate, timingEndDate]);
+  }, []);
 
   // Format duration from seconds
   const formatDuration = (seconds: number) => {
@@ -424,6 +427,50 @@ export default function TranscriptsAnalysis() {
 
   const handleAgentClick = (agentName: string) => {
     openDrillDown('agent', agentName, `Calls by ${agentName}`);
+  };
+
+  // Apply timing filter
+  const applyTimingFilter = async () => {
+    if (!timingStartDate || !timingEndDate) {
+      alert('Please select both start and end dates');
+      return;
+    }
+    setLoadingTimingData(true);
+    setAppliedStartDate(timingStartDate);
+    setAppliedEndDate(timingEndDate);
+
+    // Fetch timing data with date filter
+    try {
+      const params = new URLSearchParams({ type: 'summary' });
+      params.append('startDate', timingStartDate);
+      params.append('endDate', timingEndDate);
+      const res = await fetch(`/api/transcript-analytics?${params.toString()}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          setLiveAnalysis(data);
+          setDeepAnalysis(prev => ({
+            ...prev,
+            byHour: data.byHour || {},
+            byDayOfWeek: data.byDayOfWeek || {},
+          }));
+        }
+      }
+    } catch (err) {
+      console.error('Failed to apply timing filter:', err);
+    } finally {
+      setLoadingTimingData(false);
+    }
+  };
+
+  // Clear timing filter
+  const clearTimingFilter = () => {
+    setTimingStartDate('');
+    setTimingEndDate('');
+    setAppliedStartDate('');
+    setAppliedEndDate('');
+    // Reload data without filter
+    window.location.reload();
   };
 
   if (loading) {
@@ -1340,16 +1387,25 @@ export default function TranscriptsAnalysis() {
               className="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 text-sm"
               placeholder="End date"
             />
-            {(timingStartDate || timingEndDate) && (
+            <button
+              onClick={applyTimingFilter}
+              disabled={!timingStartDate || !timingEndDate || loadingTimingData}
+              className="px-3 py-1 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded text-sm transition-colors"
+            >
+              {loadingTimingData ? 'Loading...' : 'Apply Filter'}
+            </button>
+            {(appliedStartDate || appliedEndDate) && (
               <button
-                onClick={() => {
-                  setTimingStartDate('');
-                  setTimingEndDate('');
-                }}
+                onClick={clearTimingFilter}
                 className="text-blue-400 hover:text-blue-300 text-xs underline"
               >
-                Clear
+                Clear Filter
               </button>
+            )}
+            {(appliedStartDate && appliedEndDate) && (
+              <span className="text-xs text-green-400">
+                Filtered: {appliedStartDate} to {appliedEndDate}
+              </span>
             )}
           </div>
         </div>

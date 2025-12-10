@@ -58,7 +58,7 @@ export default function Dashboard() {
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
     { id: 'agents' as TabType, label: 'Agents', icon: Users, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
-    { id: 'ai' as TabType, label: 'Ask AI', icon: Brain, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
+    // { id: 'ai' as TabType, label: 'Ask AI', icon: Brain, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
   ];
 
   return (
