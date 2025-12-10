@@ -15,6 +15,7 @@ import {
   Calendar,
   Download,
 } from 'lucide-react';
+import TranscriptModal from './TranscriptModal';
 
 interface TranscriptRecord {
   id: string;
@@ -59,6 +60,10 @@ export default function TranscriptDataGrid() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Modal state
+  const [selectedTranscript, setSelectedTranscript] = useState<TranscriptRecord | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Filters
   const [searchQuery, setSearchQuery] = useState('');
   const [sentimentFilter, setSentimentFilter] = useState<string>('all');
@@ -82,15 +87,21 @@ export default function TranscriptDataGrid() {
   const [sortField, setSortField] = useState<SortField>('callStart');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
-  // Load transcripts
+  // Load transcripts from database API
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/data/transcript-analysis.json');
+        // Load latest 1000 transcripts from database
+        const response = await fetch('/api/transcript-analytics?type=transcripts&limit=1000');
         if (!response.ok) throw new Error('Failed to load transcript data');
-        const data = await response.json();
-        setTranscripts(data);
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setTranscripts(result.data);
+        } else {
+          throw new Error(result.message || 'Failed to load data');
+        }
         setLoading(false);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load data');
@@ -407,7 +418,11 @@ export default function TranscriptDataGrid() {
               filteredTranscripts.map((transcript) => (
                 <tr
                   key={transcript.id}
-                  className="hover:bg-white/[0.02] transition-colors"
+                  onClick={() => {
+                    setSelectedTranscript(transcript);
+                    setIsModalOpen(true);
+                  }}
+                  className="hover:bg-white/[0.02] transition-colors cursor-pointer"
                 >
                   <td className="px-4 py-3 text-sm font-mono text-blue-400">
                     {transcript.vendorCallKey}

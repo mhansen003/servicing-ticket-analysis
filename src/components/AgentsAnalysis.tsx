@@ -113,7 +113,7 @@ export default function AgentsAnalysis() {
   const [loadingProfile, setLoadingProfile] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortBy, setSortBy] = useState<'performance' | 'calls'>('performance'); // Default to top performers
+  const [sortBy, setSortBy] = useState<'performance' | 'calls' | 'lowPerformance' | 'duration'>('performance'); // Default to top performers
 
   // Modal state
   const [transcriptModalOpen, setTranscriptModalOpen] = useState(false);
@@ -231,8 +231,12 @@ export default function AgentsAnalysis() {
     // Sort based on selected criteria
     if (sortBy === 'performance') {
       agents.sort((a, b) => b.sentimentScore - a.sentimentScore); // Top performers first
-    } else {
+    } else if (sortBy === 'lowPerformance') {
+      agents.sort((a, b) => a.sentimentScore - b.sentimentScore); // Lowest performers first
+    } else if (sortBy === 'calls') {
       agents.sort((a, b) => b.callCount - a.callCount); // Most calls first
+    } else if (sortBy === 'duration') {
+      agents.sort((a, b) => b.avgDuration - a.avgDuration); // Longest avg duration first
     }
 
     return agents;
@@ -304,33 +308,57 @@ export default function AgentsAnalysis() {
             </div>
           </div>
           <div className="grid grid-cols-3 gap-4">
-            <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/30">
-              <div className="text-2xl font-bold text-green-400">
+            <button
+              onClick={() => {
+                setTranscriptFilterAgent('');
+                setTranscriptModalOpen(true);
+                // Will need to add sentiment filter to modal
+              }}
+              className="p-4 bg-green-500/10 rounded-lg border border-green-500/30 hover:bg-green-500/20 transition-all cursor-pointer text-left group"
+            >
+              <div className="text-2xl font-bold text-green-400 group-hover:text-green-300">
                 {deepAnalysis.summary.agentSentiment.positive.toLocaleString()}
               </div>
-              <div className="text-sm text-green-300">Positive Agent Performance</div>
+              <div className="text-sm text-green-300 group-hover:text-green-200">Positive Agent Performance</div>
               <div className="text-xs text-gray-500 mt-1">
                 {((deepAnalysis.summary.agentSentiment.positive / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
               </div>
-            </div>
-            <div className="p-4 bg-gray-500/10 rounded-lg border border-gray-500/30">
-              <div className="text-2xl font-bold text-gray-400">
+              <div className="text-[10px] text-green-400/60 mt-2 group-hover:text-green-300">Click to view calls →</div>
+            </button>
+            <button
+              onClick={() => {
+                setTranscriptFilterAgent('');
+                setTranscriptModalOpen(true);
+                // Will need to add sentiment filter to modal
+              }}
+              className="p-4 bg-gray-500/10 rounded-lg border border-gray-500/30 hover:bg-gray-500/20 transition-all cursor-pointer text-left group"
+            >
+              <div className="text-2xl font-bold text-gray-400 group-hover:text-gray-300">
                 {deepAnalysis.summary.agentSentiment.neutral.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-300">Neutral Agent Performance</div>
+              <div className="text-sm text-gray-300 group-hover:text-gray-200">Neutral Agent Performance</div>
               <div className="text-xs text-gray-500 mt-1">
                 {((deepAnalysis.summary.agentSentiment.neutral / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
               </div>
-            </div>
-            <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/30">
-              <div className="text-2xl font-bold text-red-400">
+              <div className="text-[10px] text-gray-400/60 mt-2 group-hover:text-gray-300">Click to view calls →</div>
+            </button>
+            <button
+              onClick={() => {
+                setTranscriptFilterAgent('');
+                setTranscriptModalOpen(true);
+                // Will need to add sentiment filter to modal
+              }}
+              className="p-4 bg-red-500/10 rounded-lg border border-red-500/30 hover:bg-red-500/20 transition-all cursor-pointer text-left group"
+            >
+              <div className="text-2xl font-bold text-red-400 group-hover:text-red-300">
                 {deepAnalysis.summary.agentSentiment.negative.toLocaleString()}
               </div>
-              <div className="text-sm text-red-300">Negative Agent Performance</div>
+              <div className="text-sm text-red-300 group-hover:text-red-200">Negative Agent Performance</div>
               <div className="text-xs text-gray-500 mt-1">
                 {((deepAnalysis.summary.agentSentiment.negative / deepAnalysis.metadata.analyzedTickets) * 100).toFixed(1)}%
               </div>
-            </div>
+              <div className="text-[10px] text-red-400/60 mt-2 group-hover:text-red-300">Click to view calls →</div>
+            </button>
           </div>
         </div>
       )}
@@ -339,44 +367,46 @@ export default function AgentsAnalysis() {
       {rankings && !selectedAgent && displayedAgents.length > 0 && (
         <div className="p-4 bg-[#131a29] rounded-xl border border-white/[0.08]">
           <h3 className="text-sm font-medium text-gray-400 mb-3">Performance Distribution (Ranked Agents Only)</h3>
-          <div className="flex items-center gap-1 h-8 rounded-lg overflow-hidden bg-[#0f1420]">
-            <div
-              className="h-full bg-emerald-500 flex items-center justify-center"
-              style={{ width: `${(rankedDistribution.top / displayedAgents.length) * 100}%` }}
-            >
-              <span className="text-xs font-medium text-white">{rankedDistribution.top}</span>
+          <div className="flex items-center gap-2 h-8">
+            {/* Top Performers */}
+            <div className="flex-1 flex flex-col">
+              <div className="h-8 bg-emerald-500 rounded-lg flex items-center justify-center relative">
+                <span className="text-xs font-medium text-white">{rankedDistribution.top}</span>
+              </div>
+              <span className="text-[10px] text-emerald-400 mt-1 text-center">Top</span>
             </div>
-            <div
-              className="h-full bg-blue-500 flex items-center justify-center"
-              style={{ width: `${(rankedDistribution.good / displayedAgents.length) * 100}%` }}
-            >
-              <span className="text-xs font-medium text-white">{rankedDistribution.good}</span>
+
+            {/* Good */}
+            <div className="flex-1 flex flex-col">
+              <div className="h-8 bg-blue-500 rounded-lg flex items-center justify-center relative">
+                <span className="text-xs font-medium text-white">{rankedDistribution.good}</span>
+              </div>
+              <span className="text-[10px] text-blue-400 mt-1 text-center">Good</span>
             </div>
-            <div
-              className="h-full bg-gray-500 flex items-center justify-center"
-              style={{ width: `${(rankedDistribution.average / displayedAgents.length) * 100}%` }}
-            >
-              <span className="text-xs font-medium text-white">{rankedDistribution.average}</span>
+
+            {/* Average */}
+            <div className="flex-1 flex flex-col">
+              <div className="h-8 bg-gray-500 rounded-lg flex items-center justify-center relative">
+                <span className="text-xs font-medium text-white">{rankedDistribution.average}</span>
+              </div>
+              <span className="text-[10px] text-gray-400 mt-1 text-center">Average</span>
             </div>
-            <div
-              className="h-full bg-amber-500 flex items-center justify-center"
-              style={{ width: `${(rankedDistribution.needsImprovement / displayedAgents.length) * 100}%` }}
-            >
-              <span className="text-xs font-medium text-white">{rankedDistribution.needsImprovement}</span>
+
+            {/* Needs Improvement */}
+            <div className="flex-1 flex flex-col">
+              <div className="h-8 bg-amber-500 rounded-lg flex items-center justify-center relative">
+                <span className="text-xs font-medium text-white">{rankedDistribution.needsImprovement}</span>
+              </div>
+              <span className="text-[10px] text-amber-400 mt-1 text-center">Needs Imp.</span>
             </div>
-            <div
-              className="h-full bg-red-500 flex items-center justify-center"
-              style={{ width: `${(rankedDistribution.critical / displayedAgents.length) * 100}%` }}
-            >
-              <span className="text-xs font-medium text-white">{rankedDistribution.critical}</span>
+
+            {/* Critical */}
+            <div className="flex-1 flex flex-col">
+              <div className="h-8 bg-red-500 rounded-lg flex items-center justify-center relative">
+                <span className="text-xs font-medium text-white">{rankedDistribution.critical}</span>
+              </div>
+              <span className="text-[10px] text-red-400 mt-1 text-center">Critical</span>
             </div>
-          </div>
-          <div className="flex justify-between mt-2 text-xs text-gray-500">
-            <span className="text-emerald-400">Top Performer</span>
-            <span className="text-blue-400">Good</span>
-            <span className="text-gray-400">Average</span>
-            <span className="text-amber-400">Needs Improvement</span>
-            <span className="text-red-400">Critical</span>
           </div>
         </div>
       )}
@@ -399,11 +429,13 @@ export default function AgentsAnalysis() {
             </div>
             <select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'performance' | 'calls')}
+              onChange={(e) => setSortBy(e.target.value as 'performance' | 'calls' | 'lowPerformance' | 'duration')}
               className="px-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white text-sm focus:outline-none focus:border-blue-500/50"
             >
-              <option value="performance">Top Performers</option>
-              <option value="calls">Most Calls</option>
+              <option value="performance">🏆 Top Performers</option>
+              <option value="lowPerformance">⚠️ Lowest Performers</option>
+              <option value="calls">📞 Most Calls</option>
+              <option value="duration">⏱️ Longest Avg Duration</option>
             </select>
           </div>
 
