@@ -598,27 +598,63 @@ export default function AgentsAnalysis() {
                     className="grid grid-cols-12 gap-4 p-4 cursor-pointer items-center"
                   >
                     {/* Agent Name & Email */}
-                    <div className="col-span-3">
+                    <div className="col-span-2">
                       <div className="font-medium text-white">{agent.name}</div>
                       {agent.email && (
-                        <div className="text-xs text-gray-400">{agent.email}</div>
+                        <div className="text-xs text-gray-400 truncate">{agent.email}</div>
                       )}
                     </div>
 
                     {/* Stats */}
-                    <div className="col-span-2 text-center">
+                    <div className="col-span-1 text-center">
                       <div className="flex items-center gap-1 justify-center">
                         <Phone className="h-3 w-3 text-blue-400" />
                         <span className="text-white font-medium">{agent.callCount}</span>
                       </div>
-                      <div className="text-xs text-gray-400">Total Calls</div>
+                      <div className="text-xs text-gray-400">Calls</div>
                     </div>
 
-                    <div className="col-span-2 text-center">
+                    <div className="col-span-1 text-center">
                       <div className="text-white font-medium">
-                        {Math.floor(agent.avgDuration / 60)}m {agent.avgDuration % 60}s
+                        {Math.round(agent.avgDuration / 60)}m
                       </div>
-                      <div className="text-xs text-gray-400">Avg Duration</div>
+                      <div className="text-xs text-gray-400">Duration</div>
+                    </div>
+
+                    {/* Performance Bar */}
+                    <div className="col-span-4">
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                          <span>Performance</span>
+                          <span className="text-white font-medium">{(agentScore * 100).toFixed(0)}%</span>
+                        </div>
+                        <div className="flex h-2 rounded-full overflow-hidden bg-gray-700/50">
+                          {/* Positive */}
+                          <div
+                            className="bg-green-500"
+                            style={{
+                              width: `${((agent.agentPositiveRate ?? agent.positiveRate) * 100).toFixed(1)}%`,
+                            }}
+                            title={`Positive: ${((agent.agentPositiveRate ?? agent.positiveRate) * 100).toFixed(1)}%`}
+                          />
+                          {/* Neutral */}
+                          <div
+                            className="bg-gray-500"
+                            style={{
+                              width: `${((agent.agentNeutralRate ?? agent.neutralRate) * 100).toFixed(1)}%`,
+                            }}
+                            title={`Neutral: ${((agent.agentNeutralRate ?? agent.neutralRate) * 100).toFixed(1)}%`}
+                          />
+                          {/* Negative */}
+                          <div
+                            className="bg-red-500"
+                            style={{
+                              width: `${((agent.agentNegativeRate ?? agent.negativeRate) * 100).toFixed(1)}%`,
+                            }}
+                            title={`Negative: ${((agent.agentNegativeRate ?? agent.negativeRate) * 100).toFixed(1)}%`}
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     {/* Performance Tier Badge */}
@@ -637,19 +673,14 @@ export default function AgentsAnalysis() {
                         }`}
                       >
                         {agent.performanceTier === 'needs-improvement'
-                          ? 'Needs Improvement'
+                          ? 'Needs Imp.'
                           : agent.performanceTier.charAt(0).toUpperCase() + agent.performanceTier.slice(1)}
                       </span>
                     </div>
 
-                    {/* Agent Score */}
-                    <div className="col-span-2 text-center">
-                      <div className="text-white font-medium">{(agentScore * 100).toFixed(0)}%</div>
-                      <div className="text-xs text-gray-400">Agent Score</div>
-                    </div>
-
                     {/* Expand Indicator */}
-                    <div className="col-span-1 flex justify-end">
+                    <div className="col-span-2 flex justify-end items-center gap-2">
+                      <span className="text-xs text-gray-400">Details</span>
                       <ChevronUp
                         className={`h-5 w-5 text-gray-400 transition-transform ${
                           isExpanded ? 'rotate-180' : ''
