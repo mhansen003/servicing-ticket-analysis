@@ -409,17 +409,13 @@ export async function GET(request: NextRequest) {
       }
 
       if (department) {
-        transcriptWhere.department = {
-          contains: department,
-          mode: 'insensitive',
-        };
+        // Exact match - prevents "Service" from matching "Customer Service", etc.
+        transcriptWhere.department = department;
       }
 
       if (agent) {
-        transcriptWhere.agent_name = {
-          contains: agent,
-          mode: 'insensitive',
-        };
+        // Exact match - prevents "John" from matching "John Smith", "Johnny", etc.
+        transcriptWhere.agent_name = agent;
       }
 
       if (sentiment) {
