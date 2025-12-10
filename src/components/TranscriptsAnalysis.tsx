@@ -1560,6 +1560,8 @@ export default function TranscriptsAnalysis() {
         title={modalTitle}
         filterType={modalFilterType}
         filterValue={modalFilterValue}
+        startDate={appliedStartDate}
+        endDate={appliedEndDate}
       />
     </div>
   );

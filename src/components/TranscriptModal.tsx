@@ -155,6 +155,8 @@ interface TranscriptModalProps {
   title: string;
   filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
   filterValue: string;
+  startDate?: string;
+  endDate?: string;
 }
 
 const TOPIC_LABELS: Record<string, string> = {
@@ -235,6 +237,8 @@ export function TranscriptModal({
   title,
   filterType,
   filterValue,
+  startDate,
+  endDate,
 }: TranscriptModalProps) {
   const [transcripts, setTranscripts] = useState<TranscriptRecord[]>([]);
   const [loading, setLoading] = useState(true);
@@ -296,6 +300,11 @@ export function TranscriptModal({
               apiParams += `&search=${encodeURIComponent(filterValue)}`;
               break;
           }
+        }
+
+        // Add global date range filter if provided
+        if (startDate && endDate) {
+          apiParams += `&startDate=${startDate}&endDate=${endDate}`;
         }
 
         const apiResponse = await fetch(`/api/transcript-analytics?type=transcripts&${apiParams}`);
