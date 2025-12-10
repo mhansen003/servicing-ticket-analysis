@@ -46,7 +46,22 @@ interface TranscriptRecord {
     keyIssue?: string;
     escalationRisk?: string;
   } | null;
-  // Deep analysis fields
+  // Analysis object from database
+  analysis?: {
+    agentSentiment?: string;
+    agentSentimentScore?: number;
+    agentSentimentReason?: string;
+    customerSentiment?: string;
+    customerSentimentScore?: number;
+    customerSentimentReason?: string;
+    aiDiscoveredTopic?: string;
+    aiDiscoveredSubcategory?: string;
+    topicConfidence?: number;
+    keyIssues?: string[];
+    resolution?: string;
+    tags?: string[];
+  } | null;
+  // Deep analysis fields (direct properties for backward compat)
   aiDiscoveredTopic?: string;
   aiDiscoveredSubcategory?: string;
   agentSentiment?: string;
@@ -451,34 +466,34 @@ export default function TranscriptDataGrid() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    {transcript.agentSentiment ? (
+                    {transcript.analysis?.agentSentiment ? (
                       <span
                         className={`px-2 py-0.5 text-xs rounded border ${
-                          transcript.agentSentiment === 'positive'
+                          transcript.analysis.agentSentiment === 'positive'
                             ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                            : transcript.agentSentiment === 'negative'
+                            : transcript.analysis.agentSentiment === 'negative'
                             ? 'bg-red-500/20 text-red-400 border-red-500/30'
                             : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
                         }`}
                       >
-                        {transcript.agentSentiment[0].toUpperCase()}
+                        {transcript.analysis.agentSentiment[0].toUpperCase()}
                       </span>
                     ) : (
                       <span className="text-xs text-gray-600">-</span>
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    {transcript.customerSentiment ? (
+                    {transcript.analysis?.customerSentiment ? (
                       <span
                         className={`px-2 py-0.5 text-xs rounded border ${
-                          transcript.customerSentiment === 'positive'
+                          transcript.analysis.customerSentiment === 'positive'
                             ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                            : transcript.customerSentiment === 'negative'
+                            : transcript.analysis.customerSentiment === 'negative'
                             ? 'bg-red-500/20 text-red-400 border-red-500/30'
                             : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
                         }`}
                       >
-                        {transcript.customerSentiment[0].toUpperCase()}
+                        {transcript.analysis.customerSentiment[0].toUpperCase()}
                       </span>
                     ) : (
                       <span className="text-xs text-gray-600">-</span>
