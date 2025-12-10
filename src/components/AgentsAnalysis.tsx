@@ -634,6 +634,8 @@ export default function AgentsAnalysis() {
         }
         filterType={transcriptFilterType}
         filterValue={transcriptFilterValue}
+        startDate={appliedStartDate}
+        endDate={appliedEndDate}
       />
 
       {/* Agent Grading Explanation Modal */}
