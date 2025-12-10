@@ -85,7 +85,11 @@ export async function POST(request: NextRequest) {
             updates.duration_seconds = duration;
             hasUpdates = true;
             updatedFields['duration_seconds'] = (updatedFields['duration_seconds'] || 0) + 1;
+          } else if (updated < 3) {
+            console.log(`⚠️ Duration parse failed for ${vendorCallKey}: CallDurationInSeconds="${record.CallDurationInSeconds}", parsed=${duration}, isNaN=${isNaN(duration)}`);
           }
+        } else if (updated < 3) {
+          console.log(`⏭️ Duration skip for ${vendorCallKey}: existing=${existing.duration_seconds}, hasField=${!!record.CallDurationInSeconds}, value="${record.CallDurationInSeconds}"`);
         }
 
         // call_end
