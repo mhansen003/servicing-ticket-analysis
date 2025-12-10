@@ -385,7 +385,8 @@ export default function TranscriptsAnalysis() {
         return !excludedDepartments.some(excluded => upperName.includes(excluded));
       })
       .map(([name, data]) => ({
-        name: name.replace('SRVC - ', '').replace('SRVC/', ''),
+        name: name.replace('SRVC - ', '').replace('SRVC/', ''), // Display name
+        originalName: name, // Keep original for filtering
         ...data,
         positiveRate: ((data.positive / data.count) * 100).toFixed(1),
         negativeRate: ((data.negative / data.count) * 100).toFixed(1),
@@ -417,8 +418,8 @@ export default function TranscriptsAnalysis() {
     openDrillDown('topic', topic, `${label} Calls`);
   };
 
-  const handleDepartmentClick = (department: string) => {
-    openDrillDown('department', department, `${department} Calls`);
+  const handleDepartmentClick = (originalName: string, displayName: string) => {
+    openDrillDown('department', originalName, `${displayName} Calls`);
   };
 
   const handleAgentClick = (agentName: string) => {
@@ -1460,7 +1461,7 @@ export default function TranscriptsAnalysis() {
                     <tr
                       key={dept.name}
                       className="hover:bg-gray-800/30 cursor-pointer"
-                      onClick={() => handleDepartmentClick(dept.name)}
+                      onClick={() => handleDepartmentClick(dept.originalName, dept.name)}
                     >
                       <td className="py-3 px-4 text-white text-sm">{dept.name}</td>
                       <td className="py-3 px-4 text-gray-400 text-sm text-right">

@@ -251,6 +251,7 @@ export function TranscriptModal({
   const [callAnalysisCache, setCallAnalysisCache] = useState<Record<string, CallAnalysis>>({});
   const [callAnalysisError, setCallAnalysisError] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const detailRef = useRef<HTMLDivElement>(null);
   const callAnalysisAbortRef = useRef<AbortController | null>(null);
   const sentimentAbortRef = useRef<AbortController | null>(null);
 
@@ -591,6 +592,13 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
       }
     };
   }, []);
+
+  // Scroll to top when a new transcript is selected
+  useEffect(() => {
+    if (selectedTranscript && detailRef.current) {
+      detailRef.current.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [selectedTranscript?.id]);
 
   // Filter transcripts based on filter type and search
   const filteredTranscripts = useMemo(() => {
@@ -1077,7 +1085,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                       )}
                     </div>
                   </div>
-                  <div className="flex-1 overflow-y-auto p-4 space-y-3">
+                  <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3">
                     {loadingConversation ? (
                       <div className="flex items-center justify-center h-48">
                         <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-500" />
