@@ -265,8 +265,9 @@ export function TranscriptModal({
       setLoading(true);
       try {
         // Try to load from new API endpoint first
-        // Load all records - set very high limit to get complete results
-        let apiParams = `limit=100000&offset=0`;
+        // Use reasonable limit to avoid exceeding database response size (67MB limit)
+        // Modal shows 50 at a time with progressive loading on scroll
+        let apiParams = `limit=1000&offset=0`;
 
         // Add filter params based on filterType
         // Note: 'hour', 'dayOfWeek' filters are not supported by the API

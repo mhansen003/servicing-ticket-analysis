@@ -152,7 +152,7 @@ export default function TranscriptDataGrid() {
         // Build query params
         const params = new URLSearchParams({
           type: 'transcripts',
-          limit: '10000', // Load more records to show full dataset
+          limit: '1000', // Reasonable limit to avoid exceeding database response size (67MB)
         });
 
         // Add filters to API request
