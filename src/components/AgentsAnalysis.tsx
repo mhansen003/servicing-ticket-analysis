@@ -571,68 +571,64 @@ export default function AgentsAnalysis() {
           </select>
         </div>
 
-        {/* Expandable Agent Grid */}
+        {/* Agent Grid */}
         {displayedAgents.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-48 text-gray-500">
             <Users className="h-8 w-8 mb-2" />
             <p>No agents found</p>
           </div>
         ) : (
-          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {displayedAgents.map((agent) => (
-              <div
-                key={agent.name}
-                className={`bg-[#131a29] rounded-xl border transition-all ${
-                  selectedAgent?.name === agent.name
-                    ? 'border-blue-500/50 ring-2 ring-blue-500/20'
-                    : 'border-white/[0.08] hover:border-white/[0.12]'
-                }`}
-              >
-                {/* Compact Agent Card - Always Visible */}
+          <>
+            <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {displayedAgents.map((agent) => (
                 <div
+                  key={agent.name}
                   onClick={() => handleSelectAgent(agent)}
-                  className="cursor-pointer p-4"
+                  className={`bg-[#131a29] rounded-xl border transition-all cursor-pointer ${
+                    selectedAgent?.name === agent.name
+                      ? 'border-blue-500/50 ring-2 ring-blue-500/20'
+                      : 'border-white/[0.08] hover:border-white/[0.12]'
+                  }`}
                 >
+                  <div className="p-4">
+                    <AgentProfileCard
+                      agent={agent}
+                      compact
+                      onViewTranscripts={() => handleSelectAgent(agent)}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Full-Width Expanded Agent Profile Below Grid */}
+            {selectedAgent && (
+              <div className="mt-6 bg-[#131a29] rounded-xl border border-blue-500/30 overflow-hidden">
+                <div className="p-4 border-b border-white/[0.08] flex items-center justify-between bg-gradient-to-r from-blue-500/10 to-purple-500/10">
+                  <h3 className="font-semibold text-white flex items-center gap-2">
+                    <User className="h-5 w-5 text-blue-400" />
+                    Full Profile: {selectedAgent.name}
+                  </h3>
+                  <button
+                    onClick={() => setSelectedAgent(null)}
+                    className="p-2 rounded-lg hover:bg-white/[0.05] transition-colors"
+                    title="Close profile"
+                  >
+                    <X className="h-5 w-5 text-gray-400" />
+                  </button>
+                </div>
+                <div className="p-6">
                   <AgentProfileCard
-                    agent={agent}
-                    compact
-                    onViewTranscripts={() => handleSelectAgent(agent)}
+                    agent={selectedAgent}
+                    profile={agentProfile}
+                    loadingProfile={loadingProfile}
+                    profileError={profileError}
+                    onViewTranscripts={handleViewTranscripts}
                   />
                 </div>
-
-                {/* Expanded Agent Profile - Shown When Selected */}
-                {selectedAgent?.name === agent.name && (
-                  <div className="border-t border-white/[0.08] bg-[#0a0e17]/50">
-                    <div className="p-4 border-b border-white/[0.08] flex items-center justify-between bg-gradient-to-r from-blue-500/5 to-purple-500/5">
-                      <h3 className="font-semibold text-white flex items-center gap-2">
-                        <User className="h-4 w-4 text-blue-400" />
-                        Full Agent Profile
-                      </h3>
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedAgent(null);
-                        }}
-                        className="p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
-                        title="Collapse profile"
-                      >
-                        <ChevronUp className="h-4 w-4 text-gray-400" />
-                      </button>
-                    </div>
-                    <div className="p-4 max-h-[600px] overflow-y-auto">
-                      <AgentProfileCard
-                        agent={selectedAgent}
-                        profile={agentProfile}
-                        loadingProfile={loadingProfile}
-                        profileError={profileError}
-                        onViewTranscripts={handleViewTranscripts}
-                      />
-                    </div>
-                  </div>
-                )}
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
 
