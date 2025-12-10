@@ -7,6 +7,8 @@ import {
   X,
   Phone,
   Info,
+  Calendar,
+  Loader2,
 } from 'lucide-react';
 import { AgentProfileCard } from './AgentProfileCard';
 import { TranscriptModal } from './TranscriptModal';
@@ -122,13 +124,35 @@ export default function AgentsAnalysis() {
   const [transcriptFilterValue, setTranscriptFilterValue] = useState('');
   const [gradingModalOpen, setGradingModalOpen] = useState(false);
 
+  // Global date range filter (default: last 30 days)
+  const getDefaultStartDate = () => {
+    const date = new Date();
+    date.setDate(date.getDate() - 30);
+    return date.toISOString().split('T')[0];
+  };
+
+  const getDefaultEndDate = () => {
+    return new Date().toISOString().split('T')[0];
+  };
+
+  const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
+  const [globalEndDate, setGlobalEndDate] = useState(getDefaultEndDate());
+  const [appliedStartDate, setAppliedStartDate] = useState(getDefaultStartDate());
+  const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
+  const [loadingFilteredData, setLoadingFilteredData] = useState(false);
+
   // Load rankings data
   useEffect(() => {
     async function loadRankings() {
       setLoading(true);
       try {
-        // Load agent rankings from database API
-        const response = await fetch('/api/transcript-analytics?type=agents');
+        // Load agent rankings from database API with date filter
+        const params = new URLSearchParams({ type: 'agents' });
+        if (appliedStartDate && appliedEndDate) {
+          params.append('startDate', appliedStartDate);
+          params.append('endDate', appliedEndDate);
+        }
+        const response = await fetch(`/api/transcript-analytics?${params.toString()}`);
         if (response.ok) {
           const result = await response.json();
           if (result.success) {
@@ -136,13 +160,19 @@ export default function AgentsAnalysis() {
             console.log('✨ Agent rankings loaded from database:', {
               totalAgents: result.data.totalAgents,
               totalCalls: result.data.totalCalls,
+              dateRange: appliedStartDate && appliedEndDate ? `${appliedStartDate} to ${appliedEndDate}` : 'all time',
             });
           }
         }
 
         // Load deep analysis (summary with agent sentiment stats)
         try {
-          const deepRes = await fetch('/api/transcript-analytics?type=summary');
+          const deepParams = new URLSearchParams({ type: 'summary' });
+          if (appliedStartDate && appliedEndDate) {
+            deepParams.append('startDate', appliedStartDate);
+            deepParams.append('endDate', appliedEndDate);
+          }
+          const deepRes = await fetch(`/api/transcript-analytics?${deepParams.toString()}`);
           if (deepRes.ok) {
             const result = await deepRes.json();
             if (result.success) {
@@ -170,7 +200,7 @@ export default function AgentsAnalysis() {
     }
 
     loadRankings();
-  }, []);
+  }, [appliedStartDate, appliedEndDate]);
 
   // Load AI profile for selected agent
   const loadAgentProfile = useCallback(async (agent: AgentStats) => {
@@ -211,6 +241,26 @@ export default function AgentsAnalysis() {
     setTranscriptFilterType('agent');
     setTranscriptFilterValue(agentName);
     setTranscriptModalOpen(true);
+  };
+
+  // Apply global date range filter
+  const applyGlobalFilter = () => {
+    if (!globalStartDate || !globalEndDate) {
+      alert('Please select both start and end dates');
+      return;
+    }
+    setAppliedStartDate(globalStartDate);
+    setAppliedEndDate(globalEndDate);
+  };
+
+  // Clear global date range filter
+  const clearGlobalFilter = () => {
+    const defaultStart = getDefaultStartDate();
+    const defaultEnd = getDefaultEndDate();
+    setGlobalStartDate(defaultStart);
+    setGlobalEndDate(defaultEnd);
+    setAppliedStartDate(defaultStart);
+    setAppliedEndDate(defaultEnd);
   };
 
   // Get all agents sorted by selected criteria, with search filter
@@ -289,6 +339,75 @@ export default function AgentsAnalysis() {
           <Info className="h-4 w-4" />
           How Are Agents Graded?
         </button>
+      </div>
+
+      {/* Global Date Range Filter */}
+      <div className="bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-blue-500/10 rounded-2xl p-6 border border-blue-500/20 sticky top-4 z-10 backdrop-blur-sm">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+            <Calendar className="h-6 w-6 text-white" />
+          </div>
+          <div className="flex-1">
+            <h2 className="text-xl font-bold text-white">Global Date Range Filter</h2>
+            <p className="text-sm text-gray-400">Filter all agent data by date range (Default: Last 30 days)</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-4 flex-wrap">
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">From:</label>
+            <input
+              type="date"
+              value={globalStartDate}
+              onChange={(e) => setGlobalStartDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="text-sm text-gray-300 font-medium">To:</label>
+            <input
+              type="date"
+              value={globalEndDate}
+              onChange={(e) => setGlobalEndDate(e.target.value)}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+          </div>
+          <button
+            onClick={applyGlobalFilter}
+            disabled={!globalStartDate || !globalEndDate || loadingFilteredData}
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg hover:from-blue-600 hover:to-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 font-medium transition-all"
+          >
+            {loadingFilteredData ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              <>
+                <Search className="h-4 w-4" />
+                Apply Filter
+              </>
+            )}
+          </button>
+          {(appliedStartDate !== getDefaultStartDate() || appliedEndDate !== getDefaultEndDate()) && (
+            <button
+              onClick={clearGlobalFilter}
+              className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
+            >
+              <X className="h-3 w-3" />
+              Reset to Default (30 days)
+            </button>
+          )}
+        </div>
+        {appliedStartDate && appliedEndDate && (
+          <div className="mt-3 text-sm">
+            <span className="text-green-400 font-medium">
+              ✓ Showing data from {appliedStartDate} to {appliedEndDate}
+            </span>
+            <span className="text-gray-500 ml-2">
+              ({Math.ceil((new Date(appliedEndDate).getTime() - new Date(appliedStartDate).getTime()) / (1000 * 60 * 60 * 24)) + 1} days)
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Deep Analysis Agent Sentiment Stats */}
