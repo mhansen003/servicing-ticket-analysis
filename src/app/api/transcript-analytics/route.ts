@@ -219,6 +219,13 @@ export async function GET(request: NextRequest) {
         };
       }
 
+      // If we have analysis filters, we need to ensure we only get transcripts that have matching analysis
+      if (Object.keys(analysisWhere).length > 0) {
+        transcriptWhere.TranscriptAnalysis = {
+          some: analysisWhere,
+        };
+      }
+
       // Fetch transcripts with analysis
       const transcripts = await prisma.transcripts.findMany({
         where: transcriptWhere,
@@ -228,31 +235,64 @@ export async function GET(request: NextRequest) {
           call_start: 'desc',
         },
         include: {
-          TranscriptAnalysis: {
-            where: analysisWhere,
-          },
+          TranscriptAnalysis: true,
         },
       });
 
-      // Filter out transcripts that don't match analysis criteria
-      const filtered = analysisWhere.OR || analysisWhere.aiDiscoveredTopic
-        ? transcripts.filter(t => t.TranscriptAnalysis.length > 0)
-        : transcripts;
+      // All transcripts should have analysis if we filtered correctly
+      const filtered = transcripts;
 
       return NextResponse.json({
         success: true,
-        data: filtered.map(t => ({
-          id: t.id,
-          vendorCallKey: t.vendor_call_key,
-          callStart: t.call_start,
-          durationSeconds: t.duration_seconds,
-          disposition: t.disposition,
-          department: t.department,
-          // Use agentName from TranscriptAnalysis if available, otherwise fall back to transcripts table
-          agentName: t.TranscriptAnalysis[0]?.agentName || t.agent_name,
-          messages: t.messages,
-          analysis: t.TranscriptAnalysis[0] || null,
-        })),
+        data: filtered.map(t => {
+          const analysis = t.TranscriptAnalysis[0] || null;
+          const messages = t.messages as any;
+          const conversation = Array.isArray(messages) ? messages : [];
+
+          // Calculate message counts
+          const messageCount = conversation.length;
+          const customerMessages = conversation.filter((m: any) => m.role === 'customer').length;
+          const agentMessages = conversation.filter((m: any) => m.role === 'agent').length;
+
+          return {
+            id: t.id,
+            vendorCallKey: t.vendor_call_key,
+            callStart: t.call_start?.toISOString() || '',
+            callEnd: '', // Not available in database
+            durationSeconds: t.duration_seconds || 0,
+            disposition: t.disposition || '',
+            numberOfHolds: 0, // Not available in database
+            holdDuration: 0, // Not available in database
+            department: t.department || '',
+            status: '', // Not available in database
+            agentName: analysis?.agentName || t.agent_name || '',
+            agentRole: '', // Not available in database
+            agentProfile: '', // Not available in database
+            agentEmail: '', // Not available in database
+            messageCount,
+            customerMessages,
+            agentMessages,
+            detectedTopics: [], // Not available in database
+            basicSentiment: analysis ?
+              (analysis.customerSentiment || 'neutral') as 'positive' | 'negative' | 'neutral'
+              : 'neutral',
+            conversation,
+            analysis: analysis ? {
+              agentSentiment: analysis.agentSentiment || '',
+              agentSentimentScore: analysis.agentSentimentScore || 0,
+              agentSentimentReason: analysis.agentSentimentReason || '',
+              customerSentiment: analysis.customerSentiment || '',
+              customerSentimentScore: analysis.customerSentimentScore || 0,
+              customerSentimentReason: analysis.customerSentimentReason || '',
+              aiDiscoveredTopic: analysis.aiDiscoveredTopic || '',
+              aiDiscoveredSubcategory: analysis.aiDiscoveredSubcategory || '',
+              topicConfidence: analysis.topicConfidence || 0,
+              keyIssues: analysis.keyIssues || [],
+              resolution: analysis.resolution || '',
+              tags: analysis.tags || [],
+            } : null,
+          };
+        }),
         pagination: {
           total: filtered.length,
           limit,

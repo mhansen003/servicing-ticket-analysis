@@ -662,10 +662,13 @@ export default function TranscriptsAnalysis() {
                   const isCurrentMonth = currentDate.getMonth() === calendarMonth.getMonth();
 
                   if (dayData) {
-                    const total = dayData.total;
-                    const positivePercent = (dayData.positive / total) * 100;
-                    const neutralPercent = (dayData.neutral / total) * 100;
-                    const negativePercent = (dayData.negative / total) * 100;
+                    const total = dayData.total || 0;
+                    const positive = dayData.positive || 0;
+                    const neutral = dayData.neutral || 0;
+                    const negative = dayData.negative || 0;
+                    const positivePercent = total > 0 ? (positive / total) * 100 : 0;
+                    const neutralPercent = total > 0 ? (neutral / total) * 100 : 0;
+                    const negativePercent = total > 0 ? (negative / total) * 100 : 0;
                     const sparklineData = getSparklineData(dateStr);
 
                     cells.push(
@@ -757,9 +760,9 @@ export default function TranscriptsAnalysis() {
                           <div className="font-medium text-white mb-1">{formatDate(dateStr)}</div>
                           <div className="text-gray-400">{total} total calls</div>
                           <div className="flex flex-col gap-0.5 mt-1">
-                            <span className="text-emerald-400">● {dayData.positive} high sentiment ({positivePercent.toFixed(0)}%)</span>
-                            <span className="text-gray-400">● {dayData.neutral} mid sentiment ({neutralPercent.toFixed(0)}%)</span>
-                            <span className="text-red-400">● {dayData.negative} low sentiment ({negativePercent.toFixed(0)}%)</span>
+                            <span className="text-emerald-400">● {positive} high sentiment ({positivePercent.toFixed(0)}%)</span>
+                            <span className="text-gray-400">● {neutral} mid sentiment ({neutralPercent.toFixed(0)}%)</span>
+                            <span className="text-red-400">● {negative} low sentiment ({negativePercent.toFixed(0)}%)</span>
                           </div>
                         </div>
                       </button>
