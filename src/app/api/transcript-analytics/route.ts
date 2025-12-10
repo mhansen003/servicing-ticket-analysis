@@ -134,26 +134,26 @@ export async function GET(request: NextRequest) {
           LIMIT 90
         ` as Promise<any[]>,
 
-        // Hourly distribution
+        // Hourly distribution (in UTC to match client-side filtering)
         prisma.$queryRaw`
           SELECT
-            EXTRACT(HOUR FROM t.call_start) as hour,
+            EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC') as hour,
             COUNT(*) as count
           FROM transcripts t
           WHERE t.call_start IS NOT NULL
-          GROUP BY EXTRACT(HOUR FROM t.call_start)
+          GROUP BY EXTRACT(HOUR FROM t.call_start AT TIME ZONE 'UTC')
           ORDER BY hour
         ` as Promise<any[]>,
 
-        // Day of week distribution
+        // Day of week distribution (in UTC to match client-side filtering)
         prisma.$queryRaw`
           SELECT
-            TO_CHAR(t.call_start, 'Day') as day,
-            EXTRACT(DOW FROM t.call_start) as day_num,
+            TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day') as day,
+            EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC') as day_num,
             COUNT(*) as count
           FROM transcripts t
           WHERE t.call_start IS NOT NULL
-          GROUP BY TO_CHAR(t.call_start, 'Day'), EXTRACT(DOW FROM t.call_start)
+          GROUP BY TO_CHAR(t.call_start AT TIME ZONE 'UTC', 'Day'), EXTRACT(DOW FROM t.call_start AT TIME ZONE 'UTC')
           ORDER BY day_num
         ` as Promise<any[]>,
 
