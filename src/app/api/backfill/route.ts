@@ -10,6 +10,7 @@ import prisma from '@/lib/db';
 
 interface BackfillRecord {
   VendorCallKey: string;
+  CallDurationInSeconds?: string;
   CallEndDateTime?: string;
   NumberOfHolds?: string;
   CustomerHoldDuration?: string;
@@ -76,6 +77,16 @@ export async function POST(request: NextRequest) {
         // Build update object with ONLY missing fields
         const updates: any = {};
         let hasUpdates = false;
+
+        // duration_seconds
+        if ((existing.duration_seconds === null || existing.duration_seconds === 0) && record.CallDurationInSeconds) {
+          const duration = parseInt(record.CallDurationInSeconds);
+          if (!isNaN(duration) && duration > 0) {
+            updates.duration_seconds = duration;
+            hasUpdates = true;
+            updatedFields['duration_seconds'] = (updatedFields['duration_seconds'] || 0) + 1;
+          }
+        }
 
         // call_end
         if (!existing.call_end && record.CallEndDateTime) {
