@@ -1,3 +1,5 @@
+// Prisma schema for servicing ticket analysis
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -6,179 +8,63 @@ datasource db {
   provider = "postgresql"
 }
 
-model Ticket {
-  id                                    Int       @id @default(autoincrement())
-  ticketKey                             String    @unique @map("ticket_key")
-  ticketUuid                            String?   @map("ticket_uuid")
-  ticketTitle                           String?   @map("ticket_title")
-  ticketDescription                     String?   @map("ticket_description")
-  ticketPriority                        String?   @map("ticket_priority")
-  ticketStatus                          String?   @map("ticket_status")
-  ticketType                            String?   @map("ticket_type")
+// Existing transcripts table (read-only)
+model transcripts {
+  id              String   @id @default(cuid())
+  vendor_call_key String   @unique
+  call_start      DateTime?
+  duration_seconds Int?
+  disposition     String?
+  department      String?
+  agent_name      String?
+  messages        Json?
 
-  // Organization
-  orgId                                 String?   @map("org_id")
-  orgName                               String?   @map("org_name")
-  orgStatusId                           String?   @map("org_status_id")
-  orgStatusName                         String?   @map("org_status_name")
-  projectName                           String?   @map("project_name")
-
-  // Reporter
-  ticketReporterEmail                   String?   @map("ticket_reporter_email")
-  ticketReporterName                    String?   @map("ticket_reporter_name")
-
-  // Assignment
-  assignedUserName                      String?   @map("assigned_user_name")
-  assignedUserEmail                     String?   @map("assigned_user_email")
-
-  // Response tracking
-  firstResponseSentUtc                  DateTime? @map("first_response_sent_utc")
-  timeToFirstResponseInMinutes          Int?      @map("time_to_first_response_in_minutes")
-  firstResponderEmail                   String?   @map("first_responder_email")
-  firstResponderName                    String?   @map("first_responder_name")
-  latestResponseSentUtc                 DateTime? @map("latest_response_sent_utc")
-  latestResponderEmail                  String?   @map("latest_responder_email")
-  latestResponderName                   String?   @map("latest_responder_name")
-
-  // SLA
-  dueDateUtc                            DateTime? @map("due_date_utc")
-  slaEverBreached                       Boolean   @default(false) @map("sla_ever_breached")
-  firstSlaBreachedAtUtc                 DateTime? @map("first_sla_breached_at_utc")
-  latestSlaBreachedAtUtc                DateTime? @map("latest_sla_breached_at_utc")
-
-  // Deletion
-  deletedAt                             DateTime? @map("deleted_at")
-  deleteReasonName                      String?   @map("delete_reason_name")
-
-  // Completion
-  isTicketComplete                      Boolean   @default(false) @map("is_ticket_complete")
-  ticketCompletedAtUtc                  DateTime? @map("ticket_completed_at_utc")
-  timeToResolutionInMinutes             Int?      @map("time_to_resolution_in_minutes")
-  assignedUserEmailWhenTicketCompleted  String?   @map("assigned_user_email_when_ticket_completed")
-  assignedUserNameWhenTicketCompleted   String?   @map("assigned_user_name_when_ticket_completed")
-
-  // Metadata
-  ticketTags                            String?   @map("ticket_tags")
-  customFields                          String?   @map("custom_fields")
-
-  // Categorization (PHASE 1: Enhanced Categorization)
-  category                              String?   @map("category")
-  subcategory                           String?   @map("subcategory")
-  allIssues                             String?   @map("all_issues") // Pipe-separated multi-issue tags
-  categorizationConfidence              Float?    @map("categorization_confidence") // 0.0 - 1.0
-  manuallyReviewed                      Boolean   @default(false) @map("manually_reviewed")
-  manualCategory                        String?   @map("manual_category")
-  manualSubcategory                     String?   @map("manual_subcategory")
-
-  // Timestamps
-  ticketCreatedAtUtc                    DateTime  @map("ticket_created_at_utc")
-  ticketUpdatedAtUtc                    DateTime? @map("ticket_updated_at_utc")
-
-  // Indexes for common queries
-  @@index([projectName])
-  @@index([ticketStatus])
-  @@index([assignedUserEmail])
-  @@index([ticketCreatedAtUtc])
-  @@index([isTicketComplete])
-  @@index([ticketPriority])
-  @@index([category])
-  @@index([subcategory])
-
-  @@map("tickets")
+  // Relation to analysis
+  TranscriptAnalysis TranscriptAnalysis[]
 }
 
-// PHASE 1: Transcript Model for Call/Chat Analysis
-model Transcript {
-  id                      Int       @id @default(autoincrement())
-  vendorCallKey           String    @unique @map("vendor_call_key")
+// Table to store deep AI analysis results for transcripts
+// Each row represents one analyzed transcript
+model TranscriptAnalysis {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  // Call metadata
-  callDate                DateTime? @map("call_date")
-  callStart               DateTime? @map("call_start")
-  callEnd                 DateTime? @map("call_end")
-  durationSeconds         Int?      @map("duration_seconds")
+  // Transcript identifier (links to transcripts table)
+  vendorCallKey String      @unique
+  transcript    transcripts? @relation(fields: [vendorCallKey], references: [vendor_call_key])
 
   // Agent information
-  agentName               String?   @map("agent_name")
-  agentId                 String?   @map("agent_id")
-  agentEmail              String?   @map("agent_email")
-  agentRole               String?   @map("agent_role")
-  department              String?   @map("department")
+  agentName String?
 
-  // Customer information
-  customerId              String?   @map("customer_id")
-  customerName            String?   @map("customer_name")
+  // Agent Sentiment Analysis
+  agentSentiment       String? // "positive", "neutral", "negative"
+  agentSentimentScore  Float?  // 0.0 to 1.0
+  agentSentimentReason String? // Why this sentiment was assigned
 
-  // Transcript content
-  transcriptText          String    @map("transcript_text") @db.Text
-  conversation            Json?     @map("conversation") // Structured conversation array
+  // Customer Sentiment Analysis
+  customerSentiment       String? // "positive", "neutral", "negative"
+  customerSentimentScore  Float?  // 0.0 to 1.0
+  customerSentimentReason String? // Why this sentiment was assigned
 
-  // Call metrics
-  numberOfHolds           Int?      @default(0) @map("number_of_holds")
-  holdDuration            Int?      @default(0) @map("hold_duration")
-  messageCount            Int?      @map("message_count")
-  customerMessages        Int?      @map("customer_messages")
-  agentMessages           Int?      @map("agent_messages")
-  agentTurns              Int?      @map("agent_turns")
-  customerTurns           Int?      @map("customer_turns")
+  // AI-Discovered Topics
+  aiDiscoveredTopic       String? // Main topic discovered by AI
+  aiDiscoveredSubcategory String? // Subcategory discovered by AI
+  topicConfidence         Float?  // 0.0 to 1.0 confidence
 
-  // Categorization (same as Ticket)
-  category                String?   @map("category")
-  subcategory             String?   @map("subcategory")
-  allIssues               String?   @map("all_issues")
-  categorizationConfidence Float?   @map("categorization_confidence")
-  manuallyReviewed        Boolean   @default(false) @map("manually_reviewed")
-  manualCategory          String?   @map("manual_category")
-  manualSubcategory       String?   @map("manual_subcategory")
+  // Key Issues and Resolution
+  keyIssues  String[] // Array of key issues identified
+  resolution String?  // How the issue was resolved
 
-  // Sentiment analysis
-  sentiment               String?   @map("sentiment") // positive, negative, neutral, mixed
-  sentimentScore          Float?    @map("sentiment_score") // -1.0 to 1.0
-  customerSentiment       String?   @map("customer_sentiment")
-  customerSentimentScore  Float?    @map("customer_sentiment_score")
-  agentSentiment          String?   @map("agent_sentiment")
-  agentSentimentScore     Float?    @map("agent_sentiment_score")
+  // Tags
+  tags String[] // Array of tags
 
-  // Resolution tracking
-  resolutionStatus        String?   @map("resolution_status") // Resolved, Escalated, Follow-up Required, Unknown
-  wasResolved             Boolean?  @map("was_resolved")
-  wasEscalated            Boolean   @default(false) @map("was_escalated")
-  escalationReason        String?   @map("escalation_reason")
-  requiresFollowup        Boolean   @default(false) @map("requires_followup")
+  // Analysis metadata
+  analyzedAt DateTime @default(now())
+  model      String?  // AI model used for analysis
 
-  // Intent & Topic detection
-  customerIntent          String?   @map("customer_intent")
-  detectedTopics          String?   @map("detected_topics") // JSON array
-  primaryTopic            String?   @map("primary_topic")
-
-  // Quality metrics
-  callQualityScore        Float?    @map("call_quality_score") // 0-100
-  transcriptQuality       String?   @map("transcript_quality") // high, medium, low
-
-  // Status
-  status                  String?   @map("status")
-  disposition             String?   @map("disposition")
-
-  // Metadata
-  csatScore               Int?      @map("csat_score") // Customer satisfaction 1-5
-  queue                   String?   @map("queue")
-  callReason              String?   @map("call_reason")
-  resolutionCode          String?   @map("resolution_code")
-
-  // Timestamps
-  createdAt               DateTime  @default(now()) @map("created_at")
-  updatedAt               DateTime  @updatedAt @map("updated_at")
-
-  // Indexes for performance
-  @@index([agentName])
-  @@index([callDate])
-  @@index([department])
-  @@index([category])
-  @@index([subcategory])
-  @@index([sentiment])
-  @@index([resolutionStatus])
-  @@index([customerId])
-  @@index([wasEscalated])
-
-  @@map("transcripts")
+  @@index([vendorCallKey])
+  @@index([agentSentiment])
+  @@index([customerSentiment])
+  @@index([aiDiscoveredTopic])
 }

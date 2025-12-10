@@ -59,6 +59,18 @@ interface TranscriptStats {
   dailyTrends: Array<{ date: string; total: number; positive: number; negative: number; neutral: number }>;
 }
 
+// New interface for AI-analyzed daily trends
+interface AIDailyTrend {
+  date: string;
+  total: number;
+  agentPositive: number;
+  agentNeutral: number;
+  agentNegative: number;
+  customerPositive: number;
+  customerNeutral: number;
+  customerNegative: number;
+}
+
 interface TranscriptRecord {
   id: string;
   vendorCallKey: string;
@@ -161,6 +173,7 @@ export default function TranscriptsAnalysis() {
   const [deepAnalysis, setDeepAnalysis] = useState<DeepAnalysisData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [liveAnalysis, setLiveAnalysis] = useState<any>(null);
 
   // Filters
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
@@ -198,16 +211,41 @@ export default function TranscriptsAnalysis() {
         const transcriptsData = await transcriptsRes.json();
         setTranscripts(transcriptsData);
 
-        // Load deep analysis data if available
+        // Load live analysis data from database
         try {
-          const deepRes = await fetch('/data/deep-analysis.json');
-          if (deepRes.ok) {
-            const deepData = await deepRes.json();
-            setDeepAnalysis(deepData);
-            console.log('✨ Deep analysis loaded:', deepData.metadata);
+          const liveRes = await fetch('/api/transcript-analytics?type=summary');
+          if (liveRes.ok) {
+            const liveData = await liveRes.json();
+            if (liveData.success) {
+              setLiveAnalysis(liveData);
+              // Convert to deepAnalysis format for compatibility
+              setDeepAnalysis({
+                metadata: {
+                  totalTickets: liveData.metadata.totalTranscripts,
+                  analyzedTickets: liveData.metadata.analyzedTranscripts,
+                  totalCost: 0,
+                  analysisDate: new Date().toISOString(),
+                },
+                summary: liveData.summary,
+                topics: liveData.topics,
+                tickets: [],
+              });
+              console.log('✨ Live analysis loaded:', liveData.metadata.analyzedTranscripts, 'transcripts analyzed');
+            }
           }
-        } catch (deepErr) {
-          console.log('Deep analysis not yet available');
+        } catch (liveErr) {
+          console.log('Live analysis API not available, falling back to JSON');
+          // Fallback to old JSON file
+          try {
+            const deepRes = await fetch('/data/deep-analysis.json');
+            if (deepRes.ok) {
+              const deepData = await deepRes.json();
+              setDeepAnalysis(deepData);
+              console.log('✨ Deep analysis loaded from file:', deepData.metadata);
+            }
+          } catch (deepErr) {
+            console.log('Deep analysis not yet available');
+          }
         }
 
         setLoading(false);
@@ -242,6 +280,18 @@ export default function TranscriptsAnalysis() {
 
   // Prepare topic data for chart
   const topicChartData = useMemo(() => {
+    // Use AI-discovered topics if available (from live analysis)
+    if (liveAnalysis?.topics?.mainTopics && liveAnalysis.topics.mainTopics.length > 0) {
+      return liveAnalysis.topics.mainTopics
+        .slice(0, 10)
+        .map(t => ({
+          name: t.name,
+          value: t.count,
+          topic: t.name.toLowerCase().replace(/\s+/g, '_'), // Convert to snake_case for filtering
+        }));
+    }
+
+    // Fallback to static topics from JSON
     if (!stats) return [];
     return Object.entries(stats.topicDistribution)
       .map(([topic, count]) => ({
@@ -251,7 +301,7 @@ export default function TranscriptsAnalysis() {
       }))
       .sort((a, b) => b.value - a.value)
       .slice(0, 10);
-  }, [stats]);
+  }, [stats, liveAnalysis]);
 
   // Prepare sentiment pie data
   const sentimentPieData = useMemo(() => {
@@ -553,20 +603,37 @@ export default function TranscriptsAnalysis() {
 
             {/* Legend */}
             <div className="flex items-center justify-center gap-6 mb-4 text-xs text-gray-400">
-              <div className="flex items-center gap-1">
-                <div className="w-8 h-0.5 bg-emerald-500"></div>
-                <span>High Sentiment</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-8 h-0.5 bg-gray-500"></div>
-                <span>Mid Sentiment</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <div className="w-8 h-0.5 bg-red-500"></div>
-                <span>Low Sentiment</span>
-              </div>
-              <span className="text-gray-600">|</span>
-              <span>Mini charts show ±3 day trends</span>
+              {liveAnalysis?.dailyTrends && liveAnalysis.dailyTrends.length > 0 ? (
+                <>
+                  <div className="flex items-center gap-1">
+                    <div className="w-8 h-0.5 bg-blue-500"></div>
+                    <span>Agent Performance</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-8 h-0.5 bg-emerald-500"></div>
+                    <span>Customer Satisfaction</span>
+                  </div>
+                  <span className="text-gray-600">|</span>
+                  <span>Mini charts show ±3 day trends (AI-analyzed calls only)</span>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-1">
+                    <div className="w-8 h-0.5 bg-emerald-500"></div>
+                    <span>High Sentiment</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-8 h-0.5 bg-gray-500"></div>
+                    <span>Mid Sentiment</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="w-8 h-0.5 bg-red-500"></div>
+                    <span>Low Sentiment</span>
+                  </div>
+                  <span className="text-gray-600">|</span>
+                  <span>Mini charts show ±3 day trends</span>
+                </>
+              )}
             </div>
 
             {/* Calendar Grid */}
@@ -578,7 +645,10 @@ export default function TranscriptsAnalysis() {
             <div className="grid grid-cols-7 gap-2">
               {(() => {
                 // Generate calendar cells for the selected month
-                const sortedDays = [...stats.dailyTrends].sort((a, b) => a.date.localeCompare(b.date));
+                // Use live AI analysis data if available, otherwise fall back to static data
+                const useLiveData = liveAnalysis?.dailyTrends && liveAnalysis.dailyTrends.length > 0;
+                const dailyData = useLiveData ? liveAnalysis.dailyTrends : stats.dailyTrends;
+                const sortedDays = [...dailyData].sort((a, b) => a.date.localeCompare(b.date));
                 if (sortedDays.length === 0) return null;
 
                 // Calculate start and end of selected month
@@ -614,12 +684,24 @@ export default function TranscriptsAnalysis() {
                     const dateStr = formatDateStr(d);
                     const dayData = dayMap.get(dateStr);
                     if (dayData && dayData.total > 0) {
-                      data.push({
-                        day: offset,
-                        positive: (dayData.positive / dayData.total) * 100,
-                        neutral: (dayData.neutral / dayData.total) * 100,
-                        negative: (dayData.negative / dayData.total) * 100,
-                      });
+                      if (useLiveData) {
+                        // Use agent/customer sentiment from AI analysis
+                        const agentPositivePercent = (dayData.agentPositive / dayData.total) * 100;
+                        const customerPositivePercent = (dayData.customerPositive / dayData.total) * 100;
+                        data.push({
+                          day: offset,
+                          agentPerformance: agentPositivePercent,
+                          customerSatisfaction: customerPositivePercent,
+                        });
+                      } else {
+                        // Use old generic sentiment
+                        data.push({
+                          day: offset,
+                          positive: (dayData.positive / dayData.total) * 100,
+                          neutral: (dayData.neutral / dayData.total) * 100,
+                          negative: (dayData.negative / dayData.total) * 100,
+                        });
+                      }
                     }
                   }
                   return data;
@@ -663,30 +745,56 @@ export default function TranscriptsAnalysis() {
                           {sparklineData.length >= 2 ? (
                             <ResponsiveContainer width="100%" height={36}>
                               <LineChart data={sparklineData} margin={{ top: 2, right: 2, bottom: 2, left: 2 }}>
-                                <Line
-                                  type="monotone"
-                                  dataKey="positive"
-                                  stroke="#22c55e"
-                                  strokeWidth={1.5}
-                                  dot={false}
-                                  isAnimationActive={false}
-                                />
-                                <Line
-                                  type="monotone"
-                                  dataKey="neutral"
-                                  stroke="#6b7280"
-                                  strokeWidth={1}
-                                  dot={false}
-                                  isAnimationActive={false}
-                                />
-                                <Line
-                                  type="monotone"
-                                  dataKey="negative"
-                                  stroke="#ef4444"
-                                  strokeWidth={1.5}
-                                  dot={false}
-                                  isAnimationActive={false}
-                                />
+                                {useLiveData ? (
+                                  <>
+                                    {/* Agent Performance Line (Blue) */}
+                                    <Line
+                                      type="monotone"
+                                      dataKey="agentPerformance"
+                                      stroke="#3b82f6"
+                                      strokeWidth={1.5}
+                                      dot={false}
+                                      isAnimationActive={false}
+                                    />
+                                    {/* Customer Satisfaction Line (Green) */}
+                                    <Line
+                                      type="monotone"
+                                      dataKey="customerSatisfaction"
+                                      stroke="#22c55e"
+                                      strokeWidth={1.5}
+                                      dot={false}
+                                      isAnimationActive={false}
+                                    />
+                                  </>
+                                ) : (
+                                  <>
+                                    {/* Old generic sentiment lines */}
+                                    <Line
+                                      type="monotone"
+                                      dataKey="positive"
+                                      stroke="#22c55e"
+                                      strokeWidth={1.5}
+                                      dot={false}
+                                      isAnimationActive={false}
+                                    />
+                                    <Line
+                                      type="monotone"
+                                      dataKey="neutral"
+                                      stroke="#6b7280"
+                                      strokeWidth={1}
+                                      dot={false}
+                                      isAnimationActive={false}
+                                    />
+                                    <Line
+                                      type="monotone"
+                                      dataKey="negative"
+                                      stroke="#ef4444"
+                                      strokeWidth={1.5}
+                                      dot={false}
+                                      isAnimationActive={false}
+                                    />
+                                  </>
+                                )}
                               </LineChart>
                             </ResponsiveContainer>
                           ) : (

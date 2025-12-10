@@ -132,6 +132,21 @@ interface TranscriptRecord {
     keyIssue: string;
     escalationRisk: string;
   };
+  // New fields from TranscriptAnalysis table
+  analysis?: {
+    agentSentiment: string;
+    agentSentimentScore: number;
+    agentSentimentReason: string;
+    customerSentiment: string;
+    customerSentimentScore: number;
+    customerSentimentReason: string;
+    aiDiscoveredTopic: string;
+    aiDiscoveredSubcategory: string;
+    topicConfidence: number;
+    keyIssues: string[];
+    resolution: string;
+    tags: string[];
+  };
 }
 
 interface TranscriptModalProps {
@@ -246,6 +261,46 @@ export function TranscriptModal({
     async function loadTranscripts() {
       setLoading(true);
       try {
+        // Try to load from new API endpoint first
+        let apiParams = `limit=1000&offset=0`;
+
+        // Add filter params based on filterType
+        if (filterValue) {
+          switch (filterType) {
+            case 'date':
+              apiParams += `&date=${filterValue}`;
+              break;
+            case 'department':
+              apiParams += `&department=${encodeURIComponent(filterValue)}`;
+              break;
+            case 'agent':
+              apiParams += `&agent=${encodeURIComponent(filterValue)}`;
+              break;
+            case 'sentiment':
+              apiParams += `&sentiment=${filterValue}`;
+              break;
+            case 'topic':
+              apiParams += `&topic=${encodeURIComponent(filterValue)}`;
+              break;
+          }
+        }
+
+        try {
+          const apiResponse = await fetch(`/api/transcript-analytics?type=transcripts&${apiParams}`);
+          if (apiResponse.ok) {
+            const apiData = await apiResponse.json();
+            if (apiData.success && apiData.data) {
+              console.log('✨ Loaded transcripts from API:', apiData.data.length);
+              setTranscripts(apiData.data);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch (apiErr) {
+          console.log('API not available, falling back to JSON file');
+        }
+
+        // Fallback to old JSON file
         const response = await fetch('/data/transcript-analysis.json');
         if (response.ok) {
           const data = await response.json();
@@ -259,7 +314,7 @@ export function TranscriptModal({
     }
 
     loadTranscripts();
-  }, [isOpen]);
+  }, [isOpen, filterType, filterValue]);
 
   // Load conversation on-demand when a transcript is selected
   useEffect(() => {
@@ -693,6 +748,11 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               <div className="divide-y divide-white/[0.06]">
                 {visibleTranscripts.map((transcript) => {
                   const sentiment = transcript.aiAnalysis?.sentiment || transcript.basicSentiment;
+                  const agentSentiment = transcript.analysis?.agentSentiment;
+                  const customerSentiment = transcript.analysis?.customerSentiment;
+                  const aiTopic = transcript.analysis?.aiDiscoveredTopic;
+                  const aiSubcategory = transcript.analysis?.aiDiscoveredSubcategory;
+
                   return (
                     <button
                       key={transcript.id}
@@ -703,7 +763,6 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                     >
                       <div className="flex items-start justify-between gap-2 mb-2">
                         <div className="flex items-center gap-2">
-                          {getSentimentIcon(sentiment)}
                           <span className="text-sm font-medium text-white">
                             {transcript.agentName || 'Unknown Agent'}
                           </span>
@@ -717,8 +776,40 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                         <span>•</span>
                         <span>{formatDate(transcript.callStart)}</span>
                       </div>
+
+                      {/* AI-Discovered Topic and Subcategory */}
+                      {aiTopic && (
+                        <div className="mb-2 flex flex-wrap gap-1 items-center">
+                          <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 rounded text-xs font-medium border border-purple-500/30">
+                            {aiTopic}
+                          </span>
+                          {aiSubcategory && (
+                            <span className="px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded text-xs border border-purple-500/20">
+                              {aiSubcategory}
+                            </span>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Agent and Customer Sentiment Badges */}
                       <div className="flex flex-wrap gap-1">
-                        {(transcript.aiAnalysis?.topics || transcript.detectedTopics)
+                        {agentSentiment && (
+                          <span
+                            className={`px-2 py-0.5 rounded text-xs border ${getSentimentColor(agentSentiment)}`}
+                          >
+                            Agent: {agentSentiment}
+                          </span>
+                        )}
+                        {customerSentiment && (
+                          <span
+                            className={`px-2 py-0.5 rounded text-xs border ${getSentimentColor(customerSentiment)}`}
+                          >
+                            Customer: {customerSentiment}
+                          </span>
+                        )}
+
+                        {/* Fallback to old topics if no AI analysis */}
+                        {!aiTopic && (transcript.aiAnalysis?.topics || transcript.detectedTopics)
                           .slice(0, 2)
                           .map((topic) => (
                             <span
@@ -728,11 +819,15 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                               {TOPIC_LABELS[topic] || topic}
                             </span>
                           ))}
-                        <span
-                          className={`px-2 py-0.5 rounded text-xs border ${getSentimentColor(sentiment)}`}
-                        >
-                          {sentiment}
-                        </span>
+
+                        {/* Fallback sentiment if no AI sentiment */}
+                        {!agentSentiment && !customerSentiment && (
+                          <span
+                            className={`px-2 py-0.5 rounded text-xs border ${getSentimentColor(sentiment)}`}
+                          >
+                            {sentiment}
+                          </span>
+                        )}
                       </div>
                     </button>
                   );
@@ -789,8 +884,94 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                   </div>
                 </div>
 
-                {/* AI Analysis Summary if available */}
-                {selectedTranscript.aiAnalysis && (
+                {/* AI Analysis Summary - New TranscriptAnalysis data */}
+                {selectedTranscript.analysis && (
+                  <div className="mt-3 p-3 bg-gradient-to-r from-purple-500/10 to-blue-500/10 rounded-lg border border-purple-500/20">
+                    <div className="flex items-center gap-2 mb-2">
+                      <p className="text-sm text-purple-300 font-medium">AI-Discovered Topic</p>
+                      <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 rounded text-xs border border-purple-500/30">
+                        {selectedTranscript.analysis.aiDiscoveredTopic}
+                      </span>
+                      {selectedTranscript.analysis.aiDiscoveredSubcategory && (
+                        <>
+                          <span className="text-xs text-gray-500">→</span>
+                          <span className="px-2 py-0.5 bg-purple-500/10 text-purple-400 rounded text-xs border border-purple-500/20">
+                            {selectedTranscript.analysis.aiDiscoveredSubcategory}
+                          </span>
+                        </>
+                      )}
+                      <span className="ml-auto text-xs text-gray-400">
+                        Confidence: {(selectedTranscript.analysis.topicConfidence * 100).toFixed(0)}%
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-3 mt-2">
+                      {/* Agent Sentiment */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-gray-400">Agent Sentiment</span>
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2 py-1 rounded text-xs border font-medium ${getSentimentColor(selectedTranscript.analysis.agentSentiment)}`}>
+                            {selectedTranscript.analysis.agentSentiment}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {(selectedTranscript.analysis.agentSentimentScore * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                        {selectedTranscript.analysis.agentSentimentReason && (
+                          <p className="text-xs text-gray-400 mt-1">{selectedTranscript.analysis.agentSentimentReason}</p>
+                        )}
+                      </div>
+
+                      {/* Customer Sentiment */}
+                      <div className="flex flex-col gap-1">
+                        <span className="text-xs text-gray-400">Customer Sentiment</span>
+                        <div className="flex items-center gap-2">
+                          <span className={`px-2 py-1 rounded text-xs border font-medium ${getSentimentColor(selectedTranscript.analysis.customerSentiment)}`}>
+                            {selectedTranscript.analysis.customerSentiment}
+                          </span>
+                          <span className="text-xs text-gray-400">
+                            {(selectedTranscript.analysis.customerSentimentScore * 100).toFixed(0)}%
+                          </span>
+                        </div>
+                        {selectedTranscript.analysis.customerSentimentReason && (
+                          <p className="text-xs text-gray-400 mt-1">{selectedTranscript.analysis.customerSentimentReason}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Key Issues and Resolution */}
+                    {(selectedTranscript.analysis.keyIssues?.length > 0 || selectedTranscript.analysis.resolution) && (
+                      <div className="mt-3 pt-3 border-t border-white/[0.08]">
+                        {selectedTranscript.analysis.keyIssues?.length > 0 && (
+                          <div className="mb-2">
+                            <span className="text-xs text-gray-400">Key Issues: </span>
+                            <span className="text-xs text-gray-300">{selectedTranscript.analysis.keyIssues.join(', ')}</span>
+                          </div>
+                        )}
+                        {selectedTranscript.analysis.resolution && (
+                          <div>
+                            <span className="text-xs text-gray-400">Resolution: </span>
+                            <span className="text-xs text-gray-300">{selectedTranscript.analysis.resolution}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Tags */}
+                    {selectedTranscript.analysis.tags?.length > 0 && (
+                      <div className="mt-2 flex flex-wrap gap-1">
+                        {selectedTranscript.analysis.tags.map((tag, idx) => (
+                          <span key={idx} className="px-1.5 py-0.5 bg-white/[0.05] text-gray-400 rounded text-[10px]">
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* Fallback to old AI Analysis if new analysis not available */}
+                {!selectedTranscript.analysis && selectedTranscript.aiAnalysis && (
                   <div className="mt-3 p-3 bg-blue-500/10 rounded-lg border border-blue-500/20">
                     <p className="text-sm text-blue-300 font-medium mb-1">AI Summary</p>
                     <p className="text-sm text-gray-300">
