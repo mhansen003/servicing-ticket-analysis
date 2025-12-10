@@ -15,7 +15,7 @@ import {
   Calendar,
   Download,
 } from 'lucide-react';
-import TranscriptModal from './TranscriptModal';
+import { TranscriptModal } from './TranscriptModal';
 
 interface TranscriptRecord {
   id: string;
@@ -512,6 +512,20 @@ export default function TranscriptDataGrid() {
             Showing {filteredTranscripts.length.toLocaleString()} of {transcripts.length.toLocaleString()} calls
           </span>
         </div>
+      )}
+
+      {/* Call Details Modal */}
+      {selectedTranscript && (
+        <TranscriptModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedTranscript(null);
+          }}
+          title={`Call Analysis - ${selectedTranscript.vendorCallKey}`}
+          filterType="all"
+          filterValue={selectedTranscript.vendorCallKey}
+        />
       )}
     </div>
   );
