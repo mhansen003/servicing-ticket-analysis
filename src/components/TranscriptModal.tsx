@@ -262,7 +262,8 @@ export function TranscriptModal({
       setLoading(true);
       try {
         // Try to load from new API endpoint first
-        let apiParams = `limit=1000&offset=0`;
+        // Load all records - set very high limit to get complete results
+        let apiParams = `limit=100000&offset=0`;
 
         // Add filter params based on filterType
         // Note: 'hour', 'dayOfWeek', and 'all' filters are not supported by the API
