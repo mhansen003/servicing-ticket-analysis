@@ -9,6 +9,8 @@ import {
   Info,
   Calendar,
   Loader2,
+  User,
+  ChevronUp,
 } from 'lucide-react';
 import { AgentProfileCard } from './AgentProfileCard';
 import { TranscriptModal } from './TranscriptModal';
@@ -544,48 +546,52 @@ export default function AgentsAnalysis() {
       )}
 
       {/* Main Content */}
-      <div className="flex gap-6">
-        {/* Agent Grid */}
-        <div className={`${selectedAgent ? 'w-1/2' : 'w-full'} space-y-4`}>
-          {/* Search and Sort */}
-          <div className="flex gap-3">
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
-              <input
-                type="text"
-                placeholder="Search agents by name or department..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500/50"
-              />
-            </div>
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as 'performance' | 'calls' | 'lowPerformance' | 'duration')}
-              className="px-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white text-sm focus:outline-none focus:border-blue-500/50"
-            >
-              <option value="performance">🏆 Top Performers</option>
-              <option value="lowPerformance">⚠️ Lowest Performers</option>
-              <option value="calls">📞 Most Calls</option>
-              <option value="duration">⏱️ Longest Avg Duration</option>
-            </select>
+      <div className="space-y-4">
+        {/* Search and Sort */}
+        <div className="flex gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search agents by name or department..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-9 pr-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white placeholder-gray-500 text-sm focus:outline-none focus:border-blue-500/50"
+            />
           </div>
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as 'performance' | 'calls' | 'lowPerformance' | 'duration')}
+            className="px-4 py-2.5 bg-[#1a1f2e] border border-white/[0.08] rounded-xl text-white text-sm focus:outline-none focus:border-blue-500/50"
+          >
+            <option value="performance">🏆 Top Performers</option>
+            <option value="lowPerformance">⚠️ Lowest Performers</option>
+            <option value="calls">📞 Most Calls</option>
+            <option value="duration">⏱️ Longest Avg Duration</option>
+          </select>
+        </div>
 
-          {/* Agent Tiles */}
-          {displayedAgents.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-48 text-gray-500">
-              <Users className="h-8 w-8 mb-2" />
-              <p>No agents found</p>
-            </div>
-          ) : (
-            <div className={`grid gap-4 ${selectedAgent ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
-              {displayedAgents.map((agent) => (
+        {/* Expandable Agent Grid */}
+        {displayedAgents.length === 0 ? (
+          <div className="flex flex-col items-center justify-center h-48 text-gray-500">
+            <Users className="h-8 w-8 mb-2" />
+            <p>No agents found</p>
+          </div>
+        ) : (
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {displayedAgents.map((agent) => (
+              <div
+                key={agent.name}
+                className={`bg-[#131a29] rounded-xl border transition-all ${
+                  selectedAgent?.name === agent.name
+                    ? 'border-blue-500/50 ring-2 ring-blue-500/20'
+                    : 'border-white/[0.08] hover:border-white/[0.12]'
+                }`}
+              >
+                {/* Compact Agent Card - Always Visible */}
                 <div
-                  key={agent.name}
                   onClick={() => handleSelectAgent(agent)}
-                  className={`cursor-pointer transition-all ${
-                    selectedAgent?.name === agent.name ? 'ring-2 ring-blue-500/50 rounded-xl' : ''
-                  }`}
+                  className="cursor-pointer p-4"
                 >
                   <AgentProfileCard
                     agent={agent}
@@ -593,32 +599,39 @@ export default function AgentsAnalysis() {
                     onViewTranscripts={() => handleSelectAgent(agent)}
                   />
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        {/* Agent Detail Panel */}
-        {selectedAgent && (
-          <div className="w-1/2 bg-[#131a29] rounded-xl border border-white/[0.08] overflow-hidden">
-            <div className="p-4 border-b border-white/[0.08] flex items-center justify-between">
-              <h3 className="font-medium text-white">Agent Profile</h3>
-              <button
-                onClick={() => setSelectedAgent(null)}
-                className="p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
-              >
-                <X className="h-4 w-4 text-gray-400" />
-              </button>
-            </div>
-            <div className="p-4 max-h-[calc(100vh-300px)] overflow-y-auto">
-              <AgentProfileCard
-                agent={selectedAgent}
-                profile={agentProfile}
-                loadingProfile={loadingProfile}
-                profileError={profileError}
-                onViewTranscripts={handleViewTranscripts}
-              />
-            </div>
+                {/* Expanded Agent Profile - Shown When Selected */}
+                {selectedAgent?.name === agent.name && (
+                  <div className="border-t border-white/[0.08] bg-[#0a0e17]/50">
+                    <div className="p-4 border-b border-white/[0.08] flex items-center justify-between bg-gradient-to-r from-blue-500/5 to-purple-500/5">
+                      <h3 className="font-semibold text-white flex items-center gap-2">
+                        <User className="h-4 w-4 text-blue-400" />
+                        Full Agent Profile
+                      </h3>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedAgent(null);
+                        }}
+                        className="p-1.5 rounded-lg hover:bg-white/[0.05] transition-colors"
+                        title="Collapse profile"
+                      >
+                        <ChevronUp className="h-4 w-4 text-gray-400" />
+                      </button>
+                    </div>
+                    <div className="p-4 max-h-[600px] overflow-y-auto">
+                      <AgentProfileCard
+                        agent={selectedAgent}
+                        profile={agentProfile}
+                        loadingProfile={loadingProfile}
+                        profileError={profileError}
+                        onViewTranscripts={handleViewTranscripts}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         )}
       </div>
