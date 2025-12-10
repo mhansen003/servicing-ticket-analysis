@@ -156,23 +156,44 @@ async function syncTranscripts(options = {}) {
     startDate = '2025-12-01', // Default: always sync from Dec 1, 2025 to catch any missing records
     endDate,
     limit,
-    dryRun = false
+    dryRun = false,
+    useFullExport = true // NEW: Use full export to get complete conversations
   } = options;
 
   console.log('🚀 Starting Domo transcript sync...');
   console.log(`   Date range: ${startDate || 'all'} to ${endDate || 'now'}`);
+  console.log(`   Method: ${useFullExport ? 'FULL EXPORT (complete conversations)' : 'SQL Query (truncated)'}`);
   console.log(`   Dry run: ${dryRun ? 'YES' : 'NO'}`);
   console.log('');
 
   try {
     // Step 1: Fetch data from Domo
     console.log('📥 Fetching data from Domo...');
-    const domoRecords = await domo.fetchAllRecords(
-      process.env.DOMO_DATASET_ID,
-      { startDate, endDate, limit }
-    );
+
+    let domoRecords;
+
+    if (useFullExport) {
+      // Use full dataset export with streaming (gets complete Conversation field, no truncation)
+      console.log('   Using FULL EXPORT with streaming to get complete conversation data...');
+
+      // Streaming export with built-in date filtering
+      domoRecords = await domo.exportDatasetFull(process.env.DOMO_DATASET_ID, {
+        startDate,
+        endDate,
+        limit
+      });
+
+    } else {
+      // Use SQL Query API (faster but truncates large text fields at 1024 chars)
+      console.log('   Using SQL Query API (may truncate conversations)...');
+      domoRecords = await domo.fetchAllRecords(
+        process.env.DOMO_DATASET_ID,
+        { startDate, endDate, limit }
+      );
+    }
+
     stats.fetched = domoRecords.length;
-    console.log(`✅ Fetched ${stats.fetched} records from Domo\n`);
+    console.log(`\n✅ Fetched ${stats.fetched} records from Domo\n`);
 
     if (stats.fetched === 0) {
       console.log('✅ No new records to process');

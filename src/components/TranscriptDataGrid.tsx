@@ -101,24 +101,22 @@ export default function TranscriptDataGrid() {
     return date.toISOString().split('T')[0];
   };
 
-  const [fromDate, setFromDate] = useState<string>(() => {
+  const [fromDate, setFromDate] = useState<string>(getDefaultFromDate());
+  const [toDate, setToDate] = useState<string>(getDefaultToDate());
+  const [allTime, setAllTime] = useState(false);
+
+  // Load from localStorage on mount (client-side only)
+  useEffect(() => {
     if (typeof window !== 'undefined') {
-      return localStorage.getItem('transcripts-from-date') || getDefaultFromDate();
+      const savedFromDate = localStorage.getItem('transcripts-from-date');
+      const savedToDate = localStorage.getItem('transcripts-to-date');
+      const savedAllTime = localStorage.getItem('transcripts-all-time') === 'true';
+
+      if (savedFromDate) setFromDate(savedFromDate);
+      if (savedToDate) setToDate(savedToDate);
+      if (savedAllTime !== null) setAllTime(savedAllTime);
     }
-    return getDefaultFromDate();
-  });
-  const [toDate, setToDate] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('transcripts-to-date') || getDefaultToDate();
-    }
-    return getDefaultToDate();
-  });
-  const [allTime, setAllTime] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('transcripts-all-time') === 'true';
-    }
-    return false;
-  });
+  }, []);
 
   // Persist date filters to localStorage
   useEffect(() => {

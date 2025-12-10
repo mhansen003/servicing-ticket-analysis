@@ -144,37 +144,29 @@ export default function AgentsAnalysis() {
     return date.toISOString().split('T')[0];
   };
 
-  const [globalStartDate, setGlobalStartDate] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('agents-global-start-date') || getDefaultStartDate();
-    }
-    return getDefaultStartDate();
-  });
-  const [globalEndDate, setGlobalEndDate] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('agents-global-end-date') || getDefaultEndDate();
-    }
-    return getDefaultEndDate();
-  });
-  const [appliedStartDate, setAppliedStartDate] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('agents-applied-start-date') || getDefaultStartDate();
-    }
-    return getDefaultStartDate();
-  });
-  const [appliedEndDate, setAppliedEndDate] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('agents-applied-end-date') || getDefaultEndDate();
-    }
-    return getDefaultEndDate();
-  });
-  const [allTime, setAllTime] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return localStorage.getItem('agents-all-time') === 'true';
-    }
-    return false;
-  });
+  const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
+  const [globalEndDate, setGlobalEndDate] = useState(getDefaultEndDate());
+  const [appliedStartDate, setAppliedStartDate] = useState(getDefaultStartDate());
+  const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
+  const [allTime, setAllTime] = useState(false);
   const [loadingFilteredData, setLoadingFilteredData] = useState(false);
+
+  // Load from localStorage on mount (client-side only)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedGlobalStart = localStorage.getItem('agents-global-start-date');
+      const savedGlobalEnd = localStorage.getItem('agents-global-end-date');
+      const savedAppliedStart = localStorage.getItem('agents-applied-start-date');
+      const savedAppliedEnd = localStorage.getItem('agents-applied-end-date');
+      const savedAllTime = localStorage.getItem('agents-all-time') === 'true';
+
+      if (savedGlobalStart) setGlobalStartDate(savedGlobalStart);
+      if (savedGlobalEnd) setGlobalEndDate(savedGlobalEnd);
+      if (savedAppliedStart) setAppliedStartDate(savedAppliedStart);
+      if (savedAppliedEnd) setAppliedEndDate(savedAppliedEnd);
+      if (savedAllTime !== null) setAllTime(savedAllTime);
+    }
+  }, []);
 
   // Persist date filters to localStorage
   useEffect(() => {

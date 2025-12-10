@@ -8,6 +8,8 @@
  */
 
 import fetch from 'node-fetch';
+import csvParser from 'csv-parser';
+import { Readable } from 'stream';
 
 export class DomoAPI {
   constructor(clientId, clientSecret, environment = 'cmgfi') {
@@ -189,6 +191,110 @@ export class DomoAPI {
       return await response.json();
     } catch (error) {
       console.error('❌ Error getting dataset info:', error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Export full dataset data (no truncation) with streaming and filtering
+   * Uses the Data Export API which returns complete records including full text fields
+   * @param {string} datasetId - The dataset GUID
+   * @param {Object} options - Filter options
+   * @param {string} options.startDate - Only return records >= this date (YYYY-MM-DD)
+   * @param {string} options.endDate - Only return records <= this date (YYYY-MM-DD)
+   * @param {number} options.limit - Maximum records to return
+   * @returns {Promise<Array>} Array of complete filtered records
+   */
+  async exportDatasetFull(datasetId, options = {}) {
+    await this.ensureAuthenticated();
+
+    const { startDate, endDate, limit } = options;
+    const url = `https://api.domo.com/v1/datasets/${datasetId}/data?includeHeader=true`;
+
+    try {
+      console.log(`📥 Exporting full dataset with streaming (no truncation)...`);
+      if (startDate || endDate) {
+        console.log(`   Filtering: ${startDate || 'beginning'} to ${endDate || 'now'}`);
+      }
+
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${this.accessToken}`,
+          'Accept': 'text/csv'
+        }
+      });
+
+      if (!response.ok) {
+        const error = await response.text();
+        throw new Error(`Failed to export dataset: ${response.status} - ${error}`);
+      }
+
+      // Stream the CSV response
+      const records = [];
+      let totalProcessed = 0;
+      let filteredCount = 0;
+
+      await new Promise((resolve, reject) => {
+        // response.body is already a Node.js readable stream in node-fetch
+        const parser = csvParser();
+
+        response.body
+          .pipe(parser)
+          .on('data', (record) => {
+            totalProcessed++;
+
+            // Apply date filters
+            let include = true;
+
+            if (startDate || endDate) {
+              const callDate = record.CallStartDateTime;
+              if (!callDate) {
+                include = false;
+              } else {
+                const date = new Date(callDate);
+
+                if (startDate && date < new Date(startDate)) {
+                  include = false;
+                }
+
+                if (endDate && date >= new Date(new Date(endDate).getTime() + 24 * 60 * 60 * 1000)) {
+                  include = false;
+                }
+              }
+            }
+
+            // Add to results if it passes filters
+            if (include) {
+              filteredCount++;
+              records.push(record);
+
+              // Check limit
+              if (limit && filteredCount >= limit) {
+                parser.destroy(); // Stop reading more data
+                resolve(); // Resolve immediately when limit reached
+              }
+            }
+
+            // Progress indicator every 10K records
+            if (totalProcessed % 10000 === 0) {
+              console.log(`   Processed ${totalProcessed.toLocaleString()} records, kept ${filteredCount.toLocaleString()}...`);
+            }
+          })
+          .on('end', () => {
+            console.log(`✅ Processed ${totalProcessed.toLocaleString()} total records`);
+            console.log(`✅ Filtered to ${filteredCount.toLocaleString()} matching records`);
+            resolve();
+          })
+          .on('error', (error) => {
+            reject(error);
+          });
+      });
+
+      return records;
+
+    } catch (error) {
+      console.error('❌ Error exporting dataset:', error.message);
       throw error;
     }
   }
