@@ -1036,6 +1036,8 @@ export default function TranscriptsAnalysis() {
                     border: '1px solid #374151',
                     borderRadius: '8px',
                   }}
+                  labelStyle={{ color: '#ffffff' }}
+                  itemStyle={{ color: '#ffffff' }}
                   formatter={(value: number) => [value.toLocaleString(), 'Calls']}
                 />
                 <Bar
@@ -1254,6 +1256,8 @@ export default function TranscriptsAnalysis() {
                       border: '1px solid #374151',
                       borderRadius: '8px',
                     }}
+                    labelStyle={{ color: '#ffffff' }}
+                    itemStyle={{ color: '#ffffff' }}
                   />
                   <Bar
                     dataKey="count"
