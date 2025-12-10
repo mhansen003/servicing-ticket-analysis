@@ -14,11 +14,12 @@ import {
 import { AIAnalysis } from '@/components/AIAnalysis';
 import TranscriptsAnalysis from '@/components/TranscriptsAnalysis';
 import TranscriptDataGrid from '@/components/TranscriptDataGrid';
+import AgentsAnalysis from '@/components/AgentsAnalysis';
 import CategoriesAnalysis from '@/components/CategoriesAnalysis';
 import TrendsAnalysis from '@/components/TrendsAnalysis';
 import DualSentimentAnalysis from '@/components/DualSentimentAnalysis';
 import PerformanceQuadrant from '@/components/PerformanceQuadrant';
-type TabType = 'data' | 'transcripts' | 'categories' | 'trends' | 'ai';
+type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ export default function Dashboard() {
 
     // Transcript Data (Purple) - Call recordings with AI analysis
     { id: 'transcripts' as TabType, label: 'Transcripts', icon: Phone, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
-    // Agents tab removed - agent leaderboard data integrated into Transcripts tab
+    { id: 'agents' as TabType, label: 'Agents', icon: Users, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
     { id: 'data' as TabType, label: 'Raw Data', icon: FolderKanban, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
     { id: 'ai' as TabType, label: 'Ask AI', icon: Brain, group: 'transcripts', color: 'purple', dataSource: 'Transcripts' },
   ];
@@ -171,6 +172,8 @@ export default function Dashboard() {
             <TranscriptsAnalysis />
           </div>
         )}
+
+        {activeTab === 'agents' && <AgentsAnalysis />}
 
         {activeTab === 'data' && <TranscriptDataGrid />}
 

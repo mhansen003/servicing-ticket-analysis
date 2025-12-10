@@ -324,20 +324,6 @@ export default function TranscriptsAnalysis() {
       .sort((a, b) => parseInt(a.hour) - parseInt(b.hour));
   }, [stats]);
 
-  // Prepare agent leaderboard - only show agents with 20+ calls
-  const agentLeaderboard = useMemo(() => {
-    if (!stats) return [];
-    return Object.entries(stats.byAgent)
-      .map(([name, data]) => ({
-        name,
-        count: data.count,
-        avgPerformance: data.avgPerformance,
-      }))
-      .filter((agent) => agent.count >= 20) // Only show agents with sufficient data
-      .sort((a, b) => b.count - a.count)
-      .slice(0, 15);
-  }, [stats]);
-
   // Prepare department data
   const departmentData = useMemo(() => {
     if (!stats) return [];
@@ -1223,61 +1209,6 @@ export default function TranscriptsAnalysis() {
                   ))}
                 </tbody>
               </table>
-            </div>
-          </div>
-        )}
-      </div>
-
-      {/* Agent Leaderboard */}
-      <div className="bg-[#131a29] rounded-2xl border border-white/[0.08] overflow-hidden">
-        <button
-          onClick={() => toggleSection('agents')}
-          className="w-full flex items-center justify-between p-4 hover:bg-white/[0.02] transition-colors"
-        >
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-cyan-500/20">
-              <Users className="h-5 w-5 text-cyan-400" />
-            </div>
-            <div className="text-left">
-              <h3 className="text-lg font-semibold text-white">Agent Leaderboard</h3>
-              <p className="text-sm text-gray-500">Top agents by call volume (minimum 20 calls)</p>
-            </div>
-          </div>
-          {expandedSections.has('agents') ? (
-            <ChevronUp className="h-5 w-5 text-gray-400" />
-          ) : (
-            <ChevronDown className="h-5 w-5 text-gray-400" />
-          )}
-        </button>
-
-        {expandedSections.has('agents') && (
-          <div className="p-6 pt-0">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {agentLeaderboard.map((agent, index) => (
-                <div
-                  key={agent.name}
-                  className="flex items-center gap-3 p-3 bg-gray-800/30 rounded-xl cursor-pointer hover:bg-gray-800/50 transition-colors"
-                  onClick={() => handleAgentClick(agent.name)}
-                >
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                      index === 0
-                        ? 'bg-yellow-500/20 text-yellow-400'
-                        : index === 1
-                        ? 'bg-gray-400/20 text-gray-300'
-                        : index === 2
-                        ? 'bg-amber-600/20 text-amber-500'
-                        : 'bg-gray-700 text-gray-400'
-                    }`}
-                  >
-                    {index + 1}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm text-white truncate">{agent.name}</p>
-                    <p className="text-xs text-gray-500">{agent.count.toLocaleString()} calls</p>
-                  </div>
-                </div>
-              ))}
             </div>
           </div>
         )}
