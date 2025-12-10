@@ -45,6 +45,10 @@ data/tickets.csv
 # All tickets JSON is generated at build time
 data/all-tickets.json
 
+# Generated public data files (too large for git)
+public/data/*.json
+public/data/professionalism-batches/
+
 .vercel
 
 /src/generated/prisma
