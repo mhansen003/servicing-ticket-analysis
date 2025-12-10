@@ -451,33 +451,35 @@ export default function TranscriptDataGrid() {
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    {transcript.agentSentiment && transcript.customerSentiment ? (
-                      <div className="flex gap-1">
-                        <span
-                          className={`px-2 py-0.5 text-xs rounded border ${
-                            transcript.agentSentiment === 'positive'
-                              ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                              : transcript.agentSentiment === 'negative'
-                              ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
-                          }`}
-                          title="Agent Sentiment"
-                        >
-                          A:{transcript.agentSentiment[0].toUpperCase()}
-                        </span>
-                        <span
-                          className={`px-2 py-0.5 text-xs rounded border ${
-                            transcript.customerSentiment === 'positive'
-                              ? 'bg-green-500/20 text-green-400 border-green-500/30'
-                              : transcript.customerSentiment === 'negative'
-                              ? 'bg-red-500/20 text-red-400 border-red-500/30'
-                              : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
-                          }`}
-                          title="Customer Sentiment"
-                        >
-                          C:{transcript.customerSentiment[0].toUpperCase()}
-                        </span>
-                      </div>
+                    {transcript.agentSentiment ? (
+                      <span
+                        className={`px-2 py-0.5 text-xs rounded border ${
+                          transcript.agentSentiment === 'positive'
+                            ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                            : transcript.agentSentiment === 'negative'
+                            ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                            : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                        }`}
+                      >
+                        {transcript.agentSentiment[0].toUpperCase()}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-gray-600">-</span>
+                    )}
+                  </td>
+                  <td className="px-4 py-3">
+                    {transcript.customerSentiment ? (
+                      <span
+                        className={`px-2 py-0.5 text-xs rounded border ${
+                          transcript.customerSentiment === 'positive'
+                            ? 'bg-green-500/20 text-green-400 border-green-500/30'
+                            : transcript.customerSentiment === 'negative'
+                            ? 'bg-red-500/20 text-red-400 border-red-500/30'
+                            : 'bg-gray-500/20 text-gray-400 border-gray-500/30'
+                        }`}
+                      >
+                        {transcript.customerSentiment[0].toUpperCase()}
+                      </span>
                     ) : (
                       <span className="text-xs text-gray-600">-</span>
                     )}
