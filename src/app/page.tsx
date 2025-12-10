@@ -17,8 +17,6 @@ import TranscriptDataGrid from '@/components/TranscriptDataGrid';
 import AgentsAnalysis from '@/components/AgentsAnalysis';
 import CategoriesAnalysis from '@/components/CategoriesAnalysis';
 import TrendsAnalysis from '@/components/TrendsAnalysis';
-import DualSentimentAnalysis from '@/components/DualSentimentAnalysis';
-import PerformanceQuadrant from '@/components/PerformanceQuadrant';
 type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
 
 export default function Dashboard() {
@@ -165,13 +163,7 @@ export default function Dashboard() {
 
         {activeTab === 'trends' && <TrendsAnalysis />}
 
-        {activeTab === 'transcripts' && (
-          <div className="space-y-6">
-            <DualSentimentAnalysis />
-            <PerformanceQuadrant />
-            <TranscriptsAnalysis />
-          </div>
-        )}
+        {activeTab === 'transcripts' && <TranscriptsAnalysis />}
 
         {activeTab === 'agents' && <AgentsAnalysis />}
 
