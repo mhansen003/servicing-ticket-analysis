@@ -341,8 +341,16 @@ export default function TranscriptsAnalysis() {
   // Prepare department data
   const departmentData = useMemo(() => {
     if (!stats) return [];
+
+    // Exclude specific departments: IRS Agent, Collection, BK, Disaster, Loss Mit
+    const excludedDepartments = ['IRS', 'COLLECTION', 'BK', 'DISASTER', 'LOSS MIT', 'LOSS MITIGATION'];
+
     return Object.entries(stats.byDepartment)
-      .filter(([name]) => name !== 'NULL')
+      .filter(([name]) => {
+        if (name === 'NULL') return false;
+        const upperName = name.toUpperCase();
+        return !excludedDepartments.some(excluded => upperName.includes(excluded));
+      })
       .map(([name, data]) => ({
         name: name.replace('SRVC - ', '').replace('SRVC/', ''),
         ...data,
