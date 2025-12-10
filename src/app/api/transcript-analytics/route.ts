@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
       const [
         totalTranscripts,
         analyzedCount,
+        recentImportsCount,
         agentSentiment,
         customerSentiment,
         topicsData,
@@ -62,6 +63,15 @@ export async function GET(request: NextRequest) {
         // Count of analyzed transcripts (filtered by date via join)
         prisma.transcriptAnalysis.count({
           where: analysisDateFilter,
+        }),
+
+        // Count of transcripts imported in the last 8 hours
+        prisma.transcripts.count({
+          where: {
+            call_start: {
+              gte: new Date(Date.now() - 8 * 60 * 60 * 1000), // 8 hours ago
+            },
+          },
         }),
 
         // Agent sentiment distribution (filtered by date)
@@ -318,6 +328,7 @@ export async function GET(request: NextRequest) {
           totalTranscripts,
           analyzedTranscripts: analyzedCount,
           analysisProgress: totalTranscripts > 0 ? (analyzedCount / totalTranscripts) * 100 : 0,
+          recentImports: recentImportsCount, // Last 8 hours
         },
         summary: {
           agentSentiment: {
