@@ -326,7 +326,7 @@ export function TranscriptModal({
     }
 
     loadTranscripts();
-  }, [isOpen, filterType, filterValue]);
+  }, [isOpen, filterType, filterValue, startDate, endDate]);
 
   // Conversations are now loaded directly from the API with the transcript data
   // No need for separate conversation loading
