@@ -283,9 +283,19 @@ export default function AgentsAnalysis() {
 
     // Sort based on selected criteria
     if (sortBy === 'performance') {
-      agents.sort((a, b) => b.sentimentScore - a.sentimentScore); // Top performers first
+      // Use agent performance score (agentSentimentScore) for ranking
+      agents.sort((a, b) => {
+        const scoreA = a.agentSentimentScore ?? a.sentimentScore;
+        const scoreB = b.agentSentimentScore ?? b.sentimentScore;
+        return scoreB - scoreA; // Top performers first
+      });
     } else if (sortBy === 'lowPerformance') {
-      agents.sort((a, b) => a.sentimentScore - b.sentimentScore); // Lowest performers first
+      // Use agent performance score for ranking lowest performers
+      agents.sort((a, b) => {
+        const scoreA = a.agentSentimentScore ?? a.sentimentScore;
+        const scoreB = b.agentSentimentScore ?? b.sentimentScore;
+        return scoreA - scoreB; // Lowest performers first
+      });
     } else if (sortBy === 'calls') {
       agents.sort((a, b) => b.callCount - a.callCount); // Most calls first
     } else if (sortBy === 'duration') {

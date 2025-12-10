@@ -543,12 +543,13 @@ export async function GET(request: NextRequest) {
       `;
 
       // Calculate performance tiers based on agent sentiment score
+      // Adjusted thresholds to create more top/higher performers
       const calculatePerformanceTier = (score: number): string => {
-        if (score >= 0.8) return 'top';
-        if (score >= 0.6) return 'good';
-        if (score >= 0.4) return 'average';
-        if (score >= 0.2) return 'needs-improvement';
-        return 'critical';
+        if (score >= 0.70) return 'top';        // 70%+ = Top (was 80%)
+        if (score >= 0.55) return 'good';       // 55%+ = Good (was 60%)
+        if (score >= 0.35) return 'average';    // 35%+ = Average (was 40%)
+        if (score >= 0.20) return 'needs-improvement';  // 20%+ = Needs Improvement
+        return 'critical';                      // <20% = Critical
       };
 
       // Transform data into agent stats with BOTH agent and customer sentiment
