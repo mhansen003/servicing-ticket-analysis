@@ -29,6 +29,9 @@ export async function GET(request: NextRequest) {
         topicsData,
         subcategoriesData,
         dailyTrendsRaw,
+        hourlyDataRaw,
+        dayOfWeekDataRaw,
+        departmentDataRaw,
       ] = await Promise.all([
         // Total transcripts
         prisma.transcripts.count(),
@@ -105,6 +108,43 @@ export async function GET(request: NextRequest) {
           ORDER BY DATE(t.call_start) DESC
           LIMIT 90
         ` as Promise<any[]>,
+
+        // Hourly distribution
+        prisma.$queryRaw`
+          SELECT
+            EXTRACT(HOUR FROM t.call_start) as hour,
+            COUNT(*) as count
+          FROM transcripts t
+          WHERE t.call_start IS NOT NULL
+          GROUP BY EXTRACT(HOUR FROM t.call_start)
+          ORDER BY hour
+        ` as Promise<any[]>,
+
+        // Day of week distribution
+        prisma.$queryRaw`
+          SELECT
+            TO_CHAR(t.call_start, 'Day') as day,
+            EXTRACT(DOW FROM t.call_start) as day_num,
+            COUNT(*) as count
+          FROM transcripts t
+          WHERE t.call_start IS NOT NULL
+          GROUP BY TO_CHAR(t.call_start, 'Day'), EXTRACT(DOW FROM t.call_start)
+          ORDER BY day_num
+        ` as Promise<any[]>,
+
+        // Department distribution with sentiment
+        prisma.$queryRaw`
+          SELECT
+            t.department,
+            COUNT(*) as count,
+            SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as positive,
+            SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as negative
+          FROM transcripts t
+          INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+          WHERE t.department IS NOT NULL AND t.department != ''
+          GROUP BY t.department
+          ORDER BY count DESC
+        ` as Promise<any[]>,
       ]);
 
       // Calculate averages
@@ -126,6 +166,36 @@ export async function GET(request: NextRequest) {
         customerNeutral: Number(row.customer_neutral),
         customerNegative: Number(row.customer_negative),
       }));
+
+      // Format hourly data
+      const byHour: Record<string, number> = {};
+      hourlyDataRaw.forEach((row: any) => {
+        const hour = Number(row.hour);
+        const hourStr = hour.toString().padStart(2, '0') + ':00';
+        byHour[hourStr] = Number(row.count);
+      });
+
+      // Format day of week data
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const byDayOfWeek: Record<string, number> = {};
+      dayOfWeekDataRaw.forEach((row: any) => {
+        const dayNum = Number(row.day_num);
+        const dayName = dayNames[dayNum];
+        byDayOfWeek[dayName] = Number(row.count);
+      });
+
+      // Format department data
+      const byDepartment: Record<string, { count: number; negative: number; positive: number }> = {};
+      departmentDataRaw.forEach((row: any) => {
+        const dept = row.department?.trim();
+        if (dept) {
+          byDepartment[dept] = {
+            count: Number(row.count),
+            negative: Number(row.negative),
+            positive: Number(row.positive),
+          };
+        }
+      });
 
       return NextResponse.json({
         success: true,
@@ -163,6 +233,9 @@ export async function GET(request: NextRequest) {
           })),
         },
         dailyTrends,
+        byHour,
+        byDayOfWeek,
+        byDepartment,
       });
     }
 

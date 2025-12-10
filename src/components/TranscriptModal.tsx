@@ -153,7 +153,7 @@ interface TranscriptModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
+  filterType: 'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
   filterValue: string;
 }
 
@@ -279,8 +279,9 @@ export function TranscriptModal({
             case 'agent':
               apiParams += `&agent=${encodeURIComponent(filterValue)}`;
               break;
-            case 'sentiment':
-              apiParams += `&sentiment=${filterValue}`;
+            case 'agentSentiment':
+            case 'customerSentiment':
+              // These filters will be applied client-side after loading all transcripts
               break;
             case 'topic':
               apiParams += `&topic=${encodeURIComponent(filterValue)}`;
@@ -594,8 +595,10 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
     if (filterValue) {
       filtered = filtered.filter((t) => {
         switch (filterType) {
-          case 'sentiment':
-            return (t.aiAnalysis?.sentiment || t.basicSentiment) === filterValue;
+          case 'agentSentiment':
+            return t.analysis?.agentSentiment === filterValue;
+          case 'customerSentiment':
+            return t.analysis?.customerSentiment === filterValue || t.basicSentiment === filterValue;
           case 'topic':
             // Check both old and new topic fields
             // Old format: detectedTopics array and aiAnalysis.topics array

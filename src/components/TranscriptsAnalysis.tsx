@@ -191,7 +191,7 @@ export default function TranscriptsAnalysis() {
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
+  const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
   useEffect(() => {
@@ -254,10 +254,10 @@ export default function TranscriptsAnalysis() {
                 resolutionDistribution: {},
                 topicDistribution: {},
                 escalationRiskDistribution: {},
-                byDepartment: {},
+                byDepartment: liveData.byDepartment || {},
                 byAgent: {},
-                byDayOfWeek: {},
-                byHour: {},
+                byDayOfWeek: liveData.byDayOfWeek || {},
+                byHour: liveData.byHour || {},
                 avgDuration: 0,
                 avgHoldTime: 0,
                 avgMessagesPerCall: 24, // Default from the API response
@@ -867,7 +867,7 @@ export default function TranscriptsAnalysis() {
                 <div className="space-y-3">
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30 cursor-pointer hover:bg-green-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'positive', 'Positive Agent Performance Calls')}
+                    onClick={() => openDrillDown('agentSentiment', 'positive', 'Positive Agent Performance Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <ThumbsUp className="h-4 w-4 text-green-400" />
@@ -884,7 +884,7 @@ export default function TranscriptsAnalysis() {
                   </div>
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30 cursor-pointer hover:bg-gray-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'neutral', 'Neutral Agent Performance Calls')}
+                    onClick={() => openDrillDown('agentSentiment', 'neutral', 'Neutral Agent Performance Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <Minus className="h-4 w-4 text-gray-400" />
@@ -901,7 +901,7 @@ export default function TranscriptsAnalysis() {
                   </div>
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30 cursor-pointer hover:bg-red-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'negative', 'Negative Agent Performance Calls')}
+                    onClick={() => openDrillDown('agentSentiment', 'negative', 'Negative Agent Performance Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <ThumbsDown className="h-4 w-4 text-red-400" />
@@ -934,7 +934,7 @@ export default function TranscriptsAnalysis() {
                 <div className="space-y-3">
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-green-500/10 border border-green-500/30 cursor-pointer hover:bg-green-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'positive', 'Positive Customer Sentiment Calls')}
+                    onClick={() => openDrillDown('customerSentiment', 'positive', 'Positive Customer Sentiment Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <ThumbsUp className="h-4 w-4 text-green-400" />
@@ -951,7 +951,7 @@ export default function TranscriptsAnalysis() {
                   </div>
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-gray-500/10 border border-gray-500/30 cursor-pointer hover:bg-gray-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'neutral', 'Neutral Customer Sentiment Calls')}
+                    onClick={() => openDrillDown('customerSentiment', 'neutral', 'Neutral Customer Sentiment Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <Minus className="h-4 w-4 text-gray-400" />
@@ -968,7 +968,7 @@ export default function TranscriptsAnalysis() {
                   </div>
                   <div
                     className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/30 cursor-pointer hover:bg-red-500/20 transition-colors"
-                    onClick={() => openDrillDown('sentiment', 'negative', 'Negative Customer Sentiment Calls')}
+                    onClick={() => openDrillDown('customerSentiment', 'negative', 'Negative Customer Sentiment Calls')}
                   >
                     <div className="flex items-center gap-2">
                       <ThumbsDown className="h-4 w-4 text-red-400" />
@@ -1104,13 +1104,8 @@ export default function TranscriptsAnalysis() {
                         <div
                           className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] transition-colors rounded-lg p-2 group"
                           onClick={() => {
-                            // If has subcategories, toggle expansion
-                            if (topicSubcategories.length > 0) {
-                              toggleSection(`topic-${topic.name}`);
-                            } else {
-                              // Otherwise, open modal directly
-                              openDrillDown('topic', topic.name, `${topic.name} Calls`);
-                            }
+                            // Always open drill-down for main topic
+                            openDrillDown('topic', topic.name, `${topic.name} Calls`);
                           }}
                         >
                           <div className="w-40 min-w-[10rem] flex items-center gap-2">
@@ -1118,11 +1113,19 @@ export default function TranscriptsAnalysis() {
                               {topic.name}
                             </span>
                             {topicSubcategories.length > 0 && (
-                              isExpanded ? (
-                                <ChevronUp className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                              ) : (
-                                <ChevronDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
-                              )
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation(); // Prevent opening drill-down
+                                  toggleSection(`topic-${topic.name}`);
+                                }}
+                                className="hover:bg-white/[0.05] rounded p-0.5 transition-colors"
+                              >
+                                {isExpanded ? (
+                                  <ChevronUp className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                ) : (
+                                  <ChevronDown className="h-3 w-3 text-gray-400 flex-shrink-0" />
+                                )}
+                              </button>
                             )}
                           </div>
                           <div className="flex-1 relative">
