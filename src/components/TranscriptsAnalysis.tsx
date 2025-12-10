@@ -1214,9 +1214,10 @@ export default function TranscriptsAnalysis() {
                     dataKey="count"
                     fill="#8b5cf6"
                     radius={[4, 4, 0, 0]}
-                    onClick={(data) => {
-                      const hour = data.hour.split(':')[0];
-                      openDrillDown('all', '', `Calls at ${data.hour}`);
+                    onClick={(data: any) => {
+                      if (data && data.hour) {
+                        openDrillDown('all', '', `Calls at ${data.hour}`);
+                      }
                     }}
                     style={{ cursor: 'pointer' }}
                   />
