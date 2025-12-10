@@ -1556,7 +1556,7 @@ export default function TranscriptsAnalysis() {
 
       {/* Data Info Footer */}
       <div className="text-center text-xs text-gray-500 py-4">
-        Data generated: {new Date(stats.generatedAt).toLocaleString()}
+        Data generated: {new Date(stats.generatedAt).toLocaleString('en-US', { timeZone: 'UTC', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })} UTC
         <br />
         <span className="text-gray-600">
           Run <code>node scripts/analyze-transcripts.mjs</code> to update with AI analysis
