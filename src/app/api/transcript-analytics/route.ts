@@ -98,8 +98,12 @@ export async function GET(request: NextRequest) {
           where: {
             aiDiscoveredTopic: {
               not: null,
+              not: '',
             },
-            aiDiscoveredSubcategory: null,
+            OR: [
+              { aiDiscoveredSubcategory: null },
+              { aiDiscoveredSubcategory: '' },
+            ],
           },
         }),
 
