@@ -694,8 +694,10 @@ export default function TranscriptsAnalysis() {
                     if (dayData && dayData.total > 0) {
                       if (useLiveData) {
                         // Use agent/customer sentiment from AI analysis
-                        const agentPositivePercent = (dayData.agentPositive / dayData.total) * 100;
-                        const customerPositivePercent = (dayData.customerPositive / dayData.total) * 100;
+                        const agentPositive = dayData.agentPositive || 0;
+                        const customerPositive = dayData.customerPositive || 0;
+                        const agentPositivePercent = (agentPositive / dayData.total) * 100;
+                        const customerPositivePercent = (customerPositive / dayData.total) * 100;
                         data.push({
                           day: offset,
                           agentPerformance: agentPositivePercent,
