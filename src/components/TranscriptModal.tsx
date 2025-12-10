@@ -642,7 +642,12 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               const callDate = new Date(t.callStart);
               const hour = callDate.getUTCHours();
               const hourStr = `${hour.toString().padStart(2, '0')}:00`;
-              return hourStr === filterValue;
+              const matches = hourStr === filterValue;
+              // Debug logging (first 5 matches only)
+              if (matches && Math.random() < 0.01) {
+                console.log(`Hour match: ${t.callStart} -> UTC ${hourStr} === ${filterValue}`);
+              }
+              return matches;
             } catch {
               return false;
             }
@@ -653,7 +658,12 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
               const callDate = new Date(t.callStart);
               const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
               const dayOfWeek = dayNames[callDate.getUTCDay()];
-              return dayOfWeek === filterValue;
+              const matches = dayOfWeek === filterValue;
+              // Debug logging (first 5 matches only)
+              if (matches && Math.random() < 0.01) {
+                console.log(`Day match: ${t.callStart} -> ${dayOfWeek} === ${filterValue}`);
+              }
+              return matches;
             } catch {
               return false;
             }
