@@ -191,7 +191,7 @@ export default function TranscriptsAnalysis() {
   // Modal state for drill-down
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
-  const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date'>('all');
+  const [modalFilterType, setModalFilterType] = useState<'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
   useEffect(() => {
@@ -359,7 +359,7 @@ export default function TranscriptsAnalysis() {
   };
 
   // Drill-down handlers
-  const openDrillDown = (filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date', filterValue: string, title: string) => {
+  const openDrillDown = (filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek', filterValue: string, title: string) => {
     setModalFilterType(filterType);
     setModalFilterValue(filterValue);
     setModalTitle(title);
@@ -1226,7 +1226,7 @@ export default function TranscriptsAnalysis() {
                     radius={[4, 4, 0, 0]}
                     onClick={(data: any) => {
                       if (data && data.hour) {
-                        openDrillDown('all', '', `Calls at ${data.hour}`);
+                        openDrillDown('hour', data.hour, `Calls at ${data.hour}`);
                       }
                     }}
                     style={{ cursor: 'pointer' }}
@@ -1248,7 +1248,7 @@ export default function TranscriptsAnalysis() {
                     <div
                       key={day}
                       className="flex items-center gap-3 cursor-pointer hover:bg-white/[0.02] rounded-lg p-1 transition-colors"
-                      onClick={() => openDrillDown('all', '', `Calls on ${day}`)}
+                      onClick={() => openDrillDown('dayOfWeek', day, `Calls on ${day}`)}
                     >
                       <span className="w-8 text-xs text-gray-400">{day}</span>
                       <div className="flex-1 bg-gray-700 rounded-full h-4 overflow-hidden">

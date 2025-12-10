@@ -153,7 +153,7 @@ interface TranscriptModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date';
+  filterType: 'sentiment' | 'topic' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek';
   filterValue: string;
 }
 
@@ -265,6 +265,8 @@ export function TranscriptModal({
         let apiParams = `limit=1000&offset=0`;
 
         // Add filter params based on filterType
+        // Note: 'hour', 'dayOfWeek', and 'all' filters are not supported by the API
+        // and will be handled by client-side filtering in the filteredTranscripts useMemo
         if (filterValue) {
           switch (filterType) {
             case 'date':
@@ -281,6 +283,11 @@ export function TranscriptModal({
               break;
             case 'topic':
               apiParams += `&topic=${encodeURIComponent(filterValue)}`;
+              break;
+            case 'hour':
+            case 'dayOfWeek':
+            case 'all':
+              // These filters will be applied client-side after loading all transcripts
               break;
           }
         }
@@ -600,6 +607,28 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
           case 'date':
             // Filter by date when filterValue is a date (YYYY-MM-DD)
             return t.callStart?.startsWith(filterValue);
+          case 'hour':
+            // Filter by hour of day (e.g., "13:00", "14:00")
+            if (!t.callStart) return false;
+            try {
+              const callDate = new Date(t.callStart);
+              const hour = callDate.getUTCHours();
+              const hourStr = `${hour.toString().padStart(2, '0')}:00`;
+              return hourStr === filterValue;
+            } catch {
+              return false;
+            }
+          case 'dayOfWeek':
+            // Filter by day of week (e.g., "Mon", "Tue", "Wed")
+            if (!t.callStart) return false;
+            try {
+              const callDate = new Date(t.callStart);
+              const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+              const dayOfWeek = dayNames[callDate.getUTCDay()];
+              return dayOfWeek === filterValue;
+            } catch {
+              return false;
+            }
           case 'all':
             // Global search across all fields
             const query = filterValue.toLowerCase();
