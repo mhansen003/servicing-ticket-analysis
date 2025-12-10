@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 interface Message {
   role: 'agent' | 'customer';
@@ -119,6 +122,104 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenRouter API key not configured' }, { status: 500 });
     }
 
+    // Fetch processed transcript statistics for context and consistency
+    let processedDataContext = '';
+    try {
+      // Get aggregate statistics from processed transcripts
+      const [
+        totalProcessed,
+        sentimentStats,
+        topTopics,
+        agentStats,
+        departmentStats
+      ] = await Promise.all([
+        // Total processed transcripts
+        prisma.transcriptAnalysis.count(),
+
+        // Sentiment distribution
+        prisma.transcriptAnalysis.groupBy({
+          by: ['agentSentiment', 'customerSentiment'],
+          _count: true,
+        }),
+
+        // Top discovered topics
+        prisma.transcriptAnalysis.groupBy({
+          by: ['aiDiscoveredTopic', 'aiDiscoveredSubcategory'],
+          _count: true,
+          where: {
+            aiDiscoveredTopic: { not: null },
+          },
+          orderBy: {
+            _count: {
+              aiDiscoveredTopic: 'desc',
+            },
+          },
+          take: 10,
+        }),
+
+        // Agent-specific stats if we have agent name
+        metadata?.agentName ? prisma.transcriptAnalysis.groupBy({
+          by: ['agentSentiment', 'customerSentiment'],
+          _count: true,
+          where: {
+            agentName: { contains: metadata.agentName, mode: 'insensitive' },
+          },
+        }) : Promise.resolve([]),
+
+        // Department-specific stats if we have department
+        metadata?.department ? prisma.$queryRaw`
+          SELECT
+            ta."agentSentiment",
+            ta."customerSentiment",
+            COUNT(*) as count
+          FROM "TranscriptAnalysis" ta
+          INNER JOIN transcripts t ON ta."vendorCallKey" = t.vendor_call_key
+          WHERE t.department ILIKE ${'%' + metadata.department + '%'}
+          GROUP BY ta."agentSentiment", ta."customerSentiment"
+        ` as Promise<any[]> : Promise.resolve([]),
+      ]);
+
+      // Build context from processed data
+      const agentSentimentCounts = sentimentStats.reduce((acc, stat) => {
+        acc[stat.agentSentiment || 'unknown'] = (acc[stat.agentSentiment || 'unknown'] || 0) + stat._count;
+        return acc;
+      }, {} as Record<string, number>);
+
+      const customerSentimentCounts = sentimentStats.reduce((acc, stat) => {
+        acc[stat.customerSentiment || 'unknown'] = (acc[stat.customerSentiment || 'unknown'] || 0) + stat._count;
+        return acc;
+      }, {} as Record<string, number>);
+
+      processedDataContext = `
+PROCESSED TRANSCRIPT DATA FOR CONSISTENCY:
+We have analyzed ${totalProcessed.toLocaleString()} previous transcripts. Use these patterns as a guide for consistent scoring:
+
+Overall Sentiment Patterns:
+- Agent Sentiment: ${Object.entries(agentSentimentCounts).map(([k, v]) => `${k}: ${v} (${((v / totalProcessed) * 100).toFixed(1)}%)`).join(', ')}
+- Customer Sentiment: ${Object.entries(customerSentimentCounts).map(([k, v]) => `${k}: ${v} (${((v / totalProcessed) * 100).toFixed(1)}%)`).join(', ')}
+
+Common Topics Discovered:
+${topTopics.slice(0, 5).map((t, i) => `${i + 1}. ${t.aiDiscoveredTopic}${t.aiDiscoveredSubcategory ? ` → ${t.aiDiscoveredSubcategory}` : ''}: ${t._count} calls`).join('\n')}
+${metadata?.agentName && agentStats.length > 0 ? `
+This Agent's Performance Pattern (${metadata.agentName}):
+- Agent Sentiment: ${agentStats.map((s: any) => `${s.agentSentiment}: ${s._count}`).join(', ')}
+- Customer Outcomes: ${agentStats.map((s: any) => `${s.customerSentiment}: ${s._count}`).join(', ')}
+` : ''}
+${metadata?.department && departmentStats.length > 0 ? `
+This Department's Pattern (${metadata.department}):
+- Typical Sentiment Distribution: ${departmentStats.map((s: any) => `Customer ${s.customerSentiment}: ${s.count}`).join(', ')}
+` : ''}
+
+SCORING CONSISTENCY GUIDANCE:
+- Compare your scores to these historical patterns
+- If this call seems significantly different from patterns, that's valuable to note
+- Maintain consistency: similar interactions should receive similar scores across the ${totalProcessed.toLocaleString()} call dataset
+`;
+    } catch (error) {
+      console.warn('Failed to fetch processed data context:', error);
+      // Continue without context if database query fails
+    }
+
     // Build the conversation text with clear role labels
     const conversationText = messages
       .map((msg: Message, idx: number) => `[${idx + 1}] ${msg.role.toUpperCase()}: ${msg.text}`)
@@ -138,7 +239,7 @@ export async function POST(request: NextRequest) {
     const systemPrompt = `You are an expert in conversation analysis, customer psychology, and service quality evaluation for mortgage customer service calls.
 
 Analyze this customer service interaction and provide a comprehensive, executive-ready assessment.
-
+${processedDataContext}
 IMPORTANT: Return your analysis as a valid JSON object matching this exact structure. No markdown, no code blocks, just pure JSON:
 
 {

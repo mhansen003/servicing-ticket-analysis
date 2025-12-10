@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export async function POST(request: NextRequest) {
   try {
@@ -15,55 +16,115 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenRouter API key not configured' }, { status: 500 });
     }
 
-    // Load transcript statistics and sample data
-    const publicDir = path.join(process.cwd(), 'public', 'data');
+    // Load transcript statistics from database instead of static files
+    const [
+      totalCalls,
+      sentimentStats,
+      topTopics,
+      topAgents,
+      topDepartments,
+      sampleTranscripts,
+      avgMetrics
+    ] = await Promise.all([
+      // Total calls
+      prisma.transcripts.count(),
 
-    const [statsData, transcriptsData] = await Promise.all([
-      fs.readFile(path.join(publicDir, 'transcript-stats.json'), 'utf-8'),
-      fs.readFile(path.join(publicDir, 'transcript-analysis.json'), 'utf-8'),
+      // Sentiment distribution
+      prisma.transcriptAnalysis.groupBy({
+        by: ['customerSentiment'],
+        _count: true,
+      }),
+
+      // Top topics
+      prisma.transcriptAnalysis.groupBy({
+        by: ['aiDiscoveredTopic', 'aiDiscoveredSubcategory'],
+        _count: true,
+        where: { aiDiscoveredTopic: { not: null } },
+        orderBy: { _count: { aiDiscoveredTopic: 'desc' } },
+        take: 10,
+      }),
+
+      // Top agents
+      prisma.transcriptAnalysis.groupBy({
+        by: ['agentName'],
+        _count: true,
+        where: { agentName: { not: null } },
+        orderBy: { _count: { agentName: 'desc' } },
+        take: 15,
+      }),
+
+      // Top departments
+      prisma.$queryRaw`
+        SELECT
+          t.department,
+          COUNT(*) as count,
+          SUM(CASE WHEN ta."customerSentiment" = 'positive' THEN 1 ELSE 0 END) as positive,
+          SUM(CASE WHEN ta."customerSentiment" = 'negative' THEN 1 ELSE 0 END) as negative
+        FROM transcripts t
+        INNER JOIN "TranscriptAnalysis" ta ON t.vendor_call_key = ta."vendorCallKey"
+        WHERE t.department IS NOT NULL AND t.department != ''
+        GROUP BY t.department
+        ORDER BY count DESC
+        LIMIT 10
+      ` as Promise<any[]>,
+
+      // Sample recent transcripts with analysis
+      prisma.transcripts.findMany({
+        take: 50,
+        include: {
+          TranscriptAnalysis: {
+            take: 1,
+          },
+        },
+        orderBy: {
+          call_start: 'desc',
+        },
+      }),
+
+      // Average metrics
+      prisma.transcripts.aggregate({
+        _avg: {
+          duration_seconds: true,
+        },
+      }),
     ]);
 
-    const stats = JSON.parse(statsData);
-    const allTranscripts = JSON.parse(transcriptsData);
+    // Calculate sentiment breakdown
+    const sentimentBreakdown = sentimentStats.reduce((acc, stat) => {
+      acc[stat.customerSentiment || 'unknown'] = stat._count;
+      return acc;
+    }, {} as Record<string, number>);
 
-    // Get sample of recent transcripts
-    const sampleTranscripts = allTranscripts.slice(0, 50);
-
-    // Calculate key metrics
-    const totalCalls = stats.totalCalls;
-    const sentimentBreakdown = stats.sentimentDistribution;
-    const topDepartments = Object.entries(stats.byDepartment)
-      .filter(([name]) => name !== 'NULL')
-      .sort(([, a]: any, [, b]: any) => b.count - a.count)
-      .slice(0, 10);
-    const topAgents = Object.entries(stats.byAgent)
-      .sort(([, a]: any, [, b]: any) => b.count - a.count)
-      .slice(0, 15);
+    const avgDuration = avgMetrics._avg.duration_seconds || 0;
 
     const contextData = `
 ## Call Transcript Statistics Overview
 - Total Calls: ${totalCalls.toLocaleString()}
-- Average Call Duration: ${Math.floor(stats.avgDuration / 60)}m ${stats.avgDuration % 60}s
-- Average Hold Time: ${Math.floor(stats.avgHoldTime / 60)}m ${stats.avgHoldTime % 60}s
-- Average Messages Per Call: ${stats.avgMessagesPerCall}
+- Average Call Duration: ${Math.floor(avgDuration / 60)}m ${avgDuration % 60}s
 
-## Sentiment Distribution
-- Positive: ${sentimentBreakdown.positive} calls (${((sentimentBreakdown.positive / totalCalls) * 100).toFixed(1)}%)
-- Negative: ${sentimentBreakdown.negative} calls (${((sentimentBreakdown.negative / totalCalls) * 100).toFixed(1)}%)
-- Neutral: ${sentimentBreakdown.neutral} calls (${((sentimentBreakdown.neutral / totalCalls) * 100).toFixed(1)}%)
-- Mixed: ${sentimentBreakdown.mixed} calls (${((sentimentBreakdown.mixed / totalCalls) * 100).toFixed(1)}%)
+## Sentiment Distribution (from ${sentimentStats.reduce((sum, s) => sum + s._count, 0).toLocaleString()} analyzed calls)
+${Object.entries(sentimentBreakdown).map(([sentiment, count]) => `- ${sentiment.charAt(0).toUpperCase() + sentiment.slice(1)}: ${count} calls (${((count / totalCalls) * 100).toFixed(1)}%)`).join('\n')}
 
 ## Top Departments by Call Volume
-${topDepartments.map(([name, data]: [string, any]) => `- ${name.replace('SRVC - ', '').replace('SRVC/', '')}: ${data.count} calls, ${((data.positive / data.count) * 100).toFixed(1)}% positive`).join('\n')}
+${topDepartments.map((dept: any) => {
+  const posRate = dept.count > 0 ? ((dept.positive / dept.count) * 100).toFixed(1) : '0.0';
+  return `- ${dept.department.replace('SRVC - ', '').replace('SRVC/', '')}: ${dept.count} calls, ${posRate}% positive`;
+}).join('\n')}
 
-## Top Agents by Call Volume (20+ calls minimum for ranking)
-${topAgents.filter(([, data]: any) => data.count >= 20).map(([name, data]: [string, any]) => `- ${name}: ${data.count} calls, avg performance: ${data.avgPerformance?.toFixed(1) || 'N/A'}`).join('\n')}
+## Top Agents by Call Volume
+${topAgents.filter(agent => agent._count >= 20).map((agent: any) => `- ${agent.agentName}: ${agent._count} calls`).join('\n')}
 
-## Top Call Topics
-${Object.entries(stats.topicDistribution).sort(([, a]: any, [, b]: any) => b - a).slice(0, 10).map(([topic, count]) => `- ${topic}: ${count} calls`).join('\n')}
+## Top Call Topics (AI-Discovered from Processed Transcripts)
+${topTopics.map((topic: any, i: number) => `${i + 1}. ${topic.aiDiscoveredTopic}${topic.aiDiscoveredSubcategory ? ` → ${topic.aiDiscoveredSubcategory}` : ''}: ${topic._count} calls`).join('\n')}
 
 ## Sample Recent Calls
-${sampleTranscripts.map((t: any) => `- ${t.vendorCallKey} | ${t.agentName} | ${t.basicSentiment} | ${Math.floor(t.durationSeconds / 60)}m ${t.messageCount} msgs | ${t.aiAnalysis?.summary?.substring(0, 80) || 'No summary'}...`).join('\n')}
+${sampleTranscripts.map((t: any) => {
+  const analysis = t.TranscriptAnalysis?.[0];
+  const duration = t.duration_seconds || 0;
+  const sentiment = analysis?.customerSentiment || 'unknown';
+  const topic = analysis?.aiDiscoveredTopic || 'Not analyzed';
+  return `- ${t.vendor_call_key} | ${t.agent_name || 'Unknown'} | ${sentiment} | ${Math.floor(duration / 60)}m | Topic: ${topic}`;
+}).join('\n')}
 `;
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
