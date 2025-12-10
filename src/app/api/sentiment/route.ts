@@ -40,29 +40,44 @@ export async function POST(request: NextRequest) {
 
 CRITICAL: Messages are labeled [index] CUSTOMER: or [index] AGENT: - use these labels to apply correct rules.
 
-=== CUSTOMER SCORING (be sensitive to frustration) ===
+⚠️ CONTEXT IS KEY: Analyze each message in the CONTEXT of the surrounding conversation flow:
+- If customer is upset early on, "thank you" later shows improvement (+0.4 to +0.6)
+- If agent ignored complaint, "we can help" later is less positive (+0.1 vs +0.4)
+- Look at the TRAJECTORY: Is frustration building? Is resolution happening?
+- Short responses ("OK", "Yes") should reflect the emotional STATE at that point in conversation
+
+=== CUSTOMER SCORING (be sensitive to frustration AND conversation arc) ===
 Emotions: frustrated, disappointed, annoyed, resigned, confused, anxious, neutral, satisfied, grateful, relieved
 - Complaints, "I don't like", inconvenience = -0.4 to -0.6
 - "Disappointed", "frustrated", "upset" = -0.5 to -0.7
 - "I guess I'll have to...", resigned acceptance = -0.3
 - Routine questions (asking for balance, payment info) = 0 neutral
-- Simple confirmations like "OK", "Thank you" = 0 to +0.1
+- Simple confirmations like "OK", "Thank you":
+  * After resolving frustration = +0.3 to +0.5 (relief/satisfaction)
+  * After getting helpful info = +0.1 to +0.2 (acknowledgment)
+  * During ongoing problem = -0.1 to 0 (resignation)
 - Genuine gratitude, problem solved = +0.4 to +0.7
 
-=== AGENT SCORING (evaluate helpfulness) ===
+=== AGENT SCORING (evaluate helpfulness AND responsiveness to customer state) ===
 Emotions: helpful, professional, empathetic, apologetic, neutral, dismissive, confused
 - Helpful explanations, solving problems = +0.3 to +0.5
 - Professional, providing information = +0.2 to +0.3
-- Empathetic responses, acknowledging feelings = +0.4 to +0.5
+- Empathetic responses, acknowledging feelings:
+  * When customer is upset = +0.5 to +0.7 (excellent de-escalation)
+  * When customer is calm = +0.3 to +0.4 (proactive empathy)
 - Simple statements of fact = 0 to +0.1
-- "Sorry", "I apologize" with action = +0.2
-- Robotic/cold responses = 0
+- "Sorry", "I apologize" with action = +0.2 to +0.4
+- "Sorry" without action (after customer repeated complaint) = -0.1 to 0
+- Robotic/cold responses to upset customer = -0.2 to -0.4
 - Defensive or dismissive = -0.3 to -0.5
+- Ignoring customer's expressed concern = -0.4 to -0.6
 
-IMPORTANT:
-- A CUSTOMER saying "thank you" after getting info = neutral to slightly positive
-- An AGENT providing information helpfully = professional/helpful (+0.2 to +0.3)
-- Don't confuse who said what - check the CUSTOMER/AGENT label!
+CONVERSATION FLOW EXAMPLES:
+[0] CUSTOMER: "I'm very frustrated about this charge" (-0.6, frustrated)
+[1] AGENT: "I understand, let me look into that for you" (+0.5, empathetic) ← responding to frustration
+[2] CUSTOMER: "Thank you" (+0.3, relieved) ← improvement from -0.6!
+[3] AGENT: "I see the issue, I can reverse that charge" (+0.6, helpful) ← solving problem
+[4] CUSTOMER: "Oh that's great, thank you so much!" (+0.7, grateful) ← resolution
 
 Return JSON array with one object per message in order:
 {"score": number, "emotion": string}
