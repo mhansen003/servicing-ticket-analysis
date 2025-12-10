@@ -1073,7 +1073,34 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                       )}
                     </div>
                   </div>
-                  <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3">
+                  <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3 relative">
+                    {/* AI Processing Overlay */}
+                    {analyzingSentiment && (
+                      <div className="absolute inset-0 z-10 bg-gradient-to-b from-blue-900/30 via-purple-900/20 to-transparent backdrop-blur-sm flex items-start justify-center pt-8">
+                        <div className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-lg px-6 py-4 shadow-xl">
+                          <div className="flex items-center gap-3">
+                            <div className="relative">
+                              <div className="animate-spin rounded-full h-8 w-8 border-2 border-blue-500/20 border-t-blue-400" />
+                              <div className="absolute inset-0 animate-ping rounded-full h-8 w-8 border border-blue-400/40" />
+                            </div>
+                            <div className="text-left">
+                              <div className="text-white font-semibold text-lg flex items-center gap-2">
+                                <span>AI Analyzing Conversation</span>
+                                <span className="inline-flex gap-0.5">
+                                  <span className="animate-bounce animation-delay-0 text-blue-400">.</span>
+                                  <span className="animate-bounce animation-delay-100 text-blue-400">.</span>
+                                  <span className="animate-bounce animation-delay-200 text-blue-400">.</span>
+                                </span>
+                              </div>
+                              <div className="text-blue-200 text-sm mt-1">
+                                Generating sentiment heat map
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {!selectedTranscript.conversation || selectedTranscript.conversation.length === 0 ? (
                       <div className="text-center text-gray-500 py-8">
                         No conversation data available
