@@ -184,7 +184,12 @@ interface MessageSentiment {
 }
 
 // Get background color based on sentiment score and message role
-function getMessageSentimentStyle(sentiment: number, role: 'agent' | 'customer'): string {
+function getMessageSentimentStyle(sentiment: number, role: 'agent' | 'customer', emotion?: string): string {
+  // System/automated messages (IVR, hold music, etc.) - display in yellow
+  if (emotion === 'system') {
+    return 'bg-yellow-500/15 text-yellow-200 border-l-2 border-yellow-500/40';
+  }
+
   if (role === 'agent') {
     // Agent messages stay blue-tinted but can shift slightly
     if (sentiment > 0.3) {
@@ -212,6 +217,10 @@ function getMessageSentimentStyle(sentiment: number, role: 'agent' | 'customer')
 // Get emotion badge color
 function getEmotionBadgeStyle(emotion: string): string {
   const emotionLower = emotion.toLowerCase();
+  // System/automated messages
+  if (emotionLower === 'system') {
+    return 'bg-yellow-500/20 text-yellow-300';
+  }
   // Positive emotions (customer & agent)
   if (['grateful', 'satisfied', 'relieved', 'happy', 'pleased', 'helpful', 'empathetic', 'supportive', 'friendly', 'professional', 'reassuring', 'polite', 'patient'].includes(emotionLower)) {
     return 'bg-emerald-500/20 text-emerald-300';
@@ -1105,7 +1114,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
 
                           // Get the style based on sentiment
                           const messageStyle = messageSentiments.length > 0
-                            ? getMessageSentimentStyle(sentimentScore, msg.role)
+                            ? getMessageSentimentStyle(sentimentScore, msg.role, emotion)
                             : msg.role === 'agent'
                               ? 'bg-blue-500/20 text-blue-100'
                               : 'bg-[#1a1f2e] text-gray-200';

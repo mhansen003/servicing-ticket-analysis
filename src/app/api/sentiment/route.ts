@@ -5,6 +5,53 @@ interface Message {
   text: string;
 }
 
+interface SentimentResult {
+  score: number;
+  emotion: string;
+}
+
+/**
+ * Detect if a message is an automated system message (IVR, hold music, etc.)
+ */
+function isSystemMessage(text: string): boolean {
+  if (!text || text.trim().length === 0) return true;
+
+  const lowerText = text.toLowerCase();
+
+  // Common automated message patterns
+  const systemPatterns = [
+    // Hold messages
+    /\b(you are|you're) (now |currently )?on hold\b/i,
+    /\bplease (continue to )?hold\b/i,
+    /\byour call is important to us\b/i,
+    /\ball (agents|representatives) are (currently )?busy\b/i,
+    /\bthank you for (your patience|holding)\b/i,
+
+    // Music/transfer notifications
+    /\bmusic playing\b/i,
+    /\bhold music\b/i,
+    /\btransferring (you|your call)\b/i,
+    /\bplease wait while (we|I) transfer\b/i,
+
+    // IVR / Menu prompts
+    /\bpress \d+ (for|to)\b/i,
+    /\bplease listen carefully as (our )?menu options/i,
+    /\bfor .+, press \d+\b/i,
+    /\bto speak with .+, press \d+\b/i,
+    /\bmain menu\b/i,
+
+    // Generic automated greetings
+    /^thank you for calling .+\. (this call|your call)/i,
+    /\bthis call may be (recorded|monitored)\b/i,
+    /\bfor quality (and training purposes|assurance)\b/i,
+
+    // Very short non-conversational messages
+    /^(ok|okay|yes|no|uh huh|mm|hmm)\.?$/i,
+  ];
+
+  return systemPatterns.some(pattern => pattern.test(lowerText));
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { messages } = await request.json();
@@ -18,9 +65,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'OpenRouter API key not configured' }, { status: 500 });
     }
 
-    // Build the conversation text with message indices
-    const conversationText = messages
-      .map((msg: Message, idx: number) => `[${idx}] ${msg.role.toUpperCase()}: ${msg.text}`)
+    // Pre-process messages to identify system messages
+    const messageTypes = messages.map((msg: Message) => ({
+      isSystem: isSystemMessage(msg.text),
+      originalIndex: messages.indexOf(msg)
+    }));
+
+    // Filter out system messages for AI analysis
+    const humanMessages = messages.filter((msg: Message, idx: number) => !messageTypes[idx].isSystem);
+
+    // If all messages are system messages, return early
+    if (humanMessages.length === 0) {
+      const systemResults = messages.map(() => ({ score: 0, emotion: 'system' }));
+      return NextResponse.json({ sentiments: systemResults });
+    }
+
+    // Build the conversation text with message indices (only human messages)
+    const conversationText = humanMessages
+      .map((msg: Message, idx: number) => {
+        const originalIdx = messages.indexOf(msg);
+        return `[${originalIdx}] ${msg.role.toUpperCase()}: ${msg.text}`;
+      })
       .join('\n\n');
 
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -133,8 +198,24 @@ Return ONLY valid JSON array, no other text.`,
 
       jsonStr = jsonStr.trim();
 
-      const sentiments = JSON.parse(jsonStr);
-      return NextResponse.json({ sentiments });
+      const aiResults: SentimentResult[] = JSON.parse(jsonStr);
+
+      // Merge AI results with system message markers
+      const finalResults: SentimentResult[] = [];
+      let aiResultIndex = 0;
+
+      for (let i = 0; i < messages.length; i++) {
+        if (messageTypes[i].isSystem) {
+          // System message - assign neutral score with "system" emotion
+          finalResults.push({ score: 0, emotion: 'system' });
+        } else {
+          // Human message - use AI result
+          finalResults.push(aiResults[aiResultIndex] || { score: 0, emotion: 'neutral' });
+          aiResultIndex++;
+        }
+      }
+
+      return NextResponse.json({ sentiments: finalResults });
     } catch (parseError) {
       console.error('Failed to parse sentiment response:', content);
       // Return neutral sentiments as fallback
