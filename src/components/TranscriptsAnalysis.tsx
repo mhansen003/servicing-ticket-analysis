@@ -199,17 +199,27 @@ export default function TranscriptsAnalysis() {
       try {
         setLoading(true);
 
-        // Load stats
-        const statsRes = await fetch('/data/transcript-stats.json');
-        if (!statsRes.ok) throw new Error('Failed to load transcript stats');
-        const statsData = await statsRes.json();
-        setStats(statsData);
+        // Try to load stats from static files (optional)
+        try {
+          const statsRes = await fetch('/data/transcript-stats.json');
+          if (statsRes.ok) {
+            const statsData = await statsRes.json();
+            setStats(statsData);
+          }
+        } catch (err) {
+          console.log('Static transcript stats not available, will use API data');
+        }
 
-        // Load transcripts (for drill-down)
-        const transcriptsRes = await fetch('/data/transcript-analysis.json');
-        if (!transcriptsRes.ok) throw new Error('Failed to load transcript data');
-        const transcriptsData = await transcriptsRes.json();
-        setTranscripts(transcriptsData);
+        // Try to load transcripts from static files (optional)
+        try {
+          const transcriptsRes = await fetch('/data/transcript-analysis.json');
+          if (transcriptsRes.ok) {
+            const transcriptsData = await transcriptsRes.json();
+            setTranscripts(transcriptsData);
+          }
+        } catch (err) {
+          console.log('Static transcript data not available, will use API data');
+        }
 
         // Load live analysis data from database
         try {
