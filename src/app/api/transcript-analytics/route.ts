@@ -248,7 +248,8 @@ export async function GET(request: NextRequest) {
           durationSeconds: t.duration_seconds,
           disposition: t.disposition,
           department: t.department,
-          agentName: t.agent_name,
+          // Use agentName from TranscriptAnalysis if available, otherwise fall back to transcripts table
+          agentName: t.TranscriptAnalysis[0]?.agentName || t.agent_name,
           messages: t.messages,
           analysis: t.TranscriptAnalysis[0] || null,
         })),
