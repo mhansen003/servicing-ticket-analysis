@@ -843,7 +843,15 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                   return (
                     <button
                       key={transcript.id}
-                      onClick={() => setSelectedTranscript(transcript)}
+                      onClick={() => {
+                        // Clear old transcript conversation immediately while new one loads
+                        setSelectedTranscript({
+                          ...transcript,
+                          conversation: [], // Clear conversation to show loading state
+                        });
+                        setMessageSentiments([]);
+                        setCallAnalysis(null);
+                      }}
                       className={`w-full p-4 text-left hover:bg-white/[0.02] transition-colors ${
                         selectedTranscript?.id === transcript.id ? 'bg-blue-500/10' : ''
                       }`}
