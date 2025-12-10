@@ -74,7 +74,7 @@ Return ONLY valid JSON array, no other text.`,
             content: `Analyze each message's sentiment. Pay attention to CUSTOMER vs AGENT labels:\n\n${conversationText}`,
           },
         ],
-        max_tokens: 2000,
+        max_tokens: 8000, // Increased to handle long conversations (up to ~500 messages)
         temperature: 0,
       }),
     });
