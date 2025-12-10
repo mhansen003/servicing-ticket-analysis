@@ -477,7 +477,7 @@ export default function TranscriptsAnalysis() {
       </div>
 
       {/* Header Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
           <div className="flex items-center gap-2 text-gray-400 mb-2">
             <Phone className="h-4 w-4" />
@@ -488,60 +488,6 @@ export default function TranscriptsAnalysis() {
             Since {formatDate(stats.dailyTrends[0]?.date || '')}
           </div>
         </div>
-
-        {deepAnalysis ? (
-          <>
-            <div className="bg-gradient-to-br from-blue-500/10 to-blue-600/10 rounded-xl p-4 border border-blue-500/30">
-              <div className="flex items-center gap-2 text-blue-400 mb-2">
-                <User className="h-4 w-4" />
-                <span className="text-sm">Agent Performance</span>
-              </div>
-              <div className="text-2xl font-bold text-blue-400">
-                {(deepAnalysis.summary.avgAgentScore * 100).toFixed(1)}%
-              </div>
-              <div className="text-xs text-gray-500 mt-1">
-                {deepAnalysis.metadata.analyzedTickets.toLocaleString()} tickets analyzed
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-500/10 to-purple-600/10 rounded-xl p-4 border border-purple-500/30">
-              <div className="flex items-center gap-2 text-purple-400 mb-2">
-                <Users className="h-4 w-4" />
-                <span className="text-sm">Customer Satisfaction</span>
-              </div>
-              <div className="text-2xl font-bold text-purple-400">
-                {(deepAnalysis.summary.avgCustomerScore * 100).toFixed(1)}%
-              </div>
-              <div className="text-xs text-gray-500 mt-1">
-                Average sentiment score
-              </div>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <div className="flex items-center gap-2 text-gray-400 mb-2">
-                <TrendingUp className="h-4 w-4 text-green-400" />
-                <span className="text-sm">High Sentiment</span>
-              </div>
-              <div className="text-2xl font-bold text-green-400">{positiveRate}%</div>
-              <div className="text-xs text-gray-500 mt-1">
-                {stats.sentimentDistribution.positive.toLocaleString()} calls
-              </div>
-            </div>
-
-            <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
-              <div className="flex items-center gap-2 text-gray-400 mb-2">
-                <Clock className="h-4 w-4" />
-                <span className="text-sm">Avg Duration</span>
-              </div>
-              <div className="text-2xl font-bold text-white">{formatDuration(stats.avgDuration)}</div>
-              <div className="text-xs text-gray-500 mt-1">
-                Avg hold: {formatDuration(stats.avgHoldTime)}
-              </div>
-            </div>
-          </>
-        )}
 
         <div className="bg-gray-800/50 rounded-xl p-4 border border-gray-700">
           <div className="flex items-center gap-2 text-gray-400 mb-2">
