@@ -215,8 +215,8 @@ export default function TranscriptsAnalysis() {
                 tickets: [],
               });
 
-              // If stats wasn't loaded from static file, create it from API data
-              setStats((prevStats) => prevStats || {
+              // Update stats with filtered data from API
+              setStats({
                 totalCalls: liveData.metadata.totalTranscripts || 0,
                 generatedAt: new Date().toISOString(),
                 sentimentDistribution: {
@@ -254,7 +254,7 @@ export default function TranscriptsAnalysis() {
     };
 
     loadData();
-  }, []);
+  }, [appliedStartDate, appliedEndDate]);
 
   // Format duration from seconds
   const formatDuration = (seconds: number) => {
@@ -378,67 +378,14 @@ export default function TranscriptsAnalysis() {
   };
 
   // Apply global date range filter
-  const applyGlobalFilter = async () => {
+  const applyGlobalFilter = () => {
     if (!globalStartDate || !globalEndDate) {
       alert('Please select both start and end dates');
       return;
     }
-    setLoadingFilteredData(true);
+    // Update applied dates - useEffect will automatically fetch new data
     setAppliedStartDate(globalStartDate);
     setAppliedEndDate(globalEndDate);
-
-    // Fetch all data with date filter
-    try {
-      const params = new URLSearchParams({ type: 'summary' });
-      params.append('startDate', globalStartDate);
-      params.append('endDate', globalEndDate);
-      const res = await fetch(`/api/transcript-analytics?${params.toString()}`);
-      if (res.ok) {
-        const data = await res.json();
-        if (data.success) {
-          setLiveAnalysis(data);
-          setDeepAnalysis({
-            metadata: {
-              totalTickets: data.metadata.totalTranscripts,
-              analyzedTickets: data.metadata.analyzedTranscripts,
-              totalCost: 0,
-              analysisDate: new Date().toISOString(),
-            },
-            summary: data.summary,
-            topics: data.topics,
-            tickets: [],
-          });
-
-          // Update stats with filtered data
-          setStats({
-            totalCalls: data.metadata.totalTranscripts || 0,
-            generatedAt: new Date().toISOString(),
-            sentimentDistribution: {
-              positive: data.summary?.customerSentiment?.positive || 0,
-              negative: data.summary?.customerSentiment?.negative || 0,
-              neutral: data.summary?.customerSentiment?.neutral || 0,
-            },
-            emotionDistribution: {},
-            resolutionDistribution: {},
-            topicDistribution: {},
-            escalationRiskDistribution: {},
-            byDepartment: data.byDepartment || {},
-            byAgent: {},
-            byDayOfWeek: data.byDayOfWeek || {},
-            byHour: data.byHour || {},
-            avgDuration: 0,
-            avgHoldTime: 0,
-            avgMessagesPerCall: 24,
-            avgAgentPerformance: data.summary?.avgAgentScore || null,
-            dailyTrends: data.dailyTrends || [],
-          });
-        }
-      }
-    } catch (err) {
-      console.error('Failed to apply global filter:', err);
-    } finally {
-      setLoadingFilteredData(false);
-    }
   };
 
   // Clear global date range filter
@@ -449,8 +396,7 @@ export default function TranscriptsAnalysis() {
     setGlobalEndDate(defaultEnd);
     setAppliedStartDate(defaultStart);
     setAppliedEndDate(defaultEnd);
-    // Reload data with default 7-day range
-    window.location.reload();
+    // useEffect will automatically fetch data with default dates
   };
 
   if (loading) {
