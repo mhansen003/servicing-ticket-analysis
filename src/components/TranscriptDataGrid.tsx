@@ -95,8 +95,51 @@ export default function TranscriptDataGrid() {
     return new Date().toISOString().split('T')[0];
   };
 
-  const [fromDate, setFromDate] = useState<string>(getDefaultFromDate());
-  const [toDate, setToDate] = useState<string>(getDefaultToDate());
+  const getAllTimeFromDate = () => {
+    const date = new Date();
+    date.setFullYear(date.getFullYear() - 5);
+    return date.toISOString().split('T')[0];
+  };
+
+  const [fromDate, setFromDate] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('transcripts-from-date') || getDefaultFromDate();
+    }
+    return getDefaultFromDate();
+  });
+  const [toDate, setToDate] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('transcripts-to-date') || getDefaultToDate();
+    }
+    return getDefaultToDate();
+  });
+  const [allTime, setAllTime] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('transcripts-all-time') === 'true';
+    }
+    return false;
+  });
+
+  // Persist date filters to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('transcripts-from-date', fromDate);
+      localStorage.setItem('transcripts-to-date', toDate);
+      localStorage.setItem('transcripts-all-time', String(allTime));
+    }
+  }, [fromDate, toDate, allTime]);
+
+  // Handle All Time checkbox toggle
+  const handleAllTimeToggle = (checked: boolean) => {
+    setAllTime(checked);
+    if (checked) {
+      setFromDate(getAllTimeFromDate());
+      setToDate(getDefaultToDate());
+    } else {
+      setFromDate(getDefaultFromDate());
+      setToDate(getDefaultToDate());
+    }
+  };
 
   // Sorting
   const [sortField, setSortField] = useState<SortField>('callStart');
@@ -218,6 +261,7 @@ export default function TranscriptDataGrid() {
     setDepartmentFilter('all');
     setFromDate(getDefaultFromDate());
     setToDate(getDefaultToDate());
+    setAllTime(false);
   };
 
   const isDefaultDateRange = fromDate === getDefaultFromDate() && toDate === getDefaultToDate();
@@ -264,13 +308,28 @@ export default function TranscriptDataGrid() {
 
         {/* Date Range Filters - Always Visible */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-[#0a0e17] rounded-xl border border-white/[0.06]">
+          {/* All Time Checkbox */}
+          <div className="flex items-center gap-2 px-3 py-2 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <input
+              type="checkbox"
+              id="transcriptAllTime"
+              checked={allTime}
+              onChange={(e) => handleAllTimeToggle(e.target.checked)}
+              className="w-4 h-4 accent-red-500 cursor-pointer"
+            />
+            <label htmlFor="transcriptAllTime" className="text-sm text-red-400 font-medium cursor-pointer">
+              All Time (5 years)
+            </label>
+          </div>
+
           <div>
             <label className="text-xs text-gray-500 mb-1 block">From Date</label>
             <input
               type="date"
               value={fromDate}
               onChange={(e) => setFromDate(e.target.value)}
-              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+              disabled={allTime}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
 
@@ -280,7 +339,8 @@ export default function TranscriptDataGrid() {
               type="date"
               value={toDate}
               onChange={(e) => setToDate(e.target.value)}
-              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50"
+              disabled={allTime}
+              className="w-full px-3 py-2 bg-[#131a29] border border-white/[0.08] rounded-lg text-sm text-white focus:outline-none focus:border-blue-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
 

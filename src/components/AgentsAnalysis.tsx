@@ -144,12 +144,48 @@ export default function AgentsAnalysis() {
     return date.toISOString().split('T')[0];
   };
 
-  const [globalStartDate, setGlobalStartDate] = useState(getDefaultStartDate());
-  const [globalEndDate, setGlobalEndDate] = useState(getDefaultEndDate());
-  const [appliedStartDate, setAppliedStartDate] = useState(getDefaultStartDate());
-  const [appliedEndDate, setAppliedEndDate] = useState(getDefaultEndDate());
-  const [allTime, setAllTime] = useState(false);
+  const [globalStartDate, setGlobalStartDate] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('agents-global-start-date') || getDefaultStartDate();
+    }
+    return getDefaultStartDate();
+  });
+  const [globalEndDate, setGlobalEndDate] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('agents-global-end-date') || getDefaultEndDate();
+    }
+    return getDefaultEndDate();
+  });
+  const [appliedStartDate, setAppliedStartDate] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('agents-applied-start-date') || getDefaultStartDate();
+    }
+    return getDefaultStartDate();
+  });
+  const [appliedEndDate, setAppliedEndDate] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('agents-applied-end-date') || getDefaultEndDate();
+    }
+    return getDefaultEndDate();
+  });
+  const [allTime, setAllTime] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('agents-all-time') === 'true';
+    }
+    return false;
+  });
   const [loadingFilteredData, setLoadingFilteredData] = useState(false);
+
+  // Persist date filters to localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('agents-global-start-date', globalStartDate);
+      localStorage.setItem('agents-global-end-date', globalEndDate);
+      localStorage.setItem('agents-applied-start-date', appliedStartDate);
+      localStorage.setItem('agents-applied-end-date', appliedEndDate);
+      localStorage.setItem('agents-all-time', String(allTime));
+    }
+  }, [globalStartDate, globalEndDate, appliedStartDate, appliedEndDate, allTime]);
 
   // Load rankings data
   useEffect(() => {
@@ -396,13 +432,28 @@ export default function AgentsAnalysis() {
           </div>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
+          {/* All Time Checkbox */}
+          <div className="flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/30 rounded-lg">
+            <input
+              type="checkbox"
+              id="allTimeCheckbox"
+              checked={allTime}
+              onChange={(e) => handleAllTimeToggle(e.target.checked)}
+              className="w-4 h-4 accent-red-500 cursor-pointer"
+            />
+            <label htmlFor="allTimeCheckbox" className="text-sm text-red-400 font-medium cursor-pointer">
+              All Time (5 years)
+            </label>
+          </div>
+
           <div className="flex items-center gap-3">
             <label className="text-sm text-gray-300 font-medium">From:</label>
             <input
               type="date"
               value={globalStartDate}
               onChange={(e) => setGlobalStartDate(e.target.value)}
-              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+              disabled={allTime}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <div className="flex items-center gap-3">
@@ -411,7 +462,8 @@ export default function AgentsAnalysis() {
               type="date"
               value={globalEndDate}
               onChange={(e) => setGlobalEndDate(e.target.value)}
-              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all"
+              disabled={allTime}
+              className="bg-[#0a0e17] border border-white/[0.08] rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             />
           </div>
           <button
