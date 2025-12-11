@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
         totalTranscripts,
         analyzedCount,
         recentImportsCount,
+        mostRecentTranscript,
         agentSentiment,
         customerSentiment,
         topicsData,
@@ -72,6 +73,12 @@ export async function GET(request: NextRequest) {
               gte: new Date('2025-12-01'), // Dec 1, 2025 - our sync starting point
             },
           },
+        }),
+
+        // Get most recent transcript to determine last import date
+        prisma.transcripts.findFirst({
+          orderBy: { call_start: 'desc' },
+          select: { call_start: true },
         }),
 
         // Agent sentiment distribution (filtered by date)
@@ -328,7 +335,8 @@ export async function GET(request: NextRequest) {
           totalTranscripts,
           analyzedTranscripts: analyzedCount,
           analysisProgress: totalTranscripts > 0 ? (analyzedCount / totalTranscripts) * 100 : 0,
-          recentImports: recentImportsCount, // Last 8 hours
+          recentImports: recentImportsCount, // Count since Dec 1
+          mostRecentImportDate: mostRecentTranscript?.call_start?.toISOString() || null,
         },
         summary: {
           agentSentiment: {

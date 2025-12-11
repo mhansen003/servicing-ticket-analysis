@@ -75,3 +75,26 @@ model TranscriptAnalysis {
   @@index([customerSentiment])
   @@index([aiDiscoveredTopic])
 }
+
+// Authentication Tables
+
+// OTP storage table for email verification
+model auth_otp {
+  email      String   @id @db.VarChar(255)
+  code       String   @db.VarChar(10)
+  attempts   Int      @default(0)
+  created_at DateTime @default(now())
+  expires_at DateTime
+
+  @@index([expires_at])
+}
+
+// Rate limiting table for OTP requests
+model auth_rate_limit {
+  email         String   @id @db.VarChar(255)
+  request_count Int      @default(1)
+  window_start  DateTime @default(now())
+  expires_at    DateTime
+
+  @@index([expires_at])
+}

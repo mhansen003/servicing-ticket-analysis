@@ -144,6 +144,7 @@ export default function TranscriptsAnalysis() {
   const [error, setError] = useState<string | null>(null);
   const [liveAnalysis, setLiveAnalysis] = useState<any>(null);
   const [recentImports, setRecentImports] = useState<number>(0);
+  const [mostRecentImportDate, setMostRecentImportDate] = useState<string | null>(null);
 
   // Filters
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
@@ -230,6 +231,7 @@ export default function TranscriptsAnalysis() {
             if (liveData.success) {
               setLiveAnalysis(liveData);
               setRecentImports(liveData.metadata?.recentImports || 0);
+              setMostRecentImportDate(liveData.metadata?.mostRecentImportDate || null);
               // Convert to deepAnalysis format for compatibility
               console.log('📊 Topics data from API:', liveData.topics);
               console.log('📊 Uncategorized data:', liveData.topics?.uncategorized);
@@ -481,9 +483,11 @@ export default function TranscriptsAnalysis() {
               }`}>
                 <div className={`w-2 h-2 rounded-full ${recentImports > 0 ? 'bg-green-400 animate-pulse' : 'bg-amber-400'}`}></div>
                 <span className="text-xs font-medium">
-                  {recentImports > 0
-                    ? `${recentImports.toLocaleString()} imports (since Dec 1)`
-                    : 'No imports since Dec 1'}
+                  {recentImports > 0 && mostRecentImportDate
+                    ? `${recentImports.toLocaleString()} imports (last: ${new Date(mostRecentImportDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`
+                    : recentImports > 0
+                    ? `${recentImports.toLocaleString()} imports`
+                    : 'No recent imports'}
                 </span>
               </div>
             </div>
