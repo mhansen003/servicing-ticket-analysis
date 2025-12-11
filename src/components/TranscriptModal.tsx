@@ -262,6 +262,7 @@ export function TranscriptModal({
   const [analyzingCall, setAnalyzingCall] = useState(false);
   const [callAnalysisCache, setCallAnalysisCache] = useState<Record<string, CallAnalysis>>({});
   const [callAnalysisError, setCallAnalysisError] = useState<string | null>(null);
+  const [viewportPosition, setViewportPosition] = useState({ start: 0, end: 0 });
   const listRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const callAnalysisAbortRef = useRef<AbortController | null>(null);
@@ -565,6 +566,44 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
       detailRef.current.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [selectedTranscript?.id]);
+
+  // Handle scroll to update viewport position indicator on timeline
+  const handleDetailScroll = useCallback(() => {
+    if (!detailRef.current) return;
+
+    const container = detailRef.current;
+    const scrollTop = container.scrollTop;
+    const scrollHeight = container.scrollHeight;
+    const clientHeight = container.clientHeight;
+
+    // Calculate scroll position as percentage
+    const scrollableHeight = scrollHeight - clientHeight;
+    if (scrollableHeight <= 0) {
+      setViewportPosition({ start: 0, end: 100 });
+      return;
+    }
+
+    // Start position as percentage of total scrollable area
+    const startPercent = (scrollTop / scrollableHeight) * 100;
+
+    // End position based on visible area
+    const visibleRatio = clientHeight / scrollHeight;
+    const rangePercent = visibleRatio * 100;
+    const endPercent = Math.min(startPercent + rangePercent, 100);
+
+    setViewportPosition({ start: startPercent, end: endPercent });
+  }, []);
+
+  // Initialize viewport position when transcript is loaded or messages change
+  useEffect(() => {
+    if (selectedTranscript && detailRef.current) {
+      // Small delay to ensure DOM is rendered
+      const timer = setTimeout(() => {
+        handleDetailScroll();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedTranscript?.id, messageSentiments.length, handleDetailScroll]);
 
   // Filter transcripts based on filter type and search
   const filteredTranscripts = useMemo(() => {
@@ -1179,6 +1218,21 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                             );
                           })}
                         </div>
+
+                        {/* Viewport position indicator */}
+                        {viewportPosition.end > 0 && (
+                          <div
+                            className="absolute top-0 bottom-0 bg-white/20 border-l-2 border-r-2 border-blue-400 pointer-events-none transition-all duration-150 backdrop-blur-[1px]"
+                            style={{
+                              left: `${viewportPosition.start}%`,
+                              width: `${viewportPosition.end - viewportPosition.start}%`,
+                            }}
+                          >
+                            {/* Sliding indicator markers */}
+                            <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-blue-400 shadow-lg shadow-blue-500/50" />
+                            <div className="absolute right-0 top-0 bottom-0 w-0.5 bg-blue-400 shadow-lg shadow-blue-500/50" />
+                          </div>
+                        )}
                       </div>
                       ) : (
                         <div className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] flex items-center justify-center">
@@ -1188,7 +1242,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                     </div>
                   )}
 
-                  <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3 relative">
+                  <div ref={detailRef} onScroll={handleDetailScroll} className="flex-1 overflow-y-auto p-4 space-y-3 relative">
                     {/* AI Processing Overlay */}
                     {analyzingSentiment && (
                       <div className="absolute inset-0 z-10 bg-gradient-to-b from-blue-900/30 via-purple-900/20 to-transparent backdrop-blur-sm flex items-start justify-center pt-8">
