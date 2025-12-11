@@ -263,11 +263,13 @@ export function TranscriptModal({
   const [callAnalysisCache, setCallAnalysisCache] = useState<Record<string, CallAnalysis>>({});
   const [callAnalysisError, setCallAnalysisError] = useState<string | null>(null);
   const [viewportPosition, setViewportPosition] = useState({ start: 0, end: 0 });
+  const [isDraggingViewport, setIsDraggingViewport] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLDivElement>(null);
   const callAnalysisAbortRef = useRef<AbortController | null>(null);
   const sentimentAbortRef = useRef<AbortController | null>(null);
   const messageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   // Load transcript metadata
   useEffect(() => {
@@ -569,7 +571,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
 
   // Handle scroll to update viewport position indicator on timeline
   const handleDetailScroll = useCallback(() => {
-    if (!detailRef.current) return;
+    if (!detailRef.current || isDraggingViewport) return; // Don't update during drag
 
     const container = detailRef.current;
     const scrollTop = container.scrollTop;
@@ -592,7 +594,54 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
     const endPercent = Math.min(startPercent + rangePercent, 100);
 
     setViewportPosition({ start: startPercent, end: endPercent });
+  }, [isDraggingViewport]);
+
+  // Handle viewport indicator drag
+  const handleViewportDrag = useCallback((e: React.MouseEvent) => {
+    if (!timelineRef.current || !detailRef.current) return;
+
+    const timelineRect = timelineRef.current.getBoundingClientRect();
+    const clickX = e.clientX - timelineRect.left;
+    const clickPercent = (clickX / timelineRect.width) * 100;
+
+    // Clamp to valid range
+    const clampedPercent = Math.max(0, Math.min(100, clickPercent));
+
+    // Calculate scroll position
+    const container = detailRef.current;
+    const scrollableHeight = container.scrollHeight - container.clientHeight;
+    const newScrollTop = (clampedPercent / 100) * scrollableHeight;
+
+    // Update scroll position
+    container.scrollTop = newScrollTop;
   }, []);
+
+  const handleViewportMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingViewport(true);
+    handleViewportDrag(e);
+  }, [handleViewportDrag]);
+
+  const handleViewportMouseMove = useCallback((e: MouseEvent) => {
+    if (!isDraggingViewport) return;
+    handleViewportDrag(e as any);
+  }, [isDraggingViewport, handleViewportDrag]);
+
+  const handleViewportMouseUp = useCallback(() => {
+    setIsDraggingViewport(false);
+  }, []);
+
+  // Add global mouse event listeners for dragging
+  useEffect(() => {
+    if (isDraggingViewport) {
+      window.addEventListener('mousemove', handleViewportMouseMove);
+      window.addEventListener('mouseup', handleViewportMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleViewportMouseMove);
+        window.removeEventListener('mouseup', handleViewportMouseUp);
+      };
+    }
+  }, [isDraggingViewport, handleViewportMouseMove, handleViewportMouseUp]);
 
   // Initialize viewport position when transcript is loaded or messages change
   useEffect(() => {
@@ -1146,7 +1195,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                         )}
                       </div>
                       {messageSentiments.length > 0 ? (
-                      <div className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] overflow-hidden">
+                      <div ref={timelineRef} className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] overflow-hidden cursor-pointer" onMouseDown={handleViewportMouseDown}>
                         {/* Timeline bars */}
                         <div className="flex h-full">
                           {messageSentiments.map((sentiment, idx) => {
@@ -1222,10 +1271,19 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                         {/* Viewport position indicator */}
                         {viewportPosition.end > 0 && (
                           <div
-                            className="absolute top-0 bottom-0 bg-white/20 border-l-2 border-r-2 border-blue-400 pointer-events-none transition-all duration-150 backdrop-blur-[1px]"
+                            className={`absolute top-0 bottom-0 border-l-2 border-r-2 border-blue-400 transition-all backdrop-blur-[1px] ${
+                              isDraggingViewport
+                                ? 'bg-white/30 cursor-grabbing duration-0'
+                                : 'bg-white/20 cursor-grab duration-150'
+                            }`}
                             style={{
                               left: `${viewportPosition.start}%`,
                               width: `${viewportPosition.end - viewportPosition.start}%`,
+                              pointerEvents: 'auto',
+                            }}
+                            onMouseDown={(e) => {
+                              e.stopPropagation();
+                              handleViewportMouseDown(e);
                             }}
                           >
                             {/* Sliding indicator markers */}
