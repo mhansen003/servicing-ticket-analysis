@@ -168,10 +168,10 @@ export default function TranscriptsAnalysis() {
   const [modalFilterType, setModalFilterType] = useState<'agentSentiment' | 'customerSentiment' | 'topic' | 'topicNoSubcategory' | 'department' | 'agent' | 'all' | 'date' | 'hour' | 'dayOfWeek'>('all');
   const [modalFilterValue, setModalFilterValue] = useState('');
 
-  // Global date range filter (default: last 7 days, rounded to start of day)
+  // Global date range filter (default: last 15 days, rounded to start of day)
   const getDefaultStartDate = () => {
     const date = new Date();
-    date.setDate(date.getDate() - 7);
+    date.setDate(date.getDate() - 15);
     date.setHours(0, 0, 0, 0); // Round to start of day (midnight)
     return date.toISOString().split('T')[0];
   };
@@ -489,7 +489,7 @@ export default function TranscriptsAnalysis() {
                 </span>
               </div>
             </div>
-            <p className="text-sm text-gray-400">Filter all data below by date range (Default: Last 7 days)</p>
+            <p className="text-sm text-gray-400">Filter all data below by date range (Default: Last 15 days)</p>
           </div>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
