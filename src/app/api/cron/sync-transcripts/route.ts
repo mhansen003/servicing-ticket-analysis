@@ -7,7 +7,7 @@ const execAsync = promisify(exec);
 /**
  * Cron Job: Daily DOMO Delta Sync
  *
- * Runs daily at 6 AM (UTC) to:
+ * Runs daily at 6 AM PST (2 PM UTC) to:
  * 1. Query database for most recent transcript date
  * 2. Fetch ONLY NEW transcripts from Domo since that date (delta only)
  * 3. Never goes back before Dec 1, 2025 (baseline cutoff)
