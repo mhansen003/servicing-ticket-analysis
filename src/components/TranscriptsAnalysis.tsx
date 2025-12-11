@@ -534,7 +534,7 @@ export default function TranscriptsAnalysis() {
               className="text-blue-400 hover:text-blue-300 text-sm underline flex items-center gap-1"
             >
               <X className="h-3 w-3" />
-              Reset to Default (Last 7 Days)
+              Reset to Default (Last 15 Days)
             </button>
           )}
         </div>
