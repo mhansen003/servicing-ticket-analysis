@@ -44,9 +44,6 @@ function isSystemMessage(text: string): boolean {
     /^thank you for calling .+\. (this call|your call)/i,
     /\bthis call may be (recorded|monitored)\b/i,
     /\bfor quality (and training purposes|assurance)\b/i,
-
-    // Very short non-conversational messages
-    /^(ok|okay|yes|no|uh huh|mm|hmm)\.?$/i,
   ];
 
   return systemPatterns.some(pattern => pattern.test(lowerText));
