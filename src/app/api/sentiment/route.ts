@@ -18,32 +18,33 @@ function isSystemMessage(text: string): boolean {
 
   const lowerText = text.toLowerCase();
 
-  // Common automated message patterns
+  // Common automated message patterns - MUST be very specific to avoid false positives
   const systemPatterns = [
-    // Hold messages
-    /\b(you are|you're) (now |currently )?on hold\b/i,
-    /\bplease (continue to )?hold\b/i,
-    /\byour call is important to us\b/i,
-    /\ball (agents|representatives) are (currently )?busy\b/i,
-    /\bthank you for (your patience|holding)\b/i,
+    // Hold messages - exact automated phrasing only
+    /^you are (now |currently )?on hold/i,
+    /^you're (now |currently )?on hold/i,
+    /^please (continue to )?hold/i,
+    /^your call is important to us/i,
+    /^all (agents|representatives) are (currently )?busy/i,
+    /^thank you for (your patience|holding)\.?\s*$/i, // Only if it's the entire message
 
     // Music/transfer notifications
-    /\bmusic playing\b/i,
-    /\bhold music\b/i,
-    /\btransferring (you|your call)\b/i,
-    /\bplease wait while (we|I) transfer\b/i,
+    /^music playing/i,
+    /^hold music/i,
+    /^transferring (you|your call)/i,
+    /^please wait while (we|I) transfer/i,
 
     // IVR / Menu prompts
     /\bpress \d+ (for|to)\b/i,
-    /\bplease listen carefully as (our )?menu options/i,
-    /\bfor .+, press \d+\b/i,
-    /\bto speak with .+, press \d+\b/i,
+    /^please listen carefully as (our )?menu options/i,
+    /^for .+, press \d+/i,
+    /^to speak with .+, press \d+/i,
     /\bmain menu\b/i,
 
     // Generic automated greetings
     /^thank you for calling .+\. (this call|your call)/i,
-    /\bthis call may be (recorded|monitored)\b/i,
-    /\bfor quality (and training purposes|assurance)\b/i,
+    /^this call may be (recorded|monitored)/i,
+    /^for quality (and training purposes|assurance)/i,
   ];
 
   return systemPatterns.some(pattern => pattern.test(lowerText));
