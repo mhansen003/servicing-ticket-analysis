@@ -266,6 +266,7 @@ export function TranscriptModal({
   const detailRef = useRef<HTMLDivElement>(null);
   const callAnalysisAbortRef = useRef<AbortController | null>(null);
   const sentimentAbortRef = useRef<AbortController | null>(null);
+  const messageRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // Load transcript metadata
   useEffect(() => {
@@ -725,6 +726,16 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
     }
   };
 
+  // Scroll to a specific message in the timeline
+  const scrollToMessage = useCallback((index: number) => {
+    if (messageRefs.current[index] && detailRef.current) {
+      messageRefs.current[index]?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+      });
+    }
+  }, []);
+
   if (!isOpen) return null;
 
   return (
@@ -1074,6 +1085,96 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                     </div>
                   </div>
                   <div ref={detailRef} className="flex-1 overflow-y-auto p-4 space-y-3 relative">
+                    {/* Sentiment Timeline Heat Map */}
+                    {messageSentiments.length > 0 && selectedTranscript.conversation.length > 0 && (
+                      <div className="sticky top-0 z-20 bg-[#0f1420]/95 backdrop-blur-sm pb-3 mb-4 border-b border-white/[0.08]">
+                        <div className="flex items-center gap-2 mb-2">
+                          <div className="text-xs font-medium text-gray-400">Conversation Heat Map</div>
+                          <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                            <div className="w-2 h-2 rounded-full bg-red-500/60" />
+                            <span>Negative</span>
+                            <div className="w-2 h-2 rounded-full bg-yellow-500/60 ml-2" />
+                            <span>Neutral</span>
+                            <div className="w-2 h-2 rounded-full bg-emerald-500/60 ml-2" />
+                            <span>Positive</span>
+                          </div>
+                        </div>
+                        <div className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] overflow-hidden">
+                          {/* Timeline bars */}
+                          <div className="flex h-full">
+                            {messageSentiments.map((sentiment, idx) => {
+                              const score = sentiment.score;
+                              const emotion = sentiment.emotion;
+
+                              // Skip system messages for visual timeline (keep them invisible but maintain spacing)
+                              if (emotion === 'system') {
+                                return (
+                                  <div
+                                    key={idx}
+                                    className="flex-1 cursor-pointer transition-all hover:opacity-80"
+                                    onClick={() => scrollToMessage(idx)}
+                                    style={{ minWidth: '2px' }}
+                                  >
+                                    <div className="h-full bg-yellow-500/10" />
+                                  </div>
+                                );
+                              }
+
+                              // Calculate height based on intensity (0 = 50% height, ±1 = 100% height)
+                              const intensity = Math.abs(score);
+                              const heightPercent = 50 + (intensity * 50);
+
+                              // Color based on sentiment
+                              let color = 'bg-gray-500/40'; // neutral
+                              if (score > 0.3) {
+                                color = 'bg-emerald-500/60'; // positive
+                              } else if (score > 0.1) {
+                                color = 'bg-emerald-500/30'; // mildly positive
+                              } else if (score < -0.3) {
+                                color = 'bg-red-500/60'; // negative
+                              } else if (score < -0.1) {
+                                color = 'bg-orange-500/40'; // mildly negative
+                              }
+
+                              // Detect hot spots (significant changes from previous message)
+                              const isHotSpot = idx > 0 && Math.abs(score - messageSentiments[idx - 1].score) > 0.5;
+
+                              return (
+                                <div
+                                  key={idx}
+                                  className="flex-1 cursor-pointer transition-all hover:opacity-80 hover:scale-y-110 group relative"
+                                  onClick={() => scrollToMessage(idx)}
+                                  style={{ minWidth: '2px' }}
+                                  title={`${selectedTranscript.conversation[idx].role}: ${selectedTranscript.conversation[idx].text.substring(0, 50)}...`}
+                                >
+                                  <div className="h-full flex items-end">
+                                    <div
+                                      className={`w-full ${color} transition-all ${isHotSpot ? 'ring-1 ring-white/40' : ''}`}
+                                      style={{ height: `${heightPercent}%` }}
+                                    />
+                                  </div>
+                                  {/* Hot spot indicator */}
+                                  {isHotSpot && (
+                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-1 h-1 rounded-full bg-white animate-pulse" />
+                                  )}
+                                  {/* Hover tooltip */}
+                                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-30">
+                                    <div className="bg-[#0f1420] border border-white/[0.15] rounded px-2 py-1 text-[10px] text-white whitespace-nowrap shadow-xl">
+                                      <div className="font-medium text-blue-300">{selectedTranscript.conversation[idx].role}</div>
+                                      <div className="text-gray-300 max-w-[200px] truncate">{selectedTranscript.conversation[idx].text.substring(0, 60)}</div>
+                                      <div className="text-gray-400 mt-0.5">
+                                        Sentiment: {score > 0 ? '+' : ''}{score.toFixed(2)} • {emotion}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {/* AI Processing Overlay */}
                     {analyzingSentiment && (
                       <div className="absolute inset-0 z-10 bg-gradient-to-b from-blue-900/30 via-purple-900/20 to-transparent backdrop-blur-sm flex items-start justify-center pt-8">
@@ -1151,6 +1252,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                           return (
                             <div
                               key={idx}
+                              ref={(el) => (messageRefs.current[idx] = el)}
                               className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
                             >
                               <div
