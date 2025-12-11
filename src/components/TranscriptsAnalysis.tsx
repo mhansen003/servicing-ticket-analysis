@@ -143,8 +143,8 @@ export default function TranscriptsAnalysis() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [liveAnalysis, setLiveAnalysis] = useState<any>(null);
-  const [recentImports, setRecentImports] = useState<number>(0);
-  const [mostRecentImportDate, setMostRecentImportDate] = useState<string | null>(null);
+  const [recentRecords48h, setRecentRecords48h] = useState<number>(0);
+  const [mostRecentCallDate, setMostRecentCallDate] = useState<string | null>(null);
 
   // Filters
   const [selectedDepartment, setSelectedDepartment] = useState<string>('all');
@@ -230,8 +230,8 @@ export default function TranscriptsAnalysis() {
             const liveData = await liveRes.json();
             if (liveData.success) {
               setLiveAnalysis(liveData);
-              setRecentImports(liveData.metadata?.recentImports || 0);
-              setMostRecentImportDate(liveData.metadata?.mostRecentImportDate || null);
+              setRecentRecords48h(liveData.metadata?.recentRecords48h || 0);
+              setMostRecentCallDate(liveData.metadata?.mostRecentCallDate || null);
               // Convert to deepAnalysis format for compatibility
               console.log('📊 Topics data from API:', liveData.topics);
               console.log('📊 Uncategorized data:', liveData.topics?.uncategorized);
@@ -475,19 +475,17 @@ export default function TranscriptsAnalysis() {
           <div className="flex-1">
             <div className="flex items-center gap-3">
               <h2 className="text-xl font-bold text-white">Global Date Range Filter</h2>
-              {/* Recent Imports Indicator */}
+              {/* Recent Activity Indicator (Last 48 Hours) */}
               <div className={`px-3 py-1.5 rounded-full border flex items-center gap-2 ${
-                recentImports > 0
+                recentRecords48h > 0
                   ? 'bg-green-500/10 border-green-500/30 text-green-400'
                   : 'bg-amber-500/10 border-amber-500/30 text-amber-400'
               }`}>
-                <div className={`w-2 h-2 rounded-full ${recentImports > 0 ? 'bg-green-400 animate-pulse' : 'bg-amber-400'}`}></div>
+                <div className={`w-2 h-2 rounded-full ${recentRecords48h > 0 ? 'bg-green-400 animate-pulse' : 'bg-amber-400'}`}></div>
                 <span className="text-xs font-medium">
-                  {recentImports > 0 && mostRecentImportDate
-                    ? `${recentImports.toLocaleString()} imports (last: ${new Date(mostRecentImportDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })})`
-                    : recentImports > 0
-                    ? `${recentImports.toLocaleString()} imports`
-                    : 'No recent imports'}
+                  {recentRecords48h > 0
+                    ? `${recentRecords48h.toLocaleString()} records (last 48 hours)`
+                    : 'No records in last 48 hours'}
                 </span>
               </div>
             </div>

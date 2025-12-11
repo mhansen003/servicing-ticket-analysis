@@ -66,11 +66,11 @@ export async function GET(request: NextRequest) {
           where: analysisDateFilter,
         }),
 
-        // Count of transcripts from Dec 1, 2025 forward (our data baseline)
+        // Count of transcripts from last 48 hours (recent activity indicator)
         prisma.transcripts.count({
           where: {
             call_start: {
-              gte: new Date('2025-12-01'), // Dec 1, 2025 - our sync starting point
+              gte: new Date(Date.now() - 48 * 60 * 60 * 1000), // Last 48 hours
             },
           },
         }),
@@ -335,8 +335,8 @@ export async function GET(request: NextRequest) {
           totalTranscripts,
           analyzedTranscripts: analyzedCount,
           analysisProgress: totalTranscripts > 0 ? (analyzedCount / totalTranscripts) * 100 : 0,
-          recentImports: recentImportsCount, // Count since Dec 1
-          mostRecentImportDate: mostRecentTranscript?.call_start?.toISOString() || null,
+          recentRecords48h: recentImportsCount, // Records from last 48 hours
+          mostRecentCallDate: mostRecentTranscript?.call_start?.toISOString() || null,
         },
         summary: {
           agentSentiment: {
