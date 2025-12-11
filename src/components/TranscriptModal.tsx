@@ -1266,7 +1266,7 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                           return (
                             <div
                               key={idx}
-                              ref={(el) => (messageRefs.current[idx] = el)}
+                              ref={(el) => { messageRefs.current[idx] = el; }}
                               className={`flex ${msg.role === 'agent' ? 'justify-end' : 'justify-start'}`}
                             >
                               <div
