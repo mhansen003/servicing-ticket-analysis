@@ -5,12 +5,16 @@ import { promisify } from 'util';
 const execAsync = promisify(exec);
 
 /**
- * Cron Job: Sync Transcripts from Domo
+ * Cron Job: Daily DOMO Delta Sync
  *
- * Runs daily at 6 AM to:
- * 1. Fetch new transcripts from Domo (last 2 days)
- * 2. Import to database
- * 3. Run AI analysis on new transcripts
+ * Runs daily at 6 AM (UTC) to:
+ * 1. Query database for most recent transcript date
+ * 2. Fetch ONLY NEW transcripts from Domo since that date (delta only)
+ * 3. Never goes back before Dec 1, 2025 (baseline cutoff)
+ * 4. Import to database
+ * 5. Run AI analysis ONLY on newly imported transcripts
+ *
+ * This is much more efficient than syncing all data every day!
  *
  * Secured with Vercel Cron Secret
  */
@@ -24,39 +28,33 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    console.log('🕐 [CRON] Starting transcript sync...');
+    console.log('🕐 [CRON] Starting daily delta sync...');
 
-    // Calculate 2-day lookback (since Domo loads data overnight)
-    const now = new Date();
-    const twoDaysAgo = new Date(now);
-    twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-
-    const startDate = twoDaysAgo.toISOString().split('T')[0]; // YYYY-MM-DD
-    const endDate = now.toISOString().split('T')[0];
-
-    console.log(`📅 [CRON] Syncing from ${startDate} to ${endDate} (2-day lookback)`);
-
-    // Run the sync script
-    const scriptPath = 'node scripts/sync-domo-transcripts.mjs';
-    const command = `cd /c/GitHub/servicing-ticket-analysis && ${scriptPath} --start-date ${startDate} --end-date ${endDate}`;
+    // Run the delta-only sync script
+    // The script automatically determines the start date by querying the database
+    // for the most recent transcript, then syncs only new data since that date
+    const scriptPath = 'node scripts/daily-sync-domo.mjs';
+    const command = `cd /c/GitHub/servicing-ticket-analysis && ${scriptPath}`;
 
     const { stdout, stderr } = await execAsync(command, {
       timeout: 600000, // 10 minute timeout
       maxBuffer: 10 * 1024 * 1024 // 10MB buffer
     });
 
-    console.log('✅ [CRON] Sync completed successfully');
+    console.log('✅ [CRON] Daily delta sync completed successfully');
+    if (stderr) {
+      console.warn('[CRON] Stderr output:', stderr);
+    }
 
     return NextResponse.json({
       success: true,
-      message: 'Transcript sync completed',
-      dateRange: { startDate, endDate },
+      message: 'Daily delta sync completed',
       output: stdout,
       timestamp: new Date().toISOString()
     });
 
   } catch (error) {
-    console.error('❌ [CRON] Sync failed:', error);
+    console.error('❌ [CRON] Daily delta sync failed:', error);
 
     return NextResponse.json({
       success: false,
