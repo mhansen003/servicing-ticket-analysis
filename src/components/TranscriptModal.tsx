@@ -1086,19 +1086,27 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                   </div>
 
                   {/* Sentiment Timeline Heat Map - Fixed between header and content */}
-                  {messageSentiments.length > 0 && selectedTranscript.conversation.length > 0 && (
+                  {selectedTranscript.conversation.length > 0 && (
                     <div className="px-4 py-3 bg-[#131a29] border-b border-white/[0.08]">
                       <div className="flex items-center gap-2 mb-2">
                         <div className="text-xs font-medium text-gray-400">Conversation Heat Map</div>
-                        <div className="flex items-center gap-1 text-[10px] text-gray-500">
-                          <div className="w-2 h-2 rounded-full bg-red-500/60" />
-                          <span>Negative</span>
-                          <div className="w-2 h-2 rounded-full bg-yellow-500/60 ml-2" />
-                          <span>Neutral</span>
-                          <div className="w-2 h-2 rounded-full bg-emerald-500/60 ml-2" />
-                          <span>Positive</span>
-                        </div>
+                        {messageSentiments.length > 0 ? (
+                          <div className="flex items-center gap-1 text-[10px] text-gray-500">
+                            <div className="w-2 h-2 rounded-full bg-red-500/60" />
+                            <span>Negative</span>
+                            <div className="w-2 h-2 rounded-full bg-yellow-500/60 ml-2" />
+                            <span>Neutral</span>
+                            <div className="w-2 h-2 rounded-full bg-emerald-500/60 ml-2" />
+                            <span>Positive</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center gap-1 text-[10px] text-gray-400">
+                            <div className="animate-spin rounded-full h-3 w-3 border border-blue-500/20 border-t-blue-500" />
+                            <span>Analyzing sentiment...</span>
+                          </div>
+                        )}
                       </div>
+                      {messageSentiments.length > 0 ? (
                       <div className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] overflow-hidden">
                         {/* Timeline bars */}
                         <div className="flex h-full">
@@ -1172,6 +1180,11 @@ Your scores MUST be consistent with this analysis. If customer sentiment is nega
                           })}
                         </div>
                       </div>
+                      ) : (
+                        <div className="relative h-16 bg-[#1a1f2e] rounded-lg border border-white/[0.08] flex items-center justify-center">
+                          <div className="text-sm text-gray-500">Waiting for sentiment analysis...</div>
+                        </div>
+                      )}
                     </div>
                   )}
 
