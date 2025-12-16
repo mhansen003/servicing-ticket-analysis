@@ -1,0 +1,43 @@
+name: Daily DOMO Sync
+
+on:
+  schedule:
+    # Run every day at 6 AM PST (14:00 UTC)
+    - cron: '0 14 * * *'
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Prisma Generate
+        run: npx prisma generate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+      - name: Run Daily Sync
+        run: node scripts/daily-sync-domo.mjs
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          DOMO_CLIENT_ID: ${{ secrets.DOMO_CLIENT_ID }}
+          DOMO_CLIENT_SECRET: ${{ secrets.DOMO_CLIENT_SECRET }}
+          DOMO_ENVIRONMENT: ${{ secrets.DOMO_ENVIRONMENT }}
+          DOMO_DATASET_ID: ${{ secrets.DOMO_DATASET_ID }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "Daily sync failed! Check the logs."
