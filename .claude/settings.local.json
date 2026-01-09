@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(node scripts/check-domo-options.mjs:*)",
+      "Bash(node scripts/test-domo-sample.mjs:*)",
+      "Bash(node scripts/test-salesforce-auth.mjs:*)",
+      "Bash(node scripts/test-salesforce-recordings.mjs:*)",
+      "Bash(node scripts/check-voicecallrecording-fields.mjs:*)",
+      "Bash(node scripts/check-voicecall-fields.mjs:*)",
+      "Bash(node scripts/check-voice-call-info.mjs:*)"
+    ]
+  }
+}
