@@ -25,6 +25,7 @@ const tooltipStyle = {
   borderRadius: '12px',
   padding: '12px 16px',
   boxShadow: '0 10px 40px rgba(0,0,0,0.4)',
+  color: '#ffffff',
 };
 
 const tooltipLabelStyle = {
@@ -139,7 +140,7 @@ export function ProjectStackedBarChart({ data, title }: ProjectChartProps) {
             axisLine={false}
             width={130}
           />
-          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={{ color: '#ffffff' }} />
           <Legend
             wrapperStyle={{ paddingTop: '20px' }}
             formatter={(value) => <span className="text-gray-400 text-sm">{value}</span>}
@@ -243,7 +244,7 @@ export function AssigneeBarChart({ data, title }: AssigneeChartProps) {
             axisLine={false}
             width={80}
           />
-          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={{ color: '#ffffff' }} />
           <Legend
             wrapperStyle={{ paddingTop: '20px' }}
             formatter={(value) => <span className="text-gray-400 text-sm">{value}</span>}
@@ -277,7 +278,7 @@ export function HorizontalBarChart({ data, title, dataKey = 'value' }: BarChartP
             axisLine={false}
             width={90}
           />
-          <Tooltip contentStyle={tooltipStyle} formatter={(value: number) => [value.toLocaleString(), 'Tickets']} />
+          <Tooltip contentStyle={tooltipStyle} labelStyle={tooltipLabelStyle} itemStyle={{ color: '#ffffff' }} formatter={(value: number) => [value.toLocaleString(), 'Tickets']} />
           <Bar dataKey={dataKey} fill="#3b82f6" radius={[0, 4, 4, 0]} />
         </BarChart>
       </ResponsiveContainer>

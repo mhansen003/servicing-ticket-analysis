@@ -582,7 +582,10 @@ export function AdvancedCharts({ tickets, onDrillDown }: AdvancedChartsProps) {
                   border: '1px solid rgba(255,255,255,0.08)',
                   borderRadius: '8px',
                   fontSize: '12px',
+                  color: '#ffffff',
                 }}
+                labelStyle={{ color: '#9ca3af' }}
+                itemStyle={{ color: '#ffffff' }}
               />
             </RadarChart>
           </ResponsiveContainer>
