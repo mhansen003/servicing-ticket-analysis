@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
-import { X, Search, Loader2, FileText, Calendar, User, Clock, Tag, AlertCircle, CheckCircle, AlertTriangle } from 'lucide-react';
+import { X, Search, Loader2, FileText, Calendar, User, Clock, Tag, AlertCircle, CheckCircle, AlertTriangle, ExternalLink } from 'lucide-react';
+import { TicketLink } from './TicketLink';
 
 interface Ticket {
   id: string;
@@ -352,8 +353,8 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
                             : 'hover:bg-white/[0.02]'
                         }`}
                       >
-                        <td className="px-4 py-3 text-sm font-mono text-blue-400">
-                          {ticket.key}
+                        <td className="px-4 py-3 text-sm font-mono">
+                          <TicketLink ticketKey={ticket.key} />
                         </td>
                         <td className="px-4 py-3 text-sm text-gray-300 max-w-[350px] truncate" title={ticket.title}>
                           {ticket.title}
@@ -440,7 +441,7 @@ export function TicketModal({ isOpen, onClose, title, filterType, filterValue, h
                 {/* Ticket Key and Title */}
                 <div className="mb-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm font-mono text-blue-400">{selectedTicket.key}</span>
+                    <TicketLink ticketKey={selectedTicket.key} className="text-sm font-mono" showIcon />
                     <span className={`px-2 py-0.5 text-xs rounded-full ${
                       priorityColors[selectedTicket.priority] || 'bg-gray-500/20 text-gray-400'
                     }`}>

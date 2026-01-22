@@ -16,6 +16,7 @@ import {
   ChevronRight as ChevronRightIcon,
   Download,
 } from 'lucide-react';
+import { TicketLink } from './TicketLink';
 // import type { DrillDownFilter } from '@/app/page'; // Removed - no longer using drill-down filters
 
 // DrillDownFilter interface defined locally since this component is deprecated
@@ -833,8 +834,8 @@ export function DataTable({ drillDownFilter, onClearDrillDown }: DataTableProps)
                       key={ticket.id}
                       className="hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="px-4 py-3 text-sm font-mono text-blue-400">
-                        {ticket.key}
+                      <td className="px-4 py-3 text-sm font-mono">
+                        <TicketLink ticketKey={ticket.key} />
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-300 max-w-[300px] truncate">
                         {ticket.title}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Users, TrendingUp, AlertCircle, Award, Target } from 'lucide-react';
+import { TicketLink } from './TicketLink';
 
 interface SentimentData {
   ticketKey: string;
@@ -216,7 +217,8 @@ export default function PerformanceQuadrant() {
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
                     <div className="font-medium text-white mb-1">
-                      {ticket.ticketKey}: {ticket.ticketTitle?.substring(0, 80)}
+                      <TicketLink ticketKey={ticket.ticketKey} className="mr-1" />
+                      {ticket.ticketTitle?.substring(0, 80)}
                       {ticket.ticketTitle && ticket.ticketTitle.length > 80 ? '...' : ''}
                     </div>
                     <div className="text-sm text-gray-400">

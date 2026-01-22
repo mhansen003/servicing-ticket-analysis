@@ -19,7 +19,8 @@ import {
   Legend,
   Treemap,
 } from 'recharts';
-import { TrendingUp, Target, Grid3x3, Layers, Users } from 'lucide-react';
+import { TrendingUp, Target, Grid3x3, Layers, Users, ExternalLink } from 'lucide-react';
+import { getADOUrl } from './TicketLink';
 
 interface Ticket {
   id: string;
@@ -183,7 +184,16 @@ export function AdvancedCharts({ tickets, onDrillDown }: AdvancedChartsProps) {
       const data = payload[0].payload;
       return (
         <div className="bg-[#1a1f2e] border border-white/[0.08] rounded-lg p-3 shadow-xl">
-          <p className="text-white font-semibold text-sm mb-1">{data.key}</p>
+          <a
+            href={getADOUrl(data.key)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-400 hover:text-blue-300 font-semibold text-sm mb-1 flex items-center gap-1 hover:underline"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {data.key}
+            <ExternalLink className="h-3 w-3" />
+          </a>
           <p className="text-gray-400 text-xs mb-2 truncate max-w-[200px]">{data.title}</p>
           <div className="space-y-1 text-xs">
             <div className="flex justify-between gap-4">
