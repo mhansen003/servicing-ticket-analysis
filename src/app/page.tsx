@@ -10,6 +10,7 @@ import {
   Users,
   Tag,
   TrendingUp,
+  TrendingDown,
 } from 'lucide-react';
 import { AIAnalysis } from '@/components/AIAnalysis';
 import TranscriptsAnalysis from '@/components/TranscriptsAnalysis';
@@ -17,7 +18,8 @@ import TranscriptDataGrid from '@/components/TranscriptDataGrid';
 import AgentsAnalysis from '@/components/AgentsAnalysis';
 import CategoriesAnalysis from '@/components/CategoriesAnalysis';
 import TrendsAnalysis from '@/components/TrendsAnalysis';
-type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai';
+import BurndownAnalysis from '@/components/BurndownAnalysis';
+type TabType = 'data' | 'transcripts' | 'agents' | 'categories' | 'trends' | 'ai' | 'burndown';
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false);
@@ -50,7 +52,8 @@ export default function Dashboard() {
   }
 
   const tabs = [
-    // Ticket Data (Green) - Hidden for now
+    // Ticket Data (Green)
+    { id: 'burndown' as TabType, label: 'Burndown', icon: TrendingDown, group: 'tickets', color: 'green', dataSource: 'Tickets' },
     // { id: 'categories' as TabType, label: 'Categories', icon: Tag, group: 'tickets', color: 'green', dataSource: 'Tickets' },
     // { id: 'trends' as TabType, label: 'Trends', icon: TrendingUp, group: 'tickets', color: 'green', dataSource: 'Tickets' },
 
@@ -159,6 +162,8 @@ export default function Dashboard() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {/* Tab Content */}
+        {activeTab === 'burndown' && <BurndownAnalysis />}
+
         {activeTab === 'categories' && <CategoriesAnalysis />}
 
         {activeTab === 'trends' && <TrendsAnalysis />}
